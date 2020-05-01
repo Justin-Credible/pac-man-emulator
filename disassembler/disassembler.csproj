@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
-    <ProjectReference Include="..\Z80\Z80.csproj" />
+    <ProjectReference Include="..\z80\z80.csproj" />
   </ItemGroup>
 
 </Project>

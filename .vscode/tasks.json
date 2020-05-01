@@ -59,12 +59,12 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "build Z80",
+            "label": "build z80",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Z80/Z80.csproj",
+                "${workspaceFolder}/z80/z80.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -75,12 +75,12 @@
             }
         },
         {
-            "label": "build Z80.tests",
+            "label": "build z80.tests",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Z80.tests/Z80.tests.csproj",
+                "${workspaceFolder}/z80.tests/z80.tests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -88,12 +88,12 @@
             "group": "build"
         },
         {
-            "label": "run Z80.tests",
+            "label": "run z80.tests",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "test",
-                "${workspaceFolder}/Z80.tests/Z80.tests.csproj",
+                "${workspaceFolder}/z80.tests/z80.tests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

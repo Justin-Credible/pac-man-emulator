@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using JustinCredible.Z80;
+using JustinCredible.ZilogZ80;
 
 namespace JustinCredible.Z80Disassembler
 {
