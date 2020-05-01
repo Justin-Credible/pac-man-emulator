@@ -367,7 +367,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.PCHL] = PCHL,
 
                 /** Jump */
-                [OpcodeBytes.JMP] = JMP,
+                [OpcodeBytes.JP] = JP,
 
                 /** Jump (duplicate) */
                 [OpcodeBytes.JMP2] = JMP2,
@@ -379,7 +379,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.JPE] = JPE,
 
                 /** Jump if plus/positive */
-                [OpcodeBytes.JP] = JP,
+                [OpcodeBytes.JPP] = JPP,
 
                 /** Jump if zero */
                 [OpcodeBytes.JZ] = JZ,

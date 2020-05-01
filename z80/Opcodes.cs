@@ -369,7 +369,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode PCHL = new Opcode(OpcodeBytes.PCHL, size: 1, instruction: "PCHL", cycles: 5, pseudocode: "PC.hi <- H; PC.lo <- L");
 
             /** Jump */
-            public static Opcode JMP = new Opcode(OpcodeBytes.JMP, size: 3, instruction: "JMP adr", cycles: 10, pseudocode: "PC <= adr");
+            public static Opcode JP = new Opcode(OpcodeBytes.JP, size: 3, instruction: "JMP adr", cycles: 10, pseudocode: "PC <= adr");
 
             /** Jump (duplicate) */
             public static Opcode JMP2 = new Opcode(OpcodeBytes.JMP2, size: 3, instruction: "JMP adr", cycles: 10, pseudocode: "PC <= adr");
@@ -381,7 +381,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode JPE = new Opcode(OpcodeBytes.JPE, size: 3, instruction: "JPE adr", cycles: 10, pseudocode: "if PE, PC <- adr");
 
             /** Jump if plus/positive */
-            public static Opcode JP = new Opcode(OpcodeBytes.JP, size: 3, instruction: "JP adr", cycles: 10, pseudocode: "if P=1 PC <- adr");
+            public static Opcode JPP = new Opcode(OpcodeBytes.JPP, size: 3, instruction: "JP adr", cycles: 10, pseudocode: "if P=1 PC <- adr");
 
             /** Jump if zero */
             public static Opcode JZ = new Opcode(OpcodeBytes.JZ, size: 3, instruction: "JZ adr", cycles: 10, pseudocode: "if Z, PC <- adr");

@@ -14,13 +14,13 @@ namespace JustinCredible.ZilogZ80
 
         #region NOP - No operation
             public const byte NOP = 0x00;
-            public const byte NOP2 = 0x10;
-            public const byte NOP3 = 0x20;
-            public const byte NOP4 = 0x30;
-            public const byte NOP5 = 0x08;
-            public const byte NOP6 = 0x18;
-            public const byte NOP7 = 0x28;
-            public const byte NOP8 = 0x38;
+            public const byte NOP2 = 0x10; // TODO
+            public const byte NOP3 = 0x20; // TODO
+            public const byte NOP4 = 0x30; // TODO
+            public const byte NOP5 = 0x08; // TODO
+            public const byte NOP6 = 0x18; // TODO
+            public const byte NOP7 = 0x28; // TODO
+            public const byte NOP8 = 0x38; // TODO
         #endregion
 
         #region Carry bit instructions
@@ -369,10 +369,10 @@ namespace JustinCredible.ZilogZ80
             public const byte PCHL = 0xe9;
 
             /** Jump */
-            public const byte JMP = 0xc3;
+            public const byte JP = 0xc3;
 
             /** Jump (duplicate) */
-            public const byte JMP2 = 0xcb;
+            public const byte JMP2 = 0xcb; // TODO: Bit Instructions
 
             /** Jump if parity odd */
             public const byte JPO = 0xe2;
@@ -381,7 +381,7 @@ namespace JustinCredible.ZilogZ80
             public const byte JPE = 0xea;
 
             /** Jump if plus/positive */
-            public const byte JP = 0xf2;
+            public const byte JPP = 0xf2;
 
             /** Jump if zero */
             public const byte JZ = 0xca;
@@ -403,9 +403,9 @@ namespace JustinCredible.ZilogZ80
         #region Call subroutine instructions
 
             public const byte CALL = 0xcd;
-            public const byte CALL2 = 0xdd;
-            public const byte CALL3 = 0xed;
-            public const byte CALL4 = 0xfd;
+            public const byte CALL2 = 0xdd; // TODO: IX Instructions (DD)
+            public const byte CALL3 = 0xed; // TODO: Extended Instructions (ED)
+            public const byte CALL4 = 0xfd; // TODO: IY Instructions (FD)
 
             /** Call if minus/negative */
             public const byte CM = 0xfc;
@@ -439,7 +439,7 @@ namespace JustinCredible.ZilogZ80
             public const byte RET = 0xc9;
 
             /** Return from subroutine (duplicate) */
-            public const byte RET2 = 0xd9;
+            public const byte RET2 = 0xd9; // TODO
 
             /** Return if not zero */
             public const byte RNZ = 0xc0;

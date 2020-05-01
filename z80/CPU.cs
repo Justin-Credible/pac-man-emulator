@@ -26,7 +26,7 @@ namespace JustinCredible.ZilogZ80
         public ConditionFlags Flags { get; set; }
 
         /** Alternative flag register (F') */
-        public ConditionFlags AlternativeFlags { get; set; } // TODO
+        public ConditionFlags AlternateFlags { get; set; } // TODO
 
         /** The interrupt vector register (I) */
         public UInt16 InterruptVector { get; set; } // TODO
@@ -1173,7 +1173,7 @@ namespace JustinCredible.ZilogZ80
                         break;
 
                     // Jump
-                    case OpcodeBytes.JMP:
+                    case OpcodeBytes.JP:
                     // Jump (duplicate)
                     case OpcodeBytes.JMP2:
                     {
@@ -1209,7 +1209,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if plus/positive
-                    case OpcodeBytes.JP:
+                    case OpcodeBytes.JPP:
                     {
                         if (!Flags.Sign)
                         {

@@ -16,7 +16,8 @@ namespace JustinCredible.ZilogZ80
             Pseudocode = pseudocode;
         }
 
-        public byte Code { get; set; }
+        // TODO: Z80 has multi-byte opcodes; so remove this?
+        private byte Code { get; set; }
         public int Size { get; set; }
         public string Instruction { get; set; }
         public int Cycles { get; set; }
