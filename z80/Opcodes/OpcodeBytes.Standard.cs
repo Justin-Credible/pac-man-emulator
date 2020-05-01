@@ -1,13 +1,12 @@
+using System;
 
 namespace JustinCredible.ZilogZ80
 {
     // TODO: Update with Z80 mnemonics.
     // TODO: Add z80 specific instructions.
-    /**
-     * Assembly instruction name to opcode map derived from:
-     * http://www.emulator101.com/8080-by-opcode.html
-     */
-    public class OpcodeBytes
+
+    // A list of all the "standard" opcode bytes; can be used to lookup the opcode definition.
+    public partial class OpcodeBytes
     {
         /** Halt */
         public const byte HLT = 0x76;

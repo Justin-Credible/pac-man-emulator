@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace JustinCredible.ZilogZ80
 {
+    // A lookup table to locate opcode definitions by the opcode byte.
     public partial class Opcodes
     {
         public static Dictionary<byte, Opcode> Lookup = new Dictionary<byte, Opcode>()

@@ -6,7 +6,7 @@ namespace JustinCredible.ZilogZ80
      */
     public class Opcode
     {
-        public Opcode(byte code, int size, string instruction, int cycles, int? alternateCycles = null, string pseudocode = null)
+        public Opcode(byte code, int size, string instruction, int cycles, int? alternateCycles = null, string pseudocode = null, InstructionSet instructionSet = InstructionSet.Standard)
         {
             Code = code;
             Size = size;
@@ -14,14 +14,15 @@ namespace JustinCredible.ZilogZ80
             Cycles = cycles;
             AlternateCycles = alternateCycles;
             Pseudocode = pseudocode;
+            InstructionSet = instructionSet;
         }
 
-        // TODO: Z80 has multi-byte opcodes; so remove this?
-        private byte Code { get; set; }
+        public byte Code { get; set; }
         public int Size { get; set; }
         public string Instruction { get; set; }
         public int Cycles { get; set; }
         public int? AlternateCycles { get; set; }
         public string Pseudocode { get; set; }
+        public InstructionSet InstructionSet { get; set; }
     }
 }

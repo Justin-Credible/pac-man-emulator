@@ -1,12 +1,7 @@
 
-using System.Collections.Generic;
-
 namespace JustinCredible.ZilogZ80
 {
-    /**
-     * A lookup table for opcodes, which includes opcode sizes and cycle counts.
-     * Derived from: http://www.pastraiser.com/cpu/i8080/i8080_opcodes.html
-     */
+    // A list of all of the "standard" opcodes and their metadata.
     public partial class Opcodes
     {
         /** Halt */
