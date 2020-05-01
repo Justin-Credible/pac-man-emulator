@@ -1,0 +1,12 @@
+{
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "files.insertFinalNewline": true,
+
+    "search.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    },
+    "csharp.referencesCodeLens.enabled": false,
+    "dotnet-test-explorer.testProjectPath": "**/*.tests.csproj"
+}

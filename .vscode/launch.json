@@ -1,0 +1,54 @@
+{
+   // Use IntelliSense to find out which attributes exist for C# debugging
+   // Use hover for the description of the existing attributes
+   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+   "version": "0.2.0",
+   "configurations": [
+        {
+            "name": ".NET Core Launch (emulator)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build emulator",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/emulator/bin/Debug/netcoreapp3.1/emulator.dll",
+            "args": [
+                "run",
+                "${workspaceFolder}/roms",
+                "-sfx",
+                "${workspaceFolder}/roms",
+                "--debug",
+                "-a",
+                "${workspaceFolder}/roms/annotations.txt",
+                // "--rewind",
+                // "--load-state",
+                // "ufo_soon3.state",
+                // "--break",
+                // "0x15D3", // DrawSprite:
+            ],
+            "cwd": "${workspaceFolder}/emulator",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            // "console": "internalConsole",
+            "console": "externalTerminal",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Launch (disassembler)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build disassembler",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/disassembler/bin/Debug/netcoreapp3.1/disassembler.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/disassembler",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
+    ]
+}
