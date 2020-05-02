@@ -54,7 +54,7 @@ namespace JustinCredible.ZilogZ80
         /**
          * Special flag used to patch the CALL calls for the cpudiag.bin program.
          * This allow CALL 0x05 to simulate CP/M writing the console and will exit
-         * on JMP 0x00. This is only used for testing the CPU with this specific ROM.
+         * on JP 0x00. This is only used for testing the CPU with this specific ROM.
          */
         //public bool EnableDiagnosticsMode { get; set; } = false;
     }

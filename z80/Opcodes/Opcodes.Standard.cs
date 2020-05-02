@@ -361,34 +361,34 @@ namespace JustinCredible.ZilogZ80
         #region Jump instructions
 
             /** Load program counter */
-            public static Opcode JPHL = new Opcode(OpcodeBytes.JPHL, size: 1, instruction: "JP (HL)", cycles: 4, pseudocode: "PC.hi <- H; PC.lo <- L");
+            public static Opcode JP_HL = new Opcode(OpcodeBytes.JP_HL, size: 1, instruction: "JP (HL)", cycles: 4, pseudocode: "PC.hi <- H; PC.lo <- L");
 
             /** Jump */
-            public static Opcode JP = new Opcode(OpcodeBytes.JP, size: 3, instruction: "JMP adr", cycles: 10, pseudocode: "PC <= adr");
+            public static Opcode JP = new Opcode(OpcodeBytes.JP, size: 3, instruction: "JP adr", cycles: 10, pseudocode: "PC <= adr");
 
             /** Jump if parity odd */
-            public static Opcode JPPO = new Opcode(OpcodeBytes.JPPO, size: 3, instruction: "JP PO, adr", cycles: 10, pseudocode: "if PO, PC <- adr");
+            public static Opcode JP_PO = new Opcode(OpcodeBytes.JP_PO, size: 3, instruction: "JP PO, adr", cycles: 10, pseudocode: "if PO, PC <- adr");
 
             /** Jump if parity even */
-            public static Opcode JPPE = new Opcode(OpcodeBytes.JPPE, size: 3, instruction: "JP PE, adr", cycles: 10, pseudocode: "if PE, PC <- adr");
+            public static Opcode JP_PE = new Opcode(OpcodeBytes.JP_PE, size: 3, instruction: "JP PE, adr", cycles: 10, pseudocode: "if PE, PC <- adr");
 
             /** Jump if plus/positive */
-            public static Opcode JPP = new Opcode(OpcodeBytes.JPP, size: 3, instruction: "JP P, adr", cycles: 10, pseudocode: "if P=1 PC <- adr");
+            public static Opcode JP_P = new Opcode(OpcodeBytes.JP_P, size: 3, instruction: "JP P, adr", cycles: 10, pseudocode: "if P=1 PC <- adr");
 
             /** Jump if zero */
-            public static Opcode JPZ = new Opcode(OpcodeBytes.JPZ, size: 3, instruction: "JP Z, adr", cycles: 10, pseudocode: "if Z, PC <- adr");
+            public static Opcode JP_Z = new Opcode(OpcodeBytes.JP_Z, size: 3, instruction: "JP Z, adr", cycles: 10, pseudocode: "if Z, PC <- adr");
 
             /** Jump if not zero */
-            public static Opcode JPNZ = new Opcode(OpcodeBytes.JPNZ, size: 3, instruction: "JP NZ, adr", cycles: 10, pseudocode: "if NZ, PC <- adr");
+            public static Opcode JP_NZ = new Opcode(OpcodeBytes.JP_NZ, size: 3, instruction: "JP NZ, adr", cycles: 10, pseudocode: "if NZ, PC <- adr");
 
             /** Jump if not carry */
-            public static Opcode JPNC = new Opcode(OpcodeBytes.JPNC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if NCY, PC<-adr");
+            public static Opcode JP_NC = new Opcode(OpcodeBytes.JP_NC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if NCY, PC<-adr");
 
             /** Jump if carry */
-            public static Opcode JPC = new Opcode(OpcodeBytes.JPC, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if CY, PC<-adr");
+            public static Opcode JP_C = new Opcode(OpcodeBytes.JP_C, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if CY, PC<-adr");
 
             /** Jump if minus/negative */
-            public static Opcode JPM = new Opcode(OpcodeBytes.JPM, size: 3, instruction: "JP M, adr", cycles: 10, pseudocode: "if M, PC <- adr");
+            public static Opcode JP_M = new Opcode(OpcodeBytes.JP_M, size: 3, instruction: "JP M, adr", cycles: 10, pseudocode: "if M, PC <- adr");
 
         #endregion
 

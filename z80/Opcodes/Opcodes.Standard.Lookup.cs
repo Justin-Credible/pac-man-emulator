@@ -365,34 +365,34 @@ namespace JustinCredible.ZilogZ80
             #region Jump instructions
 
                 /** Load program counter */
-                [OpcodeBytes.JPHL] = JPHL,
+                [OpcodeBytes.JP_HL] = JP_HL,
 
                 /** Jump */
                 [OpcodeBytes.JP] = JP,
 
                 /** Jump if parity odd */
-                [OpcodeBytes.JPPO] = JPPO,
+                [OpcodeBytes.JP_PO] = JP_PO,
 
                 /** Jump if parity even */
-                [OpcodeBytes.JPPE] = JPPE,
+                [OpcodeBytes.JP_PE] = JP_PE,
 
                 /** Jump if plus/positive */
-                [OpcodeBytes.JPP] = JPP,
+                [OpcodeBytes.JP_P] = JP_P,
 
                 /** Jump if zero */
-                [OpcodeBytes.JPZ] = JPZ,
+                [OpcodeBytes.JP_Z] = JP_Z,
 
                 /** Jump if not zero */
-                [OpcodeBytes.JPNZ] = JPNZ,
+                [OpcodeBytes.JP_NZ] = JP_NZ,
 
                 /** Jump if not carry */
-                [OpcodeBytes.JPNC] = JPNC,
+                [OpcodeBytes.JP_NC] = JP_NC,
 
                 /** Jump if carry */
-                [OpcodeBytes.JPC] = JPC,
+                [OpcodeBytes.JP_C] = JP_C,
 
                 /** Jump if minus/negative */
-                [OpcodeBytes.JPM] = JPM,
+                [OpcodeBytes.JP_M] = JP_M,
 
             #endregion
 

@@ -954,7 +954,7 @@ namespace JustinCredible.ZilogZ80
                 #region Jump instructions
 
                     // Load program counter
-                    case OpcodeBytes.JPHL:
+                    case OpcodeBytes.JP_HL:
                         ExecuteJump(Registers.HL);
                         incrementProgramCounter = false;
                         break;
@@ -972,7 +972,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if parity odd
-                    case OpcodeBytes.JPPO:
+                    case OpcodeBytes.JP_PO:
                     {
                         if (!Flags.Parity)
                         {
@@ -983,7 +983,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if parity even
-                    case OpcodeBytes.JPPE:
+                    case OpcodeBytes.JP_PE:
                     {
                         if (Flags.Parity)
                         {
@@ -994,7 +994,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if plus/positive
-                    case OpcodeBytes.JPP:
+                    case OpcodeBytes.JP_P:
                     {
                         if (!Flags.Sign)
                         {
@@ -1005,7 +1005,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if zero
-                    case OpcodeBytes.JPZ:
+                    case OpcodeBytes.JP_Z:
                     {
                         if (Flags.Zero)
                         {
@@ -1016,7 +1016,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if not zero
-                    case OpcodeBytes.JPNZ:
+                    case OpcodeBytes.JP_NZ:
                     {
                         if (!Flags.Zero)
                         {
@@ -1027,7 +1027,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if not carry
-                    case OpcodeBytes.JPNC:
+                    case OpcodeBytes.JP_NC:
                     {
                         if (!Flags.Carry)
                         {
@@ -1038,7 +1038,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if carry
-                    case OpcodeBytes.JPC:
+                    case OpcodeBytes.JP_C:
                     {
                         if (Flags.Carry)
                         {
@@ -1049,7 +1049,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if minus/negative
-                    case OpcodeBytes.JPM:
+                    case OpcodeBytes.JP_M:
                     {
                         if (Flags.Sign)
                         {

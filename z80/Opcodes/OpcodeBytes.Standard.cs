@@ -365,34 +365,34 @@ namespace JustinCredible.ZilogZ80
         #region Jump instructions
 
             /** Load program counter */
-            public const byte JPHL = 0xe9;
+            public const byte JP_HL = 0xe9;
 
             /** Jump */
             public const byte JP = 0xc3;
 
             /** Jump if parity odd */
-            public const byte JPPO = 0xe2;
+            public const byte JP_PO = 0xe2;
 
             /** Jump if parity even */
-            public const byte JPPE = 0xea;
+            public const byte JP_PE = 0xea;
 
             /** Jump if plus/positive */
-            public const byte JPP = 0xf2;
+            public const byte JP_P = 0xf2;
 
             /** Jump if zero */
-            public const byte JPZ = 0xca;
+            public const byte JP_Z = 0xca;
 
             /** Jump if not zero */
-            public const byte JPNZ = 0xc2;
+            public const byte JP_NZ = 0xc2;
 
             /** Jump if not carry */
-            public const byte JPNC = 0xd2;
+            public const byte JP_NC = 0xd2;
 
             /** Jump if carry */
-            public const byte JPC = 0xda;
+            public const byte JP_C = 0xda;
 
             /** Jump if minus/negative */
-            public const byte JPM = 0xfa;
+            public const byte JP_M = 0xfa;
 
         #endregion
 
