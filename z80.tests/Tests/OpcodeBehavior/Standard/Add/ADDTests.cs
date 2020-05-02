@@ -30,7 +30,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     // Ensure this is flipped to zero because this was an addition.
                     Subtract = true,
-                }
+                },
             };
 
             var state = Execute(rom, initialState);

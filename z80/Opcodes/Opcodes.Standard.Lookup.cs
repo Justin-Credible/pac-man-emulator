@@ -321,7 +321,7 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 /** Add immediate to accumulator */
-                [OpcodeBytes.ADI] = ADI,
+                [OpcodeBytes.ADD_A_N] = ADD_A_N,
 
                 /** Add immediate to accumulator with carry */
                 [OpcodeBytes.ACI] = ACI,

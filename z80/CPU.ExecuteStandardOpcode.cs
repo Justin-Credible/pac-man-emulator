@@ -854,7 +854,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Add immediate to accumulator
                     // A <- A + byte
-                    case OpcodeBytes.ADI:
+                    case OpcodeBytes.ADD_A_N:
                         ExecuteADD(ReadMemory(ProgramCounter+1));
                         break;
 

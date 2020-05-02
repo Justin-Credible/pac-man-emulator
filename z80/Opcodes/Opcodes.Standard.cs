@@ -317,7 +317,7 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Add immediate to accumulator */
-            public static Opcode ADI =new Opcode(OpcodeBytes.ADI, size: 2, instruction: "ADI D8", cycles: 7, pseudocode: "A <- A + byte");
+            public static Opcode ADD_A_N =new Opcode(OpcodeBytes.ADD_A_N, size: 2, instruction: "ADD A, D8", cycles: 7, pseudocode: "A <- A + byte");
 
             /** Add immediate to accumulator with carry */
             public static Opcode ACI =new Opcode(OpcodeBytes.ACI, size: 2, instruction: "ACI D8", cycles: 7, pseudocode: "A <- A + data + CY");

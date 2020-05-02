@@ -321,7 +321,7 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Add immediate to accumulator */
-            public const byte ADI = 0xc6;
+            public const byte ADD_A_N = 0xc6;
 
             /** Add immediate to accumulator with carry */
             public const byte ACI = 0xce;
