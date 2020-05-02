@@ -2,18 +2,16 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class NOPTests : BaseTest
+    public class HALT_Tests : BaseTest
     {
         [Fact]
-        public void TestNOP()
+        public void Test_HALT()
         {
             var rom = AssembleSource($@"
                 org 00h
                 NOP         ; $0000
                 NOP         ; $0001
-                NOP         ; $0002
-                NOP         ; $0003
-                HALT        ; $0004
+                HALT        ; $0002
             ");
 
             var initialState = new CPUConfig();
@@ -24,9 +22,9 @@ namespace JustinCredible.ZilogZ80.Tests
 
             AssertFlagsSame(initialState, state);
 
-            Assert.Equal(5, state.Iterations);
-            Assert.Equal(4 + (4*4), state.Cycles);
-            Assert.Equal(0x0004, state.ProgramCounter);
+            Assert.Equal(3, state.Iterations);
+            Assert.Equal(4 + (4*2), state.Cycles);
+            Assert.Equal(0x0002, state.ProgramCounter);
         }
     }
 }
