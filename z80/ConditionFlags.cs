@@ -6,44 +6,50 @@ namespace JustinCredible.ZilogZ80
      *
      * Bit layout:
      * 7 6 5 4 3 2 1 0
-     * S Z 0 A 0 P 1 C
+     * S Z - H - P N C
      *
-     * Bits 5, 3, and 1 are not used and always remain the same.
+     * Bits 5 and 3 are not used and always remain the same (zero).
      */
     public class ConditionFlags
     {
         /**
-         * Z (zero) set to 1 when the result is equal to zero
-         */
-        public bool Zero;
-
-        /**
-         * S (sign) set to 1 when bit 7 (the most significant bit or MSB) of the math instruction is set
+         * S (sign) set to 1 when bit 7 (the most significant bit or MSB) of the math instruction is set.
          */
         public bool Sign;
 
         /**
-         * P (parity) is  set if the number of 1 bits in the result is even.
+         * Z (zero) set to 1 when the result is equal to zero.
+         */
+        public bool Zero;
+
+        /**
+         * H (half carry) is used mostly for BCD (binary coded decimal) math.
+         * TODO: I didn't implement this for the 8080 because it wasn't used by Space Invaders.
+         */
+        public bool AuxCarry;
+
+        /**
+         * P (Parity/Overflow) is  set if the number of 1 bits in the result is even.
          */
         public bool Parity;
 
         /**
-         * CY (carry) set to 1 when the instruction resulted in a carry out or borrow into the high order bit
+         * N (Add/Subtract) TODO
          */
-        public bool Carry;
+        public bool AddSub;
 
         /**
-         * AC (auxillary carry) is used mostly for BCD (binary coded decimal) math. Read the data book for more details, Space Invaders doesn't use it.
+         * C (carry) set to 1 when the instruction resulted in a carry out or borrow into the high order bit.
          */
-        public bool AuxCarry;
+        public bool Carry;
 
         public byte ToByte()
         {
             /**
              * 7 6 5 4 3 2 1 0
-             * S Z 0 A 0 P 1 C
+             * S Z - H - P N C
              */
-            var flags = 0b00000010;
+            var flags = 0b00000000;
 
             if (Sign)
                 flags = flags | 0b10000000;
@@ -57,6 +63,9 @@ namespace JustinCredible.ZilogZ80
             if (Parity)
                 flags = flags | 0b00000100;
 
+            if (AddSub)
+                flags = flags | 0b00000010;
+
             if (Carry)
                 flags = flags | 0b00000001;
 
@@ -69,6 +78,7 @@ namespace JustinCredible.ZilogZ80
             Zero = (flags & 0b01000000) == 0b01000000;
             AuxCarry = (flags & 0b00010000) == 0b00010000;
             Parity = (flags & 0b00000100) == 0b00000100;
+            AddSub = (flags & 0b00000010) == 0b00000010;
             Carry = (flags & 0b00000001) == 0b00000001;
         }
     }
