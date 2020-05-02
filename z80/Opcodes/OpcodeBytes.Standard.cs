@@ -147,14 +147,14 @@ namespace JustinCredible.ZilogZ80
         #region Register or memory to accumulator instructions
 
             #region ADD - Add register or memory to accumulator
-                public const byte ADD_B = 0x80;
-                public const byte ADD_C = 0x81;
-                public const byte ADD_D = 0x82;
-                public const byte ADD_E = 0x83;
-                public const byte ADD_H = 0x84;
-                public const byte ADD_L = 0x85;
-                public const byte ADD_M = 0x86;
-                public const byte ADD_A = 0x87;
+                public const byte ADD_A_B = 0x80;
+                public const byte ADD_A_C = 0x81;
+                public const byte ADD_A_D = 0x82;
+                public const byte ADD_A_E = 0x83;
+                public const byte ADD_A_H = 0x84;
+                public const byte ADD_A_L = 0x85;
+                public const byte ADD_A_HL = 0x86;
+                public const byte ADD_A_A = 0x87;
             #endregion
 
             #region SUB - Subtract register or memory from accumulator

@@ -147,14 +147,14 @@ namespace JustinCredible.ZilogZ80
             #region Register or memory to accumulator instructions
 
                 #region ADD - Add register or memory to accumulator
-                    [OpcodeBytes.ADD_B] = ADD_B,
-                    [OpcodeBytes.ADD_C] = ADD_C,
-                    [OpcodeBytes.ADD_D] = ADD_D,
-                    [OpcodeBytes.ADD_E] = ADD_E,
-                    [OpcodeBytes.ADD_H] = ADD_H,
-                    [OpcodeBytes.ADD_L] = ADD_L,
-                    [OpcodeBytes.ADD_M] = ADD_M,
-                    [OpcodeBytes.ADD_A] = ADD_A,
+                    [OpcodeBytes.ADD_A_B] = ADD_A_B,
+                    [OpcodeBytes.ADD_A_C] = ADD_A_C,
+                    [OpcodeBytes.ADD_A_D] = ADD_A_D,
+                    [OpcodeBytes.ADD_A_E] = ADD_A_E,
+                    [OpcodeBytes.ADD_A_H] = ADD_A_H,
+                    [OpcodeBytes.ADD_A_L] = ADD_A_L,
+                    [OpcodeBytes.ADD_A_HL] = ADD_A_HL,
+                    [OpcodeBytes.ADD_A_A] = ADD_A_A,
                 #endregion
 
                 #region SUB - Subtract register or memory from accumulator

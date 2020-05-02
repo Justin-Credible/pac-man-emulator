@@ -143,14 +143,14 @@ namespace JustinCredible.ZilogZ80
         #region Register or memory to accumulator instructions
 
             #region ADD - Add register or memory to accumulator
-                public static Opcode ADD_B = new Opcode(OpcodeBytes.ADD_B, size: 1, instruction: "ADD B", cycles: 4, pseudocode: "A <- A + B");
-                public static Opcode ADD_C = new Opcode(OpcodeBytes.ADD_C, size: 1, instruction: "ADD C", cycles: 4, pseudocode: "A <- A + C");
-                public static Opcode ADD_D = new Opcode(OpcodeBytes.ADD_D, size: 1, instruction: "ADD D", cycles: 4, pseudocode: "A <- A + D");
-                public static Opcode ADD_E = new Opcode(OpcodeBytes.ADD_E, size: 1, instruction: "ADD E", cycles: 4, pseudocode: "A <- A + E");
-                public static Opcode ADD_H = new Opcode(OpcodeBytes.ADD_H, size: 1, instruction: "ADD H", cycles: 4, pseudocode: "A <- A + H");
-                public static Opcode ADD_L = new Opcode(OpcodeBytes.ADD_L, size: 1, instruction: "ADD L", cycles: 4, pseudocode: "A <- A + L");
-                public static Opcode ADD_M = new Opcode(OpcodeBytes.ADD_M, size: 1, instruction: "ADD M", cycles: 7, pseudocode: "A <- A + (HL)");
-                public static Opcode ADD_A = new Opcode(OpcodeBytes.ADD_A, size: 1, instruction: "ADD A", cycles: 4, pseudocode: "A <- A + A");
+                public static Opcode ADD_A_B = new Opcode(OpcodeBytes.ADD_A_B, size: 1, instruction: "ADD B", cycles: 4, pseudocode: "A <- A + B");
+                public static Opcode ADD_A_C = new Opcode(OpcodeBytes.ADD_A_C, size: 1, instruction: "ADD C", cycles: 4, pseudocode: "A <- A + C");
+                public static Opcode ADD_A_D = new Opcode(OpcodeBytes.ADD_A_D, size: 1, instruction: "ADD D", cycles: 4, pseudocode: "A <- A + D");
+                public static Opcode ADD_A_E = new Opcode(OpcodeBytes.ADD_A_E, size: 1, instruction: "ADD E", cycles: 4, pseudocode: "A <- A + E");
+                public static Opcode ADD_A_H = new Opcode(OpcodeBytes.ADD_A_H, size: 1, instruction: "ADD H", cycles: 4, pseudocode: "A <- A + H");
+                public static Opcode ADD_A_L = new Opcode(OpcodeBytes.ADD_A_L, size: 1, instruction: "ADD L", cycles: 4, pseudocode: "A <- A + L");
+                public static Opcode ADD_A_HL = new Opcode(OpcodeBytes.ADD_A_HL, size: 1, instruction: "ADD M", cycles: 7, pseudocode: "A <- A + (HL)");
+                public static Opcode ADD_A_A = new Opcode(OpcodeBytes.ADD_A_A, size: 1, instruction: "ADD A", cycles: 4, pseudocode: "A <- A + A");
             #endregion
 
             #region SUB - Subtract register or memory from accumulator

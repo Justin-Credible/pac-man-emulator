@@ -376,28 +376,28 @@ namespace JustinCredible.ZilogZ80
 
                     #region ADD - Add register or memory to accumulator
 
-                        case OpcodeBytes.ADD_B:
+                        case OpcodeBytes.ADD_A_B:
                             ExecuteADD(Registers.B);
                             break;
-                        case OpcodeBytes.ADD_C:
+                        case OpcodeBytes.ADD_A_C:
                             ExecuteADD(Registers.C);
                             break;
-                        case OpcodeBytes.ADD_D:
+                        case OpcodeBytes.ADD_A_D:
                             ExecuteADD(Registers.D);
                             break;
-                        case OpcodeBytes.ADD_E:
+                        case OpcodeBytes.ADD_A_E:
                             ExecuteADD(Registers.E);
                             break;
-                        case OpcodeBytes.ADD_H:
+                        case OpcodeBytes.ADD_A_H:
                             ExecuteADD(Registers.H);
                             break;
-                        case OpcodeBytes.ADD_L:
+                        case OpcodeBytes.ADD_A_L:
                             ExecuteADD(Registers.L);
                             break;
-                        case OpcodeBytes.ADD_M:
+                        case OpcodeBytes.ADD_A_HL:
                             ExecuteADD(ReadMemory(Registers.HL));
                             break;
-                        case OpcodeBytes.ADD_A:
+                        case OpcodeBytes.ADD_A_A:
                             ExecuteADD(Registers.A);
                             break;
 
