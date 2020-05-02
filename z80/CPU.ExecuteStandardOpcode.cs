@@ -48,39 +48,39 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.INR_B:
                             Registers.B++;
-                            SetFlags(false, Registers.B);
+                            SetFlags(carry: false, result: Registers.B);
                             break;
                         case OpcodeBytes.INR_C:
                             Registers.C++;
-                            SetFlags(false, Registers.C);
+                            SetFlags(carry: false, result: Registers.C);
                             break;
                         case OpcodeBytes.INR_D:
                             Registers.D++;
-                            SetFlags(false, Registers.D);
+                            SetFlags(carry: false, result: Registers.D);
                             break;
                         case OpcodeBytes.INR_E:
                             Registers.E++;
-                            SetFlags(false, Registers.E);
+                            SetFlags(carry: false, result: Registers.E);
                             break;
                         case OpcodeBytes.INR_H:
                             Registers.H++;
-                            SetFlags(false, Registers.H);
+                            SetFlags(carry: false, result: Registers.H);
                             break;
                         case OpcodeBytes.INR_L:
                             Registers.L++;
-                            SetFlags(false, Registers.L);
+                            SetFlags(carry: false, result: Registers.L);
                             break;
                         case OpcodeBytes.INR_M:
                         {
                             var value = ReadMemory(Registers.HL);
                             value++;
                             WriteMemory(Registers.HL, value);
-                            SetFlags(false, ReadMemory(Registers.HL));
+                            SetFlags(carry: false, result: ReadMemory(Registers.HL));
                             break;
                         }
                         case OpcodeBytes.INR_A:
                             Registers.A++;
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
 
                     #endregion
@@ -89,39 +89,39 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.DCR_B:
                             Registers.B--;
-                            SetFlags(false, Registers.B);
+                            SetFlags(carry: false, result: Registers.B);
                             break;
                         case OpcodeBytes.DCR_C:
                             Registers.C--;
-                            SetFlags(false, Registers.C);
+                            SetFlags(carry: false, result: Registers.C);
                             break;
                         case OpcodeBytes.DCR_D:
                             Registers.D--;
-                            SetFlags(false, Registers.D);
+                            SetFlags(carry: false, result: Registers.D);
                             break;
                         case OpcodeBytes.DCR_E:
                             Registers.E--;
-                            SetFlags(false, Registers.E);
+                            SetFlags(carry: false, result: Registers.E);
                             break;
                         case OpcodeBytes.DCR_H:
                             Registers.H--;
-                            SetFlags(false, Registers.H);
+                            SetFlags(carry: false, result: Registers.H);
                             break;
                         case OpcodeBytes.DCR_L:
                             Registers.L--;
-                            SetFlags(false, Registers.L);
+                            SetFlags(carry: false, result: Registers.L);
                             break;
                         case OpcodeBytes.DCR_M:
                         {
                             var value = ReadMemory(Registers.HL);
                             value--;
                             WriteMemory(Registers.HL, value);
-                            SetFlags(false, ReadMemory(Registers.HL));
+                            SetFlags(carry: false, result: ReadMemory(Registers.HL));
                             break;
                         }
                         case OpcodeBytes.DCR_A:
                             Registers.A--;
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
 
                     #endregion
@@ -436,35 +436,35 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.ANA_B:
                             Registers.A = (byte)(Registers.A & Registers.B);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_C:
                             Registers.A = (byte)(Registers.A & Registers.C);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_D:
                             Registers.A = (byte)(Registers.A & Registers.D);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_E:
                             Registers.A = (byte)(Registers.A & Registers.E);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_H:
                             Registers.A = (byte)(Registers.A & Registers.H);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_L:
                             Registers.A = (byte)(Registers.A & Registers.L);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_M:
                             Registers.A = (byte)(Registers.A & ReadMemory(Registers.HL));
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ANA_A:
                             Registers.A = (byte)(Registers.A & Registers.A);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
 
                     #endregion
@@ -473,35 +473,35 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.ORA_B:
                             Registers.A = (byte)(Registers.A | Registers.B);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_C:
                             Registers.A = (byte)(Registers.A | Registers.C);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_D:
                             Registers.A = (byte)(Registers.A | Registers.D);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_E:
                             Registers.A = (byte)(Registers.A | Registers.E);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_H:
                             Registers.A = (byte)(Registers.A | Registers.H);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_L:
                             Registers.A = (byte)(Registers.A | Registers.L);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_M:
                             Registers.A = (byte)(Registers.A | ReadMemory(Registers.HL));
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.ORA_A:
                             Registers.A = (byte)(Registers.A | Registers.A);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
 
                     #endregion
@@ -568,35 +568,35 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.XRA_B:
                             Registers.A = (byte)(Registers.A ^ Registers.B);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_C:
                             Registers.A = (byte)(Registers.A ^ Registers.C);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_D:
                             Registers.A = (byte)(Registers.A ^ Registers.D);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_E:
                             Registers.A = (byte)(Registers.A ^ Registers.E);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_H:
                             Registers.A = (byte)(Registers.A ^ Registers.H);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_L:
                             Registers.A = (byte)(Registers.A ^ Registers.L);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_M:
                             Registers.A = (byte)(Registers.A ^ ReadMemory(Registers.HL));
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
                         case OpcodeBytes.XRA_A:
                             Registers.A = (byte)(Registers.A ^ Registers.A);
-                            SetFlags(false, Registers.A);
+                            SetFlags(carry: false, result: Registers.A);
                             break;
 
                     #endregion
@@ -880,21 +880,21 @@ namespace JustinCredible.ZilogZ80
                     // A <- A & data
                     case OpcodeBytes.ANI:
                         Registers.A = (byte)(Registers.A & ReadMemory(ProgramCounter+1));
-                        SetFlags(false, Registers.A);
+                        SetFlags(carry: false, result: Registers.A);
                         break;
 
                     // XOR immediate with accumulator
                     // A <- A ^ data
                     case OpcodeBytes.XRI:
                         Registers.A = (byte)(Registers.A ^ ReadMemory(ProgramCounter+1));
-                        SetFlags(false, Registers.A);
+                        SetFlags(carry: false, result: Registers.A);
                         break;
 
                     // Logical OR immediate with accumulator
                     // A <- A | data
                     case OpcodeBytes.ORI:
                         Registers.A = (byte)(Registers.A | ReadMemory(ProgramCounter+1));
-                        SetFlags(false, Registers.A);
+                        SetFlags(carry: false, result: Registers.A);
                         break;
 
                     // Compare immediate with accumulator
@@ -1476,7 +1476,7 @@ namespace JustinCredible.ZilogZ80
             }
 
             // Update the condition flags.
-            SetFlags(newCarryValue, Registers.A, newAuxCarryValue);
+            SetFlags(carry: newCarryValue, result: Registers.A, auxCarry: newAuxCarryValue);
         }
 
         private void ExecuteJump()
@@ -1635,7 +1635,7 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 256;
 
-            SetFlags(carryOccurred, (byte)result);
+            SetFlags(carry: carryOccurred, result: (byte)result, subtract: false);
 
             Registers.A = (byte)result;
         }
@@ -1654,7 +1654,7 @@ namespace JustinCredible.ZilogZ80
             if (borrowOccurred)
                 result = 256 + result;
 
-            SetFlags(borrowOccurred, (byte)result);
+            SetFlags(carry: borrowOccurred, result: (byte)result);
 
             if (updateAccumulator)
                 Registers.A = (byte)result;

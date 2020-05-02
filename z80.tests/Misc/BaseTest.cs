@@ -131,7 +131,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(stats.Flags.Zero);
             Assert.False(stats.Flags.AuxCarry);
             Assert.False(stats.Flags.Parity);
-            Assert.False(stats.Flags.AddSub);
+            Assert.False(stats.Flags.Subtract);
             Assert.False(stats.Flags.Carry);
         }
 
@@ -141,7 +141,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(initialState.Flags.Zero, stats.Flags.Zero);
             Assert.Equal(initialState.Flags.AuxCarry, stats.Flags.AuxCarry);
             Assert.Equal(initialState.Flags.Parity, stats.Flags.Parity);
-            Assert.Equal(initialState.Flags.AddSub, stats.Flags.AddSub);
+            Assert.Equal(initialState.Flags.Subtract, stats.Flags.Subtract);
             Assert.Equal(initialState.Flags.Carry, stats.Flags.Carry);
         }
     }

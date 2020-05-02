@@ -19,7 +19,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(false, false, false, false, true, true, 0b00000011)]
         [InlineData(false, false, false, false, false, true, 0b00000001)]
 
-        public void TestToByte(bool sign, bool zero, bool auxCarry, bool parity, bool addSub, bool carry, byte expected)
+        public void TestToByte(bool sign, bool zero, bool auxCarry, bool parity, bool subtract, bool carry, byte expected)
         {
             var flags = new ConditionFlags()
             {
@@ -27,7 +27,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Zero = zero,
                 AuxCarry = auxCarry,
                 Parity = parity,
-                AddSub = addSub,
+                Subtract = subtract,
                 Carry = carry,
             };
 
@@ -49,7 +49,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(false, false, false, true, true, true, 0b00000111)]
         [InlineData(false, false, false, false, true, true, 0b00000011)]
         [InlineData(false, false, false, false, false, true, 0b00000001)]
-        public void TestSetFromByte(bool expectedSign, bool expectedZero, bool expectedAuxCarry, bool expectedParity, bool exepectedAddSub, bool expectedCarry, byte flagsAsByte)
+        public void TestSetFromByte(bool expectedSign, bool expectedZero, bool expectedAuxCarry, bool expectedParity, bool exepectedsubtract, bool expectedCarry, byte flagsAsByte)
         {
             var flags = new ConditionFlags();
             flags.SetFromByte(flagsAsByte);
@@ -58,7 +58,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(expectedZero, flags.Zero);
             Assert.Equal(expectedAuxCarry, flags.AuxCarry);
             Assert.Equal(expectedParity, flags.Parity);
-            Assert.Equal(exepectedAddSub, flags.AddSub);
+            Assert.Equal(exepectedsubtract, flags.Subtract);
             Assert.Equal(expectedCarry, flags.Carry);
         }
     }

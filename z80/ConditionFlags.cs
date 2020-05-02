@@ -29,15 +29,15 @@ namespace JustinCredible.ZilogZ80
         public bool AuxCarry;
 
         /**
-         * P (Parity/Overflow) is  set if the number of 1 bits in the result is even.
+         * P (Parity/Overflow) is set if the number of 1 bits in the result is even.
          */
         public bool Parity;
 
         /**
-         * N (Add/Subtract) TODO
+         * N (Add/Subtract) is set to 1 if the operation was a subtract, 0 if it was an addition, or unmodified if neither.
          * TODO: Add to all unit tests?
          */
-        public bool AddSub;
+        public bool Subtract;
 
         /**
          * C (carry) set to 1 when the instruction resulted in a carry out or borrow into the high order bit.
@@ -64,7 +64,7 @@ namespace JustinCredible.ZilogZ80
             if (Parity)
                 flags = flags | 0b00000100;
 
-            if (AddSub)
+            if (Subtract)
                 flags = flags | 0b00000010;
 
             if (Carry)
@@ -79,7 +79,7 @@ namespace JustinCredible.ZilogZ80
             Zero = (flags & 0b01000000) == 0b01000000;
             AuxCarry = (flags & 0b00010000) == 0b00010000;
             Parity = (flags & 0b00000100) == 0b00000100;
-            AddSub = (flags & 0b00000010) == 0b00000010;
+            Subtract = (flags & 0b00000010) == 0b00000010;
             Carry = (flags & 0b00000001) == 0b00000001;
         }
     }

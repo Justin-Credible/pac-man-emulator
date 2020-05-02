@@ -278,13 +278,25 @@ namespace JustinCredible.ZilogZ80
 
         #region Utilities
 
-        private void SetFlags(bool carry, byte result, bool auxCarry = false)
+        private void SetFlags(byte? result = null, bool? carry = null, bool? auxCarry = false, bool? subtract = null)
         {
-            Flags.Carry = carry;
-            Flags.Zero = result == 0;
-            Flags.Sign = (result & 0b10000000) == 0b10000000;
-            Flags.Parity = CalculateParityBit((byte)result);
-            Flags.AuxCarry = auxCarry;
+            if (carry != null)
+                Flags.Carry = carry.Value;
+
+            if (result != null)
+            {
+                Flags.Zero = result == 0;
+                Flags.Sign = (result & 0b10000000) == 0b10000000;
+                Flags.Parity = CalculateParityBit((byte)result);
+            }
+
+            // TODO: This keeps the old 8080 behavior of always resetting the flag for all operations.
+            // I believe this is wrong for Z80, there are many cases where it remains unmodified.
+            Flags.AuxCarry = auxCarry == null ? false : auxCarry.Value;
+
+            // This flag isn't modified in all cases. If not provided, then don't modify.
+            if (subtract != null)
+                Flags.Subtract = subtract.Value;
         }
 
         private bool CalculateParityBit(byte value)
