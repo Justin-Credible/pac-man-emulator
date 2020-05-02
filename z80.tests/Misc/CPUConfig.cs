@@ -18,6 +18,8 @@ namespace JustinCredible.ZilogZ80.Tests
         public CPUConfig()
         {
             MemorySize = 16 * 1024;
+            Registers = new CPURegisters();
+            Flags = new ConditionFlags();
             WriteableMemoryStart = 0x2000;
             WriteableMemoryEnd = 0x3FFF;
             MirrorMemoryStart = 0x4000;

@@ -27,7 +27,7 @@ namespace JustinCredible.ZilogZ80.Tests
             AssertFlagsFalse(state);
 
             Assert.Equal(4, state.Iterations);
-            Assert.Equal(7 + (4*2) + 10, state.Cycles);
+            Assert.Equal(4 + (4*2) + 10, state.Cycles);
             Assert.Equal(0x000A, state.ProgramCounter);
         }
     }

@@ -9,7 +9,7 @@ namespace JustinCredible.ZilogZ80
         public static Dictionary<byte, Opcode> Lookup = new Dictionary<byte, Opcode>()
         {
             /** Halt */
-            [OpcodeBytes.HLT] = HLT,
+            [OpcodeBytes.HALT] = HALT,
     
             #region NOP - No operation
                 [OpcodeBytes.NOP] = NOP,
@@ -365,46 +365,41 @@ namespace JustinCredible.ZilogZ80
             #region Jump instructions
 
                 /** Load program counter */
-                [OpcodeBytes.PCHL] = PCHL,
+                [OpcodeBytes.JPHL] = JPHL,
 
                 /** Jump */
                 [OpcodeBytes.JP] = JP,
 
-                /** Jump (duplicate) */
-                [OpcodeBytes.JMP2] = JMP2,
-
                 /** Jump if parity odd */
-                [OpcodeBytes.JPO] = JPO,
+                [OpcodeBytes.JPPO] = JPPO,
 
                 /** Jump if parity even */
-                [OpcodeBytes.JPE] = JPE,
+                [OpcodeBytes.JPPE] = JPPE,
 
                 /** Jump if plus/positive */
                 [OpcodeBytes.JPP] = JPP,
 
                 /** Jump if zero */
-                [OpcodeBytes.JZ] = JZ,
+                [OpcodeBytes.JPZ] = JPZ,
 
                 /** Jump if not zero */
-                [OpcodeBytes.JNZ] = JNZ,
+                [OpcodeBytes.JPNZ] = JPNZ,
 
                 /** Jump if not carry */
-                [OpcodeBytes.JNC] = JNC,
+                [OpcodeBytes.JPNC] = JPNC,
 
                 /** Jump if carry */
-                [OpcodeBytes.JC] = JC,
+                [OpcodeBytes.JPC] = JPC,
 
                 /** Jump if minus/negative */
-                [OpcodeBytes.JM] = JM,
+                [OpcodeBytes.JPM] = JPM,
 
             #endregion
 
             #region Call subroutine instructions
 
+                /** Call Subroutine */
                 [OpcodeBytes.CALL] = CALL,
-                [OpcodeBytes.CALL2] = CALL2,
-                [OpcodeBytes.CALL3] = CALL3,
-                [OpcodeBytes.CALL4] = CALL4,
 
                 /** Call if minus/negative */
                 [OpcodeBytes.CM] = CM,

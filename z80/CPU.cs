@@ -8,7 +8,7 @@ namespace JustinCredible.ZilogZ80
     public partial class CPU
     {
         /**
-         * Indicates the ROM has finished executing via a HLT opcode.
+         * Indicates the ROM has finished executing via a HALT opcode.
          * Step should not be called again without first calling Reset.
          */
         public bool Finished { get; private set; }

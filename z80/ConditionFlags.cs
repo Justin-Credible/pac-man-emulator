@@ -35,6 +35,7 @@ namespace JustinCredible.ZilogZ80
 
         /**
          * N (Add/Subtract) TODO
+         * TODO: Add to all unit tests?
          */
         public bool AddSub;
 

@@ -11,7 +11,7 @@ namespace JustinCredible.ZilogZ80
 
             switch (opcode.Code)
             {
-                case OpcodeBytes.HLT:
+                case OpcodeBytes.HALT:
                     Finished = true;
                     incrementProgramCounter = false;
                     break;
@@ -954,17 +954,15 @@ namespace JustinCredible.ZilogZ80
                 #region Jump instructions
 
                     // Load program counter
-                    case OpcodeBytes.PCHL:
-                        ExecuteJP(Registers.HL);
+                    case OpcodeBytes.JPHL:
+                        ExecuteJump(Registers.HL);
                         incrementProgramCounter = false;
                         break;
 
                     // Jump
                     case OpcodeBytes.JP:
-                    // Jump (duplicate)
-                    case OpcodeBytes.JMP2:
                     {
-                        ExecuteJP();
+                        ExecuteJump();
 
                         // Don't increment the program counter because we just updated it to
                         // the given address.
@@ -974,22 +972,22 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Jump if parity odd
-                    case OpcodeBytes.JPO:
+                    case OpcodeBytes.JPPO:
                     {
                         if (!Flags.Parity)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
                     }
 
                     // Jump if parity even
-                    case OpcodeBytes.JPE:
+                    case OpcodeBytes.JPPE:
                     {
                         if (Flags.Parity)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
@@ -1000,62 +998,62 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Sign)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
                     }
 
                     // Jump if zero
-                    case OpcodeBytes.JZ:
+                    case OpcodeBytes.JPZ:
                     {
                         if (Flags.Zero)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
                     }
 
                     // Jump if not zero
-                    case OpcodeBytes.JNZ:
+                    case OpcodeBytes.JPNZ:
                     {
                         if (!Flags.Zero)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
                     }
 
                     // Jump if not carry
-                    case OpcodeBytes.JNC:
+                    case OpcodeBytes.JPNC:
                     {
                         if (!Flags.Carry)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
                     }
 
                     // Jump if carry
-                    case OpcodeBytes.JC:
+                    case OpcodeBytes.JPC:
                     {
                         if (Flags.Carry)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
                     }
 
                     // Jump if minus/negative
-                    case OpcodeBytes.JM:
+                    case OpcodeBytes.JPM:
                     {
                         if (Flags.Sign)
                         {
-                            ExecuteJP();
+                            ExecuteJump();
                             incrementProgramCounter = false;
                         }
                         break;
@@ -1066,9 +1064,6 @@ namespace JustinCredible.ZilogZ80
                 #region Call subroutine instructions
 
                     case OpcodeBytes.CALL:
-                    case OpcodeBytes.CALL2:
-                    case OpcodeBytes.CALL3:
-                    case OpcodeBytes.CALL4:
                     {
                         ExecuteCALL(opcode);
 
@@ -1484,16 +1479,16 @@ namespace JustinCredible.ZilogZ80
             SetFlags(newCarryValue, Registers.A, newAuxCarryValue);
         }
 
-        private void ExecuteJP()
+        private void ExecuteJump()
         {
             var upper = ReadMemory(ProgramCounter + 2) << 8;
             var lower = ReadMemory(ProgramCounter + 1);
             var address = (UInt16)(upper | lower);
 
-            ExecuteJP(address);
+            ExecuteJump(address);
         }
 
-        private void ExecuteJP(UInt16 address)
+        private void ExecuteJump(UInt16 address)
         {
             #region CPU Diagnostics Debugging Mode
 

@@ -8,8 +8,8 @@ namespace JustinCredible.ZilogZ80
     // A list of all the "standard" opcode bytes; can be used to lookup the opcode definition.
     public partial class OpcodeBytes
     {
-        /** Halt */
-        public const byte HLT = 0x76;
+        /** Halt CPU */
+        public const byte HALT = 0x76;
 
         #region NOP - No operation
             public const byte NOP = 0x00;
@@ -365,46 +365,40 @@ namespace JustinCredible.ZilogZ80
         #region Jump instructions
 
             /** Load program counter */
-            public const byte PCHL = 0xe9;
+            public const byte JPHL = 0xe9;
 
             /** Jump */
             public const byte JP = 0xc3;
 
-            /** Jump (duplicate) */
-            public const byte JMP2 = 0xcb; // TODO: Bit Instructions
-
             /** Jump if parity odd */
-            public const byte JPO = 0xe2;
+            public const byte JPPO = 0xe2;
 
             /** Jump if parity even */
-            public const byte JPE = 0xea;
+            public const byte JPPE = 0xea;
 
             /** Jump if plus/positive */
             public const byte JPP = 0xf2;
 
             /** Jump if zero */
-            public const byte JZ = 0xca;
+            public const byte JPZ = 0xca;
 
             /** Jump if not zero */
-            public const byte JNZ = 0xc2;
+            public const byte JPNZ = 0xc2;
 
             /** Jump if not carry */
-            public const byte JNC = 0xd2;
+            public const byte JPNC = 0xd2;
 
             /** Jump if carry */
-            public const byte JC = 0xda;
+            public const byte JPC = 0xda;
 
             /** Jump if minus/negative */
-            public const byte JM = 0xfa;
+            public const byte JPM = 0xfa;
 
         #endregion
 
         #region Call subroutine instructions
 
             public const byte CALL = 0xcd;
-            public const byte CALL2 = 0xdd; // TODO: IX Instructions (DD)
-            public const byte CALL3 = 0xed; // TODO: Extended Instructions (ED)
-            public const byte CALL4 = 0xfd; // TODO: IY Instructions (FD)
 
             /** Call if minus/negative */
             public const byte CM = 0xfc;

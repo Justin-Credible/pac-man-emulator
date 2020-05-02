@@ -127,20 +127,22 @@ namespace JustinCredible.ZilogZ80.Tests
 
         protected void AssertFlagsFalse(CPUResults stats)
         {
-            Assert.False(stats.Flags.AuxCarry);
-            Assert.False(stats.Flags.Carry);
-            Assert.False(stats.Flags.Parity);
             Assert.False(stats.Flags.Sign);
             Assert.False(stats.Flags.Zero);
+            Assert.False(stats.Flags.AuxCarry);
+            Assert.False(stats.Flags.Parity);
+            Assert.False(stats.Flags.AddSub);
+            Assert.False(stats.Flags.Carry);
         }
 
         protected void AssertFlagsSame(CPUConfig initialState, CPUResults stats)
         {
-            Assert.Equal(initialState.Flags.AuxCarry, stats.Flags.AuxCarry);
-            Assert.Equal(initialState.Flags.Carry, stats.Flags.Carry);
-            Assert.Equal(initialState.Flags.Parity, stats.Flags.Parity);
             Assert.Equal(initialState.Flags.Sign, stats.Flags.Sign);
             Assert.Equal(initialState.Flags.Zero, stats.Flags.Zero);
+            Assert.Equal(initialState.Flags.AuxCarry, stats.Flags.AuxCarry);
+            Assert.Equal(initialState.Flags.Parity, stats.Flags.Parity);
+            Assert.Equal(initialState.Flags.AddSub, stats.Flags.AddSub);
+            Assert.Equal(initialState.Flags.Carry, stats.Flags.Carry);
         }
     }
 }

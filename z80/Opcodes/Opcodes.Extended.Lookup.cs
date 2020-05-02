@@ -7,7 +7,7 @@ namespace JustinCredible.ZilogZ80
     public partial class Opcodes
     {
         // TODO
-        public static Dictionary<byte, Opcode> ExtendedMainLookup = new Dictionary<byte, Opcode>();
+        public static Dictionary<byte, Opcode> ExtendedStandardLookup = new Dictionary<byte, Opcode>();
 
         // TODO
         public static Dictionary<byte, Opcode> ExtendedBitLookup = new Dictionary<byte, Opcode>()

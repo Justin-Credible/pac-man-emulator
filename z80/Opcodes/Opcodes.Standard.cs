@@ -5,7 +5,7 @@ namespace JustinCredible.ZilogZ80
     public partial class Opcodes
     {
         /** Halt */
-        public static Opcode HLT = new Opcode(OpcodeBytes.HLT, size: 1, instruction: "HLT", cycles: 7);
+        public static Opcode HALT = new Opcode(OpcodeBytes.HALT, size: 1, instruction: "HALT", cycles: 4);
  
         #region NOP - No operation
             public static Opcode NOP = new Opcode(OpcodeBytes.NOP, size: 1, instruction: "NOP", cycles: 4);
@@ -361,46 +361,40 @@ namespace JustinCredible.ZilogZ80
         #region Jump instructions
 
             /** Load program counter */
-            public static Opcode PCHL = new Opcode(OpcodeBytes.PCHL, size: 1, instruction: "PCHL", cycles: 5, pseudocode: "PC.hi <- H; PC.lo <- L");
+            public static Opcode JPHL = new Opcode(OpcodeBytes.JPHL, size: 1, instruction: "JP (HL)", cycles: 4, pseudocode: "PC.hi <- H; PC.lo <- L");
 
             /** Jump */
             public static Opcode JP = new Opcode(OpcodeBytes.JP, size: 3, instruction: "JMP adr", cycles: 10, pseudocode: "PC <= adr");
 
-            /** Jump (duplicate) */
-            public static Opcode JMP2 = new Opcode(OpcodeBytes.JMP2, size: 3, instruction: "JMP adr", cycles: 10, pseudocode: "PC <= adr");
-
             /** Jump if parity odd */
-            public static Opcode JPO = new Opcode(OpcodeBytes.JPO, size: 3, instruction: "JPO adr", cycles: 10, pseudocode: "if PO, PC <- adr");
+            public static Opcode JPPO = new Opcode(OpcodeBytes.JPPO, size: 3, instruction: "JP PO, adr", cycles: 10, pseudocode: "if PO, PC <- adr");
 
             /** Jump if parity even */
-            public static Opcode JPE = new Opcode(OpcodeBytes.JPE, size: 3, instruction: "JPE adr", cycles: 10, pseudocode: "if PE, PC <- adr");
+            public static Opcode JPPE = new Opcode(OpcodeBytes.JPPE, size: 3, instruction: "JP PE, adr", cycles: 10, pseudocode: "if PE, PC <- adr");
 
             /** Jump if plus/positive */
-            public static Opcode JPP = new Opcode(OpcodeBytes.JPP, size: 3, instruction: "JP adr", cycles: 10, pseudocode: "if P=1 PC <- adr");
+            public static Opcode JPP = new Opcode(OpcodeBytes.JPP, size: 3, instruction: "JP P, adr", cycles: 10, pseudocode: "if P=1 PC <- adr");
 
             /** Jump if zero */
-            public static Opcode JZ = new Opcode(OpcodeBytes.JZ, size: 3, instruction: "JZ adr", cycles: 10, pseudocode: "if Z, PC <- adr");
+            public static Opcode JPZ = new Opcode(OpcodeBytes.JPZ, size: 3, instruction: "JP Z, adr", cycles: 10, pseudocode: "if Z, PC <- adr");
 
             /** Jump if not zero */
-            public static Opcode JNZ = new Opcode(OpcodeBytes.JNZ, size: 3, instruction: "JNZ adr", cycles: 10, pseudocode: "if NZ, PC <- adr");
+            public static Opcode JPNZ = new Opcode(OpcodeBytes.JPNZ, size: 3, instruction: "JP NZ, adr", cycles: 10, pseudocode: "if NZ, PC <- adr");
 
             /** Jump if not carry */
-            public static Opcode JNC = new Opcode(OpcodeBytes.JNC, size: 3, instruction: "JNC adr", cycles: 10, pseudocode: "if NCY, PC<-adr");
+            public static Opcode JPNC = new Opcode(OpcodeBytes.JPNC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if NCY, PC<-adr");
 
             /** Jump if carry */
-            public static Opcode JC = new Opcode(OpcodeBytes.JC, size: 3, instruction: "JC adr", cycles: 10, pseudocode: "if CY, PC<-adr");
+            public static Opcode JPC = new Opcode(OpcodeBytes.JPC, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if CY, PC<-adr");
 
             /** Jump if minus/negative */
-            public static Opcode JM = new Opcode(OpcodeBytes.JM, size: 3, instruction: "JM adr", cycles: 10, pseudocode: "if M, PC <- adr");
+            public static Opcode JPM = new Opcode(OpcodeBytes.JPM, size: 3, instruction: "JP M, adr", cycles: 10, pseudocode: "if M, PC <- adr");
 
         #endregion
 
         #region Call subroutine instructions
 
             public static Opcode CALL = new Opcode(OpcodeBytes.CALL, size: 3, instruction: "CALL adr", cycles: 17, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=adr");
-            public static Opcode CALL2 = new Opcode(OpcodeBytes.CALL2, size: 3, instruction: "CALL adr", cycles: 17, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=adr");
-            public static Opcode CALL3 = new Opcode(OpcodeBytes.CALL3, size: 3, instruction: "CALL adr", cycles: 17, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=adr");
-            public static Opcode CALL4 = new Opcode(OpcodeBytes.CALL4, size: 3, instruction: "CALL adr", cycles: 17, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=adr");
 
             /** Call if minus/negative */
             public static Opcode CM = new Opcode(OpcodeBytes.CM, size: 3, instruction: "CM adr", cycles: 17, alternateCycles: 11, pseudocode: "if M, CALL adr");

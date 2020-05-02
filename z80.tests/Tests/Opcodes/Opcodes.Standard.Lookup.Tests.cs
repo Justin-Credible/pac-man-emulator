@@ -22,5 +22,19 @@ namespace JustinCredible.ZilogZ80.Tests
                 Assert.True(opcodeByteIndex == opcodeByteDefined, description);
             }
         }
+
+        [Fact]
+        public void TestLookupTableDoesNotContainExtendedPreambleBytes()
+        {
+            // These were duplicate/alias opcodes on the 8080, but on the Z80
+            // they are used as "preamble" bytes to indicate extended opcode
+            // groups. Here we ensure that they aren't in the standard lookup
+            // table as aliases anymore.
+            // TODO: Remove Remaining aliases from OpcodeBytes.Standard and implement Z80 specific behavior.
+            Assert.False(Opcodes.Lookup.ContainsKey(0xED));
+            Assert.False(Opcodes.Lookup.ContainsKey(0xCB));
+            Assert.False(Opcodes.Lookup.ContainsKey(0xDD));
+            Assert.False(Opcodes.Lookup.ContainsKey(0xFD));
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace JustinCredible.ZilogZ80
             {
                 // Extended Instructions
                 var opcodeByte2 = memory[programCounter + 1];
-                return ExtendedMainLookup[opcodeByte2];
+                return ExtendedStandardLookup[opcodeByte2];
             }
             else if (opcodeByte1 == OpcodeBytes.XT_BIT)
             {
