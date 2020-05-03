@@ -162,207 +162,207 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region MOV - Move (copy) data
+                    #region LD - Load (copy) data
 
-                        #region MOV X, X (from register to register)
+                        #region LD X, X (from register to register)
 
-                        case OpcodeBytes.MOV_B_B:
+                        case OpcodeBytes.LD_B_B:
                             // NOP
                             break;
-                        case OpcodeBytes.MOV_B_C:
+                        case OpcodeBytes.LD_B_C:
                             Registers.B = Registers.C;
                             break;
-                        case OpcodeBytes.MOV_B_D:
+                        case OpcodeBytes.LD_B_D:
                             Registers.B = Registers.D;
                             break;
-                        case OpcodeBytes.MOV_B_E:
+                        case OpcodeBytes.LD_B_E:
                             Registers.B = Registers.E;
                             break;
-                        case OpcodeBytes.MOV_B_H:
+                        case OpcodeBytes.LD_B_H:
                             Registers.B = Registers.H;
                             break;
-                        case OpcodeBytes.MOV_B_L:
+                        case OpcodeBytes.LD_B_L:
                             Registers.B = Registers.L;
                             break;
-                        case OpcodeBytes.MOV_B_A:
+                        case OpcodeBytes.LD_B_A:
                             Registers.B = Registers.A;
                             break;
-                        case OpcodeBytes.MOV_C_B:
+                        case OpcodeBytes.LD_C_B:
                             Registers.C = Registers.B;
                             break;
-                        case OpcodeBytes.MOV_C_C:
+                        case OpcodeBytes.LD_C_C:
                             // NOP
                             break;
-                        case OpcodeBytes.MOV_C_D:
+                        case OpcodeBytes.LD_C_D:
                             Registers.C = Registers.D;
                             break;
-                        case OpcodeBytes.MOV_C_E:
+                        case OpcodeBytes.LD_C_E:
                             Registers.C = Registers.E;
                             break;
-                        case OpcodeBytes.MOV_C_H:
+                        case OpcodeBytes.LD_C_H:
                             Registers.C = Registers.H;
                             break;
-                        case OpcodeBytes.MOV_C_L:
+                        case OpcodeBytes.LD_C_L:
                             Registers.C = Registers.L;
                             break;
-                        case OpcodeBytes.MOV_C_A:
+                        case OpcodeBytes.LD_C_A:
                             Registers.C = Registers.A;
                             break;
-                        case OpcodeBytes.MOV_D_B:
+                        case OpcodeBytes.LD_D_B:
                             Registers.D = Registers.B;
                             break;
-                        case OpcodeBytes.MOV_D_C:
+                        case OpcodeBytes.LD_D_C:
                             Registers.D = Registers.C;
                             break;
-                        case OpcodeBytes.MOV_D_D:
+                        case OpcodeBytes.LD_D_D:
                             // NOP
                             break;
-                        case OpcodeBytes.MOV_D_E:
+                        case OpcodeBytes.LD_D_E:
                             Registers.D = Registers.E;
                             break;
-                        case OpcodeBytes.MOV_D_H:
+                        case OpcodeBytes.LD_D_H:
                             Registers.D = Registers.H;
                             break;
-                        case OpcodeBytes.MOV_D_L:
+                        case OpcodeBytes.LD_D_L:
                             Registers.D = Registers.L;
                             break;
-                        case OpcodeBytes.MOV_D_A:
+                        case OpcodeBytes.LD_D_A:
                             Registers.D = Registers.A;
                             break;
-                        case OpcodeBytes.MOV_E_B:
+                        case OpcodeBytes.LD_E_B:
                             Registers.E = Registers.B;
                             break;
-                        case OpcodeBytes.MOV_E_C:
+                        case OpcodeBytes.LD_E_C:
                             Registers.E = Registers.C;
                             break;
-                        case OpcodeBytes.MOV_E_D:
+                        case OpcodeBytes.LD_E_D:
                             Registers.E = Registers.D;
                             break;
-                        case OpcodeBytes.MOV_E_E:
+                        case OpcodeBytes.LD_E_E:
                             // NOP
                             break;
-                        case OpcodeBytes.MOV_E_H:
+                        case OpcodeBytes.LD_E_H:
                             Registers.E = Registers.H;
                             break;
-                        case OpcodeBytes.MOV_E_L:
+                        case OpcodeBytes.LD_E_L:
                             Registers.E = Registers.L;
                             break;
-                        case OpcodeBytes.MOV_E_A:
+                        case OpcodeBytes.LD_E_A:
                             Registers.E = Registers.A;
                             break;
-                        case OpcodeBytes.MOV_H_B:
+                        case OpcodeBytes.LD_H_B:
                             Registers.H = Registers.B;
                             break;
-                        case OpcodeBytes.MOV_H_C:
+                        case OpcodeBytes.LD_H_C:
                             Registers.H = Registers.C;
                             break;
-                        case OpcodeBytes.MOV_H_D:
+                        case OpcodeBytes.LD_H_D:
                             Registers.H = Registers.D;
                             break;
-                        case OpcodeBytes.MOV_H_E:
+                        case OpcodeBytes.LD_H_E:
                             Registers.H = Registers.E;
                             break;
-                        case OpcodeBytes.MOV_H_H:
+                        case OpcodeBytes.LD_H_H:
                             // NOP
                             break;
-                        case OpcodeBytes.MOV_H_L:
+                        case OpcodeBytes.LD_H_L:
                             Registers.H = Registers.L;
                             break;
-                        case OpcodeBytes.MOV_H_A:
+                        case OpcodeBytes.LD_H_A:
                             Registers.H = Registers.A;
                             break;
-                        case OpcodeBytes.MOV_L_B:
+                        case OpcodeBytes.LD_L_B:
                             Registers.L = Registers.B;
                             break;
-                        case OpcodeBytes.MOV_L_C:
+                        case OpcodeBytes.LD_L_C:
                             Registers.L = Registers.C;
                             break;
-                        case OpcodeBytes.MOV_L_D:
+                        case OpcodeBytes.LD_L_D:
                             Registers.L = Registers.D;
                             break;
-                        case OpcodeBytes.MOV_L_E:
+                        case OpcodeBytes.LD_L_E:
                             Registers.L = Registers.E;
                             break;
-                        case OpcodeBytes.MOV_L_H:
+                        case OpcodeBytes.LD_L_H:
                             Registers.L = Registers.H;
                             break;
-                        case OpcodeBytes.MOV_L_L:
+                        case OpcodeBytes.LD_L_L:
                             // NOP
                             break;
-                        case OpcodeBytes.MOV_L_A:
+                        case OpcodeBytes.LD_L_A:
                             Registers.L = Registers.A;
                             break;
-                        case OpcodeBytes.MOV_A_B:
+                        case OpcodeBytes.LD_A_B:
                             Registers.A = Registers.B;
                             break;
-                        case OpcodeBytes.MOV_A_C:
+                        case OpcodeBytes.LD_A_C:
                             Registers.A = Registers.C;
                             break;
-                        case OpcodeBytes.MOV_A_D:
+                        case OpcodeBytes.LD_A_D:
                             Registers.A = Registers.D;
                             break;
-                        case OpcodeBytes.MOV_A_E:
+                        case OpcodeBytes.LD_A_E:
                             Registers.A = Registers.E;
                             break;
-                        case OpcodeBytes.MOV_A_H:
+                        case OpcodeBytes.LD_A_H:
                             Registers.A = Registers.H;
                             break;
-                        case OpcodeBytes.MOV_A_L:
+                        case OpcodeBytes.LD_A_L:
                             Registers.A = Registers.L;
                             break;
-                        case OpcodeBytes.MOV_A_A:
+                        case OpcodeBytes.LD_A_A:
                             // NOP
                             break;
 
                         #endregion
 
-                        #region MOV X, M (from memory to register)
+                        #region LD X, M (from memory to register)
 
-                        case OpcodeBytes.MOV_B_M:
+                        case OpcodeBytes.LD_B_HL:
                             Registers.B = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.MOV_C_M:
+                        case OpcodeBytes.LD_C_HL:
                             Registers.C = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.MOV_D_M:
+                        case OpcodeBytes.LD_D_HL:
                             Registers.D = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.MOV_E_M:
+                        case OpcodeBytes.LD_E_HL:
                             Registers.E = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.MOV_H_M:
+                        case OpcodeBytes.LD_H_HL:
                             Registers.H = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.MOV_L_M:
+                        case OpcodeBytes.LD_L_HL:
                             Registers.L = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.MOV_A_M:
+                        case OpcodeBytes.LD_A_HL:
                             Registers.A = ReadMemory(Registers.HL);
                             break;
 
                         #endregion
 
-                        #region MOV M, X (from register to memory)
+                        #region LD M, X (from register to memory)
 
-                        case OpcodeBytes.MOV_M_B:
+                        case OpcodeBytes.LD_HL_B:
                             WriteMemory(Registers.HL, Registers.B);
                             break;
-                        case OpcodeBytes.MOV_M_C:
+                        case OpcodeBytes.LD_HL_C:
                             WriteMemory(Registers.HL, Registers.C);
                             break;
-                        case OpcodeBytes.MOV_M_D:
+                        case OpcodeBytes.LD_HL_D:
                             WriteMemory(Registers.HL, Registers.D);
                             break;
-                        case OpcodeBytes.MOV_M_E:
+                        case OpcodeBytes.LD_HL_E:
                             WriteMemory(Registers.HL, Registers.E);
                             break;
-                        case OpcodeBytes.MOV_M_H:
+                        case OpcodeBytes.LD_HL_H:
                             WriteMemory(Registers.HL, Registers.H);
                             break;
-                        case OpcodeBytes.MOV_M_L:
+                        case OpcodeBytes.LD_HL_L:
                             WriteMemory(Registers.HL, Registers.L);
                             break;
-                        case OpcodeBytes.MOV_M_A:
+                        case OpcodeBytes.LD_HL_A:
                             WriteMemory(Registers.HL, Registers.A);
                             break;
 
@@ -1570,58 +1570,10 @@ namespace JustinCredible.ZilogZ80
             ProgramCounter = returnAddress;
         }
 
-        private void ExecuteMOV(Register dest, Register source)
+        private void ExecuteLD(Register dest, Register source)
         {
             Registers[dest] = Registers[source];
         }
-
-        // private void ExecuteMOVFromRegisterToMemory(Register source)
-        // {
-        //     var address = Registers.HL;
-
-        //     // Determine if we should allow the write to memory based on the address
-        //     // if the configuration has specified a restricted writeable range.
-        //     var enforceWriteBoundsCheck = Config.WriteableMemoryStart != 0 && Config.WriteableMemoryEnd != 0;
-        //     var allowWrite = true;
-
-        //     if (enforceWriteBoundsCheck)
-        //         allowWrite = address >= Config.WriteableMemoryStart && address <= Config.WriteableMemoryEnd;
-
-        //     if (allowWrite)
-        //         WriteMemory(address, Registers[source]);
-        //     else
-        //     {
-        //         var programCounterFormatted = String.Format("0x{0:X4}", ProgramCounter);
-        //         var addressFormatted = String.Format("0x{0:X4}", address);
-        //         var startAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryStart);
-        //         var endAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryEnd);
-        //         throw new Exception($"Illegal memory address ({addressFormatted}) specified for 'MOV M, {source}' operation at address {programCounterFormatted}; expected address to be between {startAddressFormatted} and {endAddressFormatted} inclusive.");
-        //     }
-        // }
-
-        // private void ExecuteMOVIToMemory(byte data)
-        // {
-        //     var address = Registers.HL;
-
-        //     // Determine if we should allow the write to memory based on the address
-        //     // if the configuration has specified a restricted writeable range.
-        //     var enforceWriteBoundsCheck = Config.WriteableMemoryStart != 0 && Config.WriteableMemoryEnd != 0;
-        //     var allowWrite = true;
-
-        //     if (enforceWriteBoundsCheck)
-        //         allowWrite = address >= Config.WriteableMemoryStart && address <= Config.WriteableMemoryEnd;
-
-        //     if (allowWrite)
-        //         WriteMemory(address, data);
-        //     else
-        //     {
-        //         var programCounterFormatted = String.Format("0x{0:X4}", ProgramCounter);
-        //         var addressFormatted = String.Format("0x{0:X4}", address);
-        //         var startAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryStart);
-        //         var endAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryEnd);
-        //         throw new Exception($"Illegal memory address ({addressFormatted}) specified for 'MVI M, d8' operation at address {programCounterFormatted}; expected address to be between {startAddressFormatted} and {endAddressFormatted} inclusive.");
-        //     }
-        // }
 
         private void ExecuteADD(byte value, bool addCarryFlag = false)
         {
