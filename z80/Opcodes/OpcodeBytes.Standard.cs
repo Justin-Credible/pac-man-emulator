@@ -302,15 +302,15 @@ namespace JustinCredible.ZilogZ80
 
         #region Immediate instructions
 
-            #region MVI - Move immediate data
-                public const byte MVI_B = 0x06;
-                public const byte MVI_C = 0x0e;
-                public const byte MVI_D = 0x16;
-                public const byte MVI_E = 0x1e;
-                public const byte MVI_H = 0x26;
-                public const byte MVI_L = 0x2e;
-                public const byte MVI_M = 0x36;
-                public const byte MVI_A = 0x3e;
+            #region LD r, n - Load immediate data
+                public const byte LD_B_N = 0x06;
+                public const byte LD_C_N = 0x0e;
+                public const byte LD_D_N = 0x16;
+                public const byte LD_E_N = 0x1e;
+                public const byte LD_H_N = 0x26;
+                public const byte LD_L_N = 0x2e;
+                public const byte LD_HL_N = 0x36;
+                public const byte LD_A_N = 0x3e;
             #endregion
 
             #region LD rr, nn - Load register pair immediate

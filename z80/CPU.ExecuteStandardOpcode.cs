@@ -798,30 +798,30 @@ namespace JustinCredible.ZilogZ80
 
                 #region Immediate instructions
 
-                    #region MVI - Move immediate data
+                    #region LD r, n - Load immediate data
 
-                        case OpcodeBytes.MVI_B:
+                        case OpcodeBytes.LD_B_N:
                             Registers.B = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.MVI_C:
+                        case OpcodeBytes.LD_C_N:
                             Registers.C = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.MVI_D:
+                        case OpcodeBytes.LD_D_N:
                             Registers.D = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.MVI_E:
+                        case OpcodeBytes.LD_E_N:
                             Registers.E = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.MVI_H:
+                        case OpcodeBytes.LD_H_N:
                             Registers.H = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.MVI_L:
+                        case OpcodeBytes.LD_L_N:
                             Registers.L = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.MVI_M:
+                        case OpcodeBytes.LD_HL_N:
                             WriteMemory(Registers.HL, ReadMemory(ProgramCounter + 1));
                             break;
-                        case OpcodeBytes.MVI_A:
+                        case OpcodeBytes.LD_A_N:
                             Registers.A = ReadMemory(ProgramCounter + 1);
                             break;
 

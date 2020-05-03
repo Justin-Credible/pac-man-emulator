@@ -303,14 +303,14 @@ namespace JustinCredible.ZilogZ80
             #region Immediate instructions
 
                 #region MVI - Move immediate data
-                    [OpcodeBytes.MVI_B] = MVI_B,
-                    [OpcodeBytes.MVI_C] = MVI_C,
-                    [OpcodeBytes.MVI_D] = MVI_D,
-                    [OpcodeBytes.MVI_E] = MVI_E,
-                    [OpcodeBytes.MVI_H] = MVI_H,
-                    [OpcodeBytes.MVI_L] = MVI_L,
-                    [OpcodeBytes.MVI_M] = MVI_M,
-                    [OpcodeBytes.MVI_A] = MVI_A,
+                    [OpcodeBytes.LD_B_N] = LD_B_N,
+                    [OpcodeBytes.LD_C_N] = LD_C_N,
+                    [OpcodeBytes.LD_D_N] = LD_D_N,
+                    [OpcodeBytes.LD_E_N] = LD_E_N,
+                    [OpcodeBytes.LD_H_N] = LD_H_N,
+                    [OpcodeBytes.LD_L_N] = LD_L_N,
+                    [OpcodeBytes.LD_HL_N] = LD_HL_N,
+                    [OpcodeBytes.LD_A_N] = LD_A_N,
                 #endregion
 
                 #region LXI - Load register pair immediate

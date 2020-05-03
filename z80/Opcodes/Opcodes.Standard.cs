@@ -298,21 +298,21 @@ namespace JustinCredible.ZilogZ80
 
         #region Immediate instructions
 
-            #region MVI - Move immediate data
-                public static Opcode MVI_B = new Opcode(OpcodeBytes.MVI_B, size: 2, instruction: "MVI B,D8", cycles: 7, pseudocode: "B <- byte 2");
-                public static Opcode MVI_C = new Opcode(OpcodeBytes.MVI_C, size: 2, instruction: "MVI C,D8", cycles: 7, pseudocode: "C <- byte 2");
-                public static Opcode MVI_D = new Opcode(OpcodeBytes.MVI_D, size: 2, instruction: "MVI D,D8", cycles: 7, pseudocode: "D <- byte 2");
-                public static Opcode MVI_E = new Opcode(OpcodeBytes.MVI_E, size: 2, instruction: "MVI E,D8", cycles: 7, pseudocode: "E <- byte 2");
-                public static Opcode MVI_H = new Opcode(OpcodeBytes.MVI_H, size: 2, instruction: "MVI H,D8", cycles: 7, pseudocode: "L <- byte 2");
-                public static Opcode MVI_L = new Opcode(OpcodeBytes.MVI_L, size: 2, instruction: "MVI L,D8", cycles: 7, pseudocode: "L <- byte 2");
-                public static Opcode MVI_M = new Opcode(OpcodeBytes.MVI_M, size: 2, instruction: "MVI M,D8", cycles: 10, pseudocode: "(HL) <- byte 2");
-                public static Opcode MVI_A = new Opcode(OpcodeBytes.MVI_A, size: 2, instruction: "MVI A,D8", cycles: 7, pseudocode: "A <- byte 2");
+            #region Load r, nn - Load immediate data
+                public static Opcode LD_B_N = new Opcode(OpcodeBytes.LD_B_N, size: 2, instruction: "LD B, D8", cycles: 7, pseudocode: "B <- byte 2");
+                public static Opcode LD_C_N = new Opcode(OpcodeBytes.LD_C_N, size: 2, instruction: "LD C, D8", cycles: 7, pseudocode: "C <- byte 2");
+                public static Opcode LD_D_N = new Opcode(OpcodeBytes.LD_D_N, size: 2, instruction: "LD D, D8", cycles: 7, pseudocode: "D <- byte 2");
+                public static Opcode LD_E_N = new Opcode(OpcodeBytes.LD_E_N, size: 2, instruction: "LD E, D8", cycles: 7, pseudocode: "E <- byte 2");
+                public static Opcode LD_H_N = new Opcode(OpcodeBytes.LD_H_N, size: 2, instruction: "LD H, D8", cycles: 7, pseudocode: "L <- byte 2");
+                public static Opcode LD_L_N = new Opcode(OpcodeBytes.LD_L_N, size: 2, instruction: "LD L, D8", cycles: 7, pseudocode: "L <- byte 2");
+                public static Opcode LD_HL_N = new Opcode(OpcodeBytes.LD_HL_N, size: 2, instruction: "LD (HL), D8", cycles: 10, pseudocode: "(HL) <- byte 2");
+                public static Opcode LD_A_N = new Opcode(OpcodeBytes.LD_A_N, size: 2, instruction: "LD A, D8", cycles: 7, pseudocode: "A <- byte 2");
             #endregion
 
             #region LXI - Load register pair immediate
-                public static Opcode LD_BC_NN = new Opcode(OpcodeBytes.LD_BC_NN, size: 3, instruction: "LD B, D16", cycles: 10, pseudocode: "B <- byte 3, C <- byte 2");
-                public static Opcode LD_DE_NN = new Opcode(OpcodeBytes.LD_DE_NN, size: 3, instruction: "LD D, D16", cycles: 10, pseudocode: "D <- byte 3, E <- byte 2");
-                public static Opcode LD_HL_NN = new Opcode(OpcodeBytes.LD_HL_NN, size: 3, instruction: "LD H, D16", cycles: 10, pseudocode: "H <- byte 3, L <- byte 2");
+                public static Opcode LD_BC_NN = new Opcode(OpcodeBytes.LD_BC_NN, size: 3, instruction: "LD BC, D16", cycles: 10, pseudocode: "B <- byte 3, C <- byte 2");
+                public static Opcode LD_DE_NN = new Opcode(OpcodeBytes.LD_DE_NN, size: 3, instruction: "LD DE, D16", cycles: 10, pseudocode: "D <- byte 3, E <- byte 2");
+                public static Opcode LD_HL_NN = new Opcode(OpcodeBytes.LD_HL_NN, size: 3, instruction: "LD HL, D16", cycles: 10, pseudocode: "H <- byte 3, L <- byte 2");
                 public static Opcode LD_SP_NN = new Opcode(OpcodeBytes.LD_SP_NN, size: 3, instruction: "LD SP, D16", cycles: 10, pseudocode: "SP.hi <- byte 3, SP.lo <- byte 2");
             #endregion
 
