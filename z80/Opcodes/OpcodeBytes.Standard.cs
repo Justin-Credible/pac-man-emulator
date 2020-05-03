@@ -255,17 +255,17 @@ namespace JustinCredible.ZilogZ80
         #region Register pair instructions
 
             #region INX - Increment register pair
-                public const byte INX_B = 0x03;
-                public const byte INX_D = 0x13;
-                public const byte INX_H = 0x23;
-                public const byte INX_SP = 0x33;
+                public const byte INC_BC = 0x03;
+                public const byte INC_DE = 0x13;
+                public const byte INC_HL = 0x23;
+                public const byte INC_SP = 0x33;
             #endregion
 
             #region DCX - Decrement register pair
-                public const byte DCX_B = 0x0b;
-                public const byte DCX_D = 0x1b;
-                public const byte DCX_H = 0x2b;
-                public const byte DCX_SP = 0x3b;
+                public const byte DEC_BC = 0x0b;
+                public const byte DEC_DE = 0x1b;
+                public const byte DEC_HL = 0x2b;
+                public const byte DEC_SP = 0x3b;
             #endregion
 
             #region PUSH - Push data onto the stack

@@ -255,17 +255,17 @@ namespace JustinCredible.ZilogZ80
             #region Register pair instructions
 
                 #region INX - Increment register pair
-                    [OpcodeBytes.INX_B] = INX_B,
-                    [OpcodeBytes.INX_D] = INX_D,
-                    [OpcodeBytes.INX_H] = INX_H,
-                    [OpcodeBytes.INX_SP] = INX_SP,
+                    [OpcodeBytes.INC_BC] = INC_BC,
+                    [OpcodeBytes.INC_DE] = INC_DE,
+                    [OpcodeBytes.INC_HL] = INC_HL,
+                    [OpcodeBytes.INC_SP] = INX_SP,
                 #endregion
 
                 #region DCX - Decrement register pair
-                    [OpcodeBytes.DCX_B] = DCX_B,
-                    [OpcodeBytes.DCX_D] = DCX_D,
-                    [OpcodeBytes.DCX_H] = DCX_H,
-                    [OpcodeBytes.DCX_SP] = DCX_SP,
+                    [OpcodeBytes.DEC_BC] = DEC_BC,
+                    [OpcodeBytes.DEC_DE] = DEC_DE,
+                    [OpcodeBytes.DEC_HL] = DEC_HL,
+                    [OpcodeBytes.DEC_SP] = DEC_SP,
                 #endregion
 
                 #region PUSH - Push data onto the stack

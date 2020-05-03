@@ -664,16 +664,16 @@ namespace JustinCredible.ZilogZ80
 
                     #region INX - Increment register pair
 
-                        case OpcodeBytes.INX_B:
+                        case OpcodeBytes.INC_BC:
                             Registers.BC++;
                             break;
-                        case OpcodeBytes.INX_D:
+                        case OpcodeBytes.INC_DE:
                             Registers.DE++;
                             break;
-                        case OpcodeBytes.INX_H:
+                        case OpcodeBytes.INC_HL:
                             Registers.HL++;
                             break;
-                        case OpcodeBytes.INX_SP:
+                        case OpcodeBytes.INC_SP:
                             StackPointer++;
                             break;
 
@@ -681,16 +681,16 @@ namespace JustinCredible.ZilogZ80
 
                     #region DCX - Decrement register pair
 
-                        case OpcodeBytes.DCX_B:
+                        case OpcodeBytes.DEC_BC:
                             Registers.BC--;
                             break;
-                        case OpcodeBytes.DCX_D:
+                        case OpcodeBytes.DEC_DE:
                             Registers.DE--;
                             break;
-                        case OpcodeBytes.DCX_H:
+                        case OpcodeBytes.DEC_HL:
                             Registers.HL--;
                             break;
-                        case OpcodeBytes.DCX_SP:
+                        case OpcodeBytes.DEC_SP:
                             StackPointer--;
                             break;
 

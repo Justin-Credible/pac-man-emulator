@@ -250,18 +250,18 @@ namespace JustinCredible.ZilogZ80
 
         #region Register pair instructions
 
-            #region INX - Increment register pair
-                public static Opcode INX_B = new Opcode(OpcodeBytes.INX_B, size: 1, instruction: "INX B", cycles: 5, pseudocode: "BC <- BC+1");
-                public static Opcode INX_D = new Opcode(OpcodeBytes.INX_D, size: 1, instruction: "INX D", cycles: 5, pseudocode: "DE <- DE + 1");
-                public static Opcode INX_H = new Opcode(OpcodeBytes.INX_H, size: 1, instruction: "INX H", cycles: 5, pseudocode: "HL <- HL + 1");
-                public static Opcode INX_SP = new Opcode(OpcodeBytes.INX_SP, size: 1, instruction: "INX SP", cycles: 5, pseudocode: "SP = SP + 1");
+            #region INC rr - Increment register pair
+                public static Opcode INC_BC = new Opcode(OpcodeBytes.INC_BC, size: 1, instruction: "INC BC", cycles: 5, pseudocode: "BC <- BC+1");
+                public static Opcode INC_DE = new Opcode(OpcodeBytes.INC_DE, size: 1, instruction: "INC DE", cycles: 5, pseudocode: "DE <- DE + 1");
+                public static Opcode INC_HL = new Opcode(OpcodeBytes.INC_HL, size: 1, instruction: "INC HL", cycles: 5, pseudocode: "HL <- HL + 1");
+                public static Opcode INX_SP = new Opcode(OpcodeBytes.INC_SP, size: 1, instruction: "INC SP", cycles: 5, pseudocode: "SP = SP + 1");
             #endregion
 
-            #region DCX - Decrement register pair
-                public static Opcode DCX_B = new Opcode(OpcodeBytes.DCX_B, size: 1, instruction: "DCX B", cycles: 5, pseudocode: "BC = BC-1");
-                public static Opcode DCX_D = new Opcode(OpcodeBytes.DCX_D, size: 1, instruction: "DCX D", cycles: 5, pseudocode: "DE = DE-1");
-                public static Opcode DCX_H = new Opcode(OpcodeBytes.DCX_H, size: 1, instruction: "DCX H", cycles: 5, pseudocode: "HL = HL-1");
-                public static Opcode DCX_SP = new Opcode(OpcodeBytes.DCX_SP, size: 1, instruction: "DCX SP", cycles: 5, pseudocode: "SP = SP-1");
+            #region DEC rr - Decrement register pair
+                public static Opcode DEC_BC = new Opcode(OpcodeBytes.DEC_BC, size: 1, instruction: "DEC BC", cycles: 5, pseudocode: "BC = BC-1");
+                public static Opcode DEC_DE = new Opcode(OpcodeBytes.DEC_DE, size: 1, instruction: "DEC DE", cycles: 5, pseudocode: "DE = DE-1");
+                public static Opcode DEC_HL = new Opcode(OpcodeBytes.DEC_HL, size: 1, instruction: "DEC HL", cycles: 5, pseudocode: "HL = HL-1");
+                public static Opcode DEC_SP = new Opcode(OpcodeBytes.DEC_SP, size: 1, instruction: "DEC SP", cycles: 5, pseudocode: "SP = SP-1");
             #endregion
 
             #region PUSH - Push data onto the stack
