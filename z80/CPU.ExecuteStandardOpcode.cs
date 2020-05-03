@@ -471,35 +471,35 @@ namespace JustinCredible.ZilogZ80
 
                     #region ORA - Logical OR register or memory with accumulator
 
-                        case OpcodeBytes.ORA_B:
+                        case OpcodeBytes.OR_B:
                             Registers.A = (byte)(Registers.A | Registers.B);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_C:
+                        case OpcodeBytes.OR_C:
                             Registers.A = (byte)(Registers.A | Registers.C);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_D:
+                        case OpcodeBytes.OR_D:
                             Registers.A = (byte)(Registers.A | Registers.D);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_E:
+                        case OpcodeBytes.OR_E:
                             Registers.A = (byte)(Registers.A | Registers.E);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_H:
+                        case OpcodeBytes.OR_H:
                             Registers.A = (byte)(Registers.A | Registers.H);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_L:
+                        case OpcodeBytes.OR_L:
                             Registers.A = (byte)(Registers.A | Registers.L);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_M:
+                        case OpcodeBytes.OR_HL:
                             Registers.A = (byte)(Registers.A | ReadMemory(Registers.HL));
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ORA_A:
+                        case OpcodeBytes.OR_A:
                             Registers.A = (byte)(Registers.A | Registers.A);
                             SetFlags(carry: false, result: Registers.A);
                             break;
@@ -892,7 +892,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Logical OR immediate with accumulator
                     // A <- A | data
-                    case OpcodeBytes.ORI:
+                    case OpcodeBytes.OR_N:
                         Registers.A = (byte)(Registers.A | ReadMemory(ProgramCounter+1));
                         SetFlags(carry: false, result: Registers.A);
                         break;

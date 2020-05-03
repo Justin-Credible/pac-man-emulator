@@ -180,14 +180,14 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region ORA - Logical OR register or memory with accumulator
-                    [OpcodeBytes.ORA_B] = ORA_B,
-                    [OpcodeBytes.ORA_C] = ORA_C,
-                    [OpcodeBytes.ORA_D] = ORA_D,
-                    [OpcodeBytes.ORA_E] = ORA_E,
-                    [OpcodeBytes.ORA_H] = ORA_H,
-                    [OpcodeBytes.ORA_L] = ORA_L,
-                    [OpcodeBytes.ORA_M] = ORA_M,
-                    [OpcodeBytes.ORA_A] = ORA_A,
+                    [OpcodeBytes.OR_B] = OR_B,
+                    [OpcodeBytes.OR_C] = OR_C,
+                    [OpcodeBytes.OR_D] = OR_D,
+                    [OpcodeBytes.OR_E] = OR_E,
+                    [OpcodeBytes.OR_H] = OR_H,
+                    [OpcodeBytes.OR_L] = OR_L,
+                    [OpcodeBytes.OR_HL] = OR_HL,
+                    [OpcodeBytes.OR_A] = OR_A,
                 #endregion
 
                 #region ADC - Add register or memory to accumulator with carry
@@ -339,7 +339,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.XRI] = XRI,
 
                 /** Logical OR immediate with accumulator */
-                [OpcodeBytes.ORI] = ORI,
+                [OpcodeBytes.OR_N] = OR_N,
 
                 /** Compare immediate with accumulator */
                 [OpcodeBytes.CPI] = CPI,

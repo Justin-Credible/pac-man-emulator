@@ -175,15 +175,15 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode AND_A = new Opcode(OpcodeBytes.AND_A, size: 1, instruction: "AND A", cycles: 4, pseudocode: "A <- A & A");
             #endregion
 
-            #region ORA - Logical OR register or memory with accumulator
-                public static Opcode ORA_B = new Opcode(OpcodeBytes.ORA_B, size: 1, instruction: "ORA B", cycles: 4, pseudocode: "A <- A | B");
-                public static Opcode ORA_C = new Opcode(OpcodeBytes.ORA_C, size: 1, instruction: "ORA C", cycles: 4, pseudocode: "A <- A | C");
-                public static Opcode ORA_D = new Opcode(OpcodeBytes.ORA_D, size: 1, instruction: "ORA D", cycles: 4, pseudocode: "A <- A | D");
-                public static Opcode ORA_E = new Opcode(OpcodeBytes.ORA_E, size: 1, instruction: "ORA E", cycles: 4, pseudocode: "A <- A | E");
-                public static Opcode ORA_H = new Opcode(OpcodeBytes.ORA_H, size: 1, instruction: "ORA H", cycles: 4, pseudocode: "A <- A | H");
-                public static Opcode ORA_L = new Opcode(OpcodeBytes.ORA_L, size: 1, instruction: "ORA L", cycles: 4, pseudocode: "A <- A | L");
-                public static Opcode ORA_M = new Opcode(OpcodeBytes.ORA_M, size: 1, instruction: "ORA M", cycles: 7, pseudocode: "A <- A | (HL)");
-                public static Opcode ORA_A = new Opcode(OpcodeBytes.ORA_A, size: 1, instruction: "ORA A", cycles: 4, pseudocode: "A <- A | A");
+            #region OR - Logical OR register or memory with accumulator
+                public static Opcode OR_B = new Opcode(OpcodeBytes.OR_B, size: 1, instruction: "OR B", cycles: 4, pseudocode: "A <- A | B");
+                public static Opcode OR_C = new Opcode(OpcodeBytes.OR_C, size: 1, instruction: "OR C", cycles: 4, pseudocode: "A <- A | C");
+                public static Opcode OR_D = new Opcode(OpcodeBytes.OR_D, size: 1, instruction: "OR D", cycles: 4, pseudocode: "A <- A | D");
+                public static Opcode OR_E = new Opcode(OpcodeBytes.OR_E, size: 1, instruction: "OR E", cycles: 4, pseudocode: "A <- A | E");
+                public static Opcode OR_H = new Opcode(OpcodeBytes.OR_H, size: 1, instruction: "OR H", cycles: 4, pseudocode: "A <- A | H");
+                public static Opcode OR_L = new Opcode(OpcodeBytes.OR_L, size: 1, instruction: "OR L", cycles: 4, pseudocode: "A <- A | L");
+                public static Opcode OR_HL = new Opcode(OpcodeBytes.OR_HL, size: 1, instruction: "OR HL", cycles: 7, pseudocode: "A <- A | (HL)");
+                public static Opcode OR_A = new Opcode(OpcodeBytes.OR_A, size: 1, instruction: "OR A", cycles: 4, pseudocode: "A <- A | A");
             #endregion
 
             #region ADC - Add register or memory to accumulator with carry
@@ -335,7 +335,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode XRI = new Opcode(OpcodeBytes.XRI, size: 2, instruction: "XRI D8", cycles: 7, pseudocode: "A <- A ^ data");
 
             /** Logical OR immediate with accumulator */
-            public static Opcode ORI = new Opcode(OpcodeBytes.ORI, size: 2, instruction: "ORI D8", cycles: 7, pseudocode: "A <- A | data");
+            public static Opcode OR_N = new Opcode(OpcodeBytes.OR_N, size: 2, instruction: "OR D8", cycles: 7, pseudocode: "A <- A | data");
 
             /** Compare immediate with accumulator */
             public static Opcode CPI = new Opcode(OpcodeBytes.CPI, size: 2, instruction: "CPI D8", cycles: 7, pseudocode: "A - data");
