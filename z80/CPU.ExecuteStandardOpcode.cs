@@ -918,7 +918,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Load accumulator direct
-                    case OpcodeBytes.LDA:
+                    case OpcodeBytes.LD_A_MNN:
                     {
                         var upper = ReadMemory(ProgramCounter + 2) << 8;
                         var lower = ReadMemory(ProgramCounter + 1);

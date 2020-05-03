@@ -348,7 +348,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode STA = new Opcode(OpcodeBytes.STA, size: 3, instruction: "STA adr", cycles: 13, pseudocode: "(adr) <- A");
 
             /** Load accumulator direct */
-            public static Opcode LDA = new Opcode(OpcodeBytes.LDA, size: 3, instruction: "LDA adr", cycles: 13, pseudocode: "A <- (adr)");
+            public static Opcode LD_A_MNN = new Opcode(OpcodeBytes.LD_A_MNN, size: 3, instruction: "LD A, (nn)", cycles: 13, pseudocode: "A <- (adr)");
 
             /** Store H and L direct */
             public static Opcode SHLD = new Opcode(OpcodeBytes.SHLD, size: 3, instruction: "SHLD adr", cycles: 16, pseudocode: "(adr) <-L; (adr+1)<-H");

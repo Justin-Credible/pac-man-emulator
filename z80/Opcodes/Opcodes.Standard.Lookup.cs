@@ -352,7 +352,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.STA] = STA,
 
                 /** Load accumulator direct */
-                [OpcodeBytes.LDA] = LDA,
+                [OpcodeBytes.LD_A_MNN] = LD_A_MNN,
 
                 /** Store H and L direct */
                 [OpcodeBytes.SHLD] = SHLD,

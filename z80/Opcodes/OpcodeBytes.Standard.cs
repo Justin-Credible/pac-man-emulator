@@ -352,7 +352,7 @@ namespace JustinCredible.ZilogZ80
             public const byte STA = 0x32;
 
             /** Load accumulator direct */
-            public const byte LDA = 0x3a;
+            public const byte LD_A_MNN = 0x3a;
 
             /** Store H and L direct */
             public const byte SHLD = 0x22;
