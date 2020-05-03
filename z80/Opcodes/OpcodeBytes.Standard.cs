@@ -358,7 +358,7 @@ namespace JustinCredible.ZilogZ80
             public const byte SHLD = 0x22;
 
             /** Load H and L direct */
-            public const byte LHLD = 0x2a;
+            public const byte LD_HL_MNN = 0x2a;
 
         #endregion
 

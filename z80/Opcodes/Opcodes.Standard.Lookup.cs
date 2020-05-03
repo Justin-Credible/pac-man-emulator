@@ -358,7 +358,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.SHLD] = SHLD,
 
                 /** Load H and L direct */
-                [OpcodeBytes.LHLD] = LHLD,
+                [OpcodeBytes.LD_HL_MNN] = LD_HL_MNN,
 
             #endregion
 

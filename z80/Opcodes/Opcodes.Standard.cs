@@ -298,7 +298,7 @@ namespace JustinCredible.ZilogZ80
 
         #region Immediate instructions
 
-            #region Load r, nn - Load immediate data
+            #region Load r, n - Load immediate data
                 public static Opcode LD_B_N = new Opcode(OpcodeBytes.LD_B_N, size: 2, instruction: "LD B, D8", cycles: 7, pseudocode: "B <- byte 2");
                 public static Opcode LD_C_N = new Opcode(OpcodeBytes.LD_C_N, size: 2, instruction: "LD C, D8", cycles: 7, pseudocode: "C <- byte 2");
                 public static Opcode LD_D_N = new Opcode(OpcodeBytes.LD_D_N, size: 2, instruction: "LD D, D8", cycles: 7, pseudocode: "D <- byte 2");
@@ -354,7 +354,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SHLD = new Opcode(OpcodeBytes.SHLD, size: 3, instruction: "SHLD adr", cycles: 16, pseudocode: "(adr) <-L; (adr+1)<-H");
 
             /** Load H and L direct */
-            public static Opcode LHLD = new Opcode(OpcodeBytes.LHLD, size: 3, instruction: "LHLD adr", cycles: 16, pseudocode: "L <- (adr); H<-(adr+1)");
+            public static Opcode LD_HL_MNN = new Opcode(OpcodeBytes.LD_HL_MNN, size: 3, instruction: "LD HL, (nn)", cycles: 16, pseudocode: "L <- (adr); H<-(adr+1)");
 
         #endregion
 

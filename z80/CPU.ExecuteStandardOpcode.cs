@@ -939,7 +939,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Load H and L direct
-                    case OpcodeBytes.LHLD:
+                    case OpcodeBytes.LD_HL_MNN:
                     {
                         var upper = ReadMemory(ProgramCounter + 2) << 8;
                         var lower = ReadMemory(ProgramCounter + 1);
