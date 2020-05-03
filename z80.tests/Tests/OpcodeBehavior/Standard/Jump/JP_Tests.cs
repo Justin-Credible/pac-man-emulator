@@ -2,10 +2,10 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class JMPTests : BaseTest
+    public class JP_Tests : BaseTest
     {
         [Fact]
-        public void TestJP()
+        public void Test_JP()
         {
             var rom = AssembleSource($@"
                 org 00h

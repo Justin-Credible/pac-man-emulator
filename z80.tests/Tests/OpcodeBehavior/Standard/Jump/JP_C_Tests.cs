@@ -2,16 +2,16 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class JPNZTests : BaseTest
+    public class JP_C_Tests : BaseTest
     {
         [Fact]
-        public void TestJPNZ_Jumps()
+        public void Test_JP_C_Jumps()
         {
             var rom = AssembleSource($@"
                 org 00h
                 NOP         ; $0000
                 NOP         ; $0001
-                JP NZ, 000Ah; $0002
+                JP C, 000Ah ; $0002
                 HALT        ; $0005
                 NOP         ; $0006
                 NOP         ; $0007
@@ -24,7 +24,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Flags = new ConditionFlags()
                 {
-                    Zero = false,
+                    Carry = true,
                 },
             };
 
@@ -40,13 +40,13 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void TestJPNZ_DoesNotJump()
+        public void Test_JP_C_DoesNotJump()
         {
             var rom = AssembleSource($@"
                 org 00h
                 NOP         ; $0000
                 NOP         ; $0001
-                JP NZ, 000Ah; $0002
+                JP C, 000Ah ; $0002
                 HALT        ; $0005
                 NOP         ; $0006
                 NOP         ; $0007
@@ -59,7 +59,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Flags = new ConditionFlags()
                 {
-                    Zero = true,
+                    Carry = false,
                 },
             };
 
