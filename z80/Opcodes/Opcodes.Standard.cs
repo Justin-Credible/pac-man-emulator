@@ -187,14 +187,14 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             #region ADC - Add register or memory to accumulator with carry
-                public static Opcode ADC_B = new Opcode(OpcodeBytes.ADC_B, size: 1, instruction: "ADC B", cycles: 4, pseudocode: "A <- A + B + CY");
-                public static Opcode ADC_C = new Opcode(OpcodeBytes.ADC_C, size: 1, instruction: "ADC C", cycles: 4, pseudocode: "A <- A + C + CY");
-                public static Opcode ADC_D = new Opcode(OpcodeBytes.ADC_D, size: 1, instruction: "ADC D", cycles: 4, pseudocode: "A <- A + D + CY");
-                public static Opcode ADC_E = new Opcode(OpcodeBytes.ADC_E, size: 1, instruction: "ADC E", cycles: 4, pseudocode: "A <- A + E + CY");
-                public static Opcode ADC_H = new Opcode(OpcodeBytes.ADC_H, size: 1, instruction: "ADC H", cycles: 4, pseudocode: "A <- A + H + CY");
-                public static Opcode ADC_L = new Opcode(OpcodeBytes.ADC_L, size: 1, instruction: "ADC L", cycles: 4, pseudocode: "A <- A + L + CY");
-                public static Opcode ADC_M = new Opcode(OpcodeBytes.ADC_M, size: 1, instruction: "ADC M", cycles: 7, pseudocode: "A <- A + (HL) + CY");
-                public static Opcode ADC_A = new Opcode(OpcodeBytes.ADC_A, size: 1, instruction: "ADC A", cycles: 4, pseudocode: "A <- A + A + CY");
+                public static Opcode ADC_A_B = new Opcode(OpcodeBytes.ADC_A_B, size: 1, instruction: "ADC A, B", cycles: 4, pseudocode: "A <- A + B + CY");
+                public static Opcode ADC_A_C = new Opcode(OpcodeBytes.ADC_A_C, size: 1, instruction: "ADC A, C", cycles: 4, pseudocode: "A <- A + C + CY");
+                public static Opcode ADC_A_D = new Opcode(OpcodeBytes.ADC_A_D, size: 1, instruction: "ADC A, D", cycles: 4, pseudocode: "A <- A + D + CY");
+                public static Opcode ADC_A_E = new Opcode(OpcodeBytes.ADC_A_E, size: 1, instruction: "ADC A, E", cycles: 4, pseudocode: "A <- A + E + CY");
+                public static Opcode ADC_A_H = new Opcode(OpcodeBytes.ADC_A_H, size: 1, instruction: "ADC A, H", cycles: 4, pseudocode: "A <- A + H + CY");
+                public static Opcode ADC_A_L = new Opcode(OpcodeBytes.ADC_A_L, size: 1, instruction: "ADC A, L", cycles: 4, pseudocode: "A <- A + L + CY");
+                public static Opcode ADC_A_HL = new Opcode(OpcodeBytes.ADC_A_HL, size: 1, instruction: "ADC A, (HL)", cycles: 7, pseudocode: "A <- A + (HL) + CY");
+                public static Opcode ADC_A_A = new Opcode(OpcodeBytes.ADC_A_A, size: 1, instruction: "ADC A, A", cycles: 4, pseudocode: "A <- A + A + CY");
             #endregion
 
             #region SBB - Subtract register or memory from accumulator with borrow

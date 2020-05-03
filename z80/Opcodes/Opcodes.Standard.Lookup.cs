@@ -191,14 +191,14 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region ADC - Add register or memory to accumulator with carry
-                    [OpcodeBytes.ADC_B] = ADC_B,
-                    [OpcodeBytes.ADC_C] = ADC_C,
-                    [OpcodeBytes.ADC_D] = ADC_D,
-                    [OpcodeBytes.ADC_E] = ADC_E,
-                    [OpcodeBytes.ADC_H] = ADC_H,
-                    [OpcodeBytes.ADC_L] = ADC_L,
-                    [OpcodeBytes.ADC_M] = ADC_M,
-                    [OpcodeBytes.ADC_A] = ADC_A,
+                    [OpcodeBytes.ADC_A_B] = ADC_A_B,
+                    [OpcodeBytes.ADC_A_C] = ADC_A_C,
+                    [OpcodeBytes.ADC_A_D] = ADC_A_D,
+                    [OpcodeBytes.ADC_A_E] = ADC_A_E,
+                    [OpcodeBytes.ADC_A_H] = ADC_A_H,
+                    [OpcodeBytes.ADC_A_L] = ADC_A_L,
+                    [OpcodeBytes.ADC_A_HL] = ADC_A_HL,
+                    [OpcodeBytes.ADC_A_A] = ADC_A_A,
                 #endregion
 
                 #region SBB - Subtract register or memory from accumulator with borrow

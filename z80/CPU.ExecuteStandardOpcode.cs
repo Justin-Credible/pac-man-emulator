@@ -508,28 +508,28 @@ namespace JustinCredible.ZilogZ80
 
                     #region ADC - Add register or memory to accumulator with carry
 
-                        case OpcodeBytes.ADC_B:
+                        case OpcodeBytes.ADC_A_B:
                             ExecuteADD(Registers.B, true);
                             break;
-                        case OpcodeBytes.ADC_C:
+                        case OpcodeBytes.ADC_A_C:
                             ExecuteADD(Registers.C, true);
                             break;
-                        case OpcodeBytes.ADC_D:
+                        case OpcodeBytes.ADC_A_D:
                             ExecuteADD(Registers.D, true);
                             break;
-                        case OpcodeBytes.ADC_E:
+                        case OpcodeBytes.ADC_A_E:
                             ExecuteADD(Registers.E, true);
                             break;
-                        case OpcodeBytes.ADC_H:
+                        case OpcodeBytes.ADC_A_H:
                             ExecuteADD(Registers.H, true);
                             break;
-                        case OpcodeBytes.ADC_L:
+                        case OpcodeBytes.ADC_A_L:
                             ExecuteADD(Registers.L, true);
                             break;
-                        case OpcodeBytes.ADC_M:
+                        case OpcodeBytes.ADC_A_HL:
                             ExecuteADD(ReadMemory(Registers.HL), true);
                             break;
-                        case OpcodeBytes.ADC_A:
+                        case OpcodeBytes.ADC_A_A:
                             ExecuteADD(Registers.A, true);
                             break;
 
