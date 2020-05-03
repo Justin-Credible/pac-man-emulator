@@ -219,15 +219,15 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode XOR_A = new Opcode(OpcodeBytes.XOR_A, size: 1, instruction: "XOR A", cycles: 4, pseudocode: "A <- A ^ A");
             #endregion
 
-            #region CMP - Compare register or memory with accumulator
-                public static Opcode CMP_B = new Opcode(OpcodeBytes.CMP_B, size: 1, instruction: "CMP B", cycles: 4, pseudocode: "A - B");
-                public static Opcode CMP_C = new Opcode(OpcodeBytes.CMP_C, size: 1, instruction: "CMP C", cycles: 4, pseudocode: "A - C");
-                public static Opcode CMP_D = new Opcode(OpcodeBytes.CMP_D, size: 1, instruction: "CMP D", cycles: 4, pseudocode: "A - D");
-                public static Opcode CMP_E = new Opcode(OpcodeBytes.CMP_E, size: 1, instruction: "CMP E", cycles: 4, pseudocode: "A - E");
-                public static Opcode CMP_H = new Opcode(OpcodeBytes.CMP_H, size: 1, instruction: "CMP H", cycles: 4, pseudocode: "A - H");
-                public static Opcode CMP_L = new Opcode(OpcodeBytes.CMP_L, size: 1, instruction: "CMP L", cycles: 4, pseudocode: "A - L");
-                public static Opcode CMP_M = new Opcode(OpcodeBytes.CMP_M, size: 1, instruction: "CMP M", cycles: 7, pseudocode: "A - (HL)");
-                public static Opcode CMP_A = new Opcode(OpcodeBytes.CMP_A, size: 1, instruction: "CMP A", cycles: 4, pseudocode: "A - A");
+            #region CP - Compare register or memory with accumulator
+                public static Opcode CP_B = new Opcode(OpcodeBytes.CP_B, size: 1, instruction: "CP B", cycles: 4, pseudocode: "A - B");
+                public static Opcode CP_C = new Opcode(OpcodeBytes.CP_C, size: 1, instruction: "CP C", cycles: 4, pseudocode: "A - C");
+                public static Opcode CP_D = new Opcode(OpcodeBytes.CP_D, size: 1, instruction: "CP D", cycles: 4, pseudocode: "A - D");
+                public static Opcode CP_E = new Opcode(OpcodeBytes.CP_E, size: 1, instruction: "CP E", cycles: 4, pseudocode: "A - E");
+                public static Opcode CP_H = new Opcode(OpcodeBytes.CP_H, size: 1, instruction: "CP H", cycles: 4, pseudocode: "A - H");
+                public static Opcode CP_L = new Opcode(OpcodeBytes.CP_L, size: 1, instruction: "CP L", cycles: 4, pseudocode: "A - L");
+                public static Opcode CP_HL = new Opcode(OpcodeBytes.CP_HL, size: 1, instruction: "CP (HL)", cycles: 7, pseudocode: "A - (HL)");
+                public static Opcode CP_A = new Opcode(OpcodeBytes.CP_A, size: 1, instruction: "CP A", cycles: 4, pseudocode: "A - A");
             #endregion
 
         #endregion
@@ -338,7 +338,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode OR_N = new Opcode(OpcodeBytes.OR_N, size: 2, instruction: "OR D8", cycles: 7, pseudocode: "A <- A | data");
 
             /** Compare immediate with accumulator */
-            public static Opcode CPI = new Opcode(OpcodeBytes.CPI, size: 2, instruction: "CPI D8", cycles: 7, pseudocode: "A - data");
+            public static Opcode CP_N = new Opcode(OpcodeBytes.CP_N, size: 2, instruction: "CP D8", cycles: 7, pseudocode: "A - data");
 
         #endregion
 

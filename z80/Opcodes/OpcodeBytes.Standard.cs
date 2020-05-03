@@ -223,15 +223,15 @@ namespace JustinCredible.ZilogZ80
                 public const byte XOR_A = 0xaf;
             #endregion
 
-            #region CMP - Compare register or memory with accumulator
-                public const byte CMP_B = 0xb8;
-                public const byte CMP_C = 0xb9;
-                public const byte CMP_D = 0xba;
-                public const byte CMP_E = 0xbb;
-                public const byte CMP_H = 0xbc;
-                public const byte CMP_L = 0xbd;
-                public const byte CMP_M = 0xbe;
-                public const byte CMP_A = 0xbf;
+            #region CP - Compare register or memory with accumulator
+                public const byte CP_B = 0xb8;
+                public const byte CP_C = 0xb9;
+                public const byte CP_D = 0xba;
+                public const byte CP_E = 0xbb;
+                public const byte CP_H = 0xbc;
+                public const byte CP_L = 0xbd;
+                public const byte CP_HL = 0xbe;
+                public const byte CP_A = 0xbf;
             #endregion
 
         #endregion
@@ -342,7 +342,7 @@ namespace JustinCredible.ZilogZ80
             public const byte OR_N = 0xf6;
 
             /** Compare immediate with accumulator */
-            public const byte CPI = 0xfe;
+            public const byte CP_N = 0xfe;
 
         #endregion
 

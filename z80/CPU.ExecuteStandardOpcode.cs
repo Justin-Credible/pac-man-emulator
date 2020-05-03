@@ -601,30 +601,30 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region CMP - Compare register or memory with accumulator
+                    #region CP - Compare register or memory with accumulator
 
-                        case OpcodeBytes.CMP_B:
+                        case OpcodeBytes.CP_B:
                             ExecuteSUB(Registers.B, false, false);
                             break;
-                        case OpcodeBytes.CMP_C:
+                        case OpcodeBytes.CP_C:
                             ExecuteSUB(Registers.C, false, false);
                             break;
-                        case OpcodeBytes.CMP_D:
+                        case OpcodeBytes.CP_D:
                             ExecuteSUB(Registers.D, false, false);
                             break;
-                        case OpcodeBytes.CMP_E:
+                        case OpcodeBytes.CP_E:
                             ExecuteSUB(Registers.E, false, false);
                             break;
-                        case OpcodeBytes.CMP_H:
+                        case OpcodeBytes.CP_H:
                             ExecuteSUB(Registers.H, false, false);
                             break;
-                        case OpcodeBytes.CMP_L:
+                        case OpcodeBytes.CP_L:
                             ExecuteSUB(Registers.L, false, false);
                             break;
-                        case OpcodeBytes.CMP_M:
+                        case OpcodeBytes.CP_HL:
                             ExecuteSUB(ReadMemory(Registers.HL), false, false);
                             break;
-                        case OpcodeBytes.CMP_A:
+                        case OpcodeBytes.CP_A:
                             ExecuteSUB(Registers.A, false, false);
                             break;
 
@@ -899,7 +899,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Compare immediate with accumulator
                     // A - data
-                    case OpcodeBytes.CPI:
+                    case OpcodeBytes.CP_N:
                         ExecuteSUB(ReadMemory(ProgramCounter+1), false, false);
                         break;
 

@@ -223,15 +223,15 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.XOR_A] = XOR_A,
                 #endregion
 
-                #region CMP - Compare register or memory with accumulator
-                    [OpcodeBytes.CMP_B] = CMP_B,
-                    [OpcodeBytes.CMP_C] = CMP_C,
-                    [OpcodeBytes.CMP_D] = CMP_D,
-                    [OpcodeBytes.CMP_E] = CMP_E,
-                    [OpcodeBytes.CMP_H] = CMP_H,
-                    [OpcodeBytes.CMP_L] = CMP_L,
-                    [OpcodeBytes.CMP_M] = CMP_M,
-                    [OpcodeBytes.CMP_A] = CMP_A,
+                #region CP - Compare register or memory with accumulator
+                    [OpcodeBytes.CP_B] = CP_B,
+                    [OpcodeBytes.CP_C] = CP_C,
+                    [OpcodeBytes.CP_D] = CP_D,
+                    [OpcodeBytes.CP_E] = CP_E,
+                    [OpcodeBytes.CP_H] = CP_H,
+                    [OpcodeBytes.CP_L] = CP_L,
+                    [OpcodeBytes.CP_HL] = CP_HL,
+                    [OpcodeBytes.CP_A] = CP_A,
                 #endregion
 
             #endregion
@@ -342,7 +342,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.OR_N] = OR_N,
 
                 /** Compare immediate with accumulator */
-                [OpcodeBytes.CPI] = CPI,
+                [OpcodeBytes.CP_N] = CP_N,
 
             #endregion
 
