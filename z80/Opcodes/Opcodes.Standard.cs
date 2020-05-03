@@ -351,7 +351,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode LD_A_MNN = new Opcode(OpcodeBytes.LD_A_MNN, size: 3, instruction: "LD A, (nn)", cycles: 13, pseudocode: "A <- (adr)");
 
             /** Store H and L direct */
-            public static Opcode SHLD = new Opcode(OpcodeBytes.SHLD, size: 3, instruction: "SHLD adr", cycles: 16, pseudocode: "(adr) <-L; (adr+1)<-H");
+            public static Opcode LD_MNN_HL = new Opcode(OpcodeBytes.LD_MNN_HL, size: 3, instruction: "LD (nn), HL", cycles: 16, pseudocode: "(adr) <-L; (adr+1)<-H");
 
             /** Load H and L direct */
             public static Opcode LD_HL_MNN = new Opcode(OpcodeBytes.LD_HL_MNN, size: 3, instruction: "LD HL, (nn)", cycles: 16, pseudocode: "L <- (adr); H<-(adr+1)");

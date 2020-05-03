@@ -355,7 +355,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.LD_A_MNN] = LD_A_MNN,
 
                 /** Store H and L direct */
-                [OpcodeBytes.SHLD] = SHLD,
+                [OpcodeBytes.LD_MNN_HL] = LD_MNN_HL,
 
                 /** Load H and L direct */
                 [OpcodeBytes.LD_HL_MNN] = LD_HL_MNN,

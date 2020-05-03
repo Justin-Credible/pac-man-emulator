@@ -355,7 +355,7 @@ namespace JustinCredible.ZilogZ80
             public const byte LD_A_MNN = 0x3a;
 
             /** Store H and L direct */
-            public const byte SHLD = 0x22;
+            public const byte LD_MNN_HL = 0x22;
 
             /** Load H and L direct */
             public const byte LD_HL_MNN = 0x2a;
