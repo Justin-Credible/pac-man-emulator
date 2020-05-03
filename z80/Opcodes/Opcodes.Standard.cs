@@ -160,7 +160,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SUB_E = new Opcode(OpcodeBytes.SUB_E, size: 1, instruction: "SUB E", cycles: 4, pseudocode: "A <- A - E");
                 public static Opcode SUB_H = new Opcode(OpcodeBytes.SUB_H, size: 1, instruction: "SUB H", cycles: 4, pseudocode: "A <- A - H");
                 public static Opcode SUB_L = new Opcode(OpcodeBytes.SUB_L, size: 1, instruction: "SUB L", cycles: 4, pseudocode: "A <- A - L");
-                public static Opcode SUB_M = new Opcode(OpcodeBytes.SUB_M, size: 1, instruction: "SUB M", cycles: 7, pseudocode: "A <- A - (HL)");
+                public static Opcode SUB_HL = new Opcode(OpcodeBytes.SUB_HL, size: 1, instruction: "SUB (HL)", cycles: 7, pseudocode: "A <- A - (HL)");
                 public static Opcode SUB_A = new Opcode(OpcodeBytes.SUB_A, size: 1, instruction: "SUB A", cycles: 4, pseudocode: "A <- A - A");
             #endregion
 

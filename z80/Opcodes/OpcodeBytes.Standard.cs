@@ -164,7 +164,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SUB_E = 0x93;
                 public const byte SUB_H = 0x94;
                 public const byte SUB_L = 0x95;
-                public const byte SUB_M = 0x96;
+                public const byte SUB_HL = 0x96;
                 public const byte SUB_A = 0x97;
             #endregion
 

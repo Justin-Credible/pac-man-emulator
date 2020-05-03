@@ -423,7 +423,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SUB_L:
                             ExecuteSUB(Registers.L);
                             break;
-                        case OpcodeBytes.SUB_M:
+                        case OpcodeBytes.SUB_HL:
                             ExecuteSUB(ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.SUB_A:
@@ -1654,7 +1654,7 @@ namespace JustinCredible.ZilogZ80
             if (borrowOccurred)
                 result = 256 + result;
 
-            SetFlags(carry: borrowOccurred, result: (byte)result);
+            SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
 
             if (updateAccumulator)
                 Registers.A = (byte)result;

@@ -164,7 +164,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.SUB_E] = SUB_E,
                     [OpcodeBytes.SUB_H] = SUB_H,
                     [OpcodeBytes.SUB_L] = SUB_L,
-                    [OpcodeBytes.SUB_M] = SUB_M,
+                    [OpcodeBytes.SUB_HL] = SUB_HL,
                     [OpcodeBytes.SUB_A] = SUB_A,
                 #endregion
 
