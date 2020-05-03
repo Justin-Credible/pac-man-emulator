@@ -327,7 +327,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.ACI] = ACI,
 
                 /** Subtract immediate from accumulator */
-                [OpcodeBytes.SUI] = SUI,
+                [OpcodeBytes.SUB_N] = SUB_N,
 
                 /** Subtract immediate from accumulator with borrow */
                 [OpcodeBytes.SBI] = SBI,

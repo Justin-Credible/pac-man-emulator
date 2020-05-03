@@ -866,7 +866,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Subtract immediate from accumulator
                     // A <- A - data
-                    case OpcodeBytes.SUI:
+                    case OpcodeBytes.SUB_N:
                         ExecuteSUB(ReadMemory(ProgramCounter+1));
                         break;
 

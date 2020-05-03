@@ -323,7 +323,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode ACI =new Opcode(OpcodeBytes.ACI, size: 2, instruction: "ACI D8", cycles: 7, pseudocode: "A <- A + data + CY");
 
             /** Subtract immediate from accumulator */
-            public static Opcode SUI =new Opcode(OpcodeBytes.SUI, size: 2, instruction: "SUI D8", cycles: 7, pseudocode: "A <- A - data");
+            public static Opcode SUB_N =new Opcode(OpcodeBytes.SUB_N, size: 2, instruction: "SUB D8", cycles: 7, pseudocode: "A <- A - data");
 
             /** Subtract immediate from accumulator with borrow */
             public static Opcode SBI =new Opcode(OpcodeBytes.SBI, size: 2, instruction: "SBI D8", cycles: 7, pseudocode: "A <- A - data - CY");

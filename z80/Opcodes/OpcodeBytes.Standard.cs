@@ -327,7 +327,7 @@ namespace JustinCredible.ZilogZ80
             public const byte ACI = 0xce;
 
             /** Subtract immediate from accumulator */
-            public const byte SUI = 0xd6;
+            public const byte SUB_N = 0xd6;
 
             /** Subtract immediate from accumulator with borrow */
             public const byte SBI = 0xde;
