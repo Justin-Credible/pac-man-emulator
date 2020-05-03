@@ -168,15 +168,15 @@ namespace JustinCredible.ZilogZ80
                 public const byte SUB_A = 0x97;
             #endregion
 
-            #region ANA - Logical AND register or memory with accumulator
-                public const byte ANA_B = 0xa0;
-                public const byte ANA_C = 0xa1;
-                public const byte ANA_D = 0xa2;
-                public const byte ANA_E = 0xa3;
-                public const byte ANA_H = 0xa4;
-                public const byte ANA_L = 0xa5;
-                public const byte ANA_M = 0xa6;
-                public const byte ANA_A = 0xa7;
+            #region AND - Logical AND register or memory with accumulator
+                public const byte AND_B = 0xa0;
+                public const byte AND_C = 0xa1;
+                public const byte AND_D = 0xa2;
+                public const byte AND_E = 0xa3;
+                public const byte AND_H = 0xa4;
+                public const byte AND_L = 0xa5;
+                public const byte AND_HL = 0xa6;
+                public const byte AND_A = 0xa7;
             #endregion
 
             #region ORA - Logical OR register or memory with accumulator
@@ -333,7 +333,7 @@ namespace JustinCredible.ZilogZ80
             public const byte SBI = 0xde;
 
             /** Logical AND immediate with accumulator */
-            public const byte ANI = 0xe6;
+            public const byte AND_N = 0xe6;
 
             /** XOR immediate with accumulator */
             public const byte XRI = 0xee;

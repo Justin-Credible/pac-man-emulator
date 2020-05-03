@@ -434,35 +434,35 @@ namespace JustinCredible.ZilogZ80
 
                     #region ANA - Logical AND register or memory with accumulator
 
-                        case OpcodeBytes.ANA_B:
+                        case OpcodeBytes.AND_B:
                             Registers.A = (byte)(Registers.A & Registers.B);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_C:
+                        case OpcodeBytes.AND_C:
                             Registers.A = (byte)(Registers.A & Registers.C);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_D:
+                        case OpcodeBytes.AND_D:
                             Registers.A = (byte)(Registers.A & Registers.D);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_E:
+                        case OpcodeBytes.AND_E:
                             Registers.A = (byte)(Registers.A & Registers.E);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_H:
+                        case OpcodeBytes.AND_H:
                             Registers.A = (byte)(Registers.A & Registers.H);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_L:
+                        case OpcodeBytes.AND_L:
                             Registers.A = (byte)(Registers.A & Registers.L);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_M:
+                        case OpcodeBytes.AND_HL:
                             Registers.A = (byte)(Registers.A & ReadMemory(Registers.HL));
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.ANA_A:
+                        case OpcodeBytes.AND_A:
                             Registers.A = (byte)(Registers.A & Registers.A);
                             SetFlags(carry: false, result: Registers.A);
                             break;
@@ -878,7 +878,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Logical AND immediate with accumulator
                     // A <- A & data
-                    case OpcodeBytes.ANI:
+                    case OpcodeBytes.AND_N:
                         Registers.A = (byte)(Registers.A & ReadMemory(ProgramCounter+1));
                         SetFlags(carry: false, result: Registers.A);
                         break;

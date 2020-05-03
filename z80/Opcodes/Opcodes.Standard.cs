@@ -164,15 +164,15 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SUB_A = new Opcode(OpcodeBytes.SUB_A, size: 1, instruction: "SUB A", cycles: 4, pseudocode: "A <- A - A");
             #endregion
 
-            #region ANA - Logical AND register or memory with accumulator
-                public static Opcode ANA_B = new Opcode(OpcodeBytes.ANA_B, size: 1, instruction: "ANA B", cycles: 4, pseudocode: "A <- A & B");
-                public static Opcode ANA_C = new Opcode(OpcodeBytes.ANA_C, size: 1, instruction: "ANA C", cycles: 4, pseudocode: "A <- A & C");
-                public static Opcode ANA_D = new Opcode(OpcodeBytes.ANA_D, size: 1, instruction: "ANA D", cycles: 4, pseudocode: "A <- A & D");
-                public static Opcode ANA_E = new Opcode(OpcodeBytes.ANA_E, size: 1, instruction: "ANA E", cycles: 4, pseudocode: "A <- A & E");
-                public static Opcode ANA_H = new Opcode(OpcodeBytes.ANA_H, size: 1, instruction: "ANA H", cycles: 4, pseudocode: "A <- A & H");
-                public static Opcode ANA_L = new Opcode(OpcodeBytes.ANA_L, size: 1, instruction: "ANA L", cycles: 4, pseudocode: "A <- A & L");
-                public static Opcode ANA_M = new Opcode(OpcodeBytes.ANA_M, size: 1, instruction: "ANA M", cycles: 7, pseudocode: "A <- A & (HL)");
-                public static Opcode ANA_A = new Opcode(OpcodeBytes.ANA_A, size: 1, instruction: "ANA A", cycles: 4, pseudocode: "A <- A & A");
+            #region AND - Logical AND register or memory with accumulator
+                public static Opcode AND_B = new Opcode(OpcodeBytes.AND_B, size: 1, instruction: "AND B", cycles: 4, pseudocode: "A <- A & B");
+                public static Opcode AND_C = new Opcode(OpcodeBytes.AND_C, size: 1, instruction: "AND C", cycles: 4, pseudocode: "A <- A & C");
+                public static Opcode AND_D = new Opcode(OpcodeBytes.AND_D, size: 1, instruction: "AND D", cycles: 4, pseudocode: "A <- A & D");
+                public static Opcode AND_E = new Opcode(OpcodeBytes.AND_E, size: 1, instruction: "AND E", cycles: 4, pseudocode: "A <- A & E");
+                public static Opcode AND_H = new Opcode(OpcodeBytes.AND_H, size: 1, instruction: "AND H", cycles: 4, pseudocode: "A <- A & H");
+                public static Opcode AND_L = new Opcode(OpcodeBytes.AND_L, size: 1, instruction: "AND L", cycles: 4, pseudocode: "A <- A & L");
+                public static Opcode AND_HL = new Opcode(OpcodeBytes.AND_HL, size: 1, instruction: "AND (HL)", cycles: 7, pseudocode: "A <- A & (HL)");
+                public static Opcode AND_A = new Opcode(OpcodeBytes.AND_A, size: 1, instruction: "AND A", cycles: 4, pseudocode: "A <- A & A");
             #endregion
 
             #region ORA - Logical OR register or memory with accumulator
@@ -317,28 +317,28 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Add immediate to accumulator */
-            public static Opcode ADD_A_N =new Opcode(OpcodeBytes.ADD_A_N, size: 2, instruction: "ADD A, D8", cycles: 7, pseudocode: "A <- A + byte");
+            public static Opcode ADD_A_N = new Opcode(OpcodeBytes.ADD_A_N, size: 2, instruction: "ADD A, D8", cycles: 7, pseudocode: "A <- A + byte");
 
             /** Add immediate to accumulator with carry */
-            public static Opcode ACI =new Opcode(OpcodeBytes.ACI, size: 2, instruction: "ACI D8", cycles: 7, pseudocode: "A <- A + data + CY");
+            public static Opcode ACI = new Opcode(OpcodeBytes.ACI, size: 2, instruction: "ACI D8", cycles: 7, pseudocode: "A <- A + data + CY");
 
             /** Subtract immediate from accumulator */
-            public static Opcode SUB_N =new Opcode(OpcodeBytes.SUB_N, size: 2, instruction: "SUB D8", cycles: 7, pseudocode: "A <- A - data");
+            public static Opcode SUB_N = new Opcode(OpcodeBytes.SUB_N, size: 2, instruction: "SUB D8", cycles: 7, pseudocode: "A <- A - data");
 
             /** Subtract immediate from accumulator with borrow */
-            public static Opcode SBI =new Opcode(OpcodeBytes.SBI, size: 2, instruction: "SBI D8", cycles: 7, pseudocode: "A <- A - data - CY");
+            public static Opcode SBI = new Opcode(OpcodeBytes.SBI, size: 2, instruction: "SBI D8", cycles: 7, pseudocode: "A <- A - data - CY");
 
             /** Logical AND immediate with accumulator */
-            public static Opcode ANI =new Opcode(OpcodeBytes.ANI, size: 2, instruction: "ANI D8", cycles: 7, pseudocode: "A <- A & data");
+            public static Opcode AND_N = new Opcode(OpcodeBytes.AND_N, size: 2, instruction: "AND D8", cycles: 7, pseudocode: "A <- A & data");
 
             /** XOR immediate with accumulator */
-            public static Opcode XRI =new Opcode(OpcodeBytes.XRI, size: 2, instruction: "XRI D8", cycles: 7, pseudocode: "A <- A ^ data");
+            public static Opcode XRI = new Opcode(OpcodeBytes.XRI, size: 2, instruction: "XRI D8", cycles: 7, pseudocode: "A <- A ^ data");
 
             /** Logical OR immediate with accumulator */
-            public static Opcode ORI =new Opcode(OpcodeBytes.ORI, size: 2, instruction: "ORI D8", cycles: 7, pseudocode: "A <- A | data");
+            public static Opcode ORI = new Opcode(OpcodeBytes.ORI, size: 2, instruction: "ORI D8", cycles: 7, pseudocode: "A <- A | data");
 
             /** Compare immediate with accumulator */
-            public static Opcode CPI =new Opcode(OpcodeBytes.CPI, size: 2, instruction: "CPI D8", cycles: 7, pseudocode: "A - data");
+            public static Opcode CPI = new Opcode(OpcodeBytes.CPI, size: 2, instruction: "CPI D8", cycles: 7, pseudocode: "A - data");
 
         #endregion
 

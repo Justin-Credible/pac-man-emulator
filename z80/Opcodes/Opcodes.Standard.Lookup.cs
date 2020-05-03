@@ -169,14 +169,14 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region ANA - Logical AND register or memory with accumulator
-                    [OpcodeBytes.ANA_B] = ANA_B,
-                    [OpcodeBytes.ANA_C] = ANA_C,
-                    [OpcodeBytes.ANA_D] = ANA_D,
-                    [OpcodeBytes.ANA_E] = ANA_E,
-                    [OpcodeBytes.ANA_H] = ANA_H,
-                    [OpcodeBytes.ANA_L] = ANA_L,
-                    [OpcodeBytes.ANA_M] = ANA_M,
-                    [OpcodeBytes.ANA_A] = ANA_A,
+                    [OpcodeBytes.AND_B] = AND_B,
+                    [OpcodeBytes.AND_C] = AND_C,
+                    [OpcodeBytes.AND_D] = AND_D,
+                    [OpcodeBytes.AND_E] = AND_E,
+                    [OpcodeBytes.AND_H] = AND_H,
+                    [OpcodeBytes.AND_L] = AND_L,
+                    [OpcodeBytes.AND_HL] = AND_HL,
+                    [OpcodeBytes.AND_A] = AND_A,
                 #endregion
 
                 #region ORA - Logical OR register or memory with accumulator
@@ -333,7 +333,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.SBI] = SBI,
 
                 /** Logical AND immediate with accumulator */
-                [OpcodeBytes.ANI] = ANI,
+                [OpcodeBytes.AND_N] = AND_N,
 
                 /** XOR immediate with accumulator */
                 [OpcodeBytes.XRI] = XRI,
