@@ -140,7 +140,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Data transfer instructions
 
-                    #region STAX - Store accumulator
+                    #region LD rr, A - Store accumulator
 
                         case OpcodeBytes.LD_BC_A:
                             WriteMemory(Registers.BC, Registers.A);
@@ -151,12 +151,12 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region LDAX - Load accumulator
+                    #region LD A, rr - Load accumulator
 
-                        case OpcodeBytes.LDAX_B:
+                        case OpcodeBytes.LD_A_BC:
                             Registers.A = ReadMemory(Registers.BC);
                             break;
-                        case OpcodeBytes.LDAX_D:
+                        case OpcodeBytes.LD_A_DE:
                             Registers.A = ReadMemory(Registers.DE);
                             break;
 

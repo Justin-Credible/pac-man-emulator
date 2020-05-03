@@ -66,14 +66,14 @@ namespace JustinCredible.ZilogZ80
 
         #region Data transfer instructions
 
-            #region LD rr, a - Store accumulator
+            #region LD rr, A - Store accumulator
                 public const byte LD_BC_A = 0x02;
                 public const byte LD_DE_A = 0x12;
             #endregion
 
-            #region LDAX - Load accumulator
-                public const byte LDAX_B = 0x0a;
-                public const byte LDAX_D = 0x1a;
+            #region LD A, rr - Load accumulator
+                public const byte LD_A_BC = 0x0a;
+                public const byte LD_A_DE = 0x1a;
             #endregion
 
             #region LD - Load (copy) data

@@ -62,14 +62,14 @@ namespace JustinCredible.ZilogZ80
 
         #region Data transfer instructions
 
-            #region LD rr, a - Store accumulator
-                public static Opcode LD_BC_A = new Opcode(OpcodeBytes.LD_BC_A, size: 1, instruction: "LD BC, A", cycles: 7, pseudocode: "(BC) <- A");
-                public static Opcode LD_DE_A = new Opcode(OpcodeBytes.LD_DE_A, size: 1, instruction: "LD DE, A", cycles: 7, pseudocode: "(DE) <- A");
+            #region LD rr, A - Store accumulator
+                public static Opcode LD_BC_A = new Opcode(OpcodeBytes.LD_BC_A, size: 1, instruction: "LD (BC), A", cycles: 7, pseudocode: "(BC) <- A");
+                public static Opcode LD_DE_A = new Opcode(OpcodeBytes.LD_DE_A, size: 1, instruction: "LD (DE), A", cycles: 7, pseudocode: "(DE) <- A");
             #endregion
 
-            #region LDAX - Load accumulator
-                public static Opcode LDAX_B = new Opcode(OpcodeBytes.LDAX_B, size: 1, instruction: "LDAX B", cycles: 7, pseudocode: "A <- (BC)");
-                public static Opcode LDAX_D = new Opcode(OpcodeBytes.LDAX_D, size: 1, instruction: "LDAX D", cycles: 7, pseudocode: "A <- (DE)");
+            #region LD A, rr - Load accumulator
+                public static Opcode LD_A_BC = new Opcode(OpcodeBytes.LD_A_BC, size: 1, instruction: "LD A, (BC)", cycles: 7, pseudocode: "A <- (BC)");
+                public static Opcode LD_A_DE = new Opcode(OpcodeBytes.LD_A_DE, size: 1, instruction: "LD A, (DE)", cycles: 7, pseudocode: "A <- (DE)");
             #endregion
 
             #region LD - Load (copy) data

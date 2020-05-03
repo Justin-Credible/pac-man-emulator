@@ -72,8 +72,8 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region LDAX - Load accumulator
-                    [OpcodeBytes.LDAX_B] = LDAX_B,
-                    [OpcodeBytes.LDAX_D] = LDAX_D,
+                    [OpcodeBytes.LD_A_BC] = LD_A_BC,
+                    [OpcodeBytes.LD_A_DE] = LD_A_DE,
                 #endregion
 
                 #region LD - Load (copy) data
