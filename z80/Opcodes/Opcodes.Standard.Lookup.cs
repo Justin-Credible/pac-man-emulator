@@ -35,25 +35,25 @@ namespace JustinCredible.ZilogZ80
             #region Single register instructions
 
             #region INR - Increment Register or Memory
-                [OpcodeBytes.INR_B] = INR_B,
-                [OpcodeBytes.INR_C] = INR_C,
-                [OpcodeBytes.INR_D] = INR_D,
-                [OpcodeBytes.INR_E] = INR_E,
-                [OpcodeBytes.INR_H] = INR_H,
-                [OpcodeBytes.INR_L] = INR_L,
-                [OpcodeBytes.INR_M] = INR_M,
-                [OpcodeBytes.INR_A] = INR_A,
+                [OpcodeBytes.INC_B] = INC_B,
+                [OpcodeBytes.INC_C] = INC_C,
+                [OpcodeBytes.INC_D] = INC_D,
+                [OpcodeBytes.INC_E] = INC_E,
+                [OpcodeBytes.INC_H] = INC_H,
+                [OpcodeBytes.INC_L] = INC_L,
+                [OpcodeBytes.INC_MHL] = INC_MHL,
+                [OpcodeBytes.INC_A] = INC_A,
             #endregion
 
             #region DCR - Decrement Register or Memory
-                [OpcodeBytes.DCR_B] = DCR_B,
-                [OpcodeBytes.DCR_C] = DCR_C,
-                [OpcodeBytes.DCR_D] = DCR_D,
-                [OpcodeBytes.DCR_E] = DCR_E,
-                [OpcodeBytes.DCR_H] = DCR_H,
-                [OpcodeBytes.DCR_L] = DCR_L,
-                [OpcodeBytes.DCR_M] = DCR_M,
-                [OpcodeBytes.DCR_A] = DCR_A,
+                [OpcodeBytes.DEC_B] = DEC_B,
+                [OpcodeBytes.DEC_C] = DEC_C,
+                [OpcodeBytes.DEC_D] = DEC_D,
+                [OpcodeBytes.DEC_E] = DEC_E,
+                [OpcodeBytes.DEC_H] = DEC_H,
+                [OpcodeBytes.DEC_L] = DEC_L,
+                [OpcodeBytes.DEC_MHL] = DEC_MHL,
+                [OpcodeBytes.DEC_A] = DEC_A,
             #endregion
 
             /** Compliment Accumulator */

@@ -125,24 +125,24 @@ namespace JustinCredible.ZilogZ80.Tests
             return results;
         }
 
-        protected void AssertFlagsFalse(CPUResults stats)
+        protected void AssertFlagsFalse(CPUResults results)
         {
-            Assert.False(stats.Flags.Sign);
-            Assert.False(stats.Flags.Zero);
-            Assert.False(stats.Flags.AuxCarry);
-            Assert.False(stats.Flags.Parity);
-            Assert.False(stats.Flags.Subtract);
-            Assert.False(stats.Flags.Carry);
+            Assert.False(results.Flags.Sign);
+            Assert.False(results.Flags.Zero);
+            Assert.False(results.Flags.AuxCarry);
+            Assert.False(results.Flags.Parity);
+            Assert.False(results.Flags.Subtract);
+            Assert.False(results.Flags.Carry);
         }
 
-        protected void AssertFlagsSame(CPUConfig initialState, CPUResults stats)
+        protected void AssertFlagsSame(CPUConfig initialState, CPUResults results)
         {
-            Assert.Equal(initialState.Flags.Sign, stats.Flags.Sign);
-            Assert.Equal(initialState.Flags.Zero, stats.Flags.Zero);
-            Assert.Equal(initialState.Flags.AuxCarry, stats.Flags.AuxCarry);
-            Assert.Equal(initialState.Flags.Parity, stats.Flags.Parity);
-            Assert.Equal(initialState.Flags.Subtract, stats.Flags.Subtract);
-            Assert.Equal(initialState.Flags.Carry, stats.Flags.Carry);
+            Assert.Equal(initialState.Flags.Sign, results.Flags.Sign);
+            Assert.Equal(initialState.Flags.Zero, results.Flags.Zero);
+            Assert.Equal(initialState.Flags.AuxCarry, results.Flags.AuxCarry);
+            Assert.Equal(initialState.Flags.Parity, results.Flags.Parity);
+            Assert.Equal(initialState.Flags.Subtract, results.Flags.Subtract);
+            Assert.Equal(initialState.Flags.Carry, results.Flags.Carry);
         }
     }
 }

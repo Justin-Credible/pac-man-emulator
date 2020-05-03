@@ -34,26 +34,26 @@ namespace JustinCredible.ZilogZ80
 
         #region Single register instructions
 
-            #region INR - Increment Register or Memory
-                public const byte INR_B = 0x04;
-                public const byte INR_C = 0x0c;
-                public const byte INR_D = 0x14;
-                public const byte INR_E = 0x1c;
-                public const byte INR_H = 0x24;
-                public const byte INR_L = 0x2c;
-                public const byte INR_M = 0x34;
-                public const byte INR_A = 0x3c;
+            #region INC r - Increment Register or Memory
+                public const byte INC_B = 0x04;
+                public const byte INC_C = 0x0c;
+                public const byte INC_D = 0x14;
+                public const byte INC_E = 0x1c;
+                public const byte INC_H = 0x24;
+                public const byte INC_L = 0x2c;
+                public const byte INC_MHL = 0x34;
+                public const byte INC_A = 0x3c;
             #endregion
 
-            #region DCR - Decrement Register or Memory
-                public const byte DCR_B = 0x05;
-                public const byte DCR_C = 0x0d;
-                public const byte DCR_D = 0x15;
-                public const byte DCR_E = 0x1d;
-                public const byte DCR_H = 0x25;
-                public const byte DCR_L = 0x2d;
-                public const byte DCR_M = 0x35;
-                public const byte DCR_A = 0x3d;
+            #region DEC r - Decrement Register or Memory
+                public const byte DEC_B = 0x05;
+                public const byte DEC_C = 0x0d;
+                public const byte DEC_D = 0x15;
+                public const byte DEC_E = 0x1d;
+                public const byte DEC_H = 0x25;
+                public const byte DEC_L = 0x2d;
+                public const byte DEC_MHL = 0x35;
+                public const byte DEC_A = 0x3d;
             #endregion
 
             /** Compliment Accumulator */
@@ -254,14 +254,14 @@ namespace JustinCredible.ZilogZ80
 
         #region Register pair instructions
 
-            #region INX - Increment register pair
+            #region INC rr - Increment register pair
                 public const byte INC_BC = 0x03;
                 public const byte INC_DE = 0x13;
                 public const byte INC_HL = 0x23;
                 public const byte INC_SP = 0x33;
             #endregion
 
-            #region DCX - Decrement register pair
+            #region DEC rr - Decrement register pair
                 public const byte DEC_BC = 0x0b;
                 public const byte DEC_DE = 0x1b;
                 public const byte DEC_HL = 0x2b;

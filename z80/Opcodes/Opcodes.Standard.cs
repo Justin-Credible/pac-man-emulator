@@ -30,26 +30,26 @@ namespace JustinCredible.ZilogZ80
 
         #region Single register instructions
 
-        #region INR - Increment Register or Memory
-            public static Opcode INR_B = new Opcode(OpcodeBytes.INR_B, size: 1, instruction: "INR B", cycles: 5, pseudocode: "B <- B+1");
-            public static Opcode INR_C = new Opcode(OpcodeBytes.INR_C, size: 1, instruction: "INR C", cycles: 5, pseudocode: "C <- C+1");
-            public static Opcode INR_D = new Opcode(OpcodeBytes.INR_D, size: 1, instruction: "INR D", cycles: 5, pseudocode: "D <- D+1");
-            public static Opcode INR_E = new Opcode(OpcodeBytes.INR_E, size: 1, instruction: "INR E", cycles: 5, pseudocode: "E <-E+1");
-            public static Opcode INR_H = new Opcode(OpcodeBytes.INR_H, size: 1, instruction: "INR H", cycles: 5, pseudocode: "H <- H+1");
-            public static Opcode INR_L = new Opcode(OpcodeBytes.INR_L, size: 1, instruction: "INR L", cycles: 5, pseudocode: "L <- L+1");
-            public static Opcode INR_M = new Opcode(OpcodeBytes.INR_M, size: 1, instruction: "INR M", cycles: 10, pseudocode: "(HL) <- (HL)+1");
-            public static Opcode INR_A = new Opcode(OpcodeBytes.INR_A, size: 1, instruction: "INR A", cycles: 5, pseudocode: "A <- A+1");
+        #region INC r - Increment Register or Memory
+            public static Opcode INC_B = new Opcode(OpcodeBytes.INC_B, size: 1, instruction: "INC B", cycles: 5, pseudocode: "B <- B+1");
+            public static Opcode INC_C = new Opcode(OpcodeBytes.INC_C, size: 1, instruction: "INC C", cycles: 5, pseudocode: "C <- C+1");
+            public static Opcode INC_D = new Opcode(OpcodeBytes.INC_D, size: 1, instruction: "INC D", cycles: 5, pseudocode: "D <- D+1");
+            public static Opcode INC_E = new Opcode(OpcodeBytes.INC_E, size: 1, instruction: "INC E", cycles: 5, pseudocode: "E <-E+1");
+            public static Opcode INC_H = new Opcode(OpcodeBytes.INC_H, size: 1, instruction: "INC H", cycles: 5, pseudocode: "H <- H+1");
+            public static Opcode INC_L = new Opcode(OpcodeBytes.INC_L, size: 1, instruction: "INC L", cycles: 5, pseudocode: "L <- L+1");
+            public static Opcode INC_MHL = new Opcode(OpcodeBytes.INC_MHL, size: 1, instruction: "INC (HL)", cycles: 10, pseudocode: "(HL) <- (HL)+1");
+            public static Opcode INC_A = new Opcode(OpcodeBytes.INC_A, size: 1, instruction: "INC A", cycles: 5, pseudocode: "A <- A+1");
         #endregion
 
-        #region DCR - Decrement Register or Memory
-            public static Opcode DCR_B = new Opcode(OpcodeBytes.DCR_B, size: 1, instruction: "DCR B", cycles: 5, pseudocode: "B <- B-1");
-            public static Opcode DCR_C = new Opcode(OpcodeBytes.DCR_C, size: 1, instruction: "DCR C", cycles: 5, pseudocode: "C <-C-1");
-            public static Opcode DCR_D = new Opcode(OpcodeBytes.DCR_D, size: 1, instruction: "DCR D", cycles: 5, pseudocode: "D <- D-1");
-            public static Opcode DCR_E = new Opcode(OpcodeBytes.DCR_E, size: 1, instruction: "DCR E", cycles: 5, pseudocode: "E <- E-1");
-            public static Opcode DCR_H = new Opcode(OpcodeBytes.DCR_H, size: 1, instruction: "DCR H", cycles: 5, pseudocode: "H <- H-1");
-            public static Opcode DCR_L = new Opcode(OpcodeBytes.DCR_L, size: 1, instruction: "DCR L", cycles: 5, pseudocode: "L <- L-1");
-            public static Opcode DCR_M = new Opcode(OpcodeBytes.DCR_M, size: 1, instruction: "DCR M", cycles: 10, pseudocode: "(HL) <- (HL)-1");
-            public static Opcode DCR_A = new Opcode(OpcodeBytes.DCR_A, size: 1, instruction: "DCR A", cycles: 5, pseudocode: "A <- A-1");
+        #region DEC r - Decrement Register or Memory
+            public static Opcode DEC_B = new Opcode(OpcodeBytes.DEC_B, size: 1, instruction: "DEC B", cycles: 5, pseudocode: "B <- B-1");
+            public static Opcode DEC_C = new Opcode(OpcodeBytes.DEC_C, size: 1, instruction: "DEC C", cycles: 5, pseudocode: "C <-C-1");
+            public static Opcode DEC_D = new Opcode(OpcodeBytes.DEC_D, size: 1, instruction: "DEC D", cycles: 5, pseudocode: "D <- D-1");
+            public static Opcode DEC_E = new Opcode(OpcodeBytes.DEC_E, size: 1, instruction: "DEC E", cycles: 5, pseudocode: "E <- E-1");
+            public static Opcode DEC_H = new Opcode(OpcodeBytes.DEC_H, size: 1, instruction: "DEC H", cycles: 5, pseudocode: "H <- H-1");
+            public static Opcode DEC_L = new Opcode(OpcodeBytes.DEC_L, size: 1, instruction: "DEC L", cycles: 5, pseudocode: "L <- L-1");
+            public static Opcode DEC_MHL = new Opcode(OpcodeBytes.DEC_MHL, size: 1, instruction: "DEC (HL)", cycles: 10, pseudocode: "(HL) <- (HL)-1");
+            public static Opcode DEC_A = new Opcode(OpcodeBytes.DEC_A, size: 1, instruction: "DEC A", cycles: 5, pseudocode: "A <- A-1");
         #endregion
 
         /** Compliment Accumulator */

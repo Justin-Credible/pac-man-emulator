@@ -44,84 +44,84 @@ namespace JustinCredible.ZilogZ80
 
                 #region Single register instructions
 
-                    #region INR - Increment Register or Memory
+                    #region INC r - Increment Register or Memory
 
-                        case OpcodeBytes.INR_B:
+                        case OpcodeBytes.INC_B:
                             Registers.B++;
-                            SetFlags(carry: false, result: Registers.B);
+                            SetFlags(carry: false, result: Registers.B, subtract: false);
                             break;
-                        case OpcodeBytes.INR_C:
+                        case OpcodeBytes.INC_C:
                             Registers.C++;
-                            SetFlags(carry: false, result: Registers.C);
+                            SetFlags(carry: false, result: Registers.C, subtract: false);
                             break;
-                        case OpcodeBytes.INR_D:
+                        case OpcodeBytes.INC_D:
                             Registers.D++;
-                            SetFlags(carry: false, result: Registers.D);
+                            SetFlags(carry: false, result: Registers.D, subtract: false);
                             break;
-                        case OpcodeBytes.INR_E:
+                        case OpcodeBytes.INC_E:
                             Registers.E++;
-                            SetFlags(carry: false, result: Registers.E);
+                            SetFlags(carry: false, result: Registers.E, subtract: false);
                             break;
-                        case OpcodeBytes.INR_H:
+                        case OpcodeBytes.INC_H:
                             Registers.H++;
-                            SetFlags(carry: false, result: Registers.H);
+                            SetFlags(carry: false, result: Registers.H, subtract: false);
                             break;
-                        case OpcodeBytes.INR_L:
+                        case OpcodeBytes.INC_L:
                             Registers.L++;
-                            SetFlags(carry: false, result: Registers.L);
+                            SetFlags(carry: false, result: Registers.L, subtract: false);
                             break;
-                        case OpcodeBytes.INR_M:
+                        case OpcodeBytes.INC_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value++;
                             WriteMemory(Registers.HL, value);
-                            SetFlags(carry: false, result: ReadMemory(Registers.HL));
+                            SetFlags(carry: false, result: ReadMemory(Registers.HL), subtract: false);
                             break;
                         }
-                        case OpcodeBytes.INR_A:
+                        case OpcodeBytes.INC_A:
                             Registers.A++;
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlags(carry: false, result: Registers.A, subtract: false);
                             break;
 
                     #endregion
 
-                    #region DCR - Decrement Register or Memory
+                    #region DEC r - Decrement Register or Memory
 
-                        case OpcodeBytes.DCR_B:
+                        case OpcodeBytes.DEC_B:
                             Registers.B--;
-                            SetFlags(carry: false, result: Registers.B);
+                            SetFlags(carry: false, result: Registers.B, subtract: true);
                             break;
-                        case OpcodeBytes.DCR_C:
+                        case OpcodeBytes.DEC_C:
                             Registers.C--;
-                            SetFlags(carry: false, result: Registers.C);
+                            SetFlags(carry: false, result: Registers.C, subtract: true);
                             break;
-                        case OpcodeBytes.DCR_D:
+                        case OpcodeBytes.DEC_D:
                             Registers.D--;
-                            SetFlags(carry: false, result: Registers.D);
+                            SetFlags(carry: false, result: Registers.D, subtract: true);
                             break;
-                        case OpcodeBytes.DCR_E:
+                        case OpcodeBytes.DEC_E:
                             Registers.E--;
-                            SetFlags(carry: false, result: Registers.E);
+                            SetFlags(carry: false, result: Registers.E, subtract: true);
                             break;
-                        case OpcodeBytes.DCR_H:
+                        case OpcodeBytes.DEC_H:
                             Registers.H--;
-                            SetFlags(carry: false, result: Registers.H);
+                            SetFlags(carry: false, result: Registers.H, subtract: true);
                             break;
-                        case OpcodeBytes.DCR_L:
+                        case OpcodeBytes.DEC_L:
                             Registers.L--;
-                            SetFlags(carry: false, result: Registers.L);
+                            SetFlags(carry: false, result: Registers.L, subtract: true);
                             break;
-                        case OpcodeBytes.DCR_M:
+                        case OpcodeBytes.DEC_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value--;
                             WriteMemory(Registers.HL, value);
-                            SetFlags(carry: false, result: ReadMemory(Registers.HL));
+                            SetFlags(carry: false, result: ReadMemory(Registers.HL), subtract: true);
                             break;
                         }
-                        case OpcodeBytes.DCR_A:
+                        case OpcodeBytes.DEC_A:
                             Registers.A--;
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlags(carry: false, result: Registers.A, subtract: true);
                             break;
 
                     #endregion
@@ -662,7 +662,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Register pair instructions
 
-                    #region INX - Increment register pair
+                    #region INC rr - Increment register pair
 
                         case OpcodeBytes.INC_BC:
                             Registers.BC++;
@@ -679,7 +679,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region DCX - Decrement register pair
+                    #region DEC rr - Decrement register pair
 
                         case OpcodeBytes.DEC_BC:
                             Registers.BC--;

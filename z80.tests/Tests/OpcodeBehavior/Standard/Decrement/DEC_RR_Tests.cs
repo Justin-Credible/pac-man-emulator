@@ -26,13 +26,23 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 Registers = registers,
+                Flags = new ConditionFlags()
+                {
+                    Sign = true,
+                    Zero = true,
+                    AuxCarry = true,
+                    Parity = true,
+                    Subtract = true,
+                    Carry = true,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x38FF, state.Registers[pair]);
 
-            AssertFlagsFalse(state);
+            // This opcode shouldn't affect flags.
+            AssertFlagsSame(initialState, state);
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (5*3), state.Cycles);
@@ -53,13 +63,23 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 StackPointer = 0x3902,
+                Flags = new ConditionFlags()
+                {
+                    Sign = true,
+                    Zero = true,
+                    AuxCarry = true,
+                    Parity = true,
+                    Subtract = true,
+                    Carry = true,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x38FF, state.StackPointer);
 
-            AssertFlagsFalse(state);
+            // This opcode shouldn't affect flags.
+            AssertFlagsSame(initialState, state);
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (5*3), state.Cycles);
