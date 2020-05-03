@@ -66,9 +66,9 @@ namespace JustinCredible.ZilogZ80
 
         #region Data transfer instructions
 
-            #region STAX - Store accumulator
-                public const byte STAX_B = 0x02;
-                public const byte STAX_D = 0x12;
+            #region LD rr, a - Store accumulator
+                public const byte LD_BC_A = 0x02;
+                public const byte LD_DE_A = 0x12;
             #endregion
 
             #region LDAX - Load accumulator

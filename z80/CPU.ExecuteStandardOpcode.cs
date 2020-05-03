@@ -142,10 +142,10 @@ namespace JustinCredible.ZilogZ80
 
                     #region STAX - Store accumulator
 
-                        case OpcodeBytes.STAX_B:
+                        case OpcodeBytes.LD_BC_A:
                             WriteMemory(Registers.BC, Registers.A);
                             break;
-                        case OpcodeBytes.STAX_D:
+                        case OpcodeBytes.LD_DE_A:
                             WriteMemory(Registers.DE, Registers.A);
                             break;
 

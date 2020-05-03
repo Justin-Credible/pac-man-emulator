@@ -67,8 +67,8 @@ namespace JustinCredible.ZilogZ80
             #region Data transfer instructions
 
                 #region STAX - Store accumulator
-                    [OpcodeBytes.STAX_B] = STAX_B,
-                    [OpcodeBytes.STAX_D] = STAX_D,
+                    [OpcodeBytes.LD_BC_A] = LD_BC_A,
+                    [OpcodeBytes.LD_DE_A] = LD_DE_A,
                 #endregion
 
                 #region LDAX - Load accumulator

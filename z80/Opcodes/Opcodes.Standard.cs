@@ -62,9 +62,9 @@ namespace JustinCredible.ZilogZ80
 
         #region Data transfer instructions
 
-            #region STAX - Store accumulator
-                public static Opcode STAX_B = new Opcode(OpcodeBytes.STAX_B, size: 1, instruction: "STAX B", cycles: 7, pseudocode: "(BC) <- A");
-                public static Opcode STAX_D = new Opcode(OpcodeBytes.STAX_D, size: 1, instruction: "STAX D", cycles: 7, pseudocode: "(DE) <- A");
+            #region LD rr, a - Store accumulator
+                public static Opcode LD_BC_A = new Opcode(OpcodeBytes.LD_BC_A, size: 1, instruction: "LD BC, A", cycles: 7, pseudocode: "(BC) <- A");
+                public static Opcode LD_DE_A = new Opcode(OpcodeBytes.LD_DE_A, size: 1, instruction: "LD DE, A", cycles: 7, pseudocode: "(DE) <- A");
             #endregion
 
             #region LDAX - Load accumulator
