@@ -310,10 +310,10 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             #region LXI - Load register pair immediate
-                public static Opcode LXI_B = new Opcode(OpcodeBytes.LXI_B, size: 3, instruction: "LXI B,D16", cycles: 10, pseudocode: "B <- byte 3, C <- byte 2");
-                public static Opcode LXI_D = new Opcode(OpcodeBytes.LXI_D, size: 3, instruction: "LXI D,D16", cycles: 10, pseudocode: "D <- byte 3, E <- byte 2");
-                public static Opcode LXI_H = new Opcode(OpcodeBytes.LXI_H, size: 3, instruction: "LXI H,D16", cycles: 10, pseudocode: "H <- byte 3, L <- byte 2");
-                public static Opcode LXI_SP = new Opcode(OpcodeBytes.LXI_SP, size: 3, instruction: "LXI SP, D16", cycles: 10, pseudocode: "SP.hi <- byte 3, SP.lo <- byte 2");
+                public static Opcode LD_BC_NN = new Opcode(OpcodeBytes.LD_BC_NN, size: 3, instruction: "LD B, D16", cycles: 10, pseudocode: "B <- byte 3, C <- byte 2");
+                public static Opcode LD_DE_NN = new Opcode(OpcodeBytes.LD_DE_NN, size: 3, instruction: "LD D, D16", cycles: 10, pseudocode: "D <- byte 3, E <- byte 2");
+                public static Opcode LD_HL_NN = new Opcode(OpcodeBytes.LD_HL_NN, size: 3, instruction: "LD H, D16", cycles: 10, pseudocode: "H <- byte 3, L <- byte 2");
+                public static Opcode LD_SP_NN = new Opcode(OpcodeBytes.LD_SP_NN, size: 3, instruction: "LD SP, D16", cycles: 10, pseudocode: "SP.hi <- byte 3, SP.lo <- byte 2");
             #endregion
 
             /** Add immediate to accumulator */

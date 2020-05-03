@@ -313,11 +313,11 @@ namespace JustinCredible.ZilogZ80
                 public const byte MVI_A = 0x3e;
             #endregion
 
-            #region LXI - Load register pair immediate
-                public const byte LXI_B = 0x01;
-                public const byte LXI_D = 0x11;
-                public const byte LXI_H = 0x21;
-                public const byte LXI_SP = 0x31;
+            #region LD rr, nn - Load register pair immediate
+                public const byte LD_BC_NN = 0x01;
+                public const byte LD_DE_NN = 0x11;
+                public const byte LD_HL_NN = 0x21;
+                public const byte LD_SP_NN = 0x31;
             #endregion
 
             /** Add immediate to accumulator */

@@ -314,10 +314,10 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region LXI - Load register pair immediate
-                    [OpcodeBytes.LXI_B] = LXI_B,
-                    [OpcodeBytes.LXI_D] = LXI_D,
-                    [OpcodeBytes.LXI_H] = LXI_H,
-                    [OpcodeBytes.LXI_SP] = LXI_SP,
+                    [OpcodeBytes.LD_BC_NN] = LD_BC_NN,
+                    [OpcodeBytes.LD_DE_NN] = LD_DE_NN,
+                    [OpcodeBytes.LD_HL_NN] = LD_HL_NN,
+                    [OpcodeBytes.LD_SP_NN] = LD_SP_NN,
                 #endregion
 
                 /** Add immediate to accumulator */

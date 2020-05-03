@@ -827,21 +827,21 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region LXI - Load register pair immediate
+                    #region LD rr, nn - Load register pair immediate
 
-                        case OpcodeBytes.LXI_B:
+                        case OpcodeBytes.LD_BC_NN:
                             Registers.B = ReadMemory(ProgramCounter + 2);
                             Registers.C = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.LXI_D:
+                        case OpcodeBytes.LD_DE_NN:
                             Registers.D = ReadMemory(ProgramCounter + 2);
                             Registers.E = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.LXI_H:
+                        case OpcodeBytes.LD_HL_NN:
                             Registers.H = ReadMemory(ProgramCounter + 2);
                             Registers.L = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.LXI_SP:
+                        case OpcodeBytes.LD_SP_NN:
                         {
                             var upper = ReadMemory(ProgramCounter + 2) << 8;
                             var lower = ReadMemory(ProgramCounter + 1);
