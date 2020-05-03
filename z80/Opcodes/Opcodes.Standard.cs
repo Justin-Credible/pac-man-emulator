@@ -208,15 +208,15 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SBB_A = new Opcode(OpcodeBytes.SBB_A, size: 1, instruction: "SBB A", cycles: 4, pseudocode: "A <- A - A - CY");
             #endregion
 
-            #region XRA - Logical XOR register or memory with accumulator
-                public static Opcode XRA_B = new Opcode(OpcodeBytes.XRA_B, size: 1, instruction: "XRA B", cycles: 4, pseudocode: "A <- A ^ B");
-                public static Opcode XRA_C = new Opcode(OpcodeBytes.XRA_C, size: 1, instruction: "XRA C", cycles: 4, pseudocode: "A <- A ^ C");
-                public static Opcode XRA_D = new Opcode(OpcodeBytes.XRA_D, size: 1, instruction: "XRA D", cycles: 4, pseudocode: "A <- A ^ D");
-                public static Opcode XRA_E = new Opcode(OpcodeBytes.XRA_E, size: 1, instruction: "XRA E", cycles: 4, pseudocode: "A <- A ^ E");
-                public static Opcode XRA_H = new Opcode(OpcodeBytes.XRA_H, size: 1, instruction: "XRA H", cycles: 4, pseudocode: "A <- A ^ H");
-                public static Opcode XRA_L = new Opcode(OpcodeBytes.XRA_L, size: 1, instruction: "XRA L", cycles: 4, pseudocode: "A <- A ^ L");
-                public static Opcode XRA_M = new Opcode(OpcodeBytes.XRA_M, size: 1, instruction: "XRA M", cycles: 7, pseudocode: "A <- A ^ (HL)");
-                public static Opcode XRA_A = new Opcode(OpcodeBytes.XRA_A, size: 1, instruction: "XRA A", cycles: 4, pseudocode: "A <- A ^ A");
+            #region XOR - Logical XOR register or memory with accumulator
+                public static Opcode XOR_B = new Opcode(OpcodeBytes.XOR_B, size: 1, instruction: "XOR B", cycles: 4, pseudocode: "A <- A ^ B");
+                public static Opcode XOR_C = new Opcode(OpcodeBytes.XOR_C, size: 1, instruction: "XOR C", cycles: 4, pseudocode: "A <- A ^ C");
+                public static Opcode XOR_D = new Opcode(OpcodeBytes.XOR_D, size: 1, instruction: "XOR D", cycles: 4, pseudocode: "A <- A ^ D");
+                public static Opcode XOR_E = new Opcode(OpcodeBytes.XOR_E, size: 1, instruction: "XOR E", cycles: 4, pseudocode: "A <- A ^ E");
+                public static Opcode XOR_H = new Opcode(OpcodeBytes.XOR_H, size: 1, instruction: "XOR H", cycles: 4, pseudocode: "A <- A ^ H");
+                public static Opcode XOR_L = new Opcode(OpcodeBytes.XOR_L, size: 1, instruction: "XOR L", cycles: 4, pseudocode: "A <- A ^ L");
+                public static Opcode XOR_HL = new Opcode(OpcodeBytes.XOR_HL, size: 1, instruction: "XOR (HL)", cycles: 7, pseudocode: "A <- A ^ (HL)");
+                public static Opcode XOR_A = new Opcode(OpcodeBytes.XOR_A, size: 1, instruction: "XOR A", cycles: 4, pseudocode: "A <- A ^ A");
             #endregion
 
             #region CMP - Compare register or memory with accumulator
@@ -332,7 +332,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode AND_N = new Opcode(OpcodeBytes.AND_N, size: 2, instruction: "AND D8", cycles: 7, pseudocode: "A <- A & data");
 
             /** XOR immediate with accumulator */
-            public static Opcode XRI = new Opcode(OpcodeBytes.XRI, size: 2, instruction: "XRI D8", cycles: 7, pseudocode: "A <- A ^ data");
+            public static Opcode XOR_N = new Opcode(OpcodeBytes.XOR_N, size: 2, instruction: "XOR D8", cycles: 7, pseudocode: "A <- A ^ data");
 
             /** Logical OR immediate with accumulator */
             public static Opcode OR_N = new Opcode(OpcodeBytes.OR_N, size: 2, instruction: "OR D8", cycles: 7, pseudocode: "A <- A | data");

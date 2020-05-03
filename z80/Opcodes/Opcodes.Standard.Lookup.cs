@@ -213,14 +213,14 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region XRA - Logical XOR register or memory with accumulator
-                    [OpcodeBytes.XRA_B] = XRA_B,
-                    [OpcodeBytes.XRA_C] = XRA_C,
-                    [OpcodeBytes.XRA_D] = XRA_D,
-                    [OpcodeBytes.XRA_E] = XRA_E,
-                    [OpcodeBytes.XRA_H] = XRA_H,
-                    [OpcodeBytes.XRA_L] = XRA_L,
-                    [OpcodeBytes.XRA_M] = XRA_M,
-                    [OpcodeBytes.XRA_A] = XRA_A,
+                    [OpcodeBytes.XOR_B] = XOR_B,
+                    [OpcodeBytes.XOR_C] = XOR_C,
+                    [OpcodeBytes.XOR_D] = XOR_D,
+                    [OpcodeBytes.XOR_E] = XOR_E,
+                    [OpcodeBytes.XOR_H] = XOR_H,
+                    [OpcodeBytes.XOR_L] = XOR_L,
+                    [OpcodeBytes.XOR_HL] = XOR_HL,
+                    [OpcodeBytes.XOR_A] = XOR_A,
                 #endregion
 
                 #region CMP - Compare register or memory with accumulator
@@ -336,7 +336,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.AND_N] = AND_N,
 
                 /** XOR immediate with accumulator */
-                [OpcodeBytes.XRI] = XRI,
+                [OpcodeBytes.XOR_N] = XOR_N,
 
                 /** Logical OR immediate with accumulator */
                 [OpcodeBytes.OR_N] = OR_N,

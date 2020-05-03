@@ -212,15 +212,15 @@ namespace JustinCredible.ZilogZ80
                 public const byte SBB_A = 0x9f;
             #endregion
 
-            #region XRA - Logical XOR register or memory with accumulator
-                public const byte XRA_B = 0xa8;
-                public const byte XRA_C = 0xa9;
-                public const byte XRA_D = 0xaa;
-                public const byte XRA_E = 0xab;
-                public const byte XRA_H = 0xac;
-                public const byte XRA_L = 0xad;
-                public const byte XRA_M = 0xae;
-                public const byte XRA_A = 0xaf;
+            #region XOR - Logical XOR register or memory with accumulator
+                public const byte XOR_B = 0xa8;
+                public const byte XOR_C = 0xa9;
+                public const byte XOR_D = 0xaa;
+                public const byte XOR_E = 0xab;
+                public const byte XOR_H = 0xac;
+                public const byte XOR_L = 0xad;
+                public const byte XOR_HL = 0xae;
+                public const byte XOR_A = 0xaf;
             #endregion
 
             #region CMP - Compare register or memory with accumulator
@@ -336,7 +336,7 @@ namespace JustinCredible.ZilogZ80
             public const byte AND_N = 0xe6;
 
             /** XOR immediate with accumulator */
-            public const byte XRI = 0xee;
+            public const byte XOR_N = 0xee;
 
             /** Logical OR immediate with accumulator */
             public const byte OR_N = 0xf6;

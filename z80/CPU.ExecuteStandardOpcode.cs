@@ -566,35 +566,35 @@ namespace JustinCredible.ZilogZ80
 
                     #region XRA - Logical XOR register or memory with accumulator
 
-                        case OpcodeBytes.XRA_B:
+                        case OpcodeBytes.XOR_B:
                             Registers.A = (byte)(Registers.A ^ Registers.B);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_C:
+                        case OpcodeBytes.XOR_C:
                             Registers.A = (byte)(Registers.A ^ Registers.C);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_D:
+                        case OpcodeBytes.XOR_D:
                             Registers.A = (byte)(Registers.A ^ Registers.D);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_E:
+                        case OpcodeBytes.XOR_E:
                             Registers.A = (byte)(Registers.A ^ Registers.E);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_H:
+                        case OpcodeBytes.XOR_H:
                             Registers.A = (byte)(Registers.A ^ Registers.H);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_L:
+                        case OpcodeBytes.XOR_L:
                             Registers.A = (byte)(Registers.A ^ Registers.L);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_M:
+                        case OpcodeBytes.XOR_HL:
                             Registers.A = (byte)(Registers.A ^ ReadMemory(Registers.HL));
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XRA_A:
+                        case OpcodeBytes.XOR_A:
                             Registers.A = (byte)(Registers.A ^ Registers.A);
                             SetFlags(carry: false, result: Registers.A);
                             break;
@@ -885,7 +885,7 @@ namespace JustinCredible.ZilogZ80
 
                     // XOR immediate with accumulator
                     // A <- A ^ data
-                    case OpcodeBytes.XRI:
+                    case OpcodeBytes.XOR_N:
                         Registers.A = (byte)(Registers.A ^ ReadMemory(ProgramCounter+1));
                         SetFlags(carry: false, result: Registers.A);
                         break;
