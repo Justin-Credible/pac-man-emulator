@@ -62,14 +62,14 @@ namespace JustinCredible.ZilogZ80
 
         #region Data transfer instructions
 
-            #region LD rr, A - Store accumulator
-                public static Opcode LD_BC_A = new Opcode(OpcodeBytes.LD_BC_A, size: 1, instruction: "LD (BC), A", cycles: 7, pseudocode: "(BC) <- A");
-                public static Opcode LD_DE_A = new Opcode(OpcodeBytes.LD_DE_A, size: 1, instruction: "LD (DE), A", cycles: 7, pseudocode: "(DE) <- A");
+            #region LD (rr), A - Store accumulator
+                public static Opcode LD_MBC_A = new Opcode(OpcodeBytes.LD_MBC_A, size: 1, instruction: "LD (BC), A", cycles: 7, pseudocode: "(BC) <- A");
+                public static Opcode LD_MDE_A = new Opcode(OpcodeBytes.LD_MDE_A, size: 1, instruction: "LD (DE), A", cycles: 7, pseudocode: "(DE) <- A");
             #endregion
 
-            #region LD A, rr - Load accumulator
-                public static Opcode LD_A_BC = new Opcode(OpcodeBytes.LD_A_BC, size: 1, instruction: "LD A, (BC)", cycles: 7, pseudocode: "A <- (BC)");
-                public static Opcode LD_A_DE = new Opcode(OpcodeBytes.LD_A_DE, size: 1, instruction: "LD A, (DE)", cycles: 7, pseudocode: "A <- (DE)");
+            #region LD A, (rr) - Load accumulator
+                public static Opcode LD_A_MBC = new Opcode(OpcodeBytes.LD_A_MBC, size: 1, instruction: "LD A, (BC)", cycles: 7, pseudocode: "A <- (BC)");
+                public static Opcode LD_A_MDE = new Opcode(OpcodeBytes.LD_A_MDE, size: 1, instruction: "LD A, (DE)", cycles: 7, pseudocode: "A <- (DE)");
             #endregion
 
             #region LD - Load (copy) data
@@ -79,7 +79,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_B_E = new Opcode(OpcodeBytes.LD_B_E, size: 1, instruction: "LD B, E", cycles: 5, pseudocode: "B <- E");
                 public static Opcode LD_B_H = new Opcode(OpcodeBytes.LD_B_H, size: 1, instruction: "LD B, H", cycles: 5, pseudocode: "B <- H");
                 public static Opcode LD_B_L = new Opcode(OpcodeBytes.LD_B_L, size: 1, instruction: "LD B, L", cycles: 5, pseudocode: "B <- L");
-                public static Opcode LD_B_HL = new Opcode(OpcodeBytes.LD_B_HL, size: 1, instruction: "LD B, (HL)", cycles: 7, pseudocode: "B <- (HL)");
+                public static Opcode LD_B_MHL = new Opcode(OpcodeBytes.LD_B_MHL, size: 1, instruction: "LD B, (HL)", cycles: 7, pseudocode: "B <- (HL)");
                 public static Opcode LD_B_A = new Opcode(OpcodeBytes.LD_B_A, size: 1, instruction: "LD B, A", cycles: 5, pseudocode: "B <- A");
                 public static Opcode LD_C_B = new Opcode(OpcodeBytes.LD_C_B, size: 1, instruction: "LD C, B", cycles: 5, pseudocode: "C <- B");
                 public static Opcode LD_C_C = new Opcode(OpcodeBytes.LD_C_C, size: 1, instruction: "LD C, C", cycles: 5, pseudocode: "C <- C");
@@ -87,7 +87,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_C_E = new Opcode(OpcodeBytes.LD_C_E, size: 1, instruction: "LD C, E", cycles: 5, pseudocode: "C <- E");
                 public static Opcode LD_C_H = new Opcode(OpcodeBytes.LD_C_H, size: 1, instruction: "LD C, H", cycles: 5, pseudocode: "C <- H");
                 public static Opcode LD_C_L = new Opcode(OpcodeBytes.LD_C_L, size: 1, instruction: "LD C, L", cycles: 5, pseudocode: "C <- L");
-                public static Opcode LD_C_HL = new Opcode(OpcodeBytes.LD_C_HL, size: 1, instruction: "LD C, (HL)", cycles: 7, pseudocode: "C <- (HL)");
+                public static Opcode LD_C_MHL = new Opcode(OpcodeBytes.LD_C_MHL, size: 1, instruction: "LD C, (HL)", cycles: 7, pseudocode: "C <- (HL)");
                 public static Opcode LD_C_A = new Opcode(OpcodeBytes.LD_C_A, size: 1, instruction: "LD C, A", cycles: 5, pseudocode: "C <- A");
                 public static Opcode LD_D_B = new Opcode(OpcodeBytes.LD_D_B, size: 1, instruction: "LD D, B", cycles: 5, pseudocode: "D <- B");
                 public static Opcode LD_D_C = new Opcode(OpcodeBytes.LD_D_C, size: 1, instruction: "LD D, C", cycles: 5, pseudocode: "D <- C");
@@ -95,7 +95,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_D_E = new Opcode(OpcodeBytes.LD_D_E, size: 1, instruction: "LD D, E", cycles: 5, pseudocode: "D <- E");
                 public static Opcode LD_D_H = new Opcode(OpcodeBytes.LD_D_H, size: 1, instruction: "LD D, H", cycles: 5, pseudocode: "D <- H");
                 public static Opcode LD_D_L = new Opcode(OpcodeBytes.LD_D_L, size: 1, instruction: "LD D, L", cycles: 5, pseudocode: "D <- L");
-                public static Opcode LD_D_HL = new Opcode(OpcodeBytes.LD_D_HL, size: 1, instruction: "LD D, (HL)", cycles: 7, pseudocode: "D <- (HL)");
+                public static Opcode LD_D_MHL = new Opcode(OpcodeBytes.LD_D_MHL, size: 1, instruction: "LD D, (HL)", cycles: 7, pseudocode: "D <- (HL)");
                 public static Opcode LD_D_A = new Opcode(OpcodeBytes.LD_D_A, size: 1, instruction: "LD D, A", cycles: 5, pseudocode: "D <- A");
                 public static Opcode LD_E_B = new Opcode(OpcodeBytes.LD_E_B, size: 1, instruction: "LD E, B", cycles: 5, pseudocode: "E <- B");
                 public static Opcode LD_E_C = new Opcode(OpcodeBytes.LD_E_C, size: 1, instruction: "LD E, C", cycles: 5, pseudocode: "E <- C");
@@ -103,7 +103,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_E_E = new Opcode(OpcodeBytes.LD_E_E, size: 1, instruction: "LD E, E", cycles: 5, pseudocode: "E <- E");
                 public static Opcode LD_E_H = new Opcode(OpcodeBytes.LD_E_H, size: 1, instruction: "LD E, H", cycles: 5, pseudocode: "E <- H");
                 public static Opcode LD_E_L = new Opcode(OpcodeBytes.LD_E_L, size: 1, instruction: "LD E, L", cycles: 5, pseudocode: "E <- L");
-                public static Opcode LD_E_HL = new Opcode(OpcodeBytes.LD_E_HL, size: 1, instruction: "LD E, (HL)", cycles: 7, pseudocode: "E <- (HL)");
+                public static Opcode LD_E_MHL = new Opcode(OpcodeBytes.LD_E_MHL, size: 1, instruction: "LD E, (HL)", cycles: 7, pseudocode: "E <- (HL)");
                 public static Opcode LD_E_A = new Opcode(OpcodeBytes.LD_E_A, size: 1, instruction: "LD E, A", cycles: 5, pseudocode: "E <- A");
                 public static Opcode LD_H_B = new Opcode(OpcodeBytes.LD_H_B, size: 1, instruction: "LD H, B", cycles: 5, pseudocode: "H <- B");
                 public static Opcode LD_H_C = new Opcode(OpcodeBytes.LD_H_C, size: 1, instruction: "LD H, C", cycles: 5, pseudocode: "H <- C");
@@ -111,7 +111,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_H_E = new Opcode(OpcodeBytes.LD_H_E, size: 1, instruction: "LD H, E", cycles: 5, pseudocode: "H <- E");
                 public static Opcode LD_H_H = new Opcode(OpcodeBytes.LD_H_H, size: 1, instruction: "LD H, H", cycles: 5, pseudocode: "H <- H");
                 public static Opcode LD_H_L = new Opcode(OpcodeBytes.LD_H_L, size: 1, instruction: "LD H, L", cycles: 5, pseudocode: "H <- L");
-                public static Opcode LD_H_HL = new Opcode(OpcodeBytes.LD_H_HL, size: 1, instruction: "LD H, (HL)", cycles: 7, pseudocode: "H <- (HL)");
+                public static Opcode LD_H_MHL = new Opcode(OpcodeBytes.LD_H_MHL, size: 1, instruction: "LD H, (HL)", cycles: 7, pseudocode: "H <- (HL)");
                 public static Opcode LD_H_A = new Opcode(OpcodeBytes.LD_H_A, size: 1, instruction: "LD H, A", cycles: 5, pseudocode: "H <- A");
                 public static Opcode LD_L_B = new Opcode(OpcodeBytes.LD_L_B, size: 1, instruction: "LD L, B", cycles: 5, pseudocode: "L <- B");
                 public static Opcode LD_L_C = new Opcode(OpcodeBytes.LD_L_C, size: 1, instruction: "LD L, C", cycles: 5, pseudocode: "L <- C");
@@ -119,22 +119,22 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_L_E = new Opcode(OpcodeBytes.LD_L_E, size: 1, instruction: "LD L, E", cycles: 5, pseudocode: "L <- E");
                 public static Opcode LD_L_H = new Opcode(OpcodeBytes.LD_L_H, size: 1, instruction: "LD L, H", cycles: 5, pseudocode: "L <- H");
                 public static Opcode LD_L_L = new Opcode(OpcodeBytes.LD_L_L, size: 1, instruction: "LD L, L", cycles: 5, pseudocode: "L <- L");
-                public static Opcode LD_L_HL = new Opcode(OpcodeBytes.LD_L_HL, size: 1, instruction: "LD L, (HL)", cycles: 7, pseudocode: "L <- (HL)");
+                public static Opcode LD_L_MHL = new Opcode(OpcodeBytes.LD_L_MHL, size: 1, instruction: "LD L, (HL)", cycles: 7, pseudocode: "L <- (HL)");
                 public static Opcode LD_L_A = new Opcode(OpcodeBytes.LD_L_A, size: 1, instruction: "LD L, A", cycles: 5, pseudocode: "L <- A");
-                public static Opcode LD_HL_B = new Opcode(OpcodeBytes.LD_HL_B, size: 1, instruction: "LD (HL), B", cycles: 7, pseudocode: "(HL) <- B");
-                public static Opcode LD_HL_C = new Opcode(OpcodeBytes.LD_HL_C, size: 1, instruction: "LD (HL), C", cycles: 7, pseudocode: "(HL) <- C");
-                public static Opcode LD_HL_D = new Opcode(OpcodeBytes.LD_HL_D, size: 1, instruction: "LD (HL), D", cycles: 7, pseudocode: "(HL) <- D");
-                public static Opcode LD_HL_E = new Opcode(OpcodeBytes.LD_HL_E, size: 1, instruction: "LD (HL), E", cycles: 7, pseudocode: "(HL) <- E");
-                public static Opcode LD_HL_H = new Opcode(OpcodeBytes.LD_HL_H, size: 1, instruction: "LD (HL), H", cycles: 7, pseudocode: "(HL) <- H");
-                public static Opcode LD_HL_L = new Opcode(OpcodeBytes.LD_HL_L, size: 1, instruction: "LD (HL), L", cycles: 7, pseudocode: "(HL) <- L");
-                public static Opcode LD_HL_A = new Opcode(OpcodeBytes.LD_HL_A, size: 1, instruction: "LD (HL), A", cycles: 7, pseudocode: "(HL) <- A");
+                public static Opcode LD_MHL_B = new Opcode(OpcodeBytes.LD_MHL_B, size: 1, instruction: "LD (HL), B", cycles: 7, pseudocode: "(HL) <- B");
+                public static Opcode LD_MHL_C = new Opcode(OpcodeBytes.LD_MHL_C, size: 1, instruction: "LD (HL), C", cycles: 7, pseudocode: "(HL) <- C");
+                public static Opcode LD_MHL_D = new Opcode(OpcodeBytes.LD_MHL_D, size: 1, instruction: "LD (HL), D", cycles: 7, pseudocode: "(HL) <- D");
+                public static Opcode LD_MHL_E = new Opcode(OpcodeBytes.LD_MHL_E, size: 1, instruction: "LD (HL), E", cycles: 7, pseudocode: "(HL) <- E");
+                public static Opcode LD_MHL_H = new Opcode(OpcodeBytes.LD_MHL_H, size: 1, instruction: "LD (HL), H", cycles: 7, pseudocode: "(HL) <- H");
+                public static Opcode LD_MHL_L = new Opcode(OpcodeBytes.LD_MHL_L, size: 1, instruction: "LD (HL), L", cycles: 7, pseudocode: "(HL) <- L");
+                public static Opcode LD_MHL_A = new Opcode(OpcodeBytes.LD_MHL_A, size: 1, instruction: "LD (HL), A", cycles: 7, pseudocode: "(HL) <- A");
                 public static Opcode LD_A_B = new Opcode(OpcodeBytes.LD_A_B, size: 1, instruction: "LD A, B", cycles: 5, pseudocode: "A <- B");
                 public static Opcode LD_A_C = new Opcode(OpcodeBytes.LD_A_C, size: 1, instruction: "LD A, C", cycles: 5, pseudocode: "A <- C");
                 public static Opcode LD_A_D = new Opcode(OpcodeBytes.LD_A_D, size: 1, instruction: "LD A, D", cycles: 5, pseudocode: "A <- D");
                 public static Opcode LD_A_E = new Opcode(OpcodeBytes.LD_A_E, size: 1, instruction: "LD A, E", cycles: 5, pseudocode: "A <- E");
                 public static Opcode LD_A_H = new Opcode(OpcodeBytes.LD_A_H, size: 1, instruction: "LD A, H", cycles: 5, pseudocode: "A <- H");
                 public static Opcode LD_A_L = new Opcode(OpcodeBytes.LD_A_L, size: 1, instruction: "LD A, L", cycles: 5, pseudocode: "A <- L");
-                public static Opcode LD_A_HL = new Opcode(OpcodeBytes.LD_A_HL, size: 1, instruction: "LD A, (HL)", cycles: 7, pseudocode: "A <- (HL)");
+                public static Opcode LD_A_MHL = new Opcode(OpcodeBytes.LD_A_MHL, size: 1, instruction: "LD A, (HL)", cycles: 7, pseudocode: "A <- (HL)");
                 public static Opcode LD_A_A = new Opcode(OpcodeBytes.LD_A_A, size: 1, instruction: "LD A, A", cycles: 5, pseudocode: "A <- A");
             #endregion
 
@@ -149,7 +149,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode ADD_A_E = new Opcode(OpcodeBytes.ADD_A_E, size: 1, instruction: "ADD E", cycles: 4, pseudocode: "A <- A + E");
                 public static Opcode ADD_A_H = new Opcode(OpcodeBytes.ADD_A_H, size: 1, instruction: "ADD H", cycles: 4, pseudocode: "A <- A + H");
                 public static Opcode ADD_A_L = new Opcode(OpcodeBytes.ADD_A_L, size: 1, instruction: "ADD L", cycles: 4, pseudocode: "A <- A + L");
-                public static Opcode ADD_A_HL = new Opcode(OpcodeBytes.ADD_A_HL, size: 1, instruction: "ADD M", cycles: 7, pseudocode: "A <- A + (HL)");
+                public static Opcode ADD_A_MHL = new Opcode(OpcodeBytes.ADD_A_MHL, size: 1, instruction: "ADD (HL)", cycles: 7, pseudocode: "A <- A + (HL)");
                 public static Opcode ADD_A_A = new Opcode(OpcodeBytes.ADD_A_A, size: 1, instruction: "ADD A", cycles: 4, pseudocode: "A <- A + A");
             #endregion
 
@@ -160,7 +160,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SUB_E = new Opcode(OpcodeBytes.SUB_E, size: 1, instruction: "SUB E", cycles: 4, pseudocode: "A <- A - E");
                 public static Opcode SUB_H = new Opcode(OpcodeBytes.SUB_H, size: 1, instruction: "SUB H", cycles: 4, pseudocode: "A <- A - H");
                 public static Opcode SUB_L = new Opcode(OpcodeBytes.SUB_L, size: 1, instruction: "SUB L", cycles: 4, pseudocode: "A <- A - L");
-                public static Opcode SUB_HL = new Opcode(OpcodeBytes.SUB_HL, size: 1, instruction: "SUB (HL)", cycles: 7, pseudocode: "A <- A - (HL)");
+                public static Opcode SUB_MHL = new Opcode(OpcodeBytes.SUB_MHL, size: 1, instruction: "SUB (HL)", cycles: 7, pseudocode: "A <- A - (HL)");
                 public static Opcode SUB_A = new Opcode(OpcodeBytes.SUB_A, size: 1, instruction: "SUB A", cycles: 4, pseudocode: "A <- A - A");
             #endregion
 
@@ -171,7 +171,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode AND_E = new Opcode(OpcodeBytes.AND_E, size: 1, instruction: "AND E", cycles: 4, pseudocode: "A <- A & E");
                 public static Opcode AND_H = new Opcode(OpcodeBytes.AND_H, size: 1, instruction: "AND H", cycles: 4, pseudocode: "A <- A & H");
                 public static Opcode AND_L = new Opcode(OpcodeBytes.AND_L, size: 1, instruction: "AND L", cycles: 4, pseudocode: "A <- A & L");
-                public static Opcode AND_HL = new Opcode(OpcodeBytes.AND_HL, size: 1, instruction: "AND (HL)", cycles: 7, pseudocode: "A <- A & (HL)");
+                public static Opcode AND_MHL = new Opcode(OpcodeBytes.AND_MHL, size: 1, instruction: "AND (HL)", cycles: 7, pseudocode: "A <- A & (HL)");
                 public static Opcode AND_A = new Opcode(OpcodeBytes.AND_A, size: 1, instruction: "AND A", cycles: 4, pseudocode: "A <- A & A");
             #endregion
 
@@ -182,7 +182,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode OR_E = new Opcode(OpcodeBytes.OR_E, size: 1, instruction: "OR E", cycles: 4, pseudocode: "A <- A | E");
                 public static Opcode OR_H = new Opcode(OpcodeBytes.OR_H, size: 1, instruction: "OR H", cycles: 4, pseudocode: "A <- A | H");
                 public static Opcode OR_L = new Opcode(OpcodeBytes.OR_L, size: 1, instruction: "OR L", cycles: 4, pseudocode: "A <- A | L");
-                public static Opcode OR_HL = new Opcode(OpcodeBytes.OR_HL, size: 1, instruction: "OR HL", cycles: 7, pseudocode: "A <- A | (HL)");
+                public static Opcode OR_MHL = new Opcode(OpcodeBytes.OR_MHL, size: 1, instruction: "OR (HL)", cycles: 7, pseudocode: "A <- A | (HL)");
                 public static Opcode OR_A = new Opcode(OpcodeBytes.OR_A, size: 1, instruction: "OR A", cycles: 4, pseudocode: "A <- A | A");
             #endregion
 
@@ -193,7 +193,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode ADC_A_E = new Opcode(OpcodeBytes.ADC_A_E, size: 1, instruction: "ADC A, E", cycles: 4, pseudocode: "A <- A + E + CY");
                 public static Opcode ADC_A_H = new Opcode(OpcodeBytes.ADC_A_H, size: 1, instruction: "ADC A, H", cycles: 4, pseudocode: "A <- A + H + CY");
                 public static Opcode ADC_A_L = new Opcode(OpcodeBytes.ADC_A_L, size: 1, instruction: "ADC A, L", cycles: 4, pseudocode: "A <- A + L + CY");
-                public static Opcode ADC_A_HL = new Opcode(OpcodeBytes.ADC_A_HL, size: 1, instruction: "ADC A, (HL)", cycles: 7, pseudocode: "A <- A + (HL) + CY");
+                public static Opcode ADC_A_MHL = new Opcode(OpcodeBytes.ADC_A_MHL, size: 1, instruction: "ADC A, (HL)", cycles: 7, pseudocode: "A <- A + (HL) + CY");
                 public static Opcode ADC_A_A = new Opcode(OpcodeBytes.ADC_A_A, size: 1, instruction: "ADC A, A", cycles: 4, pseudocode: "A <- A + A + CY");
             #endregion
 
@@ -204,7 +204,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SBC_A_E = new Opcode(OpcodeBytes.SBC_A_E, size: 1, instruction: "SBC A, E", cycles: 4, pseudocode: "A <- A - E - CY");
                 public static Opcode SBC_A_H = new Opcode(OpcodeBytes.SBC_A_H, size: 1, instruction: "SBC A, H", cycles: 4, pseudocode: "A <- A - H - CY");
                 public static Opcode SBC_A_L = new Opcode(OpcodeBytes.SBC_A_L, size: 1, instruction: "SBC A, L", cycles: 4, pseudocode: "A <- A - L - CY");
-                public static Opcode SBC_A_HL = new Opcode(OpcodeBytes.SBC_A_HL, size: 1, instruction: "SBC A, (HL)", cycles: 7, pseudocode: "A <- A - (HL) - CY");
+                public static Opcode SBC_A_MHL = new Opcode(OpcodeBytes.SBC_A_MHL, size: 1, instruction: "SBC A, (HL)", cycles: 7, pseudocode: "A <- A - (HL) - CY");
                 public static Opcode SBC_A_A = new Opcode(OpcodeBytes.SBC_A_A, size: 1, instruction: "SBC A, A", cycles: 4, pseudocode: "A <- A - A - CY");
             #endregion
 
@@ -215,7 +215,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode XOR_E = new Opcode(OpcodeBytes.XOR_E, size: 1, instruction: "XOR E", cycles: 4, pseudocode: "A <- A ^ E");
                 public static Opcode XOR_H = new Opcode(OpcodeBytes.XOR_H, size: 1, instruction: "XOR H", cycles: 4, pseudocode: "A <- A ^ H");
                 public static Opcode XOR_L = new Opcode(OpcodeBytes.XOR_L, size: 1, instruction: "XOR L", cycles: 4, pseudocode: "A <- A ^ L");
-                public static Opcode XOR_HL = new Opcode(OpcodeBytes.XOR_HL, size: 1, instruction: "XOR (HL)", cycles: 7, pseudocode: "A <- A ^ (HL)");
+                public static Opcode XOR_MHL = new Opcode(OpcodeBytes.XOR_MHL, size: 1, instruction: "XOR (HL)", cycles: 7, pseudocode: "A <- A ^ (HL)");
                 public static Opcode XOR_A = new Opcode(OpcodeBytes.XOR_A, size: 1, instruction: "XOR A", cycles: 4, pseudocode: "A <- A ^ A");
             #endregion
 
@@ -226,7 +226,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode CP_E = new Opcode(OpcodeBytes.CP_E, size: 1, instruction: "CP E", cycles: 4, pseudocode: "A - E");
                 public static Opcode CP_H = new Opcode(OpcodeBytes.CP_H, size: 1, instruction: "CP H", cycles: 4, pseudocode: "A - H");
                 public static Opcode CP_L = new Opcode(OpcodeBytes.CP_L, size: 1, instruction: "CP L", cycles: 4, pseudocode: "A - L");
-                public static Opcode CP_HL = new Opcode(OpcodeBytes.CP_HL, size: 1, instruction: "CP (HL)", cycles: 7, pseudocode: "A - (HL)");
+                public static Opcode CP_MHL = new Opcode(OpcodeBytes.CP_MHL, size: 1, instruction: "CP (HL)", cycles: 7, pseudocode: "A - (HL)");
                 public static Opcode CP_A = new Opcode(OpcodeBytes.CP_A, size: 1, instruction: "CP A", cycles: 4, pseudocode: "A - A");
             #endregion
 
@@ -305,11 +305,11 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_E_N = new Opcode(OpcodeBytes.LD_E_N, size: 2, instruction: "LD E, D8", cycles: 7, pseudocode: "E <- byte 2");
                 public static Opcode LD_H_N = new Opcode(OpcodeBytes.LD_H_N, size: 2, instruction: "LD H, D8", cycles: 7, pseudocode: "L <- byte 2");
                 public static Opcode LD_L_N = new Opcode(OpcodeBytes.LD_L_N, size: 2, instruction: "LD L, D8", cycles: 7, pseudocode: "L <- byte 2");
-                public static Opcode LD_HL_N = new Opcode(OpcodeBytes.LD_HL_N, size: 2, instruction: "LD (HL), D8", cycles: 10, pseudocode: "(HL) <- byte 2");
+                public static Opcode LD_MHL_N = new Opcode(OpcodeBytes.LD_MHL_N, size: 2, instruction: "LD (HL), D8", cycles: 10, pseudocode: "(HL) <- byte 2");
                 public static Opcode LD_A_N = new Opcode(OpcodeBytes.LD_A_N, size: 2, instruction: "LD A, D8", cycles: 7, pseudocode: "A <- byte 2");
             #endregion
 
-            #region LXI - Load register pair immediate
+            #region Load rr, nn - Load register pair immediate
                 public static Opcode LD_BC_NN = new Opcode(OpcodeBytes.LD_BC_NN, size: 3, instruction: "LD BC, D16", cycles: 10, pseudocode: "B <- byte 3, C <- byte 2");
                 public static Opcode LD_DE_NN = new Opcode(OpcodeBytes.LD_DE_NN, size: 3, instruction: "LD DE, D16", cycles: 10, pseudocode: "D <- byte 3, E <- byte 2");
                 public static Opcode LD_HL_NN = new Opcode(OpcodeBytes.LD_HL_NN, size: 3, instruction: "LD HL, D16", cycles: 10, pseudocode: "H <- byte 3, L <- byte 2");
@@ -360,6 +360,9 @@ namespace JustinCredible.ZilogZ80
 
         #region Jump instructions
 
+            // WARNING: Note that although the variants that use register pairs look like they are using indirect addressing,
+            // JP (HL) jumps to the address stored in the register HL, not the address stored at the address HL points to.
+            // https://wiki.specnext.dev/Extended_Z80_instruction_set
             /** Load program counter */
             public static Opcode JP_HL = new Opcode(OpcodeBytes.JP_HL, size: 1, instruction: "JP (HL)", cycles: 4, pseudocode: "PC.hi <- H; PC.lo <- L");
 

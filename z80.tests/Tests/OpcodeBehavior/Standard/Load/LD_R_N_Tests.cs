@@ -6,7 +6,7 @@ namespace JustinCredible.ZilogZ80.Tests
     {
         [Theory]
         [ClassData(typeof(RegistersClassData))]
-        public void TestMVIToRegister(Register destReg)
+        public void Test_LD_R_N_ToRegister(Register destReg)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -26,7 +26,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void TestMVIToMemory()
+        public void Test_LD_MRR_N_ToMemory()
         {
             var rom = AssembleSource($@"
                 org 00h

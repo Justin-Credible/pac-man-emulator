@@ -66,14 +66,14 @@ namespace JustinCredible.ZilogZ80
 
         #region Data transfer instructions
 
-            #region LD rr, A - Store accumulator
-                public const byte LD_BC_A = 0x02;
-                public const byte LD_DE_A = 0x12;
+            #region LD (rr), A - Store accumulator
+                public const byte LD_MBC_A = 0x02;
+                public const byte LD_MDE_A = 0x12;
             #endregion
 
-            #region LD A, rr - Load accumulator
-                public const byte LD_A_BC = 0x0a;
-                public const byte LD_A_DE = 0x1a;
+            #region LD A, (rr) - Load accumulator
+                public const byte LD_A_MBC = 0x0a;
+                public const byte LD_A_MDE = 0x1a;
             #endregion
 
             #region LD - Load (copy) data
@@ -83,7 +83,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_B_E = 0x43;
                 public const byte LD_B_H = 0x44;
                 public const byte LD_B_L = 0x45;
-                public const byte LD_B_HL = 0x46;
+                public const byte LD_B_MHL = 0x46;
                 public const byte LD_B_A = 0x47;
                 public const byte LD_C_B = 0x48;
                 public const byte LD_C_C = 0x49;
@@ -91,7 +91,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_C_E = 0x4b;
                 public const byte LD_C_H = 0x4c;
                 public const byte LD_C_L = 0x4d;
-                public const byte LD_C_HL = 0x4e;
+                public const byte LD_C_MHL = 0x4e;
                 public const byte LD_C_A = 0x4f;
                 public const byte LD_D_B = 0x50;
                 public const byte LD_D_C = 0x51;
@@ -99,7 +99,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_D_E = 0x53;
                 public const byte LD_D_H = 0x54;
                 public const byte LD_D_L = 0x55;
-                public const byte LD_D_HL = 0x56;
+                public const byte LD_D_MHL = 0x56;
                 public const byte LD_D_A = 0x57;
                 public const byte LD_E_B = 0x58;
                 public const byte LD_E_C = 0x59;
@@ -107,7 +107,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_E_E = 0x5b;
                 public const byte LD_E_H = 0x5c;
                 public const byte LD_E_L = 0x5d;
-                public const byte LD_E_HL = 0x5e;
+                public const byte LD_E_MHL = 0x5e;
                 public const byte LD_E_A = 0x5f;
                 public const byte LD_H_B = 0x60;
                 public const byte LD_H_C = 0x61;
@@ -115,7 +115,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_H_E = 0x63;
                 public const byte LD_H_H = 0x64;
                 public const byte LD_H_L = 0x65;
-                public const byte LD_H_HL = 0x66;
+                public const byte LD_H_MHL = 0x66;
                 public const byte LD_H_A = 0x67;
                 public const byte LD_L_B = 0x68;
                 public const byte LD_L_C = 0x69;
@@ -123,22 +123,22 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_L_E = 0x6b;
                 public const byte LD_L_H = 0x6c;
                 public const byte LD_L_L = 0x6d;
-                public const byte LD_L_HL = 0x6e;
+                public const byte LD_L_MHL = 0x6e;
                 public const byte LD_L_A = 0x6f;
-                public const byte LD_HL_B = 0x70;
-                public const byte LD_HL_C = 0x71;
-                public const byte LD_HL_D = 0x72;
-                public const byte LD_HL_E = 0x73;
-                public const byte LD_HL_H = 0x74;
-                public const byte LD_HL_L = 0x75;
-                public const byte LD_HL_A = 0x77;
+                public const byte LD_MHL_B = 0x70;
+                public const byte LD_MHL_C = 0x71;
+                public const byte LD_MHL_D = 0x72;
+                public const byte LD_MHL_E = 0x73;
+                public const byte LD_MHL_H = 0x74;
+                public const byte LD_MHL_L = 0x75;
+                public const byte LD_MHL_A = 0x77;
                 public const byte LD_A_B = 0x78;
                 public const byte LD_A_C = 0x79;
                 public const byte LD_A_D = 0x7a;
                 public const byte LD_A_E = 0x7b;
                 public const byte LD_A_H = 0x7c;
                 public const byte LD_A_L = 0x7d;
-                public const byte LD_A_HL = 0x7e;
+                public const byte LD_A_MHL = 0x7e;
                 public const byte LD_A_A = 0x7f;
             #endregion
 
@@ -153,7 +153,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte ADD_A_E = 0x83;
                 public const byte ADD_A_H = 0x84;
                 public const byte ADD_A_L = 0x85;
-                public const byte ADD_A_HL = 0x86;
+                public const byte ADD_A_MHL = 0x86;
                 public const byte ADD_A_A = 0x87;
             #endregion
 
@@ -164,7 +164,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SUB_E = 0x93;
                 public const byte SUB_H = 0x94;
                 public const byte SUB_L = 0x95;
-                public const byte SUB_HL = 0x96;
+                public const byte SUB_MHL = 0x96;
                 public const byte SUB_A = 0x97;
             #endregion
 
@@ -175,7 +175,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte AND_E = 0xa3;
                 public const byte AND_H = 0xa4;
                 public const byte AND_L = 0xa5;
-                public const byte AND_HL = 0xa6;
+                public const byte AND_MHL = 0xa6;
                 public const byte AND_A = 0xa7;
             #endregion
 
@@ -186,7 +186,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte OR_E = 0xb3;
                 public const byte OR_H = 0xb4;
                 public const byte OR_L = 0xb5;
-                public const byte OR_HL = 0xb6;
+                public const byte OR_MHL = 0xb6;
                 public const byte OR_A = 0xb7;
             #endregion
 
@@ -197,7 +197,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte ADC_A_E = 0x8b;
                 public const byte ADC_A_H = 0x8c;
                 public const byte ADC_A_L = 0x8d;
-                public const byte ADC_A_HL = 0x8e;
+                public const byte ADC_A_MHL = 0x8e;
                 public const byte ADC_A_A = 0x8f;
             #endregion
 
@@ -208,7 +208,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SBC_A_E = 0x9b;
                 public const byte SBC_A_H = 0x9c;
                 public const byte SBC_A_L = 0x9d;
-                public const byte SBC_A_HL = 0x9e;
+                public const byte SBC_A_MHL = 0x9e;
                 public const byte SBC_A_A = 0x9f;
             #endregion
 
@@ -219,7 +219,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte XOR_E = 0xab;
                 public const byte XOR_H = 0xac;
                 public const byte XOR_L = 0xad;
-                public const byte XOR_HL = 0xae;
+                public const byte XOR_MHL = 0xae;
                 public const byte XOR_A = 0xaf;
             #endregion
 
@@ -230,7 +230,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte CP_E = 0xbb;
                 public const byte CP_H = 0xbc;
                 public const byte CP_L = 0xbd;
-                public const byte CP_HL = 0xbe;
+                public const byte CP_MHL = 0xbe;
                 public const byte CP_A = 0xbf;
             #endregion
 
@@ -309,7 +309,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_E_N = 0x1e;
                 public const byte LD_H_N = 0x26;
                 public const byte LD_L_N = 0x2e;
-                public const byte LD_HL_N = 0x36;
+                public const byte LD_MHL_N = 0x36;
                 public const byte LD_A_N = 0x3e;
             #endregion
 

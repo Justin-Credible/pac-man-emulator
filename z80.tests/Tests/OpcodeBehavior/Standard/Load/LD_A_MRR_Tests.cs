@@ -2,12 +2,12 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class LD_A_RR_Tests : BaseTest
+    public class LD_A_MRR_Tests : BaseTest
     {
         [Theory]
         [InlineData(RegisterPair.BC)]
         [InlineData(RegisterPair.DE)]
-        public void Test_LD_A_RR(RegisterPair registerPair)
+        public void Test_LD_A_MRR(RegisterPair registerPair)
         {
             var rom = AssembleSource($@"
                 org 00h

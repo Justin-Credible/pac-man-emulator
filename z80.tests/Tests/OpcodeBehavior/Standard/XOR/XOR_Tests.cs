@@ -202,7 +202,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_XOR_M_NoFlags()
+        public void Test_XOR_MHL_NoFlags()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -241,7 +241,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_XOR_M_SignFlag()
+        public void Test_XOR_MHL_SignFlag()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -280,7 +280,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_XOR_M_ParityFlag()
+        public void Test_XOR_MHL_ParityFlag()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -319,7 +319,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_XOR_M_ZeroFlag()
+        public void Test_XOR_MHL_ZeroFlag()
         {
             var rom = AssembleSource($@"
                 org 00h

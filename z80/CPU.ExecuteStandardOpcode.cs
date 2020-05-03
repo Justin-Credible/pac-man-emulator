@@ -140,23 +140,23 @@ namespace JustinCredible.ZilogZ80
 
                 #region Data transfer instructions
 
-                    #region LD rr, A - Store accumulator
+                    #region LD (rr), A - Store accumulator
 
-                        case OpcodeBytes.LD_BC_A:
+                        case OpcodeBytes.LD_MBC_A:
                             WriteMemory(Registers.BC, Registers.A);
                             break;
-                        case OpcodeBytes.LD_DE_A:
+                        case OpcodeBytes.LD_MDE_A:
                             WriteMemory(Registers.DE, Registers.A);
                             break;
 
                     #endregion
 
-                    #region LD A, rr - Load accumulator
+                    #region LD A, (rr) - Load accumulator
 
-                        case OpcodeBytes.LD_A_BC:
+                        case OpcodeBytes.LD_A_MBC:
                             Registers.A = ReadMemory(Registers.BC);
                             break;
-                        case OpcodeBytes.LD_A_DE:
+                        case OpcodeBytes.LD_A_MDE:
                             Registers.A = ReadMemory(Registers.DE);
                             break;
 
@@ -316,53 +316,53 @@ namespace JustinCredible.ZilogZ80
 
                         #endregion
 
-                        #region LD X, M (from memory to register)
+                        #region LD r, (HL) (from memory to register)
 
-                        case OpcodeBytes.LD_B_HL:
+                        case OpcodeBytes.LD_B_MHL:
                             Registers.B = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.LD_C_HL:
+                        case OpcodeBytes.LD_C_MHL:
                             Registers.C = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.LD_D_HL:
+                        case OpcodeBytes.LD_D_MHL:
                             Registers.D = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.LD_E_HL:
+                        case OpcodeBytes.LD_E_MHL:
                             Registers.E = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.LD_H_HL:
+                        case OpcodeBytes.LD_H_MHL:
                             Registers.H = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.LD_L_HL:
+                        case OpcodeBytes.LD_L_MHL:
                             Registers.L = ReadMemory(Registers.HL);
                             break;
-                        case OpcodeBytes.LD_A_HL:
+                        case OpcodeBytes.LD_A_MHL:
                             Registers.A = ReadMemory(Registers.HL);
                             break;
 
                         #endregion
 
-                        #region LD M, X (from register to memory)
+                        #region LD (HL), r (from register to memory)
 
-                        case OpcodeBytes.LD_HL_B:
+                        case OpcodeBytes.LD_MHL_B:
                             WriteMemory(Registers.HL, Registers.B);
                             break;
-                        case OpcodeBytes.LD_HL_C:
+                        case OpcodeBytes.LD_MHL_C:
                             WriteMemory(Registers.HL, Registers.C);
                             break;
-                        case OpcodeBytes.LD_HL_D:
+                        case OpcodeBytes.LD_MHL_D:
                             WriteMemory(Registers.HL, Registers.D);
                             break;
-                        case OpcodeBytes.LD_HL_E:
+                        case OpcodeBytes.LD_MHL_E:
                             WriteMemory(Registers.HL, Registers.E);
                             break;
-                        case OpcodeBytes.LD_HL_H:
+                        case OpcodeBytes.LD_MHL_H:
                             WriteMemory(Registers.HL, Registers.H);
                             break;
-                        case OpcodeBytes.LD_HL_L:
+                        case OpcodeBytes.LD_MHL_L:
                             WriteMemory(Registers.HL, Registers.L);
                             break;
-                        case OpcodeBytes.LD_HL_A:
+                        case OpcodeBytes.LD_MHL_A:
                             WriteMemory(Registers.HL, Registers.A);
                             break;
 
@@ -394,7 +394,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.ADD_A_L:
                             ExecuteADD(Registers.L);
                             break;
-                        case OpcodeBytes.ADD_A_HL:
+                        case OpcodeBytes.ADD_A_MHL:
                             ExecuteADD(ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.ADD_A_A:
@@ -423,7 +423,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SUB_L:
                             ExecuteSUB(Registers.L);
                             break;
-                        case OpcodeBytes.SUB_HL:
+                        case OpcodeBytes.SUB_MHL:
                             ExecuteSUB(ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.SUB_A:
@@ -458,7 +458,7 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = (byte)(Registers.A & Registers.L);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.AND_HL:
+                        case OpcodeBytes.AND_MHL:
                             Registers.A = (byte)(Registers.A & ReadMemory(Registers.HL));
                             SetFlags(carry: false, result: Registers.A);
                             break;
@@ -495,7 +495,7 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = (byte)(Registers.A | Registers.L);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.OR_HL:
+                        case OpcodeBytes.OR_MHL:
                             Registers.A = (byte)(Registers.A | ReadMemory(Registers.HL));
                             SetFlags(carry: false, result: Registers.A);
                             break;
@@ -526,7 +526,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.ADC_A_L:
                             ExecuteADD(Registers.L, true);
                             break;
-                        case OpcodeBytes.ADC_A_HL:
+                        case OpcodeBytes.ADC_A_MHL:
                             ExecuteADD(ReadMemory(Registers.HL), true);
                             break;
                         case OpcodeBytes.ADC_A_A:
@@ -555,7 +555,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SBC_A_L:
                             ExecuteSUB(Registers.L, true);
                             break;
-                        case OpcodeBytes.SBC_A_HL:
+                        case OpcodeBytes.SBC_A_MHL:
                             ExecuteSUB(ReadMemory(Registers.HL), true);
                             break;
                         case OpcodeBytes.SBC_A_A:
@@ -590,7 +590,7 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = (byte)(Registers.A ^ Registers.L);
                             SetFlags(carry: false, result: Registers.A);
                             break;
-                        case OpcodeBytes.XOR_HL:
+                        case OpcodeBytes.XOR_MHL:
                             Registers.A = (byte)(Registers.A ^ ReadMemory(Registers.HL));
                             SetFlags(carry: false, result: Registers.A);
                             break;
@@ -621,7 +621,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.CP_L:
                             ExecuteSUB(Registers.L, false, false);
                             break;
-                        case OpcodeBytes.CP_HL:
+                        case OpcodeBytes.CP_MHL:
                             ExecuteSUB(ReadMemory(Registers.HL), false, false);
                             break;
                         case OpcodeBytes.CP_A:
@@ -818,7 +818,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.LD_L_N:
                             Registers.L = ReadMemory(ProgramCounter + 1);
                             break;
-                        case OpcodeBytes.LD_HL_N:
+                        case OpcodeBytes.LD_MHL_N:
                             WriteMemory(Registers.HL, ReadMemory(ProgramCounter + 1));
                             break;
                         case OpcodeBytes.LD_A_N:

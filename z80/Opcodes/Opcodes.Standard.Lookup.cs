@@ -67,13 +67,13 @@ namespace JustinCredible.ZilogZ80
             #region Data transfer instructions
 
                 #region STAX - Store accumulator
-                    [OpcodeBytes.LD_BC_A] = LD_BC_A,
-                    [OpcodeBytes.LD_DE_A] = LD_DE_A,
+                    [OpcodeBytes.LD_MBC_A] = LD_MBC_A,
+                    [OpcodeBytes.LD_MDE_A] = LD_MDE_A,
                 #endregion
 
                 #region LDAX - Load accumulator
-                    [OpcodeBytes.LD_A_BC] = LD_A_BC,
-                    [OpcodeBytes.LD_A_DE] = LD_A_DE,
+                    [OpcodeBytes.LD_A_MBC] = LD_A_MBC,
+                    [OpcodeBytes.LD_A_MDE] = LD_A_MDE,
                 #endregion
 
                 #region LD - Load (copy) data
@@ -83,7 +83,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_B_E] = LD_B_E,
                     [OpcodeBytes.LD_B_H] = LD_B_H,
                     [OpcodeBytes.LD_B_L] = LD_B_L,
-                    [OpcodeBytes.LD_B_HL] = LD_B_HL,
+                    [OpcodeBytes.LD_B_MHL] = LD_B_MHL,
                     [OpcodeBytes.LD_B_A] = LD_B_A,
                     [OpcodeBytes.LD_C_B] = LD_C_B,
                     [OpcodeBytes.LD_C_C] = LD_C_C,
@@ -91,7 +91,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_C_E] = LD_C_E,
                     [OpcodeBytes.LD_C_H] = LD_C_H,
                     [OpcodeBytes.LD_C_L] = LD_C_L,
-                    [OpcodeBytes.LD_C_HL] = LD_C_HL,
+                    [OpcodeBytes.LD_C_MHL] = LD_C_MHL,
                     [OpcodeBytes.LD_C_A] = LD_C_A,
                     [OpcodeBytes.LD_D_B] = LD_D_B,
                     [OpcodeBytes.LD_D_C] = LD_D_C,
@@ -99,7 +99,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_D_E] = LD_D_E,
                     [OpcodeBytes.LD_D_H] = LD_D_H,
                     [OpcodeBytes.LD_D_L] = LD_D_L,
-                    [OpcodeBytes.LD_D_HL] = LD_D_HL,
+                    [OpcodeBytes.LD_D_MHL] = LD_D_MHL,
                     [OpcodeBytes.LD_D_A] = LD_D_A,
                     [OpcodeBytes.LD_E_B] = LD_E_B,
                     [OpcodeBytes.LD_E_C] = LD_E_C,
@@ -107,7 +107,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_E_E] = LD_E_E,
                     [OpcodeBytes.LD_E_H] = LD_E_H,
                     [OpcodeBytes.LD_E_L] = LD_E_L,
-                    [OpcodeBytes.LD_E_HL] = LD_E_HL,
+                    [OpcodeBytes.LD_E_MHL] = LD_E_MHL,
                     [OpcodeBytes.LD_E_A] = LD_E_A,
                     [OpcodeBytes.LD_H_B] = LD_H_B,
                     [OpcodeBytes.LD_H_C] = LD_H_C,
@@ -115,7 +115,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_H_E] = LD_H_E,
                     [OpcodeBytes.LD_H_H] = LD_H_H,
                     [OpcodeBytes.LD_H_L] = LD_H_L,
-                    [OpcodeBytes.LD_H_HL] = LD_H_HL,
+                    [OpcodeBytes.LD_H_MHL] = LD_H_MHL,
                     [OpcodeBytes.LD_H_A] = LD_H_A,
                     [OpcodeBytes.LD_L_B] = LD_L_B,
                     [OpcodeBytes.LD_L_C] = LD_L_C,
@@ -123,22 +123,22 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_L_E] = LD_L_E,
                     [OpcodeBytes.LD_L_H] = LD_L_H,
                     [OpcodeBytes.LD_L_L] = LD_L_L,
-                    [OpcodeBytes.LD_L_HL] = LD_L_HL,
+                    [OpcodeBytes.LD_L_MHL] = LD_L_MHL,
                     [OpcodeBytes.LD_L_A] = LD_L_A,
-                    [OpcodeBytes.LD_HL_B] = LD_HL_B,
-                    [OpcodeBytes.LD_HL_C] = LD_HL_C,
-                    [OpcodeBytes.LD_HL_D] = LD_HL_D,
-                    [OpcodeBytes.LD_HL_E] = LD_HL_E,
-                    [OpcodeBytes.LD_HL_H] = LD_HL_H,
-                    [OpcodeBytes.LD_HL_L] = LD_HL_L,
-                    [OpcodeBytes.LD_HL_A] = LD_HL_A,
+                    [OpcodeBytes.LD_MHL_B] = LD_MHL_B,
+                    [OpcodeBytes.LD_MHL_C] = LD_MHL_C,
+                    [OpcodeBytes.LD_MHL_D] = LD_MHL_D,
+                    [OpcodeBytes.LD_MHL_E] = LD_MHL_E,
+                    [OpcodeBytes.LD_MHL_H] = LD_MHL_H,
+                    [OpcodeBytes.LD_MHL_L] = LD_MHL_L,
+                    [OpcodeBytes.LD_MHL_A] = LD_MHL_A,
                     [OpcodeBytes.LD_A_B] = LD_A_B,
                     [OpcodeBytes.LD_A_C] = LD_A_C,
                     [OpcodeBytes.LD_A_D] = LD_A_D,
                     [OpcodeBytes.LD_A_E] = LD_A_E,
                     [OpcodeBytes.LD_A_H] = LD_A_H,
                     [OpcodeBytes.LD_A_L] = LD_A_L,
-                    [OpcodeBytes.LD_A_HL] = LD_A_HL,
+                    [OpcodeBytes.LD_A_MHL] = LD_A_MHL,
                     [OpcodeBytes.LD_A_A] = LD_A_A,
                 #endregion
 
@@ -153,7 +153,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.ADD_A_E] = ADD_A_E,
                     [OpcodeBytes.ADD_A_H] = ADD_A_H,
                     [OpcodeBytes.ADD_A_L] = ADD_A_L,
-                    [OpcodeBytes.ADD_A_HL] = ADD_A_HL,
+                    [OpcodeBytes.ADD_A_MHL] = ADD_A_MHL,
                     [OpcodeBytes.ADD_A_A] = ADD_A_A,
                 #endregion
 
@@ -164,7 +164,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.SUB_E] = SUB_E,
                     [OpcodeBytes.SUB_H] = SUB_H,
                     [OpcodeBytes.SUB_L] = SUB_L,
-                    [OpcodeBytes.SUB_HL] = SUB_HL,
+                    [OpcodeBytes.SUB_MHL] = SUB_MHL,
                     [OpcodeBytes.SUB_A] = SUB_A,
                 #endregion
 
@@ -175,7 +175,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.AND_E] = AND_E,
                     [OpcodeBytes.AND_H] = AND_H,
                     [OpcodeBytes.AND_L] = AND_L,
-                    [OpcodeBytes.AND_HL] = AND_HL,
+                    [OpcodeBytes.AND_MHL] = AND_MHL,
                     [OpcodeBytes.AND_A] = AND_A,
                 #endregion
 
@@ -186,7 +186,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.OR_E] = OR_E,
                     [OpcodeBytes.OR_H] = OR_H,
                     [OpcodeBytes.OR_L] = OR_L,
-                    [OpcodeBytes.OR_HL] = OR_HL,
+                    [OpcodeBytes.OR_MHL] = OR_MHL,
                     [OpcodeBytes.OR_A] = OR_A,
                 #endregion
 
@@ -197,7 +197,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.ADC_A_E] = ADC_A_E,
                     [OpcodeBytes.ADC_A_H] = ADC_A_H,
                     [OpcodeBytes.ADC_A_L] = ADC_A_L,
-                    [OpcodeBytes.ADC_A_HL] = ADC_A_HL,
+                    [OpcodeBytes.ADC_A_MHL] = ADC_A_MHL,
                     [OpcodeBytes.ADC_A_A] = ADC_A_A,
                 #endregion
 
@@ -208,7 +208,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.SBC_A_E] = SBC_A_E,
                     [OpcodeBytes.SBC_A_H] = SBC_A_H,
                     [OpcodeBytes.SBC_A_L] = SBC_A_L,
-                    [OpcodeBytes.SBC_A_HL] = SBC_A_HL,
+                    [OpcodeBytes.SBC_A_MHL] = SBC_A_MHL,
                     [OpcodeBytes.SBC_A_A] = SBC_A_A,
                 #endregion
 
@@ -219,7 +219,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.XOR_E] = XOR_E,
                     [OpcodeBytes.XOR_H] = XOR_H,
                     [OpcodeBytes.XOR_L] = XOR_L,
-                    [OpcodeBytes.XOR_HL] = XOR_HL,
+                    [OpcodeBytes.XOR_MHL] = XOR_MHL,
                     [OpcodeBytes.XOR_A] = XOR_A,
                 #endregion
 
@@ -230,7 +230,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.CP_E] = CP_E,
                     [OpcodeBytes.CP_H] = CP_H,
                     [OpcodeBytes.CP_L] = CP_L,
-                    [OpcodeBytes.CP_HL] = CP_HL,
+                    [OpcodeBytes.CP_MHL] = CP_MHL,
                     [OpcodeBytes.CP_A] = CP_A,
                 #endregion
 
@@ -309,7 +309,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_E_N] = LD_E_N,
                     [OpcodeBytes.LD_H_N] = LD_H_N,
                     [OpcodeBytes.LD_L_N] = LD_L_N,
-                    [OpcodeBytes.LD_HL_N] = LD_HL_N,
+                    [OpcodeBytes.LD_MHL_N] = LD_MHL_N,
                     [OpcodeBytes.LD_A_N] = LD_A_N,
                 #endregion
 
