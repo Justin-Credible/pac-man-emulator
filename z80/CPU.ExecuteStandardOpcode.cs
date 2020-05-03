@@ -537,28 +537,28 @@ namespace JustinCredible.ZilogZ80
 
                     #region SBB - Subtract register or memory from accumulator with borrow
 
-                        case OpcodeBytes.SBB_B:
+                        case OpcodeBytes.SBC_A_B:
                             ExecuteSUB(Registers.B, true);
                             break;
-                        case OpcodeBytes.SBB_C:
+                        case OpcodeBytes.SBC_A_C:
                             ExecuteSUB(Registers.C, true);
                             break;
-                        case OpcodeBytes.SBB_D:
+                        case OpcodeBytes.SBC_A_D:
                             ExecuteSUB(Registers.D, true);
                             break;
-                        case OpcodeBytes.SBB_E:
+                        case OpcodeBytes.SBC_A_E:
                             ExecuteSUB(Registers.E, true);
                             break;
-                        case OpcodeBytes.SBB_H:
+                        case OpcodeBytes.SBC_A_H:
                             ExecuteSUB(Registers.H, true);
                             break;
-                        case OpcodeBytes.SBB_L:
+                        case OpcodeBytes.SBC_A_L:
                             ExecuteSUB(Registers.L, true);
                             break;
-                        case OpcodeBytes.SBB_M:
+                        case OpcodeBytes.SBC_A_HL:
                             ExecuteSUB(ReadMemory(Registers.HL), true);
                             break;
-                        case OpcodeBytes.SBB_A:
+                        case OpcodeBytes.SBC_A_A:
                             ExecuteSUB(Registers.A, true);
                             break;
 
@@ -872,7 +872,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Subtract immediate from accumulator with borrow
                     // A <- A - data - CY
-                    case OpcodeBytes.SBI:
+                    case OpcodeBytes.SBC_A_N:
                         ExecuteSUB(ReadMemory(ProgramCounter+1), true);
                         break;
 

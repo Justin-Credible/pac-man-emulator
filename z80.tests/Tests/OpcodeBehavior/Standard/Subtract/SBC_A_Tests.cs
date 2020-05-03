@@ -2,7 +2,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class ADC_Tests : BaseTest
+    public class SBC_A_Tests : BaseTest
     {
         [Theory]
         [InlineData(Register.B)]
@@ -11,11 +11,11 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(Register.E)]
         [InlineData(Register.H)]
         [InlineData(Register.L)]
-        public void Test_ADC_NoFlags(Register sourceReg)
+        public void Test_SBC_A_NoFlags(Register sourceReg)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, {sourceReg}
+                SBC A, {sourceReg}
                 HALT
             ");
 
@@ -26,9 +26,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var flags = new ConditionFlags()
             {
                 Carry = true,
-
-                // Ensure this is flipped to zero because this was an addition.
-                Subtract = true,
+                Subtract = false,
             };
 
             var initialState = new CPUConfig()
@@ -39,14 +37,14 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x58, state.Registers.A);
+            Assert.Equal(0x2C, state.Registers.A);
             Assert.Equal(0x15, state.Registers[sourceReg]);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
             Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -61,21 +59,22 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(Register.E)]
         [InlineData(Register.H)]
         [InlineData(Register.L)]
-        public void Test_ADC_CarryFlag(Register sourceReg)
+        public void Test_SBC_A_CarryFlag(Register sourceReg)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, {sourceReg}
+                SBC A, {sourceReg}
                 HALT
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0xFE;
+            registers.A = 0x02;
             registers[sourceReg] = 0x03;
 
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
 
             var initialState = new CPUConfig()
@@ -86,14 +85,14 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x02, state.Registers.A);
+            Assert.Equal(0xFE, state.Registers.A);
             Assert.Equal(0x03, state.Registers[sourceReg]);
 
-            Assert.False(state.Flags.Sign);
+            Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
             Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            Assert.True(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -108,21 +107,70 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(Register.E)]
         [InlineData(Register.H)]
         [InlineData(Register.L)]
-        public void Test_ADC_ZeroFlag(Register sourceReg)
+        public void Test_SBC_A_CarryFlag_CausedByExtraMinusOneFromFlag(Register sourceReg)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, {sourceReg}
+                SBC A, {sourceReg}
                 HALT
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0xFE;
+            registers.A = 0x02;
+            registers[sourceReg] = 0x02;
+
+            var flags = new ConditionFlags()
+            {
+                Carry = true,
+                Subtract = false,
+            };
+
+            var initialState = new CPUConfig()
+            {
+                Registers = registers,
+                Flags = flags,
+            };
+
+            var state = Execute(rom, initialState);
+
+            Assert.Equal(0xFF, state.Registers.A);
+            Assert.Equal(0x02, state.Registers[sourceReg]);
+
+            Assert.True(state.Flags.Sign);
+            Assert.False(state.Flags.Zero);
+            Assert.False(state.Flags.AuxCarry);
+            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.Subtract);
+            Assert.True(state.Flags.Carry);
+
+            Assert.Equal(2, state.Iterations);
+            Assert.Equal(4 + 4, state.Cycles);
+            Assert.Equal(0x01, state.ProgramCounter);
+        }
+
+        [Theory]
+        [InlineData(Register.B)]
+        [InlineData(Register.C)]
+        [InlineData(Register.D)]
+        [InlineData(Register.E)]
+        [InlineData(Register.H)]
+        [InlineData(Register.L)]
+        public void Test_SBC_A_ZeroFlag(Register sourceReg)
+        {
+            var rom = AssembleSource($@"
+                org 00h
+                SBC A, {sourceReg}
+                HALT
+            ");
+
+            var registers = new CPURegisters();
+            registers.A = 0x02;
             registers[sourceReg] = 0x01;
 
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
 
             var initialState = new CPUConfig()
@@ -140,8 +188,8 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
             Assert.True(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
-            Assert.True(state.Flags.Carry);
+            Assert.True(state.Flags.Subtract);
+            Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
@@ -155,11 +203,11 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(Register.E)]
         [InlineData(Register.H)]
         [InlineData(Register.L)]
-        public void Test_ADC_ParityFlag(Register sourceReg)
+        public void Test_SBC_A_ParityFlag(Register sourceReg)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, {sourceReg}
+                SBC A, {sourceReg}
                 HALT
             ");
 
@@ -170,6 +218,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
 
             var initialState = new CPUConfig()
@@ -180,14 +229,14 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x77, state.Registers.A);
+            Assert.Equal(0x11, state.Registers.A);
             Assert.Equal(0x32, state.Registers[sourceReg]);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
             Assert.True(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -202,21 +251,22 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(Register.E)]
         [InlineData(Register.H)]
         [InlineData(Register.L)]
-        public void Test_ADC_SignFlag(Register sourceReg)
+        public void Test_SBC_A_SignFlag(Register sourceReg)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, {sourceReg}
+                SBC A, {sourceReg}
                 HALT
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0x4D;
-            registers[sourceReg] = 0x39;
+            registers.A = 0x8D;
+            registers[sourceReg] = 0x09;
 
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
 
             var initialState = new CPUConfig()
@@ -227,56 +277,14 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x87, state.Registers.A);
-            Assert.Equal(0x39, state.Registers[sourceReg]);
+            Assert.Equal(0x83, state.Registers.A);
+            Assert.Equal(0x09, state.Registers[sourceReg]);
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
-        }
-
-        [Fact]
-        public void Test_ADC_A_A_NoFlags()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                ADC A, A
-                HALT
-            ");
-
-            var registers = new CPURegisters();
-            registers.A = 0x03;
-
-            var flags = new ConditionFlags()
-            {
-                Carry = true,
-
-                // Ensure this is flipped to zero because this was an addition.
-                Subtract = true,
-            };
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                Flags = flags,
-            };
-
-            var state = Execute(rom, initialState);
-
-            Assert.Equal(0x07, state.Registers.A);
-
-            Assert.False(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
             Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -285,11 +293,11 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADC_A_A_CarryFlag()
+        public void Test_SBC_A_A_SignParityCarryFlags()
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, A
+                SBC A, A
                 HALT
             ");
 
@@ -299,6 +307,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
 
             var initialState = new CPUConfig()
@@ -309,13 +318,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x01, state.Registers.A);
+            Assert.Equal(0xFF, state.Registers.A);
 
-            Assert.False(state.Flags.Sign);
+            Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -324,49 +333,11 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADC_A_A_SignFlag()
+        public void Test_SBC_A_M_NoFlags()
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, A
-                HALT
-            ");
-
-            var registers = new CPURegisters();
-            registers.A = 0x44;
-
-            var flags = new ConditionFlags()
-            {
-                Carry = true,
-            };
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                Flags = flags,
-            };
-            var state = Execute(rom, initialState);
-
-            Assert.Equal(0x89, state.Registers.A);
-
-            Assert.True(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
-        }
-
-        [Fact]
-        public void Test_ADC_A_HL_NoFlags()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                ADC A, (HL)
+                SBC A, (HL)
                 HALT
             ");
 
@@ -374,16 +345,14 @@ namespace JustinCredible.ZilogZ80.Tests
             registers.A = 0x42;
             registers.HL = 0x2477;
 
-            var memory = new byte[16384];
-            memory[0x2477] = 0x15;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
-
-                // Ensure this is flipped to zero because this was an addition.
-                Subtract = true,
+                Subtract = false,
             };
+
+            var memory = new byte[16384];
+            memory[0x2477] = 0x15;
 
             var initialState = new CPUConfig()
             {
@@ -394,14 +363,14 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x58, state.Registers.A);
+            Assert.Equal(0x2C, state.Registers.A);
             Assert.Equal(0x15, state.Memory[0x2477]);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
             Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -410,25 +379,26 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADC_A_HL_ZeroAndCarryFlags()
+        public void Test_SBC_A_M_ZeroFlag()
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, (HL)
+                SBC A, (HL)
                 HALT
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0xC0;
+            registers.A = 0x40;
             registers.HL = 0x2477;
-
-            var memory = new byte[16384];
-            memory[0x2477] = 0x3F;
 
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
+
+            var memory = new byte[16384];
+            memory[0x2477] = 0x3F;
 
             var initialState = new CPUConfig()
             {
@@ -446,8 +416,8 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
             Assert.True(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
-            Assert.True(state.Flags.Carry);
+            Assert.True(state.Flags.Subtract);
+            Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 7, state.Cycles);
@@ -455,25 +425,26 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADC_A_HL_SignAndParityFlags()
+        public void Test_SBC_A_M_CarryAndSignFlags()
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, (HL)
+                SBC A, (HL)
                 HALT
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0x47;
+            registers.A = 0x02;
             registers.HL = 0x2477;
-
-            var memory = new byte[16384];
-            memory[0x2477] = 0x43;
 
             var flags = new ConditionFlags()
             {
                 Carry = true,
+                Subtract = false,
             };
+
+            var memory = new byte[16384];
+            memory[0x2477] = 0x03;
 
             var initialState = new CPUConfig()
             {
@@ -484,15 +455,15 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x8B, state.Registers.A);
-            Assert.Equal(0x43, state.Memory[0x2477]);
+            Assert.Equal(0xFE, state.Registers.A);
+            Assert.Equal(0x03, state.Memory[0x2477]);
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
+            Assert.False(state.Flags.Parity);
+            Assert.True(state.Flags.Subtract);
+            Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 7, state.Cycles);

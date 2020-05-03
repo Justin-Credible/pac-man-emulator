@@ -202,14 +202,14 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region SBB - Subtract register or memory from accumulator with borrow
-                    [OpcodeBytes.SBB_B] = SBB_B,
-                    [OpcodeBytes.SBB_C] = SBB_C,
-                    [OpcodeBytes.SBB_D] = SBB_D,
-                    [OpcodeBytes.SBB_E] = SBB_E,
-                    [OpcodeBytes.SBB_H] = SBB_H,
-                    [OpcodeBytes.SBB_L] = SBB_L,
-                    [OpcodeBytes.SBB_M] = SBB_M,
-                    [OpcodeBytes.SBB_A] = SBB_A,
+                    [OpcodeBytes.SBC_A_B] = SBC_A_B,
+                    [OpcodeBytes.SBC_A_C] = SBC_A_C,
+                    [OpcodeBytes.SBC_A_D] = SBC_A_D,
+                    [OpcodeBytes.SBC_A_E] = SBC_A_E,
+                    [OpcodeBytes.SBC_A_H] = SBC_A_H,
+                    [OpcodeBytes.SBC_A_L] = SBC_A_L,
+                    [OpcodeBytes.SBC_A_HL] = SBC_A_HL,
+                    [OpcodeBytes.SBC_A_A] = SBC_A_A,
                 #endregion
 
                 #region XRA - Logical XOR register or memory with accumulator
@@ -330,7 +330,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.SUB_N] = SUB_N,
 
                 /** Subtract immediate from accumulator with borrow */
-                [OpcodeBytes.SBI] = SBI,
+                [OpcodeBytes.SBC_A_N] = SBC_A_N,
 
                 /** Logical AND immediate with accumulator */
                 [OpcodeBytes.AND_N] = AND_N,

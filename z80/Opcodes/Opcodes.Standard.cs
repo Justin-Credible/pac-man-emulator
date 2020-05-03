@@ -197,15 +197,15 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode ADC_A_A = new Opcode(OpcodeBytes.ADC_A_A, size: 1, instruction: "ADC A, A", cycles: 4, pseudocode: "A <- A + A + CY");
             #endregion
 
-            #region SBB - Subtract register or memory from accumulator with borrow
-                public static Opcode SBB_B = new Opcode(OpcodeBytes.SBB_B, size: 1, instruction: "SBB B", cycles: 4, pseudocode: "A <- A - B - CY");
-                public static Opcode SBB_C = new Opcode(OpcodeBytes.SBB_C, size: 1, instruction: "SBB C", cycles: 4, pseudocode: "A <- A - C - CY");
-                public static Opcode SBB_D = new Opcode(OpcodeBytes.SBB_D, size: 1, instruction: "SBB D", cycles: 4, pseudocode: "A <- A - D - CY");
-                public static Opcode SBB_E = new Opcode(OpcodeBytes.SBB_E, size: 1, instruction: "SBB E", cycles: 4, pseudocode: "A <- A - E - CY");
-                public static Opcode SBB_H = new Opcode(OpcodeBytes.SBB_H, size: 1, instruction: "SBB H", cycles: 4, pseudocode: "A <- A - H - CY");
-                public static Opcode SBB_L = new Opcode(OpcodeBytes.SBB_L, size: 1, instruction: "SBB L", cycles: 4, pseudocode: "A <- A - L - CY");
-                public static Opcode SBB_M = new Opcode(OpcodeBytes.SBB_M, size: 1, instruction: "SBB M", cycles: 7, pseudocode: "A <- A - (HL) - CY");
-                public static Opcode SBB_A = new Opcode(OpcodeBytes.SBB_A, size: 1, instruction: "SBB A", cycles: 4, pseudocode: "A <- A - A - CY");
+            #region SBC - Subtract register or memory from accumulator with borrow
+                public static Opcode SBC_A_B = new Opcode(OpcodeBytes.SBC_A_B, size: 1, instruction: "SBC A, B", cycles: 4, pseudocode: "A <- A - B - CY");
+                public static Opcode SBC_A_C = new Opcode(OpcodeBytes.SBC_A_C, size: 1, instruction: "SBC A, C", cycles: 4, pseudocode: "A <- A - C - CY");
+                public static Opcode SBC_A_D = new Opcode(OpcodeBytes.SBC_A_D, size: 1, instruction: "SBC A, D", cycles: 4, pseudocode: "A <- A - D - CY");
+                public static Opcode SBC_A_E = new Opcode(OpcodeBytes.SBC_A_E, size: 1, instruction: "SBC A, E", cycles: 4, pseudocode: "A <- A - E - CY");
+                public static Opcode SBC_A_H = new Opcode(OpcodeBytes.SBC_A_H, size: 1, instruction: "SBC A, H", cycles: 4, pseudocode: "A <- A - H - CY");
+                public static Opcode SBC_A_L = new Opcode(OpcodeBytes.SBC_A_L, size: 1, instruction: "SBC A, L", cycles: 4, pseudocode: "A <- A - L - CY");
+                public static Opcode SBC_A_HL = new Opcode(OpcodeBytes.SBC_A_HL, size: 1, instruction: "SBC A, (HL)", cycles: 7, pseudocode: "A <- A - (HL) - CY");
+                public static Opcode SBC_A_A = new Opcode(OpcodeBytes.SBC_A_A, size: 1, instruction: "SBC A, A", cycles: 4, pseudocode: "A <- A - A - CY");
             #endregion
 
             #region XOR - Logical XOR register or memory with accumulator
@@ -326,7 +326,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SUB_N = new Opcode(OpcodeBytes.SUB_N, size: 2, instruction: "SUB D8", cycles: 7, pseudocode: "A <- A - data");
 
             /** Subtract immediate from accumulator with borrow */
-            public static Opcode SBI = new Opcode(OpcodeBytes.SBI, size: 2, instruction: "SBI D8", cycles: 7, pseudocode: "A <- A - data - CY");
+            public static Opcode SBC_A_N = new Opcode(OpcodeBytes.SBC_A_N, size: 2, instruction: "SBC A, D8", cycles: 7, pseudocode: "A <- A - data - CY");
 
             /** Logical AND immediate with accumulator */
             public static Opcode AND_N = new Opcode(OpcodeBytes.AND_N, size: 2, instruction: "AND D8", cycles: 7, pseudocode: "A <- A & data");

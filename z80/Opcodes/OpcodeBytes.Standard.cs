@@ -201,15 +201,15 @@ namespace JustinCredible.ZilogZ80
                 public const byte ADC_A_A = 0x8f;
             #endregion
 
-            #region SBB - Subtract register or memory from accumulator with borrow
-                public const byte SBB_B = 0x98;
-                public const byte SBB_C = 0x99;
-                public const byte SBB_D = 0x9a;
-                public const byte SBB_E = 0x9b;
-                public const byte SBB_H = 0x9c;
-                public const byte SBB_L = 0x9d;
-                public const byte SBB_M = 0x9e;
-                public const byte SBB_A = 0x9f;
+            #region SBC - Subtract register or memory from accumulator with borrow
+                public const byte SBC_A_B = 0x98;
+                public const byte SBC_A_C = 0x99;
+                public const byte SBC_A_D = 0x9a;
+                public const byte SBC_A_E = 0x9b;
+                public const byte SBC_A_H = 0x9c;
+                public const byte SBC_A_L = 0x9d;
+                public const byte SBC_A_HL = 0x9e;
+                public const byte SBC_A_A = 0x9f;
             #endregion
 
             #region XOR - Logical XOR register or memory with accumulator
@@ -330,7 +330,7 @@ namespace JustinCredible.ZilogZ80
             public const byte SUB_N = 0xd6;
 
             /** Subtract immediate from accumulator with borrow */
-            public const byte SBI = 0xde;
+            public const byte SBC_A_N = 0xde;
 
             /** Logical AND immediate with accumulator */
             public const byte AND_N = 0xe6;
