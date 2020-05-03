@@ -349,7 +349,7 @@ namespace JustinCredible.ZilogZ80
             #region Direct addressing instructions
 
                 /** Store accumulator direct */
-                [OpcodeBytes.STA] = STA,
+                [OpcodeBytes.LD_MNN_A] = LD_MNN_A,
 
                 /** Load accumulator direct */
                 [OpcodeBytes.LD_A_MNN] = LD_A_MNN,

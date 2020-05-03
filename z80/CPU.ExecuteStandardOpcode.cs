@@ -908,7 +908,7 @@ namespace JustinCredible.ZilogZ80
                 #region Direct addressing instructions
 
                     // Store accumulator direct
-                    case OpcodeBytes.STA:
+                    case OpcodeBytes.LD_MNN_A:
                     {
                         var upper = ReadMemory(ProgramCounter + 2) << 8;
                         var lower = ReadMemory(ProgramCounter + 1);

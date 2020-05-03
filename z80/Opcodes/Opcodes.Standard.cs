@@ -345,7 +345,7 @@ namespace JustinCredible.ZilogZ80
         #region Direct addressing instructions
 
             /** Store accumulator direct */
-            public static Opcode STA = new Opcode(OpcodeBytes.STA, size: 3, instruction: "STA adr", cycles: 13, pseudocode: "(adr) <- A");
+            public static Opcode LD_MNN_A = new Opcode(OpcodeBytes.LD_MNN_A, size: 3, instruction: "LD (nn), A", cycles: 13, pseudocode: "(adr) <- A");
 
             /** Load accumulator direct */
             public static Opcode LD_A_MNN = new Opcode(OpcodeBytes.LD_A_MNN, size: 3, instruction: "LD A, (nn)", cycles: 13, pseudocode: "A <- (adr)");

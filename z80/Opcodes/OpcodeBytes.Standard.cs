@@ -349,7 +349,7 @@ namespace JustinCredible.ZilogZ80
         #region Direct addressing instructions
 
             /** Store accumulator direct */
-            public const byte STA = 0x32;
+            public const byte LD_MNN_A = 0x32;
 
             /** Load accumulator direct */
             public const byte LD_A_MNN = 0x3a;
