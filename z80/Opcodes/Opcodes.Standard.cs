@@ -265,17 +265,17 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             #region PUSH - Push data onto the stack
-                public static Opcode PUSH_B = new Opcode(OpcodeBytes.PUSH_B, size: 1, instruction: "PUSH B", cycles: 11, pseudocode: "(sp-2)<-C; (sp-1)<-B; sp <- sp - 2");
-                public static Opcode PUSH_D = new Opcode(OpcodeBytes.PUSH_D, size: 1, instruction: "PUSH D", cycles: 11, pseudocode: "(sp-2)<-E; (sp-1)<-D; sp <- sp - 2");
-                public static Opcode PUSH_H = new Opcode(OpcodeBytes.PUSH_H, size: 1, instruction: "PUSH H", cycles: 11, pseudocode: "(sp-2)<-L; (sp-1)<-H; sp <- sp - 2");
-                public static Opcode PUSH_PSW = new Opcode(OpcodeBytes.PUSH_PSW, size: 1, instruction: "PUSH PSW", cycles: 11, pseudocode: "(sp-2)<-flags; (sp-1)<-A; sp <- sp - 2");
+                public static Opcode PUSH_BC = new Opcode(OpcodeBytes.PUSH_BC, size: 1, instruction: "PUSH BC", cycles: 11, pseudocode: "(sp-2)<-C; (sp-1)<-B; sp <- sp - 2");
+                public static Opcode PUSH_DE = new Opcode(OpcodeBytes.PUSH_DE, size: 1, instruction: "PUSH DE", cycles: 11, pseudocode: "(sp-2)<-E; (sp-1)<-D; sp <- sp - 2");
+                public static Opcode PUSH_HL = new Opcode(OpcodeBytes.PUSH_HL, size: 1, instruction: "PUSH HL", cycles: 11, pseudocode: "(sp-2)<-L; (sp-1)<-H; sp <- sp - 2");
+                public static Opcode PUSH_AF = new Opcode(OpcodeBytes.PUSH_AF, size: 1, instruction: "PUSH AF", cycles: 11, pseudocode: "(sp-2)<-flags; (sp-1)<-A; sp <- sp - 2");
             #endregion
 
             #region POP - Pop data off of the stack
-                public static Opcode POP_B = new Opcode(OpcodeBytes.POP_B, size: 1, instruction: "POP B", cycles: 10, pseudocode: "C <- (sp); B <- (sp+1); sp <- sp+2");
-                public static Opcode POP_D = new Opcode(OpcodeBytes.POP_D, size: 1, instruction: "POP D", cycles: 10, pseudocode: "E <- (sp); D <- (sp+1); sp <- sp+2");
-                public static Opcode POP_H = new Opcode(OpcodeBytes.POP_H, size: 1, instruction: "POP H", cycles: 10, pseudocode: "L <- (sp); H <- (sp+1); sp <- sp+2");
-                public static Opcode POP_PSW = new Opcode(OpcodeBytes.POP_PSW, size: 1, instruction: "POP PSW", cycles: 10, pseudocode: "flags <- (sp); A <- (sp+1); sp <- sp+2");
+                public static Opcode POP_BC = new Opcode(OpcodeBytes.POP_BC, size: 1, instruction: "POP BC", cycles: 10, pseudocode: "C <- (sp); B <- (sp+1); sp <- sp+2");
+                public static Opcode POP_DE = new Opcode(OpcodeBytes.POP_DE, size: 1, instruction: "POP DE", cycles: 10, pseudocode: "E <- (sp); D <- (sp+1); sp <- sp+2");
+                public static Opcode POP_HL = new Opcode(OpcodeBytes.POP_HL, size: 1, instruction: "POP HL", cycles: 10, pseudocode: "L <- (sp); H <- (sp+1); sp <- sp+2");
+                public static Opcode POP_AF = new Opcode(OpcodeBytes.POP_AF, size: 1, instruction: "POP AF", cycles: 10, pseudocode: "flags <- (sp); A <- (sp+1); sp <- sp+2");
             #endregion
 
             #region DAD - Double (16-bit) add

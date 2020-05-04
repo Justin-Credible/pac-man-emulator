@@ -269,17 +269,17 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region PUSH - Push data onto the stack
-                    [OpcodeBytes.PUSH_B] = PUSH_B,
-                    [OpcodeBytes.PUSH_D] = PUSH_D,
-                    [OpcodeBytes.PUSH_H] = PUSH_H,
-                    [OpcodeBytes.PUSH_PSW] = PUSH_PSW,
+                    [OpcodeBytes.PUSH_BC] = PUSH_BC,
+                    [OpcodeBytes.PUSH_DE] = PUSH_DE,
+                    [OpcodeBytes.PUSH_HL] = PUSH_HL,
+                    [OpcodeBytes.PUSH_AF] = PUSH_AF,
                 #endregion
 
                 #region POP - Pop data off of the stack
-                    [OpcodeBytes.POP_B] = POP_B,
-                    [OpcodeBytes.POP_D] = POP_D,
-                    [OpcodeBytes.POP_H] = POP_H,
-                    [OpcodeBytes.POP_PSW] = POP_PSW,
+                    [OpcodeBytes.POP_BC] = POP_BC,
+                    [OpcodeBytes.POP_DE] = POP_DE,
+                    [OpcodeBytes.POP_HL] = POP_HL,
+                    [OpcodeBytes.POP_AF] = POP_AF,
                 #endregion
 
                 #region DAD - Double (16-bit) add

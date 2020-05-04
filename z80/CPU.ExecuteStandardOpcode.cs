@@ -698,22 +698,22 @@ namespace JustinCredible.ZilogZ80
 
                     #region PUSH - Push data onto the stack
 
-                        case OpcodeBytes.PUSH_B:
+                        case OpcodeBytes.PUSH_BC:
                             WriteMemory(StackPointer - 1, Registers.B);
                             WriteMemory(StackPointer - 2, Registers.C);
                             StackPointer = (UInt16)(StackPointer - 2);
                             break;
-                        case OpcodeBytes.PUSH_D:
+                        case OpcodeBytes.PUSH_DE:
                             WriteMemory(StackPointer - 1, Registers.D);
                             WriteMemory(StackPointer - 2, Registers.E);
                             StackPointer = (UInt16)(StackPointer - 2);
                             break;
-                        case OpcodeBytes.PUSH_H:
+                        case OpcodeBytes.PUSH_HL:
                             WriteMemory(StackPointer - 1, Registers.H);
                             WriteMemory(StackPointer - 2, Registers.L);
                             StackPointer = (UInt16)(StackPointer - 2);
                             break;
-                        case OpcodeBytes.PUSH_PSW:
+                        case OpcodeBytes.PUSH_AF:
                             WriteMemory(StackPointer - 1, Registers.A);
                             WriteMemory(StackPointer - 2, Flags.ToByte());
                             StackPointer = (UInt16)(StackPointer - 2);
@@ -723,22 +723,22 @@ namespace JustinCredible.ZilogZ80
 
                     #region POP - Pop data off of the stack
 
-                        case OpcodeBytes.POP_B:
+                        case OpcodeBytes.POP_BC:
                             Registers.B = ReadMemory(StackPointer + 1);
                             Registers.C = ReadMemory(StackPointer);
                             StackPointer = (UInt16)(StackPointer + 2);
                             break;
-                        case OpcodeBytes.POP_D:
+                        case OpcodeBytes.POP_DE:
                             Registers.D = ReadMemory(StackPointer + 1);
                             Registers.E = ReadMemory(StackPointer);
                             StackPointer = (UInt16)(StackPointer + 2);
                             break;
-                        case OpcodeBytes.POP_H:
+                        case OpcodeBytes.POP_HL:
                             Registers.H = ReadMemory(StackPointer + 1);
                             Registers.L = ReadMemory(StackPointer);
                             StackPointer = (UInt16)(StackPointer + 2);
                             break;
-                        case OpcodeBytes.POP_PSW:
+                        case OpcodeBytes.POP_AF:
                             Registers.A = ReadMemory(StackPointer + 1);
                             Flags.SetFromByte(ReadMemory(StackPointer));
                             StackPointer = (UInt16)(StackPointer + 2);
