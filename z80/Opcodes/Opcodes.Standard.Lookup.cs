@@ -402,28 +402,28 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.CALL] = CALL,
 
                 /** Call if minus/negative */
-                [OpcodeBytes.CM] = CM,
+                [OpcodeBytes.CALL_M] = CALL_M,
 
                 /** Call if party even */
-                [OpcodeBytes.CPE] = CPE,
+                [OpcodeBytes.CALL_PE] = CALL_PE,
 
                 /** Call if carry */
-                [OpcodeBytes.CC] = CC,
+                [OpcodeBytes.CALL_C] = CALL_C,
 
                 /** Call if zero */
-                [OpcodeBytes.CZ] = CZ,
+                [OpcodeBytes.CALL_Z] = CALL_Z,
 
                 /** Call if plus/positive */
-                [OpcodeBytes.CP] = CP,
+                [OpcodeBytes.CALL_P] = CALL_P,
 
                 /** Call if party odd */
-                [OpcodeBytes.CPO] = CPO,
+                [OpcodeBytes.CALL_PO] = CALL_PO,
 
                 /** Call if no carry */
-                [OpcodeBytes.CNC] = CNC,
+                [OpcodeBytes.CALL_NC] = CALL_NC,
 
                 /** Call if not zero */
-                [OpcodeBytes.CNZ] = CNZ,
+                [OpcodeBytes.CALL_NZ] = CALL_NZ,
 
             #endregion
 

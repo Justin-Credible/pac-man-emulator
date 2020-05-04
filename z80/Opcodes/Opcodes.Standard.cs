@@ -400,28 +400,28 @@ namespace JustinCredible.ZilogZ80
             public static Opcode CALL = new Opcode(OpcodeBytes.CALL, size: 3, instruction: "CALL adr", cycles: 17, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=adr");
 
             /** Call if minus/negative */
-            public static Opcode CM = new Opcode(OpcodeBytes.CM, size: 3, instruction: "CM adr", cycles: 17, alternateCycles: 11, pseudocode: "if M, CALL adr");
+            public static Opcode CALL_M = new Opcode(OpcodeBytes.CALL_M, size: 3, instruction: "CALL M, adr", cycles: 17, alternateCycles: 11, pseudocode: "if M, CALL adr");
 
             /** Call if party even */
-            public static Opcode CPE = new Opcode(OpcodeBytes.CPE, size: 3, instruction: "CPE adr", cycles: 17, alternateCycles: 11, pseudocode: "if PE, CALL adr");
+            public static Opcode CALL_PE = new Opcode(OpcodeBytes.CALL_PE, size: 3, instruction: "CALL PE, adr", cycles: 17, alternateCycles: 11, pseudocode: "if PE, CALL adr");
 
             /** Call if carry */
-            public static Opcode CC = new Opcode(OpcodeBytes.CC, size: 3, instruction: "CC adr", cycles: 17, alternateCycles: 11, pseudocode: "if CY, CALL adr");
+            public static Opcode CALL_C = new Opcode(OpcodeBytes.CALL_C, size: 3, instruction: "CALL C, adr", cycles: 17, alternateCycles: 11, pseudocode: "if CY, CALL adr");
 
             /** Call if zero */
-            public static Opcode CZ = new Opcode(OpcodeBytes.CZ, size: 3, instruction: "CZ adr", cycles: 17, alternateCycles: 11, pseudocode: "if Z, CALL adr");
+            public static Opcode CALL_Z = new Opcode(OpcodeBytes.CALL_Z, size: 3, instruction: "CALL Z, adr", cycles: 17, alternateCycles: 11, pseudocode: "if Z, CALL adr");
 
             /** Call if plus/positive */
-            public static Opcode CP = new Opcode(OpcodeBytes.CP, size: 3, instruction: "CP adr", cycles: 17, alternateCycles: 11, pseudocode: "if P, PC <- adr");
+            public static Opcode CALL_P = new Opcode(OpcodeBytes.CALL_P, size: 3, instruction: "CALL P, adr", cycles: 17, alternateCycles: 11, pseudocode: "if P, PC <- adr");
 
             /** Call if party odd */
-            public static Opcode CPO = new Opcode(OpcodeBytes.CPO, size: 3, instruction: "CPO adr", cycles: 17, alternateCycles: 11, pseudocode: "if PO, CALL adr");
+            public static Opcode CALL_PO = new Opcode(OpcodeBytes.CALL_PO, size: 3, instruction: "CALL PO, adr", cycles: 17, alternateCycles: 11, pseudocode: "if PO, CALL adr");
 
             /** Call if no carry */
-            public static Opcode CNC = new Opcode(OpcodeBytes.CNC, size: 3, instruction: "CNC adr", cycles: 17, alternateCycles: 11, pseudocode: "if NCY, CALL adr");
+            public static Opcode CALL_NC = new Opcode(OpcodeBytes.CALL_NC, size: 3, instruction: "CALL NC, adr", cycles: 17, alternateCycles: 11, pseudocode: "if NCY, CALL adr");
 
             /** Call if not zero */
-            public static Opcode CNZ = new Opcode(OpcodeBytes.CNZ, size: 3, instruction: "CNZ adr", cycles: 17, alternateCycles: 11, pseudocode: "if NZ, CALL adr");
+            public static Opcode CALL_NZ = new Opcode(OpcodeBytes.CALL_NZ, size: 3, instruction: "CALL NZ, adr", cycles: 17, alternateCycles: 11, pseudocode: "if NZ, CALL adr");
 
         #endregion
 

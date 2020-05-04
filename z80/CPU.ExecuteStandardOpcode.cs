@@ -1075,7 +1075,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if minus/negative
-                    case OpcodeBytes.CM:
+                    case OpcodeBytes.CALL_M:
                     {
                         if (Flags.Sign)
                         {
@@ -1089,7 +1089,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if party even
-                    case OpcodeBytes.CPE:
+                    case OpcodeBytes.CALL_PE:
                     {
                         if (Flags.Parity)
                         {
@@ -1103,7 +1103,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if carry
-                    case OpcodeBytes.CC:
+                    case OpcodeBytes.CALL_C:
                     {
                         if (Flags.Carry)
                         {
@@ -1117,7 +1117,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if zero
-                    case OpcodeBytes.CZ:
+                    case OpcodeBytes.CALL_Z:
                     {
                         if (Flags.Zero)
                         {
@@ -1131,7 +1131,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if plus/positive
-                    case OpcodeBytes.CP:
+                    case OpcodeBytes.CALL_P:
                     {
                         if (!Flags.Sign)
                         {
@@ -1145,7 +1145,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if party odd
-                    case OpcodeBytes.CPO:
+                    case OpcodeBytes.CALL_PO:
                     {
                         if (!Flags.Parity)
                         {
@@ -1159,7 +1159,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if no carry
-                    case OpcodeBytes.CNC:
+                    case OpcodeBytes.CALL_NC:
                     {
                         if (!Flags.Carry)
                         {
@@ -1173,7 +1173,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Call if not zero
-                    case OpcodeBytes.CNZ:
+                    case OpcodeBytes.CALL_NZ:
                     {
                         if (!Flags.Zero)
                         {

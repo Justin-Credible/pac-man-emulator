@@ -401,28 +401,28 @@ namespace JustinCredible.ZilogZ80
             public const byte CALL = 0xcd;
 
             /** Call if minus/negative */
-            public const byte CM = 0xfc;
+            public const byte CALL_M = 0xfc;
 
             /** Call if party even */
-            public const byte CPE = 0xec;
+            public const byte CALL_PE = 0xec;
 
             /** Call if carry */
-            public const byte CC = 0xdc;
+            public const byte CALL_C = 0xdc;
 
             /** Call if zero */
-            public const byte CZ = 0xcc;
+            public const byte CALL_Z = 0xcc;
 
             /** Call if plus/positive */
-            public const byte CP = 0xf4;
+            public const byte CALL_P = 0xf4;
 
             /** Call if party odd */
-            public const byte CPO = 0xe4;
+            public const byte CALL_PO = 0xe4;
 
             /** Call if no carry */
-            public const byte CNC = 0xd4;
+            public const byte CALL_NC = 0xd4;
 
             /** Call if not zero */
-            public const byte CNZ = 0xc4;
+            public const byte CALL_NZ = 0xc4;
 
         #endregion
 
