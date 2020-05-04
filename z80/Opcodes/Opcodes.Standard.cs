@@ -235,16 +235,16 @@ namespace JustinCredible.ZilogZ80
         #region Rotate accumulator instructions
 
             /** Rotate accumulator left */
-            public static Opcode RLC = new Opcode(OpcodeBytes.RLC, size: 1, instruction: "RLC", cycles: 4, pseudocode: "A = A << 1; bit 0 = prev bit 7; CY = prev bit 7");
+            public static Opcode RLCA = new Opcode(OpcodeBytes.RLCA, size: 1, instruction: "RLCA", cycles: 4, pseudocode: "A = A << 1; bit 0 = prev bit 7; CY = prev bit 7");
 
             /** Rotate accumulator right */
-            public static Opcode RRC = new Opcode(OpcodeBytes.RRC, size: 1, instruction: "RRC", cycles: 4, pseudocode: "A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0");
+            public static Opcode RRCA = new Opcode(OpcodeBytes.RRCA, size: 1, instruction: "RRCA", cycles: 4, pseudocode: "A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0");
 
             /** Rotate accumulator left through carry */
-            public static Opcode RAL = new Opcode(OpcodeBytes.RAL, size: 1, instruction: "RAL", cycles: 4, pseudocode: "A = A << 1; bit 0 = prev CY; CY = prev bit 7");
+            public static Opcode RLA = new Opcode(OpcodeBytes.RLA, size: 1, instruction: "RLA", cycles: 4, pseudocode: "A = A << 1; bit 0 = prev CY; CY = prev bit 7");
 
             /** Rotate accumulator right through carry */
-            public static Opcode RAR = new Opcode(OpcodeBytes.RAR, size: 1, instruction: "RAR", cycles: 4, pseudocode: "A = A >> 1; bit 7 = prev bit 7; CY = prev bit 0");
+            public static Opcode RRA = new Opcode(OpcodeBytes.RRA, size: 1, instruction: "RRA", cycles: 4, pseudocode: "A = A >> 1; bit 7 = prev bit 7; CY = prev bit 0");
 
         #endregion
 

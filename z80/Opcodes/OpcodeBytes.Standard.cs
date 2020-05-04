@@ -239,16 +239,16 @@ namespace JustinCredible.ZilogZ80
         #region Rotate accumulator instructions
 
             /** Rotate accumulator left */
-            public const byte RLC = 0x07;
+            public const byte RLCA = 0x07;
 
             /** Rotate accumulator right */
-            public const byte RRC = 0x0f;
+            public const byte RRCA = 0x0f;
 
             /** Rotate accumulator left through carry */
-            public const byte RAL = 0x17;
+            public const byte RLA = 0x17;
 
             /** Rotate accumulator right through carry */
-            public const byte RAR = 0x1f;
+            public const byte RRA = 0x1f;
 
         #endregion
 

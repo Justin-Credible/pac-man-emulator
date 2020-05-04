@@ -239,16 +239,16 @@ namespace JustinCredible.ZilogZ80
             #region Rotate accumulator instructions
 
                 /** Rotate accumulator left */
-                [OpcodeBytes.RLC] = RLC,
+                [OpcodeBytes.RLCA] = RLCA,
 
                 /** Rotate accumulator right */
-                [OpcodeBytes.RRC] = RRC,
+                [OpcodeBytes.RRCA] = RRCA,
 
                 /** Rotate accumulator left through carry */
-                [OpcodeBytes.RAL] = RAL,
+                [OpcodeBytes.RLA] = RLA,
 
                 /** Rotate accumulator right through carry */
-                [OpcodeBytes.RAR] = RAR,
+                [OpcodeBytes.RRA] = RRA,
 
             #endregion
 

@@ -636,25 +636,25 @@ namespace JustinCredible.ZilogZ80
 
                     // Rotate accumulator left
                     // A = A << 1; bit 0 = prev bit 7; CY = prev bit 7
-                    case OpcodeBytes.RLC:
+                    case OpcodeBytes.RLCA:
                         ExecuteRotateAccumulator(left: true);
                         break;
 
                     // Rotate accumulator right
                     // A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0
-                    case OpcodeBytes.RRC:
+                    case OpcodeBytes.RRCA:
                         ExecuteRotateAccumulator(left: false);
                         break;
 
                     // Rotate accumulator left through carry
                     // A = A << 1; bit 0 = prev CY; CY = prev bit 7
-                    case OpcodeBytes.RAL:
+                    case OpcodeBytes.RLA:
                         ExecuteRotateAccumulator(left: true, rotateThroughCarry: true);
                         break;
 
                     // Rotate accumulator right through carry
                     // A = A >> 1; bit 7 = prev CY; CY = prev bit 0
-                    case OpcodeBytes.RAR:
+                    case OpcodeBytes.RRA:
                         ExecuteRotateAccumulator(left: false, rotateThroughCarry: true);
                         break;
 
