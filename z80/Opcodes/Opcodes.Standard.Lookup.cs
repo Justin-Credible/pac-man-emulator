@@ -283,10 +283,10 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 #region DAD - Double (16-bit) add
-                    [OpcodeBytes.DAD_B] = DAD_B,
-                    [OpcodeBytes.DAD_D] = DAD_D,
-                    [OpcodeBytes.DAD_H] = DAD_H,
-                    [OpcodeBytes.DAD_SP] = DAD_SP,
+                    [OpcodeBytes.ADD_HL_BC] = ADD_HL_BC,
+                    [OpcodeBytes.ADD_HL_DE] = ADD_HL_DE,
+                    [OpcodeBytes.ADD_HL_HL] = ADD_HL_HL,
+                    [OpcodeBytes.ADD_HL_SP] = ADD_HL_SP,
                 #endregion
 
                 /** Load SP from H and L */

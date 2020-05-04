@@ -748,16 +748,16 @@ namespace JustinCredible.ZilogZ80
 
                     #region DAD - Double (16-bit) add
 
-                        case OpcodeBytes.DAD_B:
+                        case OpcodeBytes.ADD_HL_BC:
                             ExecuteDAD(Registers.BC);
                             break;
-                        case OpcodeBytes.DAD_D:
+                        case OpcodeBytes.ADD_HL_DE:
                             ExecuteDAD(Registers.DE);
                             break;
-                        case OpcodeBytes.DAD_H:
+                        case OpcodeBytes.ADD_HL_HL:
                             ExecuteDAD(Registers.HL);
                             break;
-                        case OpcodeBytes.DAD_SP:
+                        case OpcodeBytes.ADD_HL_SP:
                             ExecuteDAD(StackPointer);
                             break;
 
@@ -1624,6 +1624,9 @@ namespace JustinCredible.ZilogZ80
             Registers.HL = (UInt16)result;
 
             Flags.Carry = carryOccurred;
+            Flags.Subtract = false;
+
+            // TODO: Set H flag
         }
 
         /**

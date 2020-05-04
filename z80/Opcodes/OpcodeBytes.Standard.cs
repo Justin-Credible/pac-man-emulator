@@ -283,10 +283,10 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             #region DAD - Double (16-bit) add
-                public const byte DAD_B = 0x09;
-                public const byte DAD_D = 0x19;
-                public const byte DAD_H = 0x29;
-                public const byte DAD_SP = 0x39;
+                public const byte ADD_HL_BC = 0x09;
+                public const byte ADD_HL_DE = 0x19;
+                public const byte ADD_HL_HL = 0x29;
+                public const byte ADD_HL_SP = 0x39;
             #endregion
 
             /** Load SP from H and L */

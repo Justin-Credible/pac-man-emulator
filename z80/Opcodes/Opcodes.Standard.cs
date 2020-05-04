@@ -278,11 +278,11 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode POP_AF = new Opcode(OpcodeBytes.POP_AF, size: 1, instruction: "POP AF", cycles: 10, pseudocode: "flags <- (sp); A <- (sp+1); sp <- sp+2");
             #endregion
 
-            #region DAD - Double (16-bit) add
-                public static Opcode DAD_B = new Opcode(OpcodeBytes.DAD_B, size: 1, instruction: "DAD B", cycles: 10, pseudocode: "HL = HL + BC");
-                public static Opcode DAD_D = new Opcode(OpcodeBytes.DAD_D, size: 1, instruction: "DAD D", cycles: 10, pseudocode: "HL = HL + DE");
-                public static Opcode DAD_H = new Opcode(OpcodeBytes.DAD_H, size: 1, instruction: "DAD H", cycles: 10, pseudocode: "HL = HL + HL");
-                public static Opcode DAD_SP = new Opcode(OpcodeBytes.DAD_SP, size: 1, instruction: "DAD SP", cycles: 10, pseudocode: "HL = HL + SP");
+            #region ADD HL, rr - Double (16-bit) add
+                public static Opcode ADD_HL_BC = new Opcode(OpcodeBytes.ADD_HL_BC, size: 1, instruction: "ADD HL, BC", cycles: 10, pseudocode: "HL = HL + BC");
+                public static Opcode ADD_HL_DE = new Opcode(OpcodeBytes.ADD_HL_DE, size: 1, instruction: "ADD HL, DE", cycles: 10, pseudocode: "HL = HL + DE");
+                public static Opcode ADD_HL_HL = new Opcode(OpcodeBytes.ADD_HL_HL, size: 1, instruction: "ADD HL, HL", cycles: 10, pseudocode: "HL = HL + HL");
+                public static Opcode ADD_HL_SP = new Opcode(OpcodeBytes.ADD_HL_SP, size: 1, instruction: "ADD HL, SP", cycles: 10, pseudocode: "HL = HL + SP");
             #endregion
 
             /** Load SP from H and L */
