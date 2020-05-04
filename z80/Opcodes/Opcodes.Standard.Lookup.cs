@@ -436,28 +436,28 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.RET2] = RET2,
 
                 /** Return if not zero */
-                [OpcodeBytes.RNZ] = RNZ,
+                [OpcodeBytes.RET_NZ] = RET_NZ,
 
                 /** Return if zero */
-                [OpcodeBytes.RZ] = RZ,
+                [OpcodeBytes.RET_Z] = RET_Z,
 
                 /** Return if no carry */
-                [OpcodeBytes.RNC] = RNC,
+                [OpcodeBytes.RET_NC] = RET_NC,
 
                 /** Return if carry */
-                [OpcodeBytes.RC] = RC,
+                [OpcodeBytes.RET_C] = RET_C,
 
                 /** Return if parity odd */
-                [OpcodeBytes.RPO] = RPO,
+                [OpcodeBytes.RET_PO] = RET_PO,
 
                 /** Return if parity even */
-                [OpcodeBytes.RPE] = RPE,
+                [OpcodeBytes.RET_PE] = RET_PE,
 
                 /** Return if plus/positive */
-                [OpcodeBytes.RP] = RP,
+                [OpcodeBytes.RET_P] = RET_P,
 
                 /** Return if minus/negative */
-                [OpcodeBytes.RM] = RM,
+                [OpcodeBytes.RET_M] = RET_M,
 
 
             #endregion

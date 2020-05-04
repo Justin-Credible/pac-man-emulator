@@ -434,28 +434,28 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RET2 = new Opcode(OpcodeBytes.RET2, size: 1, instruction: "RET2", cycles: 10, pseudocode: "PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2");
 
             /** Return if not zero */
-            public static Opcode RNZ = new Opcode(OpcodeBytes.RNZ, size: 1, instruction: "RNZ", cycles: 11, alternateCycles: 5, pseudocode: "if NZ, RET");
+            public static Opcode RET_NZ = new Opcode(OpcodeBytes.RET_NZ, size: 1, instruction: "RET NZ", cycles: 11, alternateCycles: 5, pseudocode: "if NZ, RET");
 
             /** Return if zero */
-            public static Opcode RZ = new Opcode(OpcodeBytes.RZ, size: 1, instruction: "RZ", cycles: 11, alternateCycles: 5, pseudocode: "if Z, RET");
+            public static Opcode RET_Z = new Opcode(OpcodeBytes.RET_Z, size: 1, instruction: "RET Z", cycles: 11, alternateCycles: 5, pseudocode: "if Z, RET");
 
             /** Return if no carry */
-            public static Opcode RNC = new Opcode(OpcodeBytes.RNC, size: 1, instruction: "RNC", cycles: 11, alternateCycles: 5, pseudocode: "if NCY, RET");
+            public static Opcode RET_NC = new Opcode(OpcodeBytes.RET_NC, size: 1, instruction: "RNC", cycles: 11, alternateCycles: 5, pseudocode: "if NCY, RET");
 
             /** Return if carry */
-            public static Opcode RC = new Opcode(OpcodeBytes.RC, size: 1, instruction: "RC", cycles: 11, alternateCycles: 5, pseudocode: "if CY, RET");
+            public static Opcode RET_C = new Opcode(OpcodeBytes.RET_C, size: 1, instruction: "RET C", cycles: 11, alternateCycles: 5, pseudocode: "if CY, RET");
 
             /** Return if parity odd */
-            public static Opcode RPO = new Opcode(OpcodeBytes.RPO, size: 1, instruction: "RPO", cycles: 11, alternateCycles: 5, pseudocode: "if PO, RET");
+            public static Opcode RET_PO = new Opcode(OpcodeBytes.RET_PO, size: 1, instruction: "RET PO", cycles: 11, alternateCycles: 5, pseudocode: "if PO, RET");
 
             /** Return if parity even */
-            public static Opcode RPE = new Opcode(OpcodeBytes.RPE, size: 1, instruction: "RPE", cycles: 11, alternateCycles: 5, pseudocode: "if PE, RET");
+            public static Opcode RET_PE = new Opcode(OpcodeBytes.RET_PE, size: 1, instruction: "RET PE", cycles: 11, alternateCycles: 5, pseudocode: "if PE, RET");
 
             /** Return if plus/positive */
-            public static Opcode RP = new Opcode(OpcodeBytes.RP, size: 1, instruction: "RP", cycles: 11, alternateCycles: 5, pseudocode: "if P, RET");
+            public static Opcode RET_P = new Opcode(OpcodeBytes.RET_P, size: 1, instruction: "RET P", cycles: 11, alternateCycles: 5, pseudocode: "if P, RET");
 
             /** Return if minus/negative */
-            public static Opcode RM = new Opcode(OpcodeBytes.RM, size: 1, instruction: "RM", cycles: 11, alternateCycles: 5, pseudocode: "if M, RET");
+            public static Opcode RET_M = new Opcode(OpcodeBytes.RET_M, size: 1, instruction: "RET M", cycles: 11, alternateCycles: 5, pseudocode: "if M, RET");
 
         #endregion
 

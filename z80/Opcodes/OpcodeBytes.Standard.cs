@@ -435,28 +435,28 @@ namespace JustinCredible.ZilogZ80
             public const byte RET2 = 0xd9; // TODO
 
             /** Return if not zero */
-            public const byte RNZ = 0xc0;
+            public const byte RET_NZ = 0xc0;
 
             /** Return if zero */
-            public const byte RZ = 0xc8;
+            public const byte RET_Z = 0xc8;
 
             /** Return if no carry */
-            public const byte RNC = 0xd0;
+            public const byte RET_NC = 0xd0;
 
             /** Return if carry */
-            public const byte RC = 0xd8;
+            public const byte RET_C = 0xd8;
 
             /** Return if parity odd */
-            public const byte RPO = 0xe0;
+            public const byte RET_PO = 0xe0;
 
             /** Return if parity even */
-            public const byte RPE = 0xe8;
+            public const byte RET_PE = 0xe8;
 
             /** Return if plus/positive */
-            public const byte RP = 0xf0;
+            public const byte RET_P = 0xf0;
 
             /** Return if minus/negative */
-            public const byte RM = 0xf8;
+            public const byte RET_M = 0xf8;
 
         #endregion
 

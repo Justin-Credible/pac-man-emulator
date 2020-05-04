@@ -1205,7 +1205,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if not zero
-                    case OpcodeBytes.RNZ:
+                    case OpcodeBytes.RET_NZ:
                     {
                         if (!Flags.Zero)
                         {
@@ -1219,7 +1219,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if zero
-                    case OpcodeBytes.RZ:
+                    case OpcodeBytes.RET_Z:
                     {
                         if (Flags.Zero)
                         {
@@ -1233,7 +1233,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if no carry
-                    case OpcodeBytes.RNC:
+                    case OpcodeBytes.RET_NC:
                     {
                         if (!Flags.Carry)
                         {
@@ -1247,7 +1247,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if carry
-                    case OpcodeBytes.RC:
+                    case OpcodeBytes.RET_C:
                     {
                         if (Flags.Carry)
                         {
@@ -1261,7 +1261,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if parity odd
-                    case OpcodeBytes.RPO:
+                    case OpcodeBytes.RET_PO:
                     {
                         if (!Flags.Parity)
                         {
@@ -1275,7 +1275,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if parity even
-                    case OpcodeBytes.RPE:
+                    case OpcodeBytes.RET_PE:
                     {
                         if (Flags.Parity)
                         {
@@ -1289,7 +1289,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if plus/positive
-                    case OpcodeBytes.RP:
+                    case OpcodeBytes.RET_P:
                     {
                         if (!Flags.Sign)
                         {
@@ -1303,7 +1303,7 @@ namespace JustinCredible.ZilogZ80
                     }
 
                     // Return if minus/negative
-                    case OpcodeBytes.RM:
+                    case OpcodeBytes.RET_M:
                     {
                         if (Flags.Sign)
                         {
