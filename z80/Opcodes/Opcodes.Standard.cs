@@ -462,28 +462,28 @@ namespace JustinCredible.ZilogZ80
         #region Restart (interrupt handlers) instructions
 
             /** CALL $0 */
-            public static Opcode RST_0 = new Opcode(OpcodeBytes.RST_0, size: 1, instruction: "RST 0", cycles: 11, pseudocode: "CALL $0");
+            public static Opcode RST_00 = new Opcode(OpcodeBytes.RST_00, size: 1, instruction: "RST 00h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC$0h");
 
             /** CALL $8 */
-            public static Opcode RST_1 = new Opcode(OpcodeBytes.RST_1, size: 1, instruction: "RST 1", cycles: 11, pseudocode: "CALL $8");
+            public static Opcode RST_08 = new Opcode(OpcodeBytes.RST_08, size: 1, instruction: "RST 08h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC$8h");
 
             /** CALL $10 */
-            public static Opcode RST_2 = new Opcode(OpcodeBytes.RST_2, size: 1, instruction: "RST 2", cycles: 11, pseudocode: "CALL $10");
+            public static Opcode RST_10 = new Opcode(OpcodeBytes.RST_10, size: 1, instruction: "RST 10h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=10h");
 
             /** CALL $18 */
-            public static Opcode RST_3 = new Opcode(OpcodeBytes.RST_3, size: 1, instruction: "RST 3", cycles: 11, pseudocode: "CALL $18");
+            public static Opcode RST_18 = new Opcode(OpcodeBytes.RST_18, size: 1, instruction: "RST 18h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=18h");
 
             /** CALL $20 */
-            public static Opcode RST_4 = new Opcode(OpcodeBytes.RST_4, size: 1, instruction: "RST 4", cycles: 11, pseudocode: "CALL $20");
+            public static Opcode RST_20 = new Opcode(OpcodeBytes.RST_20, size: 1, instruction: "RST 20h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=20h");
 
             /** CALL $28 */
-            public static Opcode RST_5 = new Opcode(OpcodeBytes.RST_5, size: 1, instruction: "RST 5", cycles: 11, pseudocode: "CALL $28");
+            public static Opcode RST_28 = new Opcode(OpcodeBytes.RST_28, size: 1, instruction: "RST 28h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=28h");
 
             /** CALL $30 */
-            public static Opcode RST_6 = new Opcode(OpcodeBytes.RST_6, size: 1, instruction: "RST 6", cycles: 11, pseudocode: "CALL $30");
+            public static Opcode RST_30 = new Opcode(OpcodeBytes.RST_30, size: 1, instruction: "RST 30h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=30h");
 
             /** CALL $38 */
-            public static Opcode RST_7 = new Opcode(OpcodeBytes.RST_7, size: 1, instruction: "RST 7", cycles: 11, pseudocode: "CALL $38");
+            public static Opcode RST_38 = new Opcode(OpcodeBytes.RST_38, size: 1, instruction: "RST 38h", cycles: 11, pseudocode: "(SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP-2;PC=38h");
 
         #endregion
 

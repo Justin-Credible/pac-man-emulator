@@ -465,28 +465,28 @@ namespace JustinCredible.ZilogZ80
             #region Restart (interrupt handlers) instructions
 
                 /** CALL $0 */
-                [OpcodeBytes.RST_0] = RST_0,
+                [OpcodeBytes.RST_00] = RST_00,
 
                 /** CALL $8 */
-                [OpcodeBytes.RST_1] = RST_1,
+                [OpcodeBytes.RST_08] = RST_08,
 
                 /** CALL $10 */
-                [OpcodeBytes.RST_2] = RST_2,
+                [OpcodeBytes.RST_10] = RST_10,
 
                 /** CALL $18 */
-                [OpcodeBytes.RST_3] = RST_3,
+                [OpcodeBytes.RST_18] = RST_18,
 
                 /** CALL $20 */
-                [OpcodeBytes.RST_4] = RST_4,
+                [OpcodeBytes.RST_20] = RST_20,
 
                 /** CALL $28 */
-                [OpcodeBytes.RST_5] = RST_5,
+                [OpcodeBytes.RST_28] = RST_28,
 
                 /** CALL $30 */
-                [OpcodeBytes.RST_6] = RST_6,
+                [OpcodeBytes.RST_30] = RST_30,
 
                 /** CALL $38 */
-                [OpcodeBytes.RST_7] = RST_7,
+                [OpcodeBytes.RST_38] = RST_38,
 
             #endregion
 

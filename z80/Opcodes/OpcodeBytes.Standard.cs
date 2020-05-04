@@ -463,28 +463,28 @@ namespace JustinCredible.ZilogZ80
         #region Restart (interrupt handlers) instructions
 
             /** CALL $0 */
-            public const byte RST_0 = 0xc7;
+            public const byte RST_00 = 0xc7;
 
             /** CALL $8 */
-            public const byte RST_1 = 0xcf;
+            public const byte RST_08 = 0xcf;
 
             /** CALL $10 */
-            public const byte RST_2 = 0xd7;
+            public const byte RST_10 = 0xd7;
 
             /** CALL $18 */
-            public const byte RST_3 = 0xdf;
+            public const byte RST_18 = 0xdf;
 
             /** CALL $20 */
-            public const byte RST_4 = 0xe7;
+            public const byte RST_20 = 0xe7;
 
             /** CALL $28 */
-            public const byte RST_5 = 0xef;
+            public const byte RST_28 = 0xef;
 
             /** CALL $30 */
-            public const byte RST_6 = 0xf7;
+            public const byte RST_30 = 0xf7;
 
             /** CALL $38 */
-            public const byte RST_7 = 0xff;
+            public const byte RST_38 = 0xff;
 
         #endregion
 

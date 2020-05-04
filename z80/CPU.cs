@@ -165,28 +165,28 @@ namespace JustinCredible.ZilogZ80
             {
                 case Interrupt.Zero:
                     ExecuteCALL(0x000, ProgramCounter);
-                    return Opcodes.RST_0.Cycles;
+                    return Opcodes.RST_00.Cycles;
                 case Interrupt.One:
                     ExecuteCALL(0x0008, ProgramCounter);
-                    return Opcodes.RST_1.Cycles;
+                    return Opcodes.RST_08.Cycles;
                 case Interrupt.Two:
                     ExecuteCALL(0x0010, ProgramCounter);
-                    return Opcodes.RST_2.Cycles;
+                    return Opcodes.RST_10.Cycles;
                 case Interrupt.Three:
                     ExecuteCALL(0x0018, ProgramCounter);
-                    return Opcodes.RST_3.Cycles;
+                    return Opcodes.RST_18.Cycles;
                 case Interrupt.Four:
                     ExecuteCALL(0x0020, ProgramCounter);
-                    return Opcodes.RST_4.Cycles;
+                    return Opcodes.RST_20.Cycles;
                 case Interrupt.Five:
                     ExecuteCALL(0x0028, ProgramCounter);
-                    return Opcodes.RST_5.Cycles;
+                    return Opcodes.RST_28.Cycles;
                 case Interrupt.Six:
                     ExecuteCALL(0x0030, ProgramCounter);
-                    return Opcodes.RST_6.Cycles;
+                    return Opcodes.RST_30.Cycles;
                 case Interrupt.Seven:
                     ExecuteCALL(0x0038, ProgramCounter);
-                    return Opcodes.RST_7.Cycles;
+                    return Opcodes.RST_38.Cycles;
                 default:
                     throw new Exception($"Unhandled interrupt ID: {id}");
             }

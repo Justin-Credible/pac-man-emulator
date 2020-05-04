@@ -1320,7 +1320,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Restart (interrupt handlers) instructions
 
-                    case OpcodeBytes.RST_0:
+                    case OpcodeBytes.RST_00:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0000, returnAddress);
@@ -1328,7 +1328,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_1:
+                    case OpcodeBytes.RST_08:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0008, returnAddress);
@@ -1336,7 +1336,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_2:
+                    case OpcodeBytes.RST_10:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0010, returnAddress);
@@ -1344,7 +1344,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_3:
+                    case OpcodeBytes.RST_18:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0018, returnAddress);
@@ -1352,7 +1352,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_4:
+                    case OpcodeBytes.RST_20:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0020, returnAddress);
@@ -1360,7 +1360,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_5:
+                    case OpcodeBytes.RST_28:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0028, returnAddress);
@@ -1368,7 +1368,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_6:
+                    case OpcodeBytes.RST_30:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0030, returnAddress);
@@ -1376,7 +1376,7 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    case OpcodeBytes.RST_7:
+                    case OpcodeBytes.RST_38:
                     {
                         var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
                         ExecuteCALL(0x0038, returnAddress);
