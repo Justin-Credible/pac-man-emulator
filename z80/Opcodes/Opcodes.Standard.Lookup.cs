@@ -324,7 +324,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.ADD_A_N] = ADD_A_N,
 
                 /** Add immediate to accumulator with carry */
-                [OpcodeBytes.ACI] = ACI,
+                [OpcodeBytes.ADC_A_N] = ADC_A_N,
 
                 /** Subtract immediate from accumulator */
                 [OpcodeBytes.SUB_N] = SUB_N,

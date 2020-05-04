@@ -324,7 +324,7 @@ namespace JustinCredible.ZilogZ80
             public const byte ADD_A_N = 0xc6;
 
             /** Add immediate to accumulator with carry */
-            public const byte ACI = 0xce;
+            public const byte ADC_A_N = 0xce;
 
             /** Subtract immediate from accumulator */
             public const byte SUB_N = 0xd6;

@@ -860,7 +860,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Add immediate to accumulator with carry
                     // A <- A + data + CY
-                    case OpcodeBytes.ACI:
+                    case OpcodeBytes.ADC_A_N:
                         ExecuteADD(ReadMemory(ProgramCounter+1), true);
                         break;
 
