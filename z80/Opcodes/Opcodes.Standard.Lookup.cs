@@ -504,10 +504,10 @@ namespace JustinCredible.ZilogZ80
             #region Input/Output Instructions
 
                 /** Output accumulator to given device number */
-                [OpcodeBytes.OUT] = OUT,
+                [OpcodeBytes.OUT_MN_A] = OUT_MN_A,
 
                 /** Retrieve input from given device number and populate accumulator */
-                [OpcodeBytes.IN] = IN,
+                [OpcodeBytes.IN_A_MN] = IN_A_MN,
 
             #endregion
         };

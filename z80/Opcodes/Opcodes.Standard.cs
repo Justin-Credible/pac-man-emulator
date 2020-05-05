@@ -500,10 +500,10 @@ namespace JustinCredible.ZilogZ80
         #region Input/Output Instructions
 
             /** Output accumulator to given device number */
-            public static Opcode OUT = new Opcode(OpcodeBytes.OUT, size: 2, instruction: "OUT", cycles: 10);
+            public static Opcode OUT_MN_A = new Opcode(OpcodeBytes.OUT_MN_A, size: 2, instruction: "OUT (adr), A", cycles: 10);
 
             /** Retrieve input from given device number and populate accumulator */
-            public static Opcode IN = new Opcode(OpcodeBytes.IN, size: 2, instruction: "IN", cycles: 10);
+            public static Opcode IN_A_MN = new Opcode(OpcodeBytes.IN_A_MN, size: 2, instruction: "IN A, (adr)", cycles: 10);
 
         #endregion
     }

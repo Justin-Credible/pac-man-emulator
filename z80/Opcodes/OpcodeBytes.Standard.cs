@@ -501,10 +501,10 @@ namespace JustinCredible.ZilogZ80
         #region Input/Output Instructions
 
             /** Output accumulator to given device number */
-            public const byte OUT = 0xd3;
+            public const byte OUT_MN_A = 0xd3;
 
             /** Retrieve input from given device number and populate accumulator */
-            public const byte IN = 0xdb;
+            public const byte IN_A_MN = 0xdb;
 
         #endregion
     }
