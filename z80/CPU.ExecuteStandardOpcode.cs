@@ -37,7 +37,7 @@ namespace JustinCredible.ZilogZ80
                         Flags.Carry = !Flags.Carry;
                         break;
 
-                    case OpcodeBytes.STC:
+                    case OpcodeBytes.SCF:
                         Flags.Carry = true;
                         break;
 

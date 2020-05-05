@@ -25,7 +25,7 @@ namespace JustinCredible.ZilogZ80
         #region Carry bit instructions
 
             /** Set Carry */
-            public const byte STC = 0x37;
+            public const byte SCF = 0x37;
 
             /** Complement Carry */
             public const byte CCF = 0x3f;

@@ -21,10 +21,10 @@ namespace JustinCredible.ZilogZ80
         #region Carry bit instructions
 
             /** Set Carry */
-            public static Opcode STC = new Opcode(OpcodeBytes.STC, size: 1, instruction: "STC", cycles: 4, pseudocode: "CY = 1");
+            public static Opcode SCF = new Opcode(OpcodeBytes.SCF, size: 1, instruction: "SCF", cycles: 4, pseudocode: "CY = 1");
 
             /** Complement Carry */
-            public static Opcode CCF = new Opcode(OpcodeBytes.CCF, size: 1, instruction: "CMC", cycles: 4, pseudocode: "CY=!CY");
+            public static Opcode CCF = new Opcode(OpcodeBytes.CCF, size: 1, instruction: "CCF", cycles: 4, pseudocode: "CY=!CY");
 
         #endregion
 

@@ -26,7 +26,7 @@ namespace JustinCredible.ZilogZ80
             #region Carry bit instructions
 
                 /** Set Carry */
-                [OpcodeBytes.STC] = STC,
+                [OpcodeBytes.SCF] = SCF,
 
                 /** Complement Carry */
                 [OpcodeBytes.CCF] = CCF,
