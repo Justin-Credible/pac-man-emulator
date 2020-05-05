@@ -294,10 +294,10 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.SPHL] = SPHL,
 
                 /** Exchange stack */
-                [OpcodeBytes.XTHL] = XTHL,
+                [OpcodeBytes.EX_MSP_HL] = EX_MSP_HL,
 
                 /** Exchange registers */
-                [OpcodeBytes.XCHG] = XCHG,
+                [OpcodeBytes.EX_DE_HL] = EX_DE_HL,
 
             #endregion
 

@@ -771,7 +771,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Exchange stack
                     //  L <-> (SP); H <-> (SP+1)
-                    case OpcodeBytes.XTHL:
+                    case OpcodeBytes.EX_MSP_HL:
                     {
                         var oldL = Registers.L;
                         var oldH = Registers.H;
@@ -784,7 +784,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Exchange registers
                     // H <-> D; L <-> E
-                    case OpcodeBytes.XCHG:
+                    case OpcodeBytes.EX_DE_HL:
                     {
                         var oldH = Registers.H;
                         var oldL = Registers.L;

@@ -293,10 +293,10 @@ namespace JustinCredible.ZilogZ80
             public const byte SPHL = 0xf9;
 
             /** Exchange stack */
-            public const byte XTHL = 0xe3;
+            public const byte EX_MSP_HL = 0xe3;
 
             /** Exchange registers */
-            public const byte XCHG = 0xeb;
+            public const byte EX_DE_HL = 0xeb;
 
         #endregion
 

@@ -289,10 +289,10 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SPHL = new Opcode(OpcodeBytes.SPHL, size: 1, instruction: "SPHL", cycles: 5, pseudocode: "SP=HL");
 
             /** Exchange stack */
-            public static Opcode XTHL = new Opcode(OpcodeBytes.XTHL, size: 1, instruction: "XTHL",	18, pseudocode: "L <-> (SP); H <-> (SP+1)");
+            public static Opcode EX_MSP_HL = new Opcode(OpcodeBytes.EX_MSP_HL, size: 1, instruction: "EX (SP), HL",	18, pseudocode: "L <-> (SP); H <-> (SP+1)");
 
             /** Exchange registers */
-            public static Opcode XCHG = new Opcode(OpcodeBytes.XCHG, size: 1, instruction: "XCHG",	5, pseudocode: "H <-> D; L <-> E");
+            public static Opcode EX_DE_HL = new Opcode(OpcodeBytes.EX_DE_HL, size: 1, instruction: "EX DE, HL",	5, pseudocode: "H <-> D; L <-> E");
 
         #endregion
 
