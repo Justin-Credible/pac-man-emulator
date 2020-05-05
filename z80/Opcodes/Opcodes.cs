@@ -17,7 +17,7 @@ namespace JustinCredible.ZilogZ80
             // If this isn't a preamble byte, we can just bail early and lookup
             // one of the "standard" instructions.
             if (!IsExtendedPreambleByte(opcodeByte1))
-                return Lookup[opcodeByte1];
+                return StandardLookup[opcodeByte1];
 
             // If we had a preamble byte there could be up to 2 more bytes that
             // determine which extended instruction set to use.

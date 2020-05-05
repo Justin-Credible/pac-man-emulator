@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace JustinCredible.ZilogZ80
 {
-    // TODO: Update mnemonics on region comments
     // A lookup table to locate opcode definitions by the opcode byte.
     public partial class Opcodes
     {
-        public static Dictionary<byte, Opcode> Lookup = new Dictionary<byte, Opcode>()
+        public static Dictionary<byte, Opcode> StandardLookup = new Dictionary<byte, Opcode>()
         {
             /** Halt */
             [OpcodeBytes.HALT] = HALT,
@@ -35,7 +34,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Single register instructions
 
-            #region INR - Increment Register or Memory
+            #region INC r - Increment Register or Memory
                 [OpcodeBytes.INC_B] = INC_B,
                 [OpcodeBytes.INC_C] = INC_C,
                 [OpcodeBytes.INC_D] = INC_D,
@@ -46,7 +45,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.INC_A] = INC_A,
             #endregion
 
-            #region DCR - Decrement Register or Memory
+            #region DEC r - Decrement Register or Memory
                 [OpcodeBytes.DEC_B] = DEC_B,
                 [OpcodeBytes.DEC_C] = DEC_C,
                 [OpcodeBytes.DEC_D] = DEC_D,
@@ -67,17 +66,17 @@ namespace JustinCredible.ZilogZ80
 
             #region Data transfer instructions
 
-                #region STAX - Store accumulator
+                #region LD (rr), A - Store accumulator
                     [OpcodeBytes.LD_MBC_A] = LD_MBC_A,
                     [OpcodeBytes.LD_MDE_A] = LD_MDE_A,
                 #endregion
 
-                #region LDAX - Load accumulator
+                #region LD A, (rr) - Load accumulator
                     [OpcodeBytes.LD_A_MBC] = LD_A_MBC,
                     [OpcodeBytes.LD_A_MDE] = LD_A_MDE,
                 #endregion
 
-                #region LD - Load (copy) data
+                #region LD r, r - Load (copy) data
                     [OpcodeBytes.LD_B_B] = LD_B_B,
                     [OpcodeBytes.LD_B_C] = LD_B_C,
                     [OpcodeBytes.LD_B_D] = LD_B_D,
@@ -147,7 +146,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Register or memory to accumulator instructions
 
-                #region ADD - Add register or memory to accumulator
+                #region ADD r - Add register or memory to accumulator
                     [OpcodeBytes.ADD_A_B] = ADD_A_B,
                     [OpcodeBytes.ADD_A_C] = ADD_A_C,
                     [OpcodeBytes.ADD_A_D] = ADD_A_D,
@@ -158,7 +157,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.ADD_A_A] = ADD_A_A,
                 #endregion
 
-                #region SUB - Subtract register or memory from accumulator
+                #region SUB r - Subtract register or memory from accumulator
                     [OpcodeBytes.SUB_B] = SUB_B,
                     [OpcodeBytes.SUB_C] = SUB_C,
                     [OpcodeBytes.SUB_D] = SUB_D,
@@ -169,7 +168,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.SUB_A] = SUB_A,
                 #endregion
 
-                #region ANA - Logical AND register or memory with accumulator
+                #region AND r - Logical AND register or memory with accumulator
                     [OpcodeBytes.AND_B] = AND_B,
                     [OpcodeBytes.AND_C] = AND_C,
                     [OpcodeBytes.AND_D] = AND_D,
@@ -180,7 +179,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.AND_A] = AND_A,
                 #endregion
 
-                #region ORA - Logical OR register or memory with accumulator
+                #region OR r - Logical OR register or memory with accumulator
                     [OpcodeBytes.OR_B] = OR_B,
                     [OpcodeBytes.OR_C] = OR_C,
                     [OpcodeBytes.OR_D] = OR_D,
@@ -191,7 +190,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.OR_A] = OR_A,
                 #endregion
 
-                #region ADC - Add register or memory to accumulator with carry
+                #region ADC A, r - Add register or memory to accumulator with carry
                     [OpcodeBytes.ADC_A_B] = ADC_A_B,
                     [OpcodeBytes.ADC_A_C] = ADC_A_C,
                     [OpcodeBytes.ADC_A_D] = ADC_A_D,
@@ -202,7 +201,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.ADC_A_A] = ADC_A_A,
                 #endregion
 
-                #region SBB - Subtract register or memory from accumulator with borrow
+                #region SBC A, r - Subtract register or memory from accumulator with borrow
                     [OpcodeBytes.SBC_A_B] = SBC_A_B,
                     [OpcodeBytes.SBC_A_C] = SBC_A_C,
                     [OpcodeBytes.SBC_A_D] = SBC_A_D,
@@ -213,7 +212,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.SBC_A_A] = SBC_A_A,
                 #endregion
 
-                #region XRA - Logical XOR register or memory with accumulator
+                #region XOR r - Logical XOR register or memory with accumulator
                     [OpcodeBytes.XOR_B] = XOR_B,
                     [OpcodeBytes.XOR_C] = XOR_C,
                     [OpcodeBytes.XOR_D] = XOR_D,
@@ -224,7 +223,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.XOR_A] = XOR_A,
                 #endregion
 
-                #region CP - Compare register or memory with accumulator
+                #region CP r - Compare register or memory with accumulator
                     [OpcodeBytes.CP_B] = CP_B,
                     [OpcodeBytes.CP_C] = CP_C,
                     [OpcodeBytes.CP_D] = CP_D,
@@ -255,35 +254,35 @@ namespace JustinCredible.ZilogZ80
 
             #region Register pair instructions
 
-                #region INX - Increment register pair
+                #region INC rr - Increment register pair
                     [OpcodeBytes.INC_BC] = INC_BC,
                     [OpcodeBytes.INC_DE] = INC_DE,
                     [OpcodeBytes.INC_HL] = INC_HL,
                     [OpcodeBytes.INC_SP] = INX_SP,
                 #endregion
 
-                #region DCX - Decrement register pair
+                #region DEC rr - Decrement register pair
                     [OpcodeBytes.DEC_BC] = DEC_BC,
                     [OpcodeBytes.DEC_DE] = DEC_DE,
                     [OpcodeBytes.DEC_HL] = DEC_HL,
                     [OpcodeBytes.DEC_SP] = DEC_SP,
                 #endregion
 
-                #region PUSH - Push data onto the stack
+                #region PUSH rr - Push data onto the stack
                     [OpcodeBytes.PUSH_BC] = PUSH_BC,
                     [OpcodeBytes.PUSH_DE] = PUSH_DE,
                     [OpcodeBytes.PUSH_HL] = PUSH_HL,
                     [OpcodeBytes.PUSH_AF] = PUSH_AF,
                 #endregion
 
-                #region POP - Pop data off of the stack
+                #region POP rr - Pop data off of the stack
                     [OpcodeBytes.POP_BC] = POP_BC,
                     [OpcodeBytes.POP_DE] = POP_DE,
                     [OpcodeBytes.POP_HL] = POP_HL,
                     [OpcodeBytes.POP_AF] = POP_AF,
                 #endregion
 
-                #region DAD - Double (16-bit) add
+                #region ADD HL, rr - Double (16-bit) add
                     [OpcodeBytes.ADD_HL_BC] = ADD_HL_BC,
                     [OpcodeBytes.ADD_HL_DE] = ADD_HL_DE,
                     [OpcodeBytes.ADD_HL_HL] = ADD_HL_HL,
@@ -303,7 +302,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Immediate instructions
 
-                #region MVI - Move immediate data
+                #region LD r, n - Load immediate data
                     [OpcodeBytes.LD_B_N] = LD_B_N,
                     [OpcodeBytes.LD_C_N] = LD_C_N,
                     [OpcodeBytes.LD_D_N] = LD_D_N,
@@ -314,7 +313,7 @@ namespace JustinCredible.ZilogZ80
                     [OpcodeBytes.LD_A_N] = LD_A_N,
                 #endregion
 
-                #region LXI - Load register pair immediate
+                #region LD rr, nn - Load register pair immediate
                     [OpcodeBytes.LD_BC_NN] = LD_BC_NN,
                     [OpcodeBytes.LD_DE_NN] = LD_DE_NN,
                     [OpcodeBytes.LD_HL_NN] = LD_HL_NN,

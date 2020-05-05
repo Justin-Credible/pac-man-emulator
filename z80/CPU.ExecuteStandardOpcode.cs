@@ -165,7 +165,7 @@ namespace JustinCredible.ZilogZ80
 
                     #region LD - Load (copy) data
 
-                        #region LD X, X (from register to register)
+                        #region LD r, r (from register to register)
 
                         case OpcodeBytes.LD_B_B:
                             // NOP
@@ -375,7 +375,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Register or memory to accumulator instructions
 
-                    #region ADD - Add register or memory to accumulator
+                    #region ADD r - Add register or memory to accumulator
 
                         case OpcodeBytes.ADD_A_B:
                             ExecuteADD(Registers.B);
@@ -404,7 +404,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region SUB - Subtract register or memory from accumulator
+                    #region SUB r - Subtract register or memory from accumulator
 
                         case OpcodeBytes.SUB_B:
                             ExecuteSUB(Registers.B);
@@ -433,7 +433,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region ANA - Logical AND register or memory with accumulator
+                    #region AND r - Logical AND register or memory with accumulator
 
                         case OpcodeBytes.AND_B:
                             Registers.A = (byte)(Registers.A & Registers.B);
@@ -470,7 +470,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region ORA - Logical OR register or memory with accumulator
+                    #region OR r - Logical OR register or memory with accumulator
 
                         case OpcodeBytes.OR_B:
                             Registers.A = (byte)(Registers.A | Registers.B);
@@ -507,7 +507,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region ADC - Add register or memory to accumulator with carry
+                    #region ADC A, r - Add register or memory to accumulator with carry
 
                         case OpcodeBytes.ADC_A_B:
                             ExecuteADD(Registers.B, true);
@@ -536,7 +536,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region SBB - Subtract register or memory from accumulator with borrow
+                    #region SBC A, r - Subtract register or memory from accumulator with borrow
 
                         case OpcodeBytes.SBC_A_B:
                             ExecuteSUB(Registers.B, true);
@@ -565,7 +565,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region XRA - Logical XOR register or memory with accumulator
+                    #region XOR r - Logical XOR register or memory with accumulator
 
                         case OpcodeBytes.XOR_B:
                             Registers.A = (byte)(Registers.A ^ Registers.B);
@@ -602,7 +602,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region CP - Compare register or memory with accumulator
+                    #region CP r - Compare register or memory with accumulator
 
                         case OpcodeBytes.CP_B:
                             ExecuteSUB(Registers.B, false, false);
@@ -697,7 +697,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region PUSH - Push data onto the stack
+                    #region PUSH rr - Push data onto the stack
 
                         case OpcodeBytes.PUSH_BC:
                             WriteMemory(StackPointer - 1, Registers.B);
@@ -722,7 +722,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region POP - Pop data off of the stack
+                    #region POP rr - Pop data off of the stack
 
                         case OpcodeBytes.POP_BC:
                             Registers.B = ReadMemory(StackPointer + 1);
@@ -747,7 +747,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region DAD - Double (16-bit) add
+                    #region ADD HL, rr - Double (16-bit) add
 
                         case OpcodeBytes.ADD_HL_BC:
                             ExecuteDAD(Registers.BC);

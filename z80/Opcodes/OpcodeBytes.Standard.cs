@@ -2,7 +2,6 @@ using System;
 
 namespace JustinCredible.ZilogZ80
 {
-    // TODO: Update with Z80 mnemonics.
     // TODO: Add z80 specific instructions.
 
     // A list of all the "standard" opcode bytes; can be used to lookup the opcode definition.
@@ -76,7 +75,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte LD_A_MDE = 0x1a;
             #endregion
 
-            #region LD - Load (copy) data
+            #region LD r, r - Load (copy) data
                 public const byte LD_B_B = 0x40;
                 public const byte LD_B_C = 0x41;
                 public const byte LD_B_D = 0x42;
@@ -146,7 +145,7 @@ namespace JustinCredible.ZilogZ80
 
         #region Register or memory to accumulator instructions
 
-            #region ADD - Add register or memory to accumulator
+            #region ADD r - Add register or memory to accumulator
                 public const byte ADD_A_B = 0x80;
                 public const byte ADD_A_C = 0x81;
                 public const byte ADD_A_D = 0x82;
@@ -157,7 +156,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte ADD_A_A = 0x87;
             #endregion
 
-            #region SUB - Subtract register or memory from accumulator
+            #region SUB r - Subtract register or memory from accumulator
                 public const byte SUB_B = 0x90;
                 public const byte SUB_C = 0x91;
                 public const byte SUB_D = 0x92;
@@ -168,7 +167,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SUB_A = 0x97;
             #endregion
 
-            #region AND - Logical AND register or memory with accumulator
+            #region AND r - Logical AND register or memory with accumulator
                 public const byte AND_B = 0xa0;
                 public const byte AND_C = 0xa1;
                 public const byte AND_D = 0xa2;
@@ -179,7 +178,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte AND_A = 0xa7;
             #endregion
 
-            #region OR - Logical OR register or memory with accumulator
+            #region OR r - Logical OR register or memory with accumulator
                 public const byte OR_B = 0xb0;
                 public const byte OR_C = 0xb1;
                 public const byte OR_D = 0xb2;
@@ -190,7 +189,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte OR_A = 0xb7;
             #endregion
 
-            #region ADC - Add register or memory to accumulator with carry
+            #region ADC A, r - Add register or memory to accumulator with carry
                 public const byte ADC_A_B = 0x88;
                 public const byte ADC_A_C = 0x89;
                 public const byte ADC_A_D = 0x8a;
@@ -201,7 +200,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte ADC_A_A = 0x8f;
             #endregion
 
-            #region SBC - Subtract register or memory from accumulator with borrow
+            #region SBC A, r - Subtract register or memory from accumulator with borrow
                 public const byte SBC_A_B = 0x98;
                 public const byte SBC_A_C = 0x99;
                 public const byte SBC_A_D = 0x9a;
@@ -212,7 +211,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SBC_A_A = 0x9f;
             #endregion
 
-            #region XOR - Logical XOR register or memory with accumulator
+            #region XOR r - Logical XOR register or memory with accumulator
                 public const byte XOR_B = 0xa8;
                 public const byte XOR_C = 0xa9;
                 public const byte XOR_D = 0xaa;
@@ -223,7 +222,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte XOR_A = 0xaf;
             #endregion
 
-            #region CP - Compare register or memory with accumulator
+            #region CP r - Compare register or memory with accumulator
                 public const byte CP_B = 0xb8;
                 public const byte CP_C = 0xb9;
                 public const byte CP_D = 0xba;
@@ -268,21 +267,21 @@ namespace JustinCredible.ZilogZ80
                 public const byte DEC_SP = 0x3b;
             #endregion
 
-            #region PUSH - Push data onto the stack
+            #region PUSH rr - Push data onto the stack
                 public const byte PUSH_BC = 0xc5;
                 public const byte PUSH_DE = 0xd5;
                 public const byte PUSH_HL = 0xe5;
                 public const byte PUSH_AF = 0xf5;
             #endregion
 
-            #region POP - Pop data off of the stack
+            #region POP rr - Pop data off of the stack
                 public const byte POP_BC = 0xc1;
                 public const byte POP_DE = 0xd1;
                 public const byte POP_HL = 0xe1;
                 public const byte POP_AF = 0xf1;
             #endregion
 
-            #region DAD - Double (16-bit) add
+            #region ADD HL, rr - Double (16-bit) add
                 public const byte ADD_HL_BC = 0x09;
                 public const byte ADD_HL_DE = 0x19;
                 public const byte ADD_HL_HL = 0x29;

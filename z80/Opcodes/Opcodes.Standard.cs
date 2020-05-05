@@ -72,7 +72,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_A_MDE = new Opcode(OpcodeBytes.LD_A_MDE, size: 1, instruction: "LD A, (DE)", cycles: 7, pseudocode: "A <- (DE)");
             #endregion
 
-            #region LD - Load (copy) data
+            #region LD r, r - Load (copy) data
                 public static Opcode LD_B_B = new Opcode(OpcodeBytes.LD_B_B, size: 1, instruction: "LD B, B", cycles: 5, pseudocode: "B <- B");
                 public static Opcode LD_B_C = new Opcode(OpcodeBytes.LD_B_C, size: 1, instruction: "LD B, C", cycles: 5, pseudocode: "B <- C");
                 public static Opcode LD_B_D = new Opcode(OpcodeBytes.LD_B_D, size: 1, instruction: "LD B, D", cycles: 5, pseudocode: "B <- D");
@@ -153,7 +153,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode ADD_A_A = new Opcode(OpcodeBytes.ADD_A_A, size: 1, instruction: "ADD A", cycles: 4, pseudocode: "A <- A + A");
             #endregion
 
-            #region SUB - Subtract register or memory from accumulator
+            #region SUB r - Subtract register or memory from accumulator
                 public static Opcode SUB_B = new Opcode(OpcodeBytes.SUB_B, size: 1, instruction: "SUB B", cycles: 4, pseudocode: "A <- A - B");
                 public static Opcode SUB_C = new Opcode(OpcodeBytes.SUB_C, size: 1, instruction: "SUB C", cycles: 4, pseudocode: "A <- A - C");
                 public static Opcode SUB_D = new Opcode(OpcodeBytes.SUB_D, size: 1, instruction: "SUB D", cycles: 4, pseudocode: "A <- A - D");
@@ -164,7 +164,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SUB_A = new Opcode(OpcodeBytes.SUB_A, size: 1, instruction: "SUB A", cycles: 4, pseudocode: "A <- A - A");
             #endregion
 
-            #region AND - Logical AND register or memory with accumulator
+            #region AND r - Logical AND register or memory with accumulator
                 public static Opcode AND_B = new Opcode(OpcodeBytes.AND_B, size: 1, instruction: "AND B", cycles: 4, pseudocode: "A <- A & B");
                 public static Opcode AND_C = new Opcode(OpcodeBytes.AND_C, size: 1, instruction: "AND C", cycles: 4, pseudocode: "A <- A & C");
                 public static Opcode AND_D = new Opcode(OpcodeBytes.AND_D, size: 1, instruction: "AND D", cycles: 4, pseudocode: "A <- A & D");
@@ -175,7 +175,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode AND_A = new Opcode(OpcodeBytes.AND_A, size: 1, instruction: "AND A", cycles: 4, pseudocode: "A <- A & A");
             #endregion
 
-            #region OR - Logical OR register or memory with accumulator
+            #region OR r - Logical OR register or memory with accumulator
                 public static Opcode OR_B = new Opcode(OpcodeBytes.OR_B, size: 1, instruction: "OR B", cycles: 4, pseudocode: "A <- A | B");
                 public static Opcode OR_C = new Opcode(OpcodeBytes.OR_C, size: 1, instruction: "OR C", cycles: 4, pseudocode: "A <- A | C");
                 public static Opcode OR_D = new Opcode(OpcodeBytes.OR_D, size: 1, instruction: "OR D", cycles: 4, pseudocode: "A <- A | D");
@@ -186,7 +186,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode OR_A = new Opcode(OpcodeBytes.OR_A, size: 1, instruction: "OR A", cycles: 4, pseudocode: "A <- A | A");
             #endregion
 
-            #region ADC - Add register or memory to accumulator with carry
+            #region ADC A, r - Add register or memory to accumulator with carry
                 public static Opcode ADC_A_B = new Opcode(OpcodeBytes.ADC_A_B, size: 1, instruction: "ADC A, B", cycles: 4, pseudocode: "A <- A + B + CY");
                 public static Opcode ADC_A_C = new Opcode(OpcodeBytes.ADC_A_C, size: 1, instruction: "ADC A, C", cycles: 4, pseudocode: "A <- A + C + CY");
                 public static Opcode ADC_A_D = new Opcode(OpcodeBytes.ADC_A_D, size: 1, instruction: "ADC A, D", cycles: 4, pseudocode: "A <- A + D + CY");
@@ -197,7 +197,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode ADC_A_A = new Opcode(OpcodeBytes.ADC_A_A, size: 1, instruction: "ADC A, A", cycles: 4, pseudocode: "A <- A + A + CY");
             #endregion
 
-            #region SBC - Subtract register or memory from accumulator with borrow
+            #region SBC A, r - Subtract register or memory from accumulator with borrow
                 public static Opcode SBC_A_B = new Opcode(OpcodeBytes.SBC_A_B, size: 1, instruction: "SBC A, B", cycles: 4, pseudocode: "A <- A - B - CY");
                 public static Opcode SBC_A_C = new Opcode(OpcodeBytes.SBC_A_C, size: 1, instruction: "SBC A, C", cycles: 4, pseudocode: "A <- A - C - CY");
                 public static Opcode SBC_A_D = new Opcode(OpcodeBytes.SBC_A_D, size: 1, instruction: "SBC A, D", cycles: 4, pseudocode: "A <- A - D - CY");
@@ -208,7 +208,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode SBC_A_A = new Opcode(OpcodeBytes.SBC_A_A, size: 1, instruction: "SBC A, A", cycles: 4, pseudocode: "A <- A - A - CY");
             #endregion
 
-            #region XOR - Logical XOR register or memory with accumulator
+            #region XOR r - Logical XOR register or memory with accumulator
                 public static Opcode XOR_B = new Opcode(OpcodeBytes.XOR_B, size: 1, instruction: "XOR B", cycles: 4, pseudocode: "A <- A ^ B");
                 public static Opcode XOR_C = new Opcode(OpcodeBytes.XOR_C, size: 1, instruction: "XOR C", cycles: 4, pseudocode: "A <- A ^ C");
                 public static Opcode XOR_D = new Opcode(OpcodeBytes.XOR_D, size: 1, instruction: "XOR D", cycles: 4, pseudocode: "A <- A ^ D");
@@ -219,7 +219,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode XOR_A = new Opcode(OpcodeBytes.XOR_A, size: 1, instruction: "XOR A", cycles: 4, pseudocode: "A <- A ^ A");
             #endregion
 
-            #region CP - Compare register or memory with accumulator
+            #region CP r - Compare register or memory with accumulator
                 public static Opcode CP_B = new Opcode(OpcodeBytes.CP_B, size: 1, instruction: "CP B", cycles: 4, pseudocode: "A - B");
                 public static Opcode CP_C = new Opcode(OpcodeBytes.CP_C, size: 1, instruction: "CP C", cycles: 4, pseudocode: "A - C");
                 public static Opcode CP_D = new Opcode(OpcodeBytes.CP_D, size: 1, instruction: "CP D", cycles: 4, pseudocode: "A - D");
@@ -264,14 +264,14 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode DEC_SP = new Opcode(OpcodeBytes.DEC_SP, size: 1, instruction: "DEC SP", cycles: 5, pseudocode: "SP = SP-1");
             #endregion
 
-            #region PUSH - Push data onto the stack
+            #region PUSH rr - Push data onto the stack
                 public static Opcode PUSH_BC = new Opcode(OpcodeBytes.PUSH_BC, size: 1, instruction: "PUSH BC", cycles: 11, pseudocode: "(sp-2)<-C; (sp-1)<-B; sp <- sp - 2");
                 public static Opcode PUSH_DE = new Opcode(OpcodeBytes.PUSH_DE, size: 1, instruction: "PUSH DE", cycles: 11, pseudocode: "(sp-2)<-E; (sp-1)<-D; sp <- sp - 2");
                 public static Opcode PUSH_HL = new Opcode(OpcodeBytes.PUSH_HL, size: 1, instruction: "PUSH HL", cycles: 11, pseudocode: "(sp-2)<-L; (sp-1)<-H; sp <- sp - 2");
                 public static Opcode PUSH_AF = new Opcode(OpcodeBytes.PUSH_AF, size: 1, instruction: "PUSH AF", cycles: 11, pseudocode: "(sp-2)<-flags; (sp-1)<-A; sp <- sp - 2");
             #endregion
 
-            #region POP - Pop data off of the stack
+            #region POP rr - Pop data off of the stack
                 public static Opcode POP_BC = new Opcode(OpcodeBytes.POP_BC, size: 1, instruction: "POP BC", cycles: 10, pseudocode: "C <- (sp); B <- (sp+1); sp <- sp+2");
                 public static Opcode POP_DE = new Opcode(OpcodeBytes.POP_DE, size: 1, instruction: "POP DE", cycles: 10, pseudocode: "E <- (sp); D <- (sp+1); sp <- sp+2");
                 public static Opcode POP_HL = new Opcode(OpcodeBytes.POP_HL, size: 1, instruction: "POP HL", cycles: 10, pseudocode: "L <- (sp); H <- (sp+1); sp <- sp+2");
@@ -298,7 +298,7 @@ namespace JustinCredible.ZilogZ80
 
         #region Immediate instructions
 
-            #region Load r, n - Load immediate data
+            #region LD r, n - Load immediate data
                 public static Opcode LD_B_N = new Opcode(OpcodeBytes.LD_B_N, size: 2, instruction: "LD B, D8", cycles: 7, pseudocode: "B <- byte 2");
                 public static Opcode LD_C_N = new Opcode(OpcodeBytes.LD_C_N, size: 2, instruction: "LD C, D8", cycles: 7, pseudocode: "C <- byte 2");
                 public static Opcode LD_D_N = new Opcode(OpcodeBytes.LD_D_N, size: 2, instruction: "LD D, D8", cycles: 7, pseudocode: "D <- byte 2");
@@ -309,7 +309,7 @@ namespace JustinCredible.ZilogZ80
                 public static Opcode LD_A_N = new Opcode(OpcodeBytes.LD_A_N, size: 2, instruction: "LD A, D8", cycles: 7, pseudocode: "A <- byte 2");
             #endregion
 
-            #region Load rr, nn - Load register pair immediate
+            #region LD rr, nn - Load register pair immediate
                 public static Opcode LD_BC_NN = new Opcode(OpcodeBytes.LD_BC_NN, size: 3, instruction: "LD BC, D16", cycles: 10, pseudocode: "B <- byte 3, C <- byte 2");
                 public static Opcode LD_DE_NN = new Opcode(OpcodeBytes.LD_DE_NN, size: 3, instruction: "LD DE, D16", cycles: 10, pseudocode: "D <- byte 3, E <- byte 2");
                 public static Opcode LD_HL_NN = new Opcode(OpcodeBytes.LD_HL_NN, size: 3, instruction: "LD HL, D16", cycles: 10, pseudocode: "H <- byte 3, L <- byte 2");

@@ -127,7 +127,7 @@ namespace JustinCredible.ZilogZ80
         public void PrintDebugSummary()
         {
             var opcodeByte = ReadMemory(ProgramCounter);
-            var opcodeInstruction = Opcodes.Lookup[opcodeByte].Instruction;
+            var opcodeInstruction = Opcodes.GetOpcode(ProgramCounter, Memory).Instruction;
 
             var opcode = String.Format("0x{0:X2} {1}", opcodeByte, opcodeInstruction);
             var pc = String.Format("0x{0:X4}", ProgramCounter);

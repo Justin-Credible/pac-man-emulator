@@ -7,9 +7,9 @@ namespace JustinCredible.ZilogZ80.Tests
     {
         // TODO: Add test for each lookup table.
         [Fact]
-        public void TestLookupTableHasCorrectBytes()
+        public void TestStandardLookupTableHasCorrectBytes()
         {
-            foreach (var entry in Opcodes.Lookup)
+            foreach (var entry in Opcodes.StandardLookup)
             {
                 var opcodeByteIndex = entry.Key;
                 var opcodeByteDefined = entry.Value.Code;
@@ -31,10 +31,10 @@ namespace JustinCredible.ZilogZ80.Tests
             // groups. Here we ensure that they aren't in the standard lookup
             // table as aliases anymore.
             // TODO: Remove Remaining aliases from OpcodeBytes.Standard and implement Z80 specific behavior.
-            Assert.False(Opcodes.Lookup.ContainsKey(0xED));
-            Assert.False(Opcodes.Lookup.ContainsKey(0xCB));
-            Assert.False(Opcodes.Lookup.ContainsKey(0xDD));
-            Assert.False(Opcodes.Lookup.ContainsKey(0xFD));
+            Assert.False(Opcodes.StandardLookup.ContainsKey(0xED));
+            Assert.False(Opcodes.StandardLookup.ContainsKey(0xCB));
+            Assert.False(Opcodes.StandardLookup.ContainsKey(0xDD));
+            Assert.False(Opcodes.StandardLookup.ContainsKey(0xFD));
         }
     }
 }
