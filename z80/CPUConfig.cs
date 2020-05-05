@@ -50,12 +50,11 @@ namespace JustinCredible.ZilogZ80
         // TODO: Interrupt modes
         public bool InterruptsEnabled { get; set; } = false;
 
-        // TODO: This was for the Intel 8080 test program; remove?
         /**
          * Special flag used to patch the CALL calls for the cpudiag.bin program.
          * This allow CALL 0x05 to simulate CP/M writing the console and will exit
          * on JP 0x00. This is only used for testing the CPU with this specific ROM.
          */
-        //public bool EnableDiagnosticsMode { get; set; } = false;
+        public bool EnableDiagnosticsMode { get; set; } = false;
     }
 }

@@ -1495,14 +1495,12 @@ namespace JustinCredible.ZilogZ80
 
             // This is special case code only for running the CPU diagnostic program.
             // See the EnableDiagnosticsMode flag for more details.
-            /* TODO: This was for the Intel 8080 test program; remove?
             if (Config.EnableDiagnosticsMode && address == 0x00)
             {
                 // This is a CALL 0x00 which returns control to CP/M.
                 this.Finished = true;
                 return;
             }
-            */
 
             #endregion
 
@@ -1537,7 +1535,6 @@ namespace JustinCredible.ZilogZ80
             // This is special case code only for running the CPU diagnostic program.
             // See the EnableDiagnosticsMode flag for more details.
 
-            /* TODO: This was for the Intel 8080 test program; remove?
             if (Config.EnableDiagnosticsMode && address == 0x05)
             {
                 // This is a CALL 0x05 which is a CP/M call.
@@ -1551,7 +1548,6 @@ namespace JustinCredible.ZilogZ80
                 ExecuteRET();
                 return;
             }
-            */
 
             #endregion
 

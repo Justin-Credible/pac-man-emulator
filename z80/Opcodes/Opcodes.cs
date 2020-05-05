@@ -12,6 +12,19 @@ namespace JustinCredible.ZilogZ80
          */
         public static Opcode GetOpcode(UInt16 programCounter, byte[] memory)
         {
+            try
+            {
+                return GetOpcodeInternal(programCounter, memory);
+            }
+            catch (Exception exception) {
+                // Wrap the exception with some helpful information: the opcode byte as well
+                // as the location of the program counter.
+                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", memory[programCounter], programCounter), exception);
+            }
+        }
+
+        private static Opcode GetOpcodeInternal(UInt16 programCounter, byte[] memory)
+        {
             var opcodeByte1 = memory[programCounter];
 
             // If this isn't a preamble byte, we can just bail early and lookup
@@ -69,7 +82,7 @@ namespace JustinCredible.ZilogZ80
             {
                 // The IsExtendedPreambleByte indicated this was a preamble byte
                 // but it was not handled above.
-                throw new Exception(String.Format("Encountered an unhandled preamble byte 0x{0:X2} at memory address 0x{1:X4} when attempting to grab an opcode.", opcodeByte1, programCounter));
+                throw new NotImplementedException("Unhandled preamble byte.");
             }
         }
 

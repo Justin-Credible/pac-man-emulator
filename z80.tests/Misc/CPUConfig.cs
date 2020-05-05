@@ -24,7 +24,7 @@ namespace JustinCredible.ZilogZ80.Tests
             WriteableMemoryEnd = 0x3FFF;
             MirrorMemoryStart = 0x4000;
             MirrorMemoryEnd = 0x5FFF;
-            // EnableDiagnosticsMode = false; // TODO
+            EnableDiagnosticsMode = false;
         }
     }
 }

@@ -53,10 +53,10 @@ namespace JustinCredible.ZilogZ80
         /** Configuration for the CPU; used to customize the CPU instance. */
         public CPUConfig Config { get; private set; }
 
-        // public delegate void CPUDiagDebugEvent(int eventID);
+        public delegate void CPUDiagDebugEvent(int eventID);
 
         /** Fired on CALL 0x05 when EnableCPUDiagMode is true. */
-        // public event CPUDiagDebugEvent OnCPUDiagDebugEvent;
+        public event CPUDiagDebugEvent OnCPUDiagDebugEvent;
 
         // TODO: Is device I/O handled differently on Z80?
 
