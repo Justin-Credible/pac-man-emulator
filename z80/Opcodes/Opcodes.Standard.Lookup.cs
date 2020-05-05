@@ -291,7 +291,7 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 /** Load SP from H and L */
-                [OpcodeBytes.SPHL] = SPHL,
+                [OpcodeBytes.LD_SP_HL] = LD_SP_HL,
 
                 /** Exchange stack */
                 [OpcodeBytes.EX_MSP_HL] = EX_MSP_HL,

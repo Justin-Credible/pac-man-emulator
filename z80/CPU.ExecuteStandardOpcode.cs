@@ -765,7 +765,7 @@ namespace JustinCredible.ZilogZ80
                     #endregion
 
                     // Load SP from H and L
-                    case OpcodeBytes.SPHL:
+                    case OpcodeBytes.LD_SP_HL:
                         StackPointer = Registers.HL;
                         break;
 

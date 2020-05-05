@@ -290,7 +290,7 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Load SP from H and L */
-            public const byte SPHL = 0xf9;
+            public const byte LD_SP_HL = 0xf9;
 
             /** Exchange stack */
             public const byte EX_MSP_HL = 0xe3;

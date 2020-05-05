@@ -286,7 +286,7 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Load SP from H and L */
-            public static Opcode SPHL = new Opcode(OpcodeBytes.SPHL, size: 1, instruction: "SPHL", cycles: 5, pseudocode: "SP=HL");
+            public static Opcode LD_SP_HL = new Opcode(OpcodeBytes.LD_SP_HL, size: 1, instruction: "LD SP, HL", cycles: 5, pseudocode: "SP=HL");
 
             /** Exchange stack */
             public static Opcode EX_MSP_HL = new Opcode(OpcodeBytes.EX_MSP_HL, size: 1, instruction: "EX (SP), HL",	18, pseudocode: "L <-> (SP); H <-> (SP+1)");
