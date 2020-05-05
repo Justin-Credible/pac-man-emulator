@@ -33,7 +33,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Carry bit instructions
 
-                    case OpcodeBytes.CMC:
+                    case OpcodeBytes.CCF:
                         Flags.Carry = !Flags.Carry;
                         break;
 

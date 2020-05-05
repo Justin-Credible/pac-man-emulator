@@ -29,7 +29,7 @@ namespace JustinCredible.ZilogZ80
                 [OpcodeBytes.STC] = STC,
 
                 /** Complement Carry */
-                [OpcodeBytes.CMC] = CMC,
+                [OpcodeBytes.CCF] = CCF,
 
             #endregion
 

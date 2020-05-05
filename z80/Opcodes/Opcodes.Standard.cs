@@ -24,7 +24,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode STC = new Opcode(OpcodeBytes.STC, size: 1, instruction: "STC", cycles: 4, pseudocode: "CY = 1");
 
             /** Complement Carry */
-            public static Opcode CMC = new Opcode(OpcodeBytes.CMC, size: 1, instruction: "CMC", cycles: 4, pseudocode: "CY=!CY");
+            public static Opcode CCF = new Opcode(OpcodeBytes.CCF, size: 1, instruction: "CMC", cycles: 4, pseudocode: "CY=!CY");
 
         #endregion
 

@@ -28,7 +28,7 @@ namespace JustinCredible.ZilogZ80
             public const byte STC = 0x37;
 
             /** Complement Carry */
-            public const byte CMC = 0x3f;
+            public const byte CCF = 0x3f;
 
         #endregion
 
