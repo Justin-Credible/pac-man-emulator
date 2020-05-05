@@ -57,7 +57,7 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Compliment Accumulator */
-            public const byte CMA = 0x2f;
+            public const byte CPL = 0x2f;
 
             /** Decimal Adjust Accumulator */
             public const byte DAA = 0x27;

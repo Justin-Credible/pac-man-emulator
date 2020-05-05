@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace JustinCredible.ZilogZ80
 {
+    // TODO: Update mnemonics on region comments
     // A lookup table to locate opcode definitions by the opcode byte.
     public partial class Opcodes
     {
@@ -57,7 +58,7 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             /** Compliment Accumulator */
-            [OpcodeBytes.CMA] = CMA,
+            [OpcodeBytes.CPL] = CPL,
 
             /** Decimal Adjust Accumulator */
             [OpcodeBytes.DAA] = DAA,

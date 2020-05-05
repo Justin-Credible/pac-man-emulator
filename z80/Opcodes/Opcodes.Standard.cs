@@ -53,7 +53,7 @@ namespace JustinCredible.ZilogZ80
         #endregion
 
         /** Compliment Accumulator */
-        public static Opcode CMA = new Opcode(OpcodeBytes.CMA, size: 1, instruction: "CMA", cycles: 4, pseudocode: "A <- !A");
+        public static Opcode CPL = new Opcode(OpcodeBytes.CPL, size: 1, instruction: "CPL", cycles: 4, pseudocode: "A <- !A");
 
         /** Decimal Adjust Accumulator */
         public static Opcode DAA = new Opcode(OpcodeBytes.DAA, size: 1, instruction: "DAA", cycles: 4);

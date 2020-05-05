@@ -2,6 +2,7 @@ using System;
 
 namespace JustinCredible.ZilogZ80
 {
+    // TODO: Update mnemonics on opcode method calls.
     public partial class CPU
     {
         private void ExecuteStandardOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
@@ -127,7 +128,7 @@ namespace JustinCredible.ZilogZ80
                     #endregion
 
                     /** Compliment Accumulator */
-                    case OpcodeBytes.CMA:
+                    case OpcodeBytes.CPL:
                         Registers.A = (byte)~Registers.A;
                         break;
 
