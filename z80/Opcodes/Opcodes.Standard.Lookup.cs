@@ -14,12 +14,7 @@ namespace JustinCredible.ZilogZ80
             #region NOP - No operation
                 [OpcodeBytes.NOP] = NOP,
                 [OpcodeBytes.NOP2] = NOP2,
-                [OpcodeBytes.NOP3] = NOP3,
-                [OpcodeBytes.NOP4] = NOP4,
                 [OpcodeBytes.NOP5] = NOP5,
-                [OpcodeBytes.NOP6] = NOP6,
-                [OpcodeBytes.NOP7] = NOP7,
-                [OpcodeBytes.NOP8] = NOP8,
             #endregion
 
             #region Carry bit instructions
@@ -393,6 +388,21 @@ namespace JustinCredible.ZilogZ80
 
                 /** Jump if minus/negative */
                 [OpcodeBytes.JP_M] = JP_M,
+
+                /** Relative jump */
+                [OpcodeBytes.JR] = JR,
+
+                /** Relative jump if zero */
+                [OpcodeBytes.JR_Z] = JR_Z,
+
+                /** Relative jump if not zero */
+                [OpcodeBytes.JR_NZ] = JR_NZ,
+
+                /** Relative jump if carry */
+                [OpcodeBytes.JR_C] = JR_C,
+
+                /** Relative jump if not carry */
+                [OpcodeBytes.JR_NC] = JR_NC,
 
             #endregion
 

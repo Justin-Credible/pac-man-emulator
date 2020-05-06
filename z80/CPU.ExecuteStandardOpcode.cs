@@ -21,12 +21,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.NOP:
                     case OpcodeBytes.NOP2:
-                    case OpcodeBytes.NOP3:
-                    case OpcodeBytes.NOP4:
                     case OpcodeBytes.NOP5:
-                    case OpcodeBytes.NOP6:
-                    case OpcodeBytes.NOP7:
-                    case OpcodeBytes.NOP8:
                         break;
 
                 #endregion
@@ -1060,6 +1055,70 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
+                    // Relative jump
+                    case OpcodeBytes.JR:
+                    {
+                        ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                        incrementProgramCounter = false;
+                        break;
+                    }
+
+                    // Relative jump if zero
+                    case OpcodeBytes.JR_Z:
+                    {
+                        if (Flags.Zero)
+                        {
+                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            incrementProgramCounter = false;
+                        }
+                        else
+                            useAlternateCycleCount = true;
+
+                        break;
+                    }
+
+                    // Relative jump if not zero
+                    case OpcodeBytes.JR_NZ:
+                    {
+                        if (!Flags.Zero)
+                        {
+                            ExecuteRelativeJump((sbyte)(sbyte)ReadMemory(ProgramCounter + 1));
+                            incrementProgramCounter = false;
+                        }
+                        else
+                            useAlternateCycleCount = true;
+
+                        break;
+                    }
+
+                    // Relative jump if carry
+                    case OpcodeBytes.JR_C:
+                    {
+                        if (Flags.Carry)
+                        {
+                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            incrementProgramCounter = false;
+                        }
+                        else
+                            useAlternateCycleCount = true;
+
+                        break;
+                    }
+
+                    // Relative jump if not carry
+                    case OpcodeBytes.JR_NC:
+                    {
+                        if (!Flags.Carry)
+                        {
+                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            incrementProgramCounter = false;
+                        }
+                        else
+                            useAlternateCycleCount = true;
+
+                        break;
+                    }
+
                 #endregion
 
                 #region Call subroutine instructions
@@ -1505,6 +1564,24 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             ProgramCounter = address;
+        }
+
+        private void ExecuteRelativeJump(sbyte relativeAddress)
+        {
+            // Calculate the address to jump to using the given relative address which
+            // is signed.
+            int offset = (int)unchecked(relativeAddress);
+            var address = ProgramCounter + offset;
+
+            // The assembler adds the size of the opcode to the offset address during
+            // assembly, attempting to account for the fact that normal hardware would
+            // increment the program counter this amount. However, in this emulator we
+            // did do not increment the program counter until after the execute loop,
+            // and we don't even do it for call/jump scenarios. Therefore, account for
+            // the assembler's adjustment and add the opcode size back in.
+            address += Opcodes.JR.Size;
+
+            ExecuteJump((UInt16)address);
         }
 
         private void ExecuteCALL(Opcode opcode)

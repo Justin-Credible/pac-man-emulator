@@ -219,7 +219,7 @@ namespace JustinCredible.ZilogZ80
 
             // Determine how many cycles the instruction took.
 
-            var elapsedCycles = (UInt16)opcode.Cycles;
+            var elapsedCycles = opcode.Cycles;
 
             if (useAlternateCycleCount)
             {
@@ -227,7 +227,7 @@ namespace JustinCredible.ZilogZ80
                 if (opcode.AlternateCycles == null)
                     throw new Exception(String.Format("The implementation for opcode 0x{0:X2} at memory address 0x{1:X4} indicated the alternate number of cycles should be used, but was not defined.", opcode, ProgramCounter));
 
-                elapsedCycles = (UInt16)opcode.AlternateCycles;
+                elapsedCycles = opcode.AlternateCycles.Value;
             }
 
             // Increment the program counter.

@@ -10,12 +10,7 @@ namespace JustinCredible.ZilogZ80
         #region NOP - No operation
             public static Opcode NOP = new Opcode(OpcodeBytes.NOP, size: 1, instruction: "NOP", cycles: 4);
             public static Opcode NOP2 = new Opcode(OpcodeBytes.NOP2, size: 1, instruction: "NOP2", cycles: 4);
-            public static Opcode NOP3 = new Opcode(OpcodeBytes.NOP3, size: 1, instruction: "NOP3", cycles: 4);
-            public static Opcode NOP4 = new Opcode(OpcodeBytes.NOP4, size: 1, instruction: "NOP4", cycles: 4);
             public static Opcode NOP5 = new Opcode(OpcodeBytes.NOP5, size: 1, instruction: "NOP5", cycles: 4);
-            public static Opcode NOP6 = new Opcode(OpcodeBytes.NOP6, size: 1, instruction: "NOP6", cycles: 4);
-            public static Opcode NOP7 = new Opcode(OpcodeBytes.NOP7, size: 1, instruction: "NOP7", cycles: 4);
-            public static Opcode NOP8 = new Opcode(OpcodeBytes.NOP8, size: 1, instruction: "NOP8", cycles: 4);
         #endregion
 
         #region Carry bit instructions
@@ -382,16 +377,31 @@ namespace JustinCredible.ZilogZ80
             public static Opcode JP_Z = new Opcode(OpcodeBytes.JP_Z, size: 3, instruction: "JP Z, adr", cycles: 10, pseudocode: "if Z, PC <- adr");
 
             /** Jump if not zero */
-            public static Opcode JP_NZ = new Opcode(OpcodeBytes.JP_NZ, size: 3, instruction: "JP NZ, adr", cycles: 10, pseudocode: "if NZ, PC <- adr");
+            public static Opcode JP_NZ = new Opcode(OpcodeBytes.JP_NZ, size: 3, instruction: "JP NZ, adr", cycles: 10, pseudocode: "if !Z, PC <- adr");
 
             /** Jump if not carry */
-            public static Opcode JP_NC = new Opcode(OpcodeBytes.JP_NC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if NCY, PC<-adr");
+            public static Opcode JP_NC = new Opcode(OpcodeBytes.JP_NC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if !C, PC<-adr");
 
             /** Jump if carry */
-            public static Opcode JP_C = new Opcode(OpcodeBytes.JP_C, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if CY, PC<-adr");
+            public static Opcode JP_C = new Opcode(OpcodeBytes.JP_C, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if C, PC<-adr");
 
             /** Jump if minus/negative */
             public static Opcode JP_M = new Opcode(OpcodeBytes.JP_M, size: 3, instruction: "JP M, adr", cycles: 10, pseudocode: "if M, PC <- adr");
+
+            /** Relative jump */
+            public static Opcode JR = new Opcode(OpcodeBytes.JR, size: 2, instruction: "JR $±n", cycles: 12, alternateCycles: 7, pseudocode: "PC = PC ± n");
+
+            /** Relative jump if zero */
+            public static Opcode JR_Z = new Opcode(OpcodeBytes.JR_Z, size: 2, instruction: "JR Z, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if Z, PC = PC ± n");
+
+            /** Relative jump if not zero */
+            public static Opcode JR_NZ = new Opcode(OpcodeBytes.JR_NZ, size: 2, instruction: "JR NZ, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if !Z, PC = PC ± n");
+
+            /** Relative jump if carry */
+            public static Opcode JR_C = new Opcode(OpcodeBytes.JR_C, size: 2, instruction: "JR C, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if C, PC = PC ± n");
+
+            /** Relative jump if not carry */
+            public static Opcode JR_NC = new Opcode(OpcodeBytes.JR_NC, size: 2, instruction: "JR NC, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if !C, PC = PC ± n");
 
         #endregion
 
@@ -406,7 +416,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode CALL_PE = new Opcode(OpcodeBytes.CALL_PE, size: 3, instruction: "CALL PE, adr", cycles: 17, alternateCycles: 11, pseudocode: "if PE, CALL adr");
 
             /** Call if carry */
-            public static Opcode CALL_C = new Opcode(OpcodeBytes.CALL_C, size: 3, instruction: "CALL C, adr", cycles: 17, alternateCycles: 11, pseudocode: "if CY, CALL adr");
+            public static Opcode CALL_C = new Opcode(OpcodeBytes.CALL_C, size: 3, instruction: "CALL C, adr", cycles: 17, alternateCycles: 11, pseudocode: "if C, CALL adr");
 
             /** Call if zero */
             public static Opcode CALL_Z = new Opcode(OpcodeBytes.CALL_Z, size: 3, instruction: "CALL Z, adr", cycles: 17, alternateCycles: 11, pseudocode: "if Z, CALL adr");
@@ -418,10 +428,10 @@ namespace JustinCredible.ZilogZ80
             public static Opcode CALL_PO = new Opcode(OpcodeBytes.CALL_PO, size: 3, instruction: "CALL PO, adr", cycles: 17, alternateCycles: 11, pseudocode: "if PO, CALL adr");
 
             /** Call if no carry */
-            public static Opcode CALL_NC = new Opcode(OpcodeBytes.CALL_NC, size: 3, instruction: "CALL NC, adr", cycles: 17, alternateCycles: 11, pseudocode: "if NCY, CALL adr");
+            public static Opcode CALL_NC = new Opcode(OpcodeBytes.CALL_NC, size: 3, instruction: "CALL NC, adr", cycles: 17, alternateCycles: 11, pseudocode: "if !C, CALL adr");
 
             /** Call if not zero */
-            public static Opcode CALL_NZ = new Opcode(OpcodeBytes.CALL_NZ, size: 3, instruction: "CALL NZ, adr", cycles: 17, alternateCycles: 11, pseudocode: "if NZ, CALL adr");
+            public static Opcode CALL_NZ = new Opcode(OpcodeBytes.CALL_NZ, size: 3, instruction: "CALL NZ, adr", cycles: 17, alternateCycles: 11, pseudocode: "if !Z, CALL adr");
 
         #endregion
 
@@ -434,16 +444,16 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RET2 = new Opcode(OpcodeBytes.RET2, size: 1, instruction: "RET2", cycles: 10, pseudocode: "PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2");
 
             /** Return if not zero */
-            public static Opcode RET_NZ = new Opcode(OpcodeBytes.RET_NZ, size: 1, instruction: "RET NZ", cycles: 11, alternateCycles: 5, pseudocode: "if NZ, RET");
+            public static Opcode RET_NZ = new Opcode(OpcodeBytes.RET_NZ, size: 1, instruction: "RET NZ", cycles: 11, alternateCycles: 5, pseudocode: "if !Z, RET");
 
             /** Return if zero */
             public static Opcode RET_Z = new Opcode(OpcodeBytes.RET_Z, size: 1, instruction: "RET Z", cycles: 11, alternateCycles: 5, pseudocode: "if Z, RET");
 
             /** Return if no carry */
-            public static Opcode RET_NC = new Opcode(OpcodeBytes.RET_NC, size: 1, instruction: "RNC", cycles: 11, alternateCycles: 5, pseudocode: "if NCY, RET");
+            public static Opcode RET_NC = new Opcode(OpcodeBytes.RET_NC, size: 1, instruction: "RNC", cycles: 11, alternateCycles: 5, pseudocode: "if !C, RET");
 
             /** Return if carry */
-            public static Opcode RET_C = new Opcode(OpcodeBytes.RET_C, size: 1, instruction: "RET C", cycles: 11, alternateCycles: 5, pseudocode: "if CY, RET");
+            public static Opcode RET_C = new Opcode(OpcodeBytes.RET_C, size: 1, instruction: "RET C", cycles: 11, alternateCycles: 5, pseudocode: "if C, RET");
 
             /** Return if parity odd */
             public static Opcode RET_PO = new Opcode(OpcodeBytes.RET_PO, size: 1, instruction: "RET PO", cycles: 11, alternateCycles: 5, pseudocode: "if PO, RET");

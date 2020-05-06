@@ -13,12 +13,7 @@ namespace JustinCredible.ZilogZ80
         #region NOP - No operation
             public const byte NOP = 0x00;
             public const byte NOP2 = 0x10; // TODO
-            public const byte NOP3 = 0x20; // TODO
-            public const byte NOP4 = 0x30; // TODO
             public const byte NOP5 = 0x08; // TODO
-            public const byte NOP6 = 0x18; // TODO
-            public const byte NOP7 = 0x28; // TODO
-            public const byte NOP8 = 0x38; // TODO
         #endregion
 
         #region Carry bit instructions
@@ -392,6 +387,21 @@ namespace JustinCredible.ZilogZ80
 
             /** Jump if minus/negative */
             public const byte JP_M = 0xfa;
+
+            /** Relative jump */
+            public const byte JR = 0x18;
+
+            /** Relative jump if zero */
+            public const byte JR_Z = 0x28;
+
+            /** Relative jump if not zero */
+            public const byte JR_NZ = 0x20;
+
+            /** Relative jump if carry */
+            public const byte JR_C = 0x38;
+
+            /** Relative jump if not carry */
+            public const byte JR_NC = 0x30;
 
         #endregion
 
