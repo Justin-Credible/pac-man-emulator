@@ -10,7 +10,6 @@ namespace JustinCredible.ZilogZ80
         #region NOP - No operation
             public static Opcode NOP = new Opcode(OpcodeBytes.NOP, size: 1, instruction: "NOP", cycles: 4);
             public static Opcode NOP2 = new Opcode(OpcodeBytes.NOP2, size: 1, instruction: "NOP2", cycles: 4);
-            public static Opcode NOP5 = new Opcode(OpcodeBytes.NOP5, size: 1, instruction: "NOP5", cycles: 4);
         #endregion
 
         #region Carry bit instructions
@@ -227,6 +226,16 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Exchange registers
+
+            /** Exchange BC, DE, HL <-> BC', DE', HL' */
+            public static Opcode EXX = new Opcode(OpcodeBytes.EXX, size: 1, instruction: "EXX", cycles: 4, pseudocode: "BC DE HL <-> BC' DE' HL'");
+
+            /** Exchange A, F <-> A', F' */
+            public static Opcode EX_AF_AFP = new Opcode(OpcodeBytes.EX_AF_AFP, size: 1, instruction: "EX_AF_AFP", cycles: 4, pseudocode: "AF <-> AF'");
+
+        #endregion
+
         #region Rotate accumulator instructions
 
             /** Rotate accumulator left */
@@ -439,9 +448,6 @@ namespace JustinCredible.ZilogZ80
 
             /** Return from subroutine */
             public static Opcode RET = new Opcode(OpcodeBytes.RET, size: 1, instruction: "RET", cycles: 10, pseudocode: "PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2");
-
-            /** Return from subroutine (duplicate) */
-            public static Opcode RET2 = new Opcode(OpcodeBytes.RET2, size: 1, instruction: "RET2", cycles: 10, pseudocode: "PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2");
 
             /** Return if not zero */
             public static Opcode RET_NZ = new Opcode(OpcodeBytes.RET_NZ, size: 1, instruction: "RET NZ", cycles: 11, alternateCycles: 5, pseudocode: "if !Z, RET");

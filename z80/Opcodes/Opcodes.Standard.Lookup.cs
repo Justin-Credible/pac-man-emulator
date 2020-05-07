@@ -14,7 +14,6 @@ namespace JustinCredible.ZilogZ80
             #region NOP - No operation
                 [OpcodeBytes.NOP] = NOP,
                 [OpcodeBytes.NOP2] = NOP2,
-                [OpcodeBytes.NOP5] = NOP5,
             #endregion
 
             #region Carry bit instructions
@@ -231,6 +230,16 @@ namespace JustinCredible.ZilogZ80
 
             #endregion
 
+            #region Exchange registers
+
+                /** Exchange BC, DE, HL <-> BC', DE', HL' */
+                [OpcodeBytes.EXX] = EXX,
+
+                /** Exchange A, F <-> A', F' */
+                [OpcodeBytes.EX_AF_AFP] = EX_AF_AFP,
+
+            #endregion
+
             #region Rotate accumulator instructions
 
                 /** Rotate accumulator left */
@@ -441,9 +450,6 @@ namespace JustinCredible.ZilogZ80
 
                 /** Return from subroutine */
                 [OpcodeBytes.RET] = RET,
-
-                /** Return from subroutine (duplicate) */
-                [OpcodeBytes.RET2] = RET2,
 
                 /** Return if not zero */
                 [OpcodeBytes.RET_NZ] = RET_NZ,

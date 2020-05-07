@@ -21,7 +21,6 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.NOP:
                     case OpcodeBytes.NOP2:
-                    case OpcodeBytes.NOP5:
                         break;
 
                 #endregion
@@ -627,6 +626,58 @@ namespace JustinCredible.ZilogZ80
                     #endregion
 
                 #endregion
+
+            #region Exchange registers
+
+                /** Exchange BC, DE, HL <-> BC', DE', HL' */
+                case OpcodeBytes.EXX:
+                {
+                    // Save off shadow register values.
+                    byte shadowB = ShadowRegisters.B;
+                    byte shadowC = ShadowRegisters.C;
+                    byte shadowD = ShadowRegisters.D;
+                    byte shadowE = ShadowRegisters.E;
+                    byte shadowH = ShadowRegisters.H;
+                    byte shadowL = ShadowRegisters.L;
+
+                    // Copy regular register values to shadow registers.
+                    ShadowRegisters.B = Registers.B;
+                    ShadowRegisters.C = Registers.C;
+                    ShadowRegisters.D = Registers.D;
+                    ShadowRegisters.E = Registers.E;
+                    ShadowRegisters.H = Registers.H;
+                    ShadowRegisters.L = Registers.L;
+
+                    // Copy shadow register values to regular registers.
+                    Registers.B = shadowB;
+                    Registers.C = shadowC;
+                    Registers.D = shadowD;
+                    Registers.E = shadowE;
+                    Registers.H = shadowH;
+                    Registers.L = shadowL;
+
+                    break;
+                }
+
+                /** Exchange A, F <-> A', F' */
+                case OpcodeBytes.EX_AF_AFP:
+                {
+                    // Save off shadow register values.
+                    byte shadowA = ShadowRegisters.A;
+                    byte shadowF = ShadowFlags.ToByte();
+
+                    // Copy regular register values to shadow registers.
+                    ShadowRegisters.A = Registers.A;
+                    ShadowFlags.SetFromByte(Flags.ToByte());
+
+                    // Copy shadow register values to regular registers.
+                    Registers.A = shadowA;
+                    Flags.SetFromByte(shadowF);
+
+                    break;
+                }
+
+            #endregion
 
                 #region Rotate accumulator instructions
 
@@ -1252,8 +1303,6 @@ namespace JustinCredible.ZilogZ80
 
                     // Return from subroutine
                     case OpcodeBytes.RET:
-                    // Return from subroutine (duplicate)
-                    case OpcodeBytes.RET2:
                     {
                         ExecuteRET();
 

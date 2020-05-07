@@ -26,13 +26,13 @@ namespace JustinCredible.ZilogZ80
         public CPURegisters Registers { get; set; }
 
         /** Alternative register set (A' B' C' D' E' H' L') */
-        public CPURegisters AlternativeRegisters { get; set; } // TODO
+        public CPURegisters ShadowRegisters { get; set; }
 
         /** The encapsulated condition/flags register (F) */
         public ConditionFlags Flags { get; set; }
 
         /** Alternative flag register (F') */
-        public ConditionFlags AlternativeFlags { get; set; } // TODO
+        public ConditionFlags ShadowFlags { get; set; }
 
         /** The memory refresh register (R) */
         public UInt16 MemoryRefresh { get; set; } // TODO

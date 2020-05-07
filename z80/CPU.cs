@@ -20,13 +20,13 @@ namespace JustinCredible.ZilogZ80
         public CPURegisters Registers { get; set; }
 
         /** Alternative register set (A' B' C' D' E' H' L') */
-        public CPURegisters AlternateRegisters { get; set; } // TODO
+        public CPURegisters ShadowRegisters { get; set; }
 
         /** The encapsulated condition/flags register (F) */
         public ConditionFlags Flags { get; set; }
 
         /** Alternative flag register (F') */
-        public ConditionFlags AlternateFlags { get; set; } // TODO
+        public ConditionFlags ShadowFlags { get; set; }
 
         /** The interrupt vector register (I) */
         public UInt16 InterruptVector { get; set; } // TODO
@@ -94,7 +94,9 @@ namespace JustinCredible.ZilogZ80
             // Re-initialize the CPU based on configuration.
             Memory = new byte[Config.MemorySize];
             Registers = Config.Registers ?? new CPURegisters();
+            ShadowRegisters = Config.ShadowRegisters ?? new CPURegisters();
             Flags = Config.Flags ?? new ConditionFlags();
+            ShadowFlags = Config.ShadowFlags ?? new ConditionFlags();
             ProgramCounter = Config.ProgramCounter;
             StackPointer = Config.StackPointer;
             InterruptsEnabled = Config.InterruptsEnabled;

@@ -13,7 +13,6 @@ namespace JustinCredible.ZilogZ80
         #region NOP - No operation
             public const byte NOP = 0x00;
             public const byte NOP2 = 0x10; // TODO
-            public const byte NOP5 = 0x08; // TODO
         #endregion
 
         #region Carry bit instructions
@@ -230,6 +229,16 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Exchange registers
+
+            /** Exchange BC, DE, HL <-> BC', DE', HL' */
+            public const byte EXX = 0xD9;
+
+            /** Exchange A, F <-> A', F' */
+            public const byte EX_AF_AFP = 0x08;
+
+        #endregion
+
         #region Rotate accumulator instructions
 
             /** Rotate accumulator left */
@@ -439,9 +448,6 @@ namespace JustinCredible.ZilogZ80
 
             /** Return from subroutine */
             public const byte RET = 0xc9;
-
-            /** Return from subroutine (duplicate) */
-            public const byte RET2 = 0xd9; // TODO
 
             /** Return if not zero */
             public const byte RET_NZ = 0xc0;
