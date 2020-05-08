@@ -11,8 +11,8 @@ namespace JustinCredible.ZilogZ80
         Standard,
 
         // Two Bytes
-        ExtendedStandard,
-        ExtendedBit,
+        Extended,
+        Bit,
         IX,
         IY,
 

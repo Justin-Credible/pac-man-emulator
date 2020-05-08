@@ -253,23 +253,23 @@ namespace JustinCredible.ZilogZ80
                 case InstructionSet.Standard:
                     ExecuteStandardOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
-                case InstructionSet.ExtendedStandard:
-                    ExecuteExtendedStandardOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
+                case InstructionSet.Extended:
+                    ExecuteExtendedOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
-                case InstructionSet.ExtendedBit:
-                    ExecuteExtendedBitOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
+                case InstructionSet.Bit:
+                    ExecuteBitOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
                 case InstructionSet.IX:
-                    ExecuteExtendedIXOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
+                    ExecuteIXOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
                 case InstructionSet.IY:
-                    ExecuteExtendedIYOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
+                    ExecuteIYOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
                 case InstructionSet.IXBit:
-                    ExecuteExtendedIXBitOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
+                    ExecuteIXBitOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
                 case InstructionSet.IYBit:
-                    ExecuteExtendedIYBitOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
+                    ExecuteIYBitOpcode(opcode, out incrementProgramCounter, out useAlternateCycleCount);
                     break;
                 default:
                     throw new Exception(String.Format("Encountered an unhandled InstructionSet type {0} at memory address 0x{1:X4} when attempting to grab an opcode.", opcode.InstructionSet));

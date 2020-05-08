@@ -2,9 +2,8 @@ using System;
 
 namespace JustinCredible.ZilogZ80
 {
-    // TODO: Add z80 specific instructions.
-
     // A list of all the "standard" opcode bytes; can be used to lookup the opcode definition.
+    // These are all of the single byte opcodes.
     public partial class OpcodeBytes
     {
         /** Halt CPU */
