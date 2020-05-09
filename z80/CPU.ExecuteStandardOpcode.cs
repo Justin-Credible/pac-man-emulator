@@ -17,13 +17,8 @@ namespace JustinCredible.ZilogZ80
                     incrementProgramCounter = false;
                     break;
 
-                #region NOP - No operation
-
-                    case OpcodeBytes.NOP:
-                    case OpcodeBytes.NOP2:
-                        break;
-
-                #endregion
+                case OpcodeBytes.NOP:
+                    break;
 
                 #region Carry bit instructions
 
@@ -1160,6 +1155,22 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.JR_NC:
                     {
                         if (!Flags.Carry)
+                        {
+                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            incrementProgramCounter = false;
+                        }
+                        else
+                            useAlternateCycleCount = true;
+
+                        break;
+                    }
+
+                    // Decrement B and relative jump if not zero
+                    case OpcodeBytes.DJNZ:
+                    {
+                        Registers.B--;
+
+                        if (Registers.B != 0)
                         {
                             ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
                             incrementProgramCounter = false;

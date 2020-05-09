@@ -9,10 +9,8 @@ namespace JustinCredible.ZilogZ80
         /** Halt CPU */
         public const byte HALT = 0x76;
 
-        #region NOP - No operation
-            public const byte NOP = 0x00;
-            public const byte NOP2 = 0x10; // TODO
-        #endregion
+        /** No Operation */
+        public const byte NOP = 0x00;
 
         #region Carry bit instructions
 
@@ -410,6 +408,9 @@ namespace JustinCredible.ZilogZ80
 
             /** Relative jump if not carry */
             public const byte JR_NC = 0x30;
+
+            /** Decrement B and relative jump if not zero */
+            public const byte DJNZ = 0x10;
 
         #endregion
 

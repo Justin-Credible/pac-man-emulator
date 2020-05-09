@@ -4,13 +4,11 @@ namespace JustinCredible.ZilogZ80
     // A list of all of the "standard" opcodes and their metadata.
     public partial class Opcodes
     {
-        /** Halt */
+        /** Halt CPU */
         public static Opcode HALT = new Opcode(OpcodeBytes.HALT, size: 1, instruction: "HALT", cycles: 4);
  
-        #region NOP - No operation
-            public static Opcode NOP = new Opcode(OpcodeBytes.NOP, size: 1, instruction: "NOP", cycles: 4);
-            public static Opcode NOP2 = new Opcode(OpcodeBytes.NOP2, size: 1, instruction: "NOP2", cycles: 4);
-        #endregion
+        /** No Operation */
+        public static Opcode NOP = new Opcode(OpcodeBytes.NOP, size: 1, instruction: "NOP", cycles: 4);
 
         #region Carry bit instructions
 
@@ -389,28 +387,31 @@ namespace JustinCredible.ZilogZ80
             public static Opcode JP_NZ = new Opcode(OpcodeBytes.JP_NZ, size: 3, instruction: "JP NZ, adr", cycles: 10, pseudocode: "if !Z, PC <- adr");
 
             /** Jump if not carry */
-            public static Opcode JP_NC = new Opcode(OpcodeBytes.JP_NC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if !C, PC<-adr");
+            public static Opcode JP_NC = new Opcode(OpcodeBytes.JP_NC, size: 3, instruction: "JP NC, adr", cycles: 10, pseudocode: "if !C, PC <- adr");
 
             /** Jump if carry */
-            public static Opcode JP_C = new Opcode(OpcodeBytes.JP_C, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if C, PC<-adr");
+            public static Opcode JP_C = new Opcode(OpcodeBytes.JP_C, size: 3, instruction: "JP C, adr", cycles: 10, pseudocode: "if C, PC <- adr");
 
             /** Jump if minus/negative */
             public static Opcode JP_M = new Opcode(OpcodeBytes.JP_M, size: 3, instruction: "JP M, adr", cycles: 10, pseudocode: "if M, PC <- adr");
 
             /** Relative jump */
-            public static Opcode JR = new Opcode(OpcodeBytes.JR, size: 2, instruction: "JR $±n", cycles: 12, alternateCycles: 7, pseudocode: "PC = PC ± n");
+            public static Opcode JR = new Opcode(OpcodeBytes.JR, size: 2, instruction: "JR $±n", cycles: 12, alternateCycles: 7, pseudocode: "PC <- PC ± n");
 
             /** Relative jump if zero */
-            public static Opcode JR_Z = new Opcode(OpcodeBytes.JR_Z, size: 2, instruction: "JR Z, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if Z, PC = PC ± n");
+            public static Opcode JR_Z = new Opcode(OpcodeBytes.JR_Z, size: 2, instruction: "JR Z, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if Z, PC <- PC ± n");
 
             /** Relative jump if not zero */
-            public static Opcode JR_NZ = new Opcode(OpcodeBytes.JR_NZ, size: 2, instruction: "JR NZ, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if !Z, PC = PC ± n");
+            public static Opcode JR_NZ = new Opcode(OpcodeBytes.JR_NZ, size: 2, instruction: "JR NZ, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if !Z, PC <- PC ± n");
 
             /** Relative jump if carry */
-            public static Opcode JR_C = new Opcode(OpcodeBytes.JR_C, size: 2, instruction: "JR C, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if C, PC = PC ± n");
+            public static Opcode JR_C = new Opcode(OpcodeBytes.JR_C, size: 2, instruction: "JR C, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if C, PC <- PC ± n");
 
             /** Relative jump if not carry */
-            public static Opcode JR_NC = new Opcode(OpcodeBytes.JR_NC, size: 2, instruction: "JR NC, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if !C, PC = PC ± n");
+            public static Opcode JR_NC = new Opcode(OpcodeBytes.JR_NC, size: 2, instruction: "JR NC, $±n", cycles: 12, alternateCycles: 7, pseudocode: "if !C, PC <- PC ± n");
+
+            /** Decrement B and relative jump if not zero */
+            public static Opcode DJNZ = new Opcode(OpcodeBytes.DJNZ, size: 2, instruction: "DJNZ $±n", cycles: 13, alternateCycles: 8, pseudocode: "B--, if B != 0, PC <- PC ± n");
 
         #endregion
 
