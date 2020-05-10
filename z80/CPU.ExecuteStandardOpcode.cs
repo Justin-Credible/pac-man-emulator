@@ -1529,7 +1529,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Retrieve input from given device number and populate accumulator
                     case OpcodeBytes.IN_A_MN:
-                        Registers.A = (byte)OnDeviceRead?.Invoke(ReadMemory(ProgramCounter + 1));
+                        Registers.A = OnDeviceRead?.Invoke(ReadMemory(ProgramCounter + 1)) ?? 0;
                         break;
 
                 #endregion

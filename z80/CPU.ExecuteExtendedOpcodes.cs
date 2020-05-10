@@ -13,6 +13,7 @@ namespace JustinCredible.ZilogZ80
             {
                 #region Input/Output Instructions
 
+                // Device[C] <- R
                 case OpcodeBytes.OUT_MC_A:
                     OnDeviceWrite?.Invoke(Registers.C, Registers.A);
                     break;
@@ -36,6 +37,24 @@ namespace JustinCredible.ZilogZ80
                     break;
                 case OpcodeBytes.OUT_MC_0:
                     OnDeviceWrite?.Invoke(Registers.C, 0);
+                    break;
+
+                // Device[C] <- (HL); HL++; B--;
+                case OpcodeBytes.OUTI:
+                    OnDeviceWrite?.Invoke(Registers.C, ReadMemory(Registers.HL));
+                    Registers.HL++;
+                    Registers.B--;
+                    Flags.Zero = Registers.B == 0;
+                    Flags.Subtract = true;
+                    break;
+
+                // Device[C] <- (HL); HL--; B--;
+                case OpcodeBytes.OUTD:
+                    OnDeviceWrite?.Invoke(Registers.C, ReadMemory(Registers.HL));
+                    Registers.HL--;
+                    Registers.B--;
+                    Flags.Zero = Registers.B == 0;
+                    Flags.Subtract = true;
                     break;
 
                 #endregion

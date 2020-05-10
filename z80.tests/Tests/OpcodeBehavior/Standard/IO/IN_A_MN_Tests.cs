@@ -66,7 +66,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, cpu);
 
-            Assert.Equal(0x11, state.Registers.A);
+            Assert.Equal(0x00, state.Registers.A);
 
             AssertFlagsFalse(state);
 

@@ -17,6 +17,12 @@ namespace JustinCredible.ZilogZ80
             public const byte OUT_MC_L = 0x69;
             public const byte OUT_MC_0 = 0x71;
 
+            /** Write value from memory location pointed to by HL to I/O port identified by register C, increment HL, decrement B */
+            public const byte OUTI = 0xA3;
+
+            /** Write value from memory location pointed to by HL to I/O port identified by register C, decrement HL, decrement B */
+            public const byte OUTD = 0xAB;
+
         #endregion
     }
 }
