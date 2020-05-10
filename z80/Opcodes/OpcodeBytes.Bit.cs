@@ -1,4 +1,3 @@
-using System;
 
 namespace JustinCredible.ZilogZ80
 {

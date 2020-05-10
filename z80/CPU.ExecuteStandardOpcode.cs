@@ -1524,21 +1524,13 @@ namespace JustinCredible.ZilogZ80
 
                     // Output accumulator to given device number
                     case OpcodeBytes.OUT_MN_A:
-                    {
-                        if (OnDeviceWrite != null)
-                            OnDeviceWrite(ReadMemory(ProgramCounter + 1), Registers.A);
-
+                        OnDeviceWrite?.Invoke(ReadMemory(ProgramCounter + 1), Registers.A);
                         break;
-                    }
 
                     // Retrieve input from given device number and populate accumulator
                     case OpcodeBytes.IN_A_MN:
-                    {
-                        if (OnDeviceRead != null)
-                            Registers.A = OnDeviceRead(ReadMemory(ProgramCounter + 1));
-
+                        Registers.A = (byte)OnDeviceRead?.Invoke(ReadMemory(ProgramCounter + 1));
                         break;
-                    }
 
                 #endregion
 

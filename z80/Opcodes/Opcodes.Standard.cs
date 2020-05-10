@@ -2,6 +2,7 @@
 namespace JustinCredible.ZilogZ80
 {
     // A list of all of the "standard" opcodes and their metadata.
+    // These are all of the single byte opcodes.
     public partial class Opcodes
     {
         /** Halt CPU */
@@ -507,20 +508,20 @@ namespace JustinCredible.ZilogZ80
         #region Interrupt flip-flop instructions
 
             /** Enable interrupts */
-            public static Opcode EI = new Opcode(OpcodeBytes.EI, size: 1, instruction: "EI", cycles: 4);
+            public static Opcode EI = new Opcode(OpcodeBytes.EI, size: 1, instruction: "EI", cycles: 4, pseudocode: "(enable interrupts)");
 
             /** Disable interrupts */
-            public static Opcode DI = new Opcode(OpcodeBytes.DI, size: 1, instruction: "DI", cycles: 4);
+            public static Opcode DI = new Opcode(OpcodeBytes.DI, size: 1, instruction: "DI", cycles: 4, pseudocode: "(disable interrupts)");
 
         #endregion
 
         #region Input/Output Instructions
 
             /** Output accumulator to given device number */
-            public static Opcode OUT_MN_A = new Opcode(OpcodeBytes.OUT_MN_A, size: 2, instruction: "OUT (adr), A", cycles: 10);
+            public static Opcode OUT_MN_A = new Opcode(OpcodeBytes.OUT_MN_A, size: 2, instruction: "OUT (adr), A", cycles: 10, pseudocode: "Write(DeviceAdr: adr, Data: A);");
 
             /** Retrieve input from given device number and populate accumulator */
-            public static Opcode IN_A_MN = new Opcode(OpcodeBytes.IN_A_MN, size: 2, instruction: "IN A, (adr)", cycles: 10);
+            public static Opcode IN_A_MN = new Opcode(OpcodeBytes.IN_A_MN, size: 2, instruction: "IN A, (adr)", cycles: 10, pseudocode: "A = Read(DeviceAdr: adr);");
 
         #endregion
     }
