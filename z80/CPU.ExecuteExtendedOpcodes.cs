@@ -57,6 +57,40 @@ namespace JustinCredible.ZilogZ80
                     Flags.Subtract = true;
                     break;
 
+                // R <- Device[C]
+                case OpcodeBytes.IN_A_MC:
+                    Registers.A = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.A, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_B_MC:
+                    Registers.B = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.B, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_C_MC:
+                    Registers.C = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.C, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_D_MC:
+                    Registers.D = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.D, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_E_MC:
+                    Registers.E = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.E, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_H_MC:
+                    Registers.H = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.H, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_L_MC:
+                    Registers.L = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(Registers.L, subtract: false, auxCarry: false);
+                    break;
+                case OpcodeBytes.IN_MC:
+                    var value = OnDeviceRead?.Invoke(Registers.C) ?? 0;
+                    SetFlags(value, subtract: false, auxCarry: false);
+                    break;
+
                 #endregion
 
                 default:
