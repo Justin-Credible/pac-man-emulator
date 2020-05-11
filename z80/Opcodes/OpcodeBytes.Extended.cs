@@ -33,6 +33,12 @@ namespace JustinCredible.ZilogZ80
             public const byte IN_L_MC = 0x68;
             public const byte IN_MC = 0x70;
 
+            /* (HL) <- Device[C]; HL++; B--; */
+            public const byte INI = 0xA2;
+
+            /* (HL) <- Device[C]; HL--; B--; */
+            public const byte IND = 0xAA;
+
         #endregion
     }
 }

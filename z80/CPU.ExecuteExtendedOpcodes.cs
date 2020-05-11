@@ -91,6 +91,24 @@ namespace JustinCredible.ZilogZ80
                     SetFlags(value, subtract: false, auxCarry: false);
                     break;
 
+                // (HL) <- Device[C]; HL++; B--;
+                case OpcodeBytes.INI:
+                    WriteMemory(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
+                    Registers.HL++;
+                    Registers.B--;
+                    Flags.Zero = Registers.B == 0;
+                    Flags.Subtract = true;
+                    break;
+
+                // (HL) <- Device[C]; HL--; B--;
+                case OpcodeBytes.IND:
+                    WriteMemory(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
+                    Registers.HL--;
+                    Registers.B--;
+                    Flags.Zero = Registers.B == 0;
+                    Flags.Subtract = true;
+                    break;
+
                 #endregion
 
                 default:

@@ -2,14 +2,14 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class OUTD_Tests : BaseTest
+    public class INI_Tests : BaseTest
     {
         [Fact]
-        public void Test_OUTD()
+        public void Test_INI()
         {
             var rom = AssembleSource($@"
                 org 00h
-                OUTD
+                INI
                 HALT
             ");
 
@@ -22,7 +22,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     B = 32,
                     C = 44,
-                    HL = 0x1234,
+                    HL = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -41,23 +41,21 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var cpu = new CPU(initialState);
 
-            byte actualData = 0;
             var actualDeviceID = -1;
 
-            cpu.OnDeviceWrite += (int deviceID, byte data) => {
+            cpu.OnDeviceRead += (int deviceID) => {
                 actualDeviceID = deviceID;
-                actualData = data;
+                return 42;
             };
 
             var state = Execute(rom, memory, cpu);
 
-            Assert.Equal(77, actualData);
             Assert.Equal(44, actualDeviceID);
 
             Assert.Equal(31, state.Registers.B);
             Assert.Equal(44, state.Registers.C);
-            Assert.Equal(0x1233, state.Registers.HL);
-            Assert.Equal(77, state.Memory[0x1234]);
+            Assert.Equal(0x2235, state.Registers.HL);
+            Assert.Equal(42, state.Memory[0x2234]);
 
             // Should remain unaffected.
             Assert.True(state.Flags.Sign);
@@ -79,12 +77,12 @@ namespace JustinCredible.ZilogZ80.Tests
         {
             var rom = AssembleSource($@"
                 org 00h
-                OUTD
+                INI
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x1234] = 77;
+            memory[0x2234] = 77;
 
             var initialState = new CPUConfig()
             {
@@ -92,7 +90,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     B = 1,
                     C = 44,
-                    HL = 0x1234,
+                    HL = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -111,23 +109,21 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var cpu = new CPU(initialState);
 
-            byte actualData = 0;
             var actualDeviceID = -1;
 
-            cpu.OnDeviceWrite += (int deviceID, byte data) => {
+            cpu.OnDeviceRead += (int deviceID) => {
                 actualDeviceID = deviceID;
-                actualData = data;
+                return 42;
             };
 
             var state = Execute(rom, memory, cpu);
 
-            Assert.Equal(77, actualData);
             Assert.Equal(44, actualDeviceID);
 
             Assert.Equal(0, state.Registers.B);
             Assert.Equal(44, state.Registers.C);
-            Assert.Equal(0x1233, state.Registers.HL);
-            Assert.Equal(77, state.Memory[0x1234]);
+            Assert.Equal(0x2235, state.Registers.HL);
+            Assert.Equal(42, state.Memory[0x2234]);
 
             // Should remain unaffected.
             Assert.True(state.Flags.Sign);

@@ -36,6 +36,12 @@ namespace JustinCredible.ZilogZ80
             public static Opcode IN_L_MC = new Opcode(OpcodeBytes.IN_L_MC, instructionSet: InstructionSet.Extended, size: 2, instruction: "IN L, (C)", cycles: 12, pseudocode: "L <- Device[C]");
             public static Opcode IN_MC = new Opcode(OpcodeBytes.IN_MC, instructionSet: InstructionSet.Extended, size: 2, instruction: "IN (C)", cycles: 12, pseudocode: "0 <- Device[C]");
 
+            /* (HL) <- Device[C]; HL++; B--; */
+            public static Opcode INI = new Opcode(OpcodeBytes.INI, instructionSet: InstructionSet.Extended, size: 2, instruction: "INI", cycles: 16, pseudocode: "(HL) <- Device[C]; HL++; B--;");
+
+            /* (HL) <- Device[C]; HL--; B--; */
+            public static Opcode IND = new Opcode(OpcodeBytes.IND, instructionSet: InstructionSet.Extended, size: 2, instruction: "IND", cycles: 16, pseudocode: "(HL) <- Device[C]; HL--; B--;");
+
         #endregion
     }
 }
