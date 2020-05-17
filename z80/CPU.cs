@@ -46,9 +46,14 @@ namespace JustinCredible.ZilogZ80
         /** Stack Pointer; 16-bits */
         public UInt16 StackPointer { get; set; }
 
-        // TODO: Interrupt modes
-        /** Indicates if interrupts are enabled or not. */
+        /** Indicates if interrupts are enabled or not: IFF1. */
         public bool InterruptsEnabled { get; set; }
+
+        /** The previous value of the interrupts enabled flag (IFF1) when a non-maskable interrupt is used: IFF2. */
+        public bool InterruptsEnabledPreviousValue { get; set; }
+
+        /** The mode of interrupt the CPU is currently using. */
+        public InterruptMode InterruptMode { get; set; }
 
         /** Configuration for the CPU; used to customize the CPU instance. */
         public CPUConfig Config { get; private set; }
@@ -100,6 +105,8 @@ namespace JustinCredible.ZilogZ80
             ProgramCounter = Config.ProgramCounter;
             StackPointer = Config.StackPointer;
             InterruptsEnabled = Config.InterruptsEnabled;
+            InterruptsEnabledPreviousValue = Config.InterruptsEnabledPreviousValue;
+            InterruptMode = Config.InterruptMode;
 
             // Reset the flag that indicates that the ROM has finished executing.
             Finished = false;
@@ -160,37 +167,82 @@ namespace JustinCredible.ZilogZ80
 
         #region Step / Execute Opcode
 
-        /** Executes the given interrupt RST instruction and returns the number of cycles it took to execute. */
-        public int StepInterrupt(Interrupt id)
+        /** Used to signal a non-maskable interrupt and call to 0x0066 */
+        public int StepNonMaskableInterrupt()
         {
-            switch (id)
+            // Save the previous state of the flag and then disable interrupts.
+            InterruptsEnabledPreviousValue = InterruptsEnabled;
+            InterruptsEnabled = false;
+
+            ExecuteCALL(0x0066, ProgramCounter);
+
+            // TODO: Guessing here for cycle count.
+            return Opcodes.CALL.Cycles;
+        }
+
+        /** Used to signal an interrupt and execute interrupt behavior based on the current interrupt mode. */
+        public int StepMaskableInterrupt(byte dataBusValue = 0x00)
+        {
+            if (!InterruptsEnabled)
+                return 0;
+
+            switch (InterruptMode)
             {
-                case Interrupt.Zero:
-                    ExecuteCALL(0x000, ProgramCounter);
-                    return Opcodes.RST_00.Cycles;
-                case Interrupt.One:
-                    ExecuteCALL(0x0008, ProgramCounter);
-                    return Opcodes.RST_08.Cycles;
-                case Interrupt.Two:
-                    ExecuteCALL(0x0010, ProgramCounter);
-                    return Opcodes.RST_10.Cycles;
-                case Interrupt.Three:
-                    ExecuteCALL(0x0018, ProgramCounter);
-                    return Opcodes.RST_18.Cycles;
-                case Interrupt.Four:
-                    ExecuteCALL(0x0020, ProgramCounter);
-                    return Opcodes.RST_20.Cycles;
-                case Interrupt.Five:
-                    ExecuteCALL(0x0028, ProgramCounter);
-                    return Opcodes.RST_28.Cycles;
-                case Interrupt.Six:
-                    ExecuteCALL(0x0030, ProgramCounter);
-                    return Opcodes.RST_30.Cycles;
-                case Interrupt.Seven:
+                case InterruptMode.Zero:
+                {
+                    switch (dataBusValue)
+                    {
+                        case OpcodeBytes.RST_00:
+                            ExecuteCALL(0x000, ProgramCounter);
+                            return Opcodes.RST_00.Cycles;
+                        case OpcodeBytes.RST_08:
+                            ExecuteCALL(0x0008, ProgramCounter);
+                            return Opcodes.RST_08.Cycles;
+                        case OpcodeBytes.RST_10:
+                            ExecuteCALL(0x0010, ProgramCounter);
+                            return Opcodes.RST_10.Cycles;
+                        case OpcodeBytes.RST_18:
+                            ExecuteCALL(0x0018, ProgramCounter);
+                            return Opcodes.RST_18.Cycles;
+                        case OpcodeBytes.RST_20:
+                            ExecuteCALL(0x0020, ProgramCounter);
+                            return Opcodes.RST_20.Cycles;
+                        case OpcodeBytes.RST_28:
+                            ExecuteCALL(0x0028, ProgramCounter);
+                            return Opcodes.RST_28.Cycles;
+                        case OpcodeBytes.RST_30:
+                            ExecuteCALL(0x0030, ProgramCounter);
+                            return Opcodes.RST_30.Cycles;
+                        case OpcodeBytes.RST_38:
+                            ExecuteCALL(0x0038, ProgramCounter);
+                            return Opcodes.RST_38.Cycles;
+                        default:
+                            // TODO: Implement accepting arbitrary opcode instruction bytes as per:
+                            // http://www.z80.info/zip/z80-interrupts_rewritten.pdf
+                            //   The instruction is normally a Restart (RST) instruction since this is an efficient one byte call to
+                            //   any one of eight subroutines located in the first 64 bytes of memory. (Each subroutine is 8
+                            //    byte long.) However, any instruction may be given to the Z80­CPU.
+                            throw new NotImplementedException(String.Format("Only RST 0 - RST 7 instructions for interrupt mode 0 are currently supported; value given: {0:X2}", dataBusValue));
+                    }
+                }
+
+                case InterruptMode.One:
+                {
                     ExecuteCALL(0x0038, ProgramCounter);
-                    return Opcodes.RST_38.Cycles;
+                    return Opcodes.RST_38.Cycles; // TODO: Seems the same as a RST 38h... same cycle count as well?
+                }
+
+                case InterruptMode.Two:
+                {
+                    var address = (InterruptVector & 0xFF00) & dataBusValue;
+                    ExecuteCALL((UInt16)address, ProgramCounter);
+
+                    // TODO: Guessing here for cycle count.
+                    return Opcodes.CALL.Cycles;
+                }
+
                 default:
-                    throw new Exception($"Unhandled interrupt ID: {id}");
+                    throw new NotImplementedException($"The given interrupt mode {InterruptMode} is not implemented.");
             }
         }
 

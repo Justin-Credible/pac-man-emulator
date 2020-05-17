@@ -40,5 +40,26 @@ namespace JustinCredible.ZilogZ80
             public const byte IND = 0xAA;
 
         #endregion
+
+        #region Set Interrupt Mode
+
+            /** Set Interrupt Mode 0 */
+            public const byte IM0 = 0x46;
+            public const byte IM0_2 = 0x66;
+
+            // Undocumented IM0 equivalents, see:
+            // https://stackoverflow.com/questions/39436351/what-does-im0-1-mean-in-z80-info-decoding#comment66229644_39436440
+            public const byte IM0_3 = 0x4E;
+            public const byte IM0_4 = 0x6E;
+
+            /** Set Interrupt Mode 1 */
+            public const byte IM1 = 0x56;
+            public const byte IM1_2 = 0x76;
+
+            /** Set Interrupt Mode 2 */
+            public const byte IM2 = 0x5E;
+            public const byte IM2_2 = 0x7E;
+
+        #endregion
     }
 }

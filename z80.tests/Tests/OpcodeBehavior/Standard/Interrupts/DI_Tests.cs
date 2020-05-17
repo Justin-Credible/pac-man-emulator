@@ -16,11 +16,13 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 InterruptsEnabled = true,
+                InterruptsEnabledPreviousValue = true,
             };
 
             var state = Execute(rom, initialState);
 
             Assert.False(state.InterruptsEnabled);
+            Assert.False(state.InterruptsEnabledPreviousValue);
 
             AssertFlagsFalse(state);
 

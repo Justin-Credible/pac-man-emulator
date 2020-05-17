@@ -1511,11 +1511,13 @@ namespace JustinCredible.ZilogZ80
                     // Enable interrupts
                     case OpcodeBytes.EI:
                         InterruptsEnabled = true;
+                        InterruptsEnabledPreviousValue = true;
                         break;
 
                     // Disable interrupts
                     case OpcodeBytes.DI:
                         InterruptsEnabled = false;
+                        InterruptsEnabledPreviousValue = false;
                         break;
 
                 #endregion

@@ -25,5 +25,7 @@ namespace JustinCredible.ZilogZ80.Tests
         public UInt16 ProgramCounter { get; set; }
         public UInt16 StackPointer { get; set; }
         public bool InterruptsEnabled { get; set; }
+        public bool InterruptsEnabledPreviousValue { get; set; }
+        public InterruptMode InterruptMode { get; set; }
     }
 }

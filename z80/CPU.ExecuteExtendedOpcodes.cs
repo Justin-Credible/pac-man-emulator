@@ -111,6 +111,27 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Set Interrupt Mode
+
+                case OpcodeBytes.IM0:
+                case OpcodeBytes.IM0_2:
+                case OpcodeBytes.IM0_3:
+                case OpcodeBytes.IM0_4:
+                    InterruptMode = InterruptMode.Zero;
+                    break;
+
+                case OpcodeBytes.IM1:
+                case OpcodeBytes.IM1_2:
+                    InterruptMode = InterruptMode.One;
+                    break;
+
+                case OpcodeBytes.IM2:
+                case OpcodeBytes.IM2_2:
+                    InterruptMode = InterruptMode.Two;
+                    break;
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
             }

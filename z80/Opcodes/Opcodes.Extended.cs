@@ -43,5 +43,26 @@ namespace JustinCredible.ZilogZ80
             public static Opcode IND = new Opcode(OpcodeBytes.IND, instructionSet: InstructionSet.Extended, size: 2, instruction: "IND", cycles: 16, pseudocode: "(HL) <- Device[C]; HL--; B--;");
 
         #endregion
+
+        #region Set Interrupt Mode
+
+            /** Set Interrupt Mode 0 */
+            public static Opcode IM0 = new Opcode(OpcodeBytes.IM0, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM0", cycles: 8, pseudocode: "InterruptMode = 0");
+            public static Opcode IM0_2 = new Opcode(OpcodeBytes.IM0_2, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM0_2", cycles: 8, pseudocode: "InterruptMode = 0");
+
+            // Undocumented IM0 equivalents, see:
+            // https://stackoverflow.com/questions/39436351/what-does-im0-1-mean-in-z80-info-decoding#comment66229644_39436440
+            public static Opcode IM0_3 = new Opcode(OpcodeBytes.IM0_3, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM0_3", cycles: 8, pseudocode: "InterruptMode = 0");
+            public static Opcode IM0_4 = new Opcode(OpcodeBytes.IM0_4, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM0_4", cycles: 8, pseudocode: "InterruptMode = 0");
+
+            /** Set Interrupt Mode 1 */
+            public static Opcode IM1 = new Opcode(OpcodeBytes.IM1, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM1", cycles: 8, pseudocode: "InterruptMode = 1");
+            public static Opcode IM1_2 = new Opcode(OpcodeBytes.IM1_2, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM1_2", cycles: 8, pseudocode: "InterruptMode = 1");
+
+            /** Set Interrupt Mode 2 */
+            public static Opcode IM2 = new Opcode(OpcodeBytes.IM2, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM2", cycles: 8, pseudocode: "InterruptMode = 2");
+            public static Opcode IM2_2 = new Opcode(OpcodeBytes.IM2_2, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM2_2", cycles: 8, pseudocode: "InterruptMode = 2");
+
+        #endregion
     }
 }

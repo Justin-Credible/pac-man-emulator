@@ -120,6 +120,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 ProgramCounter = cpu.ProgramCounter,
                 StackPointer = cpu.StackPointer,
                 InterruptsEnabled = cpu.InterruptsEnabled,
+                InterruptsEnabledPreviousValue = cpu.InterruptsEnabledPreviousValue,
+                InterruptMode = cpu.InterruptMode,
             };
 
             return results;

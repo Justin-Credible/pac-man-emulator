@@ -47,8 +47,14 @@ namespace JustinCredible.ZilogZ80
 
         public UInt16 StackPointer { get; set; } = 0x0000;
 
-        // TODO: Interrupt modes
+        /** Indicates if interrupts are enabled or not: IFF1. */
         public bool InterruptsEnabled { get; set; } = false;
+
+        /** The previous value of the interrupts enabled flag (IFF1) when a non-maskable interrupt is used: IFF2. */
+        public bool InterruptsEnabledPreviousValue { get; set; } = false;
+
+        /** The mode of interrupt the CPU is currently using. */
+        public InterruptMode InterruptMode { get; set; } = InterruptMode.Zero;
 
         /**
          * Special flag used to patch the CALL calls for the cpudiag.bin program.
