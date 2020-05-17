@@ -34,6 +34,9 @@ namespace JustinCredible.ZilogZ80
         /** Alternative flag register (F') */
         public ConditionFlags ShadowFlags { get; set; }
 
+        /** The interrupt vector register (I) */
+        public UInt16 InterruptVector { get; set; }
+
         /** The memory refresh register (R) */
         public UInt16 MemoryRefresh { get; set; } // TODO
 

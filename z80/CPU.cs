@@ -102,6 +102,7 @@ namespace JustinCredible.ZilogZ80
             ShadowRegisters = Config.ShadowRegisters ?? new CPURegisters();
             Flags = Config.Flags ?? new ConditionFlags();
             ShadowFlags = Config.ShadowFlags ?? new ConditionFlags();
+            InterruptVector = Config.InterruptVector;
             ProgramCounter = Config.ProgramCounter;
             StackPointer = Config.StackPointer;
             InterruptsEnabled = Config.InterruptsEnabled;
@@ -234,7 +235,8 @@ namespace JustinCredible.ZilogZ80
 
                 case InterruptMode.Two:
                 {
-                    var address = (InterruptVector & 0xFF00) & dataBusValue;
+                    // The MSB bits are from the interrupt vector while the LSB are from the data bus.
+                    var address = (InterruptVector & 0xFF00) | dataBusValue;
                     ExecuteCALL((UInt16)address, ProgramCounter);
 
                     // TODO: Guessing here for cycle count.
