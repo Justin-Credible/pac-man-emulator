@@ -508,10 +508,10 @@ namespace JustinCredible.ZilogZ80
         #region Interrupt flip-flop instructions
 
             /** Enable interrupts */
-            public static Opcode EI = new Opcode(OpcodeBytes.EI, size: 1, instruction: "EI", cycles: 4, pseudocode: "(enable interrupts)");
+            public static Opcode EI = new Opcode(OpcodeBytes.EI, size: 1, instruction: "EI", cycles: 4, pseudocode: "Interrupts = on; IFF1 = true; IFF2 = true;");
 
             /** Disable interrupts */
-            public static Opcode DI = new Opcode(OpcodeBytes.DI, size: 1, instruction: "DI", cycles: 4, pseudocode: "(disable interrupts)");
+            public static Opcode DI = new Opcode(OpcodeBytes.DI, size: 1, instruction: "DI", cycles: 4, pseudocode: "Interrupts = off; IFF1 = false; IFF2 = false;");
 
         #endregion
 

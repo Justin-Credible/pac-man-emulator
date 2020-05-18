@@ -73,5 +73,11 @@ namespace JustinCredible.ZilogZ80
             public const byte RETN_7 = 0x7D;
 
         #endregion
+
+        #region Return from Interrupt
+
+            public const byte RETI = 0x4D;
+
+        #endregion
     }
 }

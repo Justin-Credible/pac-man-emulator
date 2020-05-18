@@ -156,6 +156,24 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Return from Interrupt
+
+                    case OpcodeBytes.RETI:
+                    {
+                        ExecuteRET();
+
+                        // TODO: Support daisy-chainable interrupts; signal here to allow the
+                        // next interrupt to occur (if any).
+
+                        // Don't increment the program counter because we just updated it to
+                        // the given address.
+                        incrementProgramCounter = false;
+
+                        break;
+                    }
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
             }

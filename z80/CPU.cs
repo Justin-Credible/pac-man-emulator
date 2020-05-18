@@ -184,6 +184,8 @@ namespace JustinCredible.ZilogZ80
         /** Used to signal an interrupt and execute interrupt behavior based on the current interrupt mode. */
         public int StepMaskableInterrupt(byte dataBusValue = 0x00)
         {
+            // TODO: How to support daisy-chained peripheral interrupt scheme?
+
             if (!InterruptsEnabled)
                 return 0;
 
