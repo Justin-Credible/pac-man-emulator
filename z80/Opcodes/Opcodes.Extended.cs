@@ -64,5 +64,17 @@ namespace JustinCredible.ZilogZ80
             public static Opcode IM2_2 = new Opcode(OpcodeBytes.IM2_2, instructionSet: InstructionSet.Extended, size: 2, instruction: "IM2_2", cycles: 8, pseudocode: "InterruptMode = 2");
 
         #endregion
+
+        #region Return from Non-maskable Interrupt
+
+            public static Opcode RETN = new Opcode(OpcodeBytes.RETN, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN", cycles: 14, pseudocode: "RETN");
+            public static Opcode RETN_2 = new Opcode(OpcodeBytes.RETN_2, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN_2", cycles: 14, pseudocode: "RETN");
+            public static Opcode RETN_3 = new Opcode(OpcodeBytes.RETN_3, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN_3", cycles: 14, pseudocode: "RETN");
+            public static Opcode RETN_4 = new Opcode(OpcodeBytes.RETN_4, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN_4", cycles: 14, pseudocode: "RETN");
+            public static Opcode RETN_5 = new Opcode(OpcodeBytes.RETN_5, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN_5", cycles: 14, pseudocode: "RETN");
+            public static Opcode RETN_6 = new Opcode(OpcodeBytes.RETN_6, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN_6", cycles: 14, pseudocode: "RETN");
+            public static Opcode RETN_7 = new Opcode(OpcodeBytes.RETN_7, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETN_7", cycles: 14, pseudocode: "RETN");
+
+        #endregion
     }
 }

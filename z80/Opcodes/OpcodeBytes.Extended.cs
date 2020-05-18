@@ -61,5 +61,17 @@ namespace JustinCredible.ZilogZ80
             public const byte IM2_2 = 0x7E;
 
         #endregion
+
+        #region Return from Non-maskable Interrupt
+
+            public const byte RETN = 0x45;
+            public const byte RETN_2 = 0x55;
+            public const byte RETN_3 = 0x65;
+            public const byte RETN_4 = 0x75;
+            public const byte RETN_5 = 0x5D;
+            public const byte RETN_6 = 0x6D;
+            public const byte RETN_7 = 0x7D;
+
+        #endregion
     }
 }
