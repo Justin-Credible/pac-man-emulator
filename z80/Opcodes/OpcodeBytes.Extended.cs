@@ -79,5 +79,12 @@ namespace JustinCredible.ZilogZ80
             public const byte RETI = 0x4D;
 
         #endregion
+
+        #region Rotate and Shift
+
+            public const byte RRD = 0x67;
+            public const byte RLD = 0x6F;
+
+        #endregion
     }
 }

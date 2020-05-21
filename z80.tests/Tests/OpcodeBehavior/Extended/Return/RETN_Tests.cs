@@ -2,7 +2,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RET_Tests2 : BaseTest
+    public class RETN_Tests : BaseTest
     {
         [Fact]
         public void Test_RET()

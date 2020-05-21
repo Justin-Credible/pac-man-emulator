@@ -174,6 +174,36 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Shift and Rotate
+
+                    case OpcodeBytes.RRD:
+                    {
+                        // tmp <- (HL).lo; (HL).lo <- (HL).hi; (HL).hi <- A.lo; A.lo <- tmp;
+                        var memValue = ReadMemory(Registers.HL); // (HL)
+                        var tmp = memValue & 0x0F; // tmp <- (HL).lo
+                        memValue = (byte)(((memValue & 0xF0) >> 4) | (memValue & 0xF0)); // (HL).lo <- (HL).hi
+                        memValue = (byte)(((Registers.A & 0x0F) << 4) | (memValue & 0x0F)); // (HL).hi <- A.lo
+                        Registers.A = (byte)((Registers.A & 0xF0) | tmp); //  A.lo <- tmp
+                        WriteMemory(Registers.HL, memValue);
+                        SetFlags(Registers.A, auxCarry: false, subtract: false);
+                        break;
+                    }
+
+                    case OpcodeBytes.RLD:
+                    {
+                        // tmp <- (HL).lo; (HL).lo <- A.lo; A.lo <- (HL).hi; (HL).hi <- tmp;
+                        var memValue = ReadMemory(Registers.HL); // (HL)
+                        var tmp = memValue & 0x0F; // tmp <- (HL).lo
+                        memValue = (byte)((Registers.A & 0x0F) | (memValue & 0xF0)); // (HL).lo <- A.lo
+                        Registers.A = (byte)(((memValue & 0xF0) >> 4) | (Registers.A & 0xF0)); // A.lo <- (HL).hi
+                        memValue = (byte)((tmp << 4) | (memValue & 0x0F)); // (HL).hi <- tmp
+                        WriteMemory(Registers.HL, memValue);
+                        SetFlags(Registers.A, auxCarry: false, subtract: false);
+                        break;
+                    }
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
             }

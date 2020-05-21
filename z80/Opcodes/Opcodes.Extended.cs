@@ -82,5 +82,12 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RETI = new Opcode(OpcodeBytes.RETI, instructionSet: InstructionSet.Extended, size: 2, instruction: "RETI", cycles: 14, pseudocode: "PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2; NextInterrupt();");
 
         #endregion
+
+        #region Rotate and Shift
+
+            public static Opcode RRD = new Opcode(OpcodeBytes.RRD, instructionSet: InstructionSet.Extended, size: 2, instruction: "RRD", cycles: 18, pseudocode: "tmp <- (HL).lo; (HL).lo <- (HL).hi; (HL).hi <- A.lo; A.lo <- tmp;");
+            public static Opcode RLD = new Opcode(OpcodeBytes.RLD, instructionSet: InstructionSet.Extended, size: 2, instruction: "RLD", cycles: 18, pseudocode: "tmp <- (HL).lo; (HL).lo <- A.lo; A.lo <- (HL).hi; (HL).hi <- tmp;");
+
+        #endregion
     }
 }

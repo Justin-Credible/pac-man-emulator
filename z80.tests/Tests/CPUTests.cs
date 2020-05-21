@@ -56,7 +56,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var cycles = cpu.StepMaskableInterrupt(0x00);
 
             Assert.Equal(0, cycles);
-            Assert.Equal(false, cpu.InterruptsEnabled);
+            Assert.False(cpu.InterruptsEnabled);
             Assert.Equal(0x1234, cpu.ProgramCounter);
             Assert.Equal(0x3FFF, cpu.StackPointer);
         }
@@ -87,7 +87,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(11, cycles);
 
             // Interrupts should still be enabled (IFF1).
-            Assert.Equal(true, cpu.InterruptsEnabled);
+            Assert.True(cpu.InterruptsEnabled);
 
             // We should've jumped somewhere.
             Assert.Equal(expectedProgramCounter, cpu.ProgramCounter);
@@ -116,7 +116,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(11, cycles);
 
             // Interrupts should still be enabled (IFF1).
-            Assert.Equal(true, cpu.InterruptsEnabled);
+            Assert.True(cpu.InterruptsEnabled);
 
             // We should've jumped here.
             Assert.Equal(0x0038, cpu.ProgramCounter);
@@ -148,7 +148,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(17, cycles);
 
             // Interrupts should still be enabled (IFF1).
-            Assert.Equal(true, cpu.InterruptsEnabled);
+            Assert.True(cpu.InterruptsEnabled);
 
             // We should've jumped here; MSB from interrupt vector and LSB from data bus combine to form address.
             Assert.Equal(expectedProgramCounter, cpu.ProgramCounter);
