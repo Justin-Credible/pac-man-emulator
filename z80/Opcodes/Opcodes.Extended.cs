@@ -98,5 +98,14 @@ namespace JustinCredible.ZilogZ80
             public static Opcode ADC_HL_SP = new Opcode(OpcodeBytes.ADC_HL_SP, instructionSet: InstructionSet.Extended, size: 2, instruction: "ADC HL, SP", cycles: 15, pseudocode: "HL <- HL + SP + CY");
 
         #endregion
+
+        #region SBC HL, r - Subtract register or memory from accumulator with borrow
+
+            public static Opcode SBC_HL_BC = new Opcode(OpcodeBytes.SBC_HL_BC, instructionSet: InstructionSet.Extended, size: 2, instruction: "SBC HL, BC", cycles: 15, pseudocode: "HL <- HL - BC - CY");
+            public static Opcode SBC_HL_DE = new Opcode(OpcodeBytes.SBC_HL_DE, instructionSet: InstructionSet.Extended, size: 2, instruction: "SBC HL, DE", cycles: 15, pseudocode: "HL <- HL - DE - CY");
+            public static Opcode SBC_HL_HL = new Opcode(OpcodeBytes.SBC_HL_HL, instructionSet: InstructionSet.Extended, size: 2, instruction: "SBC HL, HL", cycles: 15, pseudocode: "HL <- HL - HL - CY");
+            public static Opcode SBC_HL_SP = new Opcode(OpcodeBytes.SBC_HL_SP, instructionSet: InstructionSet.Extended, size: 2, instruction: "SBC HL, SP", cycles: 15, pseudocode: "HL <- HL - SP - CY");
+
+        #endregion
     }
 }

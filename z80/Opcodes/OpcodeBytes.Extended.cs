@@ -87,12 +87,21 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
-        #region ADC HL, r - Add register or memory to accumulator with carry
+        #region ADC HL, rr - Add register or memory to accumulator with carry
 
             public const byte ADC_HL_BC = 0x4A;
             public const byte ADC_HL_DE = 0x5A;
             public const byte ADC_HL_HL = 0x6A;
             public const byte ADC_HL_SP = 0x7A;
+
+        #endregion
+
+        #region SBC HL, rr - Subtract register or memory from accumulator with borrow
+
+            public const byte SBC_HL_BC = 0x42;
+            public const byte SBC_HL_DE = 0x52;
+            public const byte SBC_HL_HL = 0x62;
+            public const byte SBC_HL_SP = 0x72;
 
         #endregion
     }

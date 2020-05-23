@@ -204,7 +204,7 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
-                #region ADC HL, r - Add register or memory to accumulator with carry
+                #region ADC HL, rr - Add register or memory to HL with carry
 
                     case OpcodeBytes.ADC_HL_BC:
                         Execute_ADC_HL(Registers.BC);
@@ -217,6 +217,23 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.ADC_HL_SP:
                         Execute_ADC_HL(StackPointer);
+                        break;
+
+                #endregion
+
+                #region SBC HL, rr - Subtract register or memory from HL with borrow
+
+                    case OpcodeBytes.SBC_HL_BC:
+                        Execute_SBC_HL(Registers.BC);
+                        break;
+                    case OpcodeBytes.SBC_HL_DE:
+                        Execute_SBC_HL(Registers.DE);
+                        break;
+                    case OpcodeBytes.SBC_HL_HL:
+                        Execute_SBC_HL(Registers.HL);
+                        break;
+                    case OpcodeBytes.SBC_HL_SP:
+                        Execute_SBC_HL(StackPointer);
                         break;
 
                 #endregion
@@ -241,6 +258,25 @@ namespace JustinCredible.ZilogZ80
                 result = result - 65536;
 
             SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
+
+            Registers.HL = (UInt16)result;
+        }
+
+        private void Execute_SBC_HL(UInt16 value)
+        {
+            var borrowOccurred = Flags.Carry
+                ? value >= Registers.HL // Account for the extra minus one from the carry flag subtraction.
+                : value > Registers.HL;
+
+            var result = Registers.HL - value;
+
+            if (Flags.Carry)
+                result -= 1;
+
+            if (borrowOccurred)
+                result = 65536 + result;
+
+            SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
 
             Registers.HL = (UInt16)result;
         }
