@@ -204,10 +204,48 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region ADC HL, r - Add register or memory to accumulator with carry
+
+                    case OpcodeBytes.ADC_HL_BC:
+                        Execute_ADC_HL(Registers.BC);
+                        break;
+                    case OpcodeBytes.ADC_HL_DE:
+                        Execute_ADC_HL(Registers.DE);
+                        break;
+                    case OpcodeBytes.ADC_HL_HL:
+                        Execute_ADC_HL(Registers.HL);
+                        break;
+                    case OpcodeBytes.ADC_HL_SP:
+                        Execute_ADC_HL(StackPointer);
+                        break;
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
             }
         }
+
+        #region Opcodes - Additional Implementations
+
+        private void Execute_ADC_HL(UInt16 value)
+        {
+            var result = Registers.HL + value;
+
+            if (Flags.Carry)
+                result += 1;
+
+            var carryOccurred = result > 65535;
+
+            if (carryOccurred)
+                result = result - 65536;
+
+            SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
+
+            Registers.HL = (UInt16)result;
+        }
+
+        #endregion
 
         private void ExecuteBitOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
         {

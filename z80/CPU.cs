@@ -338,15 +338,32 @@ namespace JustinCredible.ZilogZ80
 
         private void SetFlags(byte? result = null, bool? carry = null, bool? auxCarry = false, bool? subtract = null)
         {
-            if (carry != null)
-                Flags.Carry = carry.Value;
-
             if (result != null)
             {
                 Flags.Zero = result == 0;
                 Flags.Sign = (result & 0b10000000) == 0b10000000;
                 Flags.Parity = CalculateParityBit((byte)result);
             }
+
+            SetFlags(carry: carry, auxCarry: auxCarry, subtract: subtract);
+        }
+
+        private void SetFlags(UInt16? result = null, bool? carry = null, bool? auxCarry = false, bool? subtract = null)
+        {
+            if (result != null)
+            {
+                Flags.Zero = result == 0;
+                Flags.Sign = (result & 0b1000000000000000) == 0b1000000000000000;
+                Flags.Parity = CalculateParityBit((UInt16)result);
+            }
+
+            SetFlags(carry: carry, auxCarry: auxCarry, subtract: subtract);
+        }
+
+        private void SetFlags(bool? carry = null, bool? auxCarry = false, bool? subtract = null)
+        {
+            if (carry != null)
+                Flags.Carry = carry.Value;
 
             // TODO: This keeps the old 8080 behavior of always resetting the flag for all operations.
             // I believe this is wrong for Z80, there are many cases where it remains unmodified.
@@ -362,6 +379,22 @@ namespace JustinCredible.ZilogZ80
             var setBits = 0;
 
             for (var i = 0; i < 8; i++)
+            {
+                if ((value & 0x01) == 1)
+                    setBits++;
+
+                value = (byte)(value >> 1);
+            }
+
+            // Parity bit is set if number of bits is even.
+            return setBits == 0 || setBits % 2 == 0;
+        }
+
+        private bool CalculateParityBit(UInt16 value)
+        {
+            var setBits = 0;
+
+            for (var i = 0; i < 16; i++)
             {
                 if ((value & 0x01) == 1)
                     setBits++;

@@ -86,5 +86,14 @@ namespace JustinCredible.ZilogZ80
             public const byte RLD = 0x6F;
 
         #endregion
+
+        #region ADC HL, r - Add register or memory to accumulator with carry
+
+            public const byte ADC_HL_BC = 0x4A;
+            public const byte ADC_HL_DE = 0x5A;
+            public const byte ADC_HL_HL = 0x6A;
+            public const byte ADC_HL_SP = 0x7A;
+
+        #endregion
     }
 }

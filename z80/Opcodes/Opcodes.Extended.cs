@@ -89,5 +89,14 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RLD = new Opcode(OpcodeBytes.RLD, instructionSet: InstructionSet.Extended, size: 2, instruction: "RLD", cycles: 18, pseudocode: "tmp <- (HL).lo; (HL).lo <- A.lo; A.lo <- (HL).hi; (HL).hi <- tmp;");
 
         #endregion
+
+        #region ADC HL, r - Add register or memory to accumulator with carry
+
+            public static Opcode ADC_HL_BC = new Opcode(OpcodeBytes.ADC_HL_BC, instructionSet: InstructionSet.Extended, size: 2, instruction: "ADC HL, BC", cycles: 15, pseudocode: "HL <- HL + BC + CY");
+            public static Opcode ADC_HL_DE = new Opcode(OpcodeBytes.ADC_HL_DE, instructionSet: InstructionSet.Extended, size: 2, instruction: "ADC HL, DE", cycles: 15, pseudocode: "HL <- HL + DE + CY");
+            public static Opcode ADC_HL_HL = new Opcode(OpcodeBytes.ADC_HL_HL, instructionSet: InstructionSet.Extended, size: 2, instruction: "ADC HL, HL", cycles: 15, pseudocode: "HL <- HL + HL + CY");
+            public static Opcode ADC_HL_SP = new Opcode(OpcodeBytes.ADC_HL_SP, instructionSet: InstructionSet.Extended, size: 2, instruction: "ADC HL, SP", cycles: 15, pseudocode: "HL <- HL + SP + CY");
+
+        #endregion
     }
 }
