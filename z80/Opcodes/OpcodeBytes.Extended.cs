@@ -69,6 +69,22 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Load
+
+            /* (DE) <- (HL); HL++; DE++; BC--; */
+            public const byte LDI = 0xA0;
+
+            /* (DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat(); */
+            public const byte LDIR = 0xB0;
+
+            /* (DE) <- (HL); HL--; DE--; BC--; */
+            public const byte LDD = 0xA8;
+
+            /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
+            public const byte LDDR = 0xB8;
+
+        #endregion
+
         #region Set Interrupt Mode
 
             /** Set Interrupt Mode 0 */

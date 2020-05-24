@@ -72,6 +72,22 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Load
+
+            /* (DE) <- (HL); HL++; DE++; BC--; */
+            public static Opcode LDI = new Opcode(OpcodeBytes.LDI, instructionSet: InstructionSet.Extended, size: 2, instruction: "LDI", cycles: 16, pseudocode: "(DE) <- (HL); HL++; DE++; BC--;");
+
+            /* (DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat(); */
+            public static Opcode LDIR = new Opcode(OpcodeBytes.LDIR, instructionSet: InstructionSet.Extended, size: 2, instruction: "LDIR", cycles: 21, alternateCycles: 16, pseudocode: "(DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat();");
+
+            /* (DE) <- (HL); HL--; DE--; BC--; */
+            public static Opcode LDD = new Opcode(OpcodeBytes.LDD, instructionSet: InstructionSet.Extended, size: 2, instruction: "LDD", cycles: 16, pseudocode: "(DE) <- (HL); HL--; DE--; BC--;");
+
+            /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
+            public static Opcode LDDR = new Opcode(OpcodeBytes.LDDR, instructionSet: InstructionSet.Extended, size: 2, instruction: "LDDR", cycles: 21, alternateCycles: 16, pseudocode: "(DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat();");
+
+        #endregion
+
         #region Set Interrupt Mode
 
             /** Set Interrupt Mode 0 */

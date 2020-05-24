@@ -228,6 +228,51 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+            #region Load
+
+                /* (DE) <- (HL); HL++; DE++; BC--; */
+                case OpcodeBytes.LDI:
+                /* (DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat(); */
+                case OpcodeBytes.LDIR:
+                /* (DE) <- (HL); HL--; DE--; BC--; */
+                case OpcodeBytes.LDD:
+                /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
+                case OpcodeBytes.LDDR:
+                {
+                    WriteMemory(Registers.DE, ReadMemory(Registers.HL));
+                    Registers.BC--;
+
+                    if (opcode.Code == OpcodeBytes.LDI || opcode.Code == OpcodeBytes.LDIR)
+                    {
+                        Registers.HL++;
+                        Registers.DE++;
+                    }
+                    else if (opcode.Code == OpcodeBytes.LDD || opcode.Code == OpcodeBytes.LDDR)
+                    {
+                        Registers.HL--;
+                        Registers.DE--;
+                    }
+
+                    if (opcode.Code == OpcodeBytes.LDIR || opcode.Code == OpcodeBytes.LDDR)
+                    {
+                        if (Registers.BC != 0)
+                            incrementProgramCounter = false; // repeat operation
+                        else
+                            useAlternateCycleCount = true;
+                    }
+
+                    SetFlags(null, subtract: false, auxCarry: false);
+
+                    if (opcode.Code == OpcodeBytes.LDDR)
+                        Flags.Parity = false;
+                    else
+                        Flags.Parity = Registers.BC - 1 != 0 ? true : false;
+
+                    break;
+                }
+
+            #endregion
+
                 #region Set Interrupt Mode
 
                     case OpcodeBytes.IM0:
