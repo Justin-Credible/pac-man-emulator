@@ -163,6 +163,71 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Compare
+
+                    /* A - (HL); HL++; BC--; */
+                    case OpcodeBytes.CPI:
+                    /* A - (HL); HL++; BC--; if BC != 0 && !Z, repeat(); */
+                    case OpcodeBytes.CPIR:
+                    {
+                        var memValue = ReadMemory(Registers.HL);
+
+                        var borrowOccurred = memValue > Registers.A;
+
+                        var result = Registers.A - memValue;
+
+                        if (borrowOccurred)
+                            result = 256 + result;
+
+                        SetFlags(result: (byte)result, subtract: true);
+
+                        Registers.HL++;
+                        Registers.BC--;
+
+                        if (opcode.Code == OpcodeBytes.CPIR)
+                        {
+                            if (Registers.BC != 0 && !Flags.Zero)
+                                incrementProgramCounter = false; // repeat operation
+                            else
+                                useAlternateCycleCount = true;
+                        }
+
+                        break;
+                    }
+
+                    /* A - (HL); HL--; BC--; */
+                    case OpcodeBytes.CPD:
+                    /* A - (HL); HL--; BC--; if BC != 0 && !Z, repeat(); */
+                    case OpcodeBytes.CPDR:
+                    {
+                        var memValue = ReadMemory(Registers.HL);
+
+                        var borrowOccurred = memValue > Registers.A;
+
+                        var result = Registers.A - memValue;
+
+                        if (borrowOccurred)
+                            result = 256 + result;
+
+                        SetFlags(result: (byte)result, subtract: true);
+
+                        Registers.HL--;
+                        Registers.BC--;
+
+                        if (opcode.Code == OpcodeBytes.CPDR)
+                        {
+                            if (Registers.BC != 0 && !Flags.Zero)
+                                incrementProgramCounter = false; // repeat operation
+                            else
+                                useAlternateCycleCount = true;
+                        }
+
+                        break;
+                    }
+
+
+                #endregion
+
                 #region Set Interrupt Mode
 
                     case OpcodeBytes.IM0:

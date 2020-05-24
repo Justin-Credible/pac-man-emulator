@@ -56,6 +56,22 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Compare
+
+            /* A - (HL); HL++; BC--; */
+            public static Opcode CPI = new Opcode(OpcodeBytes.CPI, instructionSet: InstructionSet.Extended, size: 2, instruction: "CPI", cycles: 16, pseudocode: "A - (HL); HL++; BC--;");
+
+            /* A - (HL); HL++; BC--; if BC != 0 && !Z, repeat(); */
+            public static Opcode CPIR = new Opcode(OpcodeBytes.CPIR, instructionSet: InstructionSet.Extended, size: 2, instruction: "CPIR", cycles: 21, alternateCycles: 16, pseudocode: "A - (HL); HL++; BC--; if BC != 0 && !Z, repeat();");
+
+            /* A - (HL); HL--; BC--; */
+            public static Opcode CPD = new Opcode(OpcodeBytes.CPD, instructionSet: InstructionSet.Extended, size: 2, instruction: "CPD", cycles: 16, pseudocode: "A - (HL); HL--; BC--;");
+
+            /* A - (HL); HL--; BC--; if BC != 0 && !Z, repeat(); */
+            public static Opcode CPDR = new Opcode(OpcodeBytes.CPDR, instructionSet: InstructionSet.Extended, size: 2, instruction: "CPDR", cycles: 21, alternateCycles: 16, pseudocode: "A - (HL); HL--; BC--; if BC != 0 && !Z, repeat();");
+
+        #endregion
+
         #region Set Interrupt Mode
 
             /** Set Interrupt Mode 0 */

@@ -53,6 +53,22 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Compare
+
+            /* A - (HL); HL++; BC--; */
+            public const byte CPI = 0xA1;
+
+            /* A - (HL); HL++; BC--; if BC != 0 && !Z, repeat(); */
+            public const byte CPIR = 0xB1;
+
+            /* A - (HL); HL--; BC--; */
+            public const byte CPD = 0xA9;
+
+            /* A - (HL); HL--; BC--; if BC != 0 && !Z, repeat(); */
+            public const byte CPDR = 0xB9;
+
+        #endregion
+
         #region Set Interrupt Mode
 
             /** Set Interrupt Mode 0 */
