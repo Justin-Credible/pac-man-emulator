@@ -23,8 +23,14 @@ namespace JustinCredible.ZilogZ80
             /* Device[C] <- (HL); HL++; B--; */
             public static Opcode OUTI = new Opcode(OpcodeBytes.OUTI, instructionSet: InstructionSet.Extended, size: 2, instruction: "OUTI", cycles: 16, pseudocode: "Device[C] <- (HL); HL++; B--;");
 
+            /* Device[C] <- (HL); HL++; B--; if B != 0, repeat(); */
+            public static Opcode OTIR = new Opcode(OpcodeBytes.OTIR, instructionSet: InstructionSet.Extended, size: 2, instruction: "OTIR", cycles: 21, alternateCycles: 16, pseudocode: "Device[C] <- (HL); HL++; B--; if B != 0, repeat();");
+
             /* Device[C] <- (HL); HL--; B--; */
             public static Opcode OUTD = new Opcode(OpcodeBytes.OUTD, instructionSet: InstructionSet.Extended, size: 2, instruction: "OUTD", cycles: 16, pseudocode: "Device[C] <- (HL); HL--; B--;");
+
+            /* Device[C] <- (HL); HL--; B--; if B != 0, repeat(); */
+            public static Opcode OTDR = new Opcode(OpcodeBytes.OTDR, instructionSet: InstructionSet.Extended, size: 2, instruction: "OTDR", cycles: 21, alternateCycles: 16, pseudocode: "Device[C] <- (HL); HL--; B--; if B != 0, repeat();");
 
             // R <- Device[C]
             public static Opcode IN_A_MC = new Opcode(OpcodeBytes.IN_A_MC, instructionSet: InstructionSet.Extended, size: 2, instruction: "IN A, (C)", cycles: 12, pseudocode: "A <- Device[C]");
@@ -44,6 +50,9 @@ namespace JustinCredible.ZilogZ80
 
             /* (HL) <- Device[C]; HL--; B--; */
             public static Opcode IND = new Opcode(OpcodeBytes.IND, instructionSet: InstructionSet.Extended, size: 2, instruction: "IND", cycles: 16, pseudocode: "(HL) <- Device[C]; HL--; B--;");
+
+            /* (HL) <- Device[C]; HL--; B--; if B != 0, repeat(); */
+            public static Opcode INDR = new Opcode(OpcodeBytes.INDR, instructionSet: InstructionSet.Extended, size: 2, instruction: "INDR", cycles: 21, alternateCycles: 16, pseudocode: "(HL) <- Device[C]; HL--; B--; if B != 0, repeat();");
 
         #endregion
 

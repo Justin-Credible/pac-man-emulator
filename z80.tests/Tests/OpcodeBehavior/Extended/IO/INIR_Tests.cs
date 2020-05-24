@@ -15,7 +15,6 @@ namespace JustinCredible.ZilogZ80.Tests
             ");
 
             var memory = new byte[16*1024];
-            memory[0x1234] = 77;
 
             var initialState = new CPUConfig()
             {

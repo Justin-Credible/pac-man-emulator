@@ -41,21 +41,47 @@ namespace JustinCredible.ZilogZ80
 
                     // Device[C] <- (HL); HL++; B--;
                     case OpcodeBytes.OUTI:
+                    // Device[C] <- (HL); HL++; B--; if B != 0, repeat(); 
+                    case OpcodeBytes.OTIR:
+                    {
                         OnDeviceWrite?.Invoke(Registers.C, ReadMemory(Registers.HL));
                         Registers.HL++;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
                         Flags.Subtract = true;
+
+                        if (opcode.Code == OpcodeBytes.OTIR)
+                        {
+                            if (Registers.B == 0)
+                                useAlternateCycleCount = true;
+                            else
+                                incrementProgramCounter = false; // repeat operation
+                        }
+
                         break;
+                    }
 
                     // Device[C] <- (HL); HL--; B--;
                     case OpcodeBytes.OUTD:
+                    // Device[C] <- (HL); HL--; B--; if B != 0, repeat(); 
+                    case OpcodeBytes.OTDR:
+                    {
                         OnDeviceWrite?.Invoke(Registers.C, ReadMemory(Registers.HL));
                         Registers.HL--;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
                         Flags.Subtract = true;
+
+                        if (opcode.Code == OpcodeBytes.OTDR)
+                        {
+                            if (Registers.B == 0)
+                                useAlternateCycleCount = true;
+                            else
+                                incrementProgramCounter = false; // repeat operation
+                        }
+
                         break;
+                    }
 
                     // R <- Device[C]
                     case OpcodeBytes.IN_A_MC:
@@ -115,12 +141,25 @@ namespace JustinCredible.ZilogZ80
 
                     // (HL) <- Device[C]; HL--; B--;
                     case OpcodeBytes.IND:
+                    // (HL) <- Device[C]; HL--; B--; if B != 0, repeat();
+                    case OpcodeBytes.INDR:
+                    {
                         WriteMemory(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
                         Registers.HL--;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
                         Flags.Subtract = true;
+
+                        if (opcode.Code == OpcodeBytes.INDR)
+                        {
+                            if (Registers.B == 0)
+                                useAlternateCycleCount = true;
+                            else
+                                incrementProgramCounter = false; // repeat operation
+                        }
+
                         break;
+                    }
 
                 #endregion
 

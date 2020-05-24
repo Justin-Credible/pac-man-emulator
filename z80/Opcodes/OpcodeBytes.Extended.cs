@@ -20,8 +20,14 @@ namespace JustinCredible.ZilogZ80
             /* Device[C] <- (HL); HL++; B--; */
             public const byte OUTI = 0xA3;
 
+            /* Device[C] <- (HL); HL++; B--; if B != 0, repeat(); */
+            public const byte OTIR = 0xB3;
+
             /* Device[C] <- (HL); HL--; B--; */
             public const byte OUTD = 0xAB;
+
+            /* Device[C] <- (HL); HL--; B--; if B != 0, repeat(); */
+            public const byte OTDR = 0xBB;
 
             // R <- Device[C]
             public const byte IN_A_MC = 0x78;
@@ -41,6 +47,9 @@ namespace JustinCredible.ZilogZ80
 
             /* (HL) <- Device[C]; HL--; B--; */
             public const byte IND = 0xAA;
+
+            /* (HL) <- Device[C]; HL--; B--; if B != 0, repeat(); */
+            public const byte INDR = 0xBA;
 
         #endregion
 
