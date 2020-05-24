@@ -73,7 +73,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_OUTD_SetsZeroFlag()
+        public void Test_INI_SetsZeroFlag()
         {
             var rom = AssembleSource($@"
                 org 00h

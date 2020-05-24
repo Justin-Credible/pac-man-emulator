@@ -36,6 +36,9 @@ namespace JustinCredible.ZilogZ80
             /* (HL) <- Device[C]; HL++; B--; */
             public const byte INI = 0xA2;
 
+            /* (HL) <- Device[C]; HL++; B--; if B != 0, repeat(); */
+            public const byte INIR = 0xB2;
+
             /* (HL) <- Device[C]; HL--; B--; */
             public const byte IND = 0xAA;
 

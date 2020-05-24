@@ -93,12 +93,25 @@ namespace JustinCredible.ZilogZ80
 
                     // (HL) <- Device[C]; HL++; B--;
                     case OpcodeBytes.INI:
+                    // (HL) <- Device[C]; HL++; B--; if B != 0, repeat();
+                    case OpcodeBytes.INIR:
+                    {
                         WriteMemory(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
                         Registers.HL++;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
                         Flags.Subtract = true;
+
+                        if (opcode.Code == OpcodeBytes.INIR)
+                        {
+                            if (Registers.B == 0)
+                                useAlternateCycleCount = true;
+                            else
+                                incrementProgramCounter = false; // repeat operation
+                        }
+
                         break;
+                    }
 
                     // (HL) <- Device[C]; HL--; B--;
                     case OpcodeBytes.IND:
