@@ -172,5 +172,18 @@ namespace JustinCredible.ZilogZ80
             public const byte SBC_HL_SP = 0x72;
 
         #endregion
+
+        #region Negate Accumulator
+
+            public const byte NEG = 0x44;
+            public const byte NEG_2 = 0x54;
+            public const byte NEG_3 = 0x64;
+            public const byte NEG_4 = 0x74;
+            public const byte NEG_5 = 0x4C;
+            public const byte NEG_6 = 0x5C;
+            public const byte NEG_7 = 0x6C;
+            public const byte NEG_8 = 0x7C;
+
+        #endregion
     }
 }

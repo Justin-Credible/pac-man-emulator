@@ -175,5 +175,18 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SBC_HL_SP = new Opcode(OpcodeBytes.SBC_HL_SP, instructionSet: InstructionSet.Extended, size: 2, instruction: "SBC HL, SP", cycles: 15, pseudocode: "HL <- HL - SP - CY");
 
         #endregion
+
+        #region Negate Accumulator
+
+            public static Opcode NEG = new Opcode(OpcodeBytes.NEG, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_2 = new Opcode(OpcodeBytes.NEG_2, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_3 = new Opcode(OpcodeBytes.NEG_3, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_4 = new Opcode(OpcodeBytes.NEG_4, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_5 = new Opcode(OpcodeBytes.NEG_5, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_6 = new Opcode(OpcodeBytes.NEG_6, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_7 = new Opcode(OpcodeBytes.NEG_7, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+            public static Opcode NEG_8 = new Opcode(OpcodeBytes.NEG_8, instructionSet: InstructionSet.Extended, size: 2, instruction: "NEG", cycles: 8, pseudocode: "A = ~A + 1");
+
+        #endregion
     }
 }

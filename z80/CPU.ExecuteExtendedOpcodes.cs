@@ -464,6 +464,35 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Negate Accumulator
+
+                    case OpcodeBytes.NEG:
+                    case OpcodeBytes.NEG_2:
+                    case OpcodeBytes.NEG_3:
+                    case OpcodeBytes.NEG_4:
+                    case OpcodeBytes.NEG_5:
+                    case OpcodeBytes.NEG_6:
+                    case OpcodeBytes.NEG_7:
+                    case OpcodeBytes.NEG_8:
+                    {
+                        var originalValue = Registers.A;
+
+                        if (originalValue != 0x80)
+                            Registers.A = (byte)(0xFF & (~Registers.A + 1));
+
+                        SetFlags(
+                            result: Registers.A, // Handles sign & zero
+                            //auxCarry // TODO: if borrow from bit 4??
+                            // parity: originalValue == 0x80, // TODO
+                            subtract: true,
+                            carry: originalValue != 0x00
+                        );
+
+                        break;
+                    }
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
             }
