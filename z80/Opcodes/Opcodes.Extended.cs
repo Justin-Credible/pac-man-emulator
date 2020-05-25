@@ -86,6 +86,30 @@ namespace JustinCredible.ZilogZ80
             /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
             public static Opcode LDDR = new Opcode(OpcodeBytes.LDDR, instructionSet: InstructionSet.Extended, size: 2, instruction: "LDDR", cycles: 21, alternateCycles: 16, pseudocode: "(DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat();");
 
+            /* (NN) <- BC */
+            public static Opcode LD_MNN_BC = new Opcode(OpcodeBytes.LD_MNN_BC, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD (NN), BC", cycles: 20, pseudocode: "(NN) <- BC");
+
+            /* (NN) <- DE */
+            public static Opcode LD_MNN_DE = new Opcode(OpcodeBytes.LD_MNN_DE, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD (NN), DE", cycles: 20, pseudocode: "(NN) <- DE");
+
+            /* (NN) <- HL */
+            public static Opcode LD_MNN_HL_2 = new Opcode(OpcodeBytes.LD_MNN_HL_2, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD (NN), HL", cycles: 20, pseudocode: "(NN) <- HL");
+
+            /* (NN) <- SP */
+            public static Opcode LD_MNN_SP = new Opcode(OpcodeBytes.LD_MNN_SP, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD (NN), SP", cycles: 20, pseudocode: "(NN) <- SP");
+
+            /* BC <- (NN) */
+            public static Opcode LD_BC_MNN = new Opcode(OpcodeBytes.LD_BC_MNN, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD BC, (NN)", cycles: 20, pseudocode: "BC <- (NN)");
+
+            /* DE <- (NN) */
+            public static Opcode LD_DE_MNN = new Opcode(OpcodeBytes.LD_DE_MNN, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD DE, (NN)", cycles: 20, pseudocode: "DE <- (NN)");
+
+            /* HL <- (NN) */
+            public static Opcode LD_HL_MNN_2 = new Opcode(OpcodeBytes.LD_HL_MNN_2, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD HL, (NN)", cycles: 20, pseudocode: "HL <- (NN)");
+
+            /* SP <- (NN) */
+            public static Opcode LD_SP_MNN = new Opcode(OpcodeBytes.LD_SP_MNN, instructionSet: InstructionSet.Extended, size: 4, instruction: "LD SP, (NN)", cycles: 20, pseudocode: "SP <- (NN)");
+
         #endregion
 
         #region Set Interrupt Mode

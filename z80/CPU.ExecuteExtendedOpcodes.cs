@@ -228,50 +228,114 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
-            #region Load
+                #region Load
 
-                /* (DE) <- (HL); HL++; DE++; BC--; */
-                case OpcodeBytes.LDI:
-                /* (DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat(); */
-                case OpcodeBytes.LDIR:
-                /* (DE) <- (HL); HL--; DE--; BC--; */
-                case OpcodeBytes.LDD:
-                /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
-                case OpcodeBytes.LDDR:
-                {
-                    WriteMemory(Registers.DE, ReadMemory(Registers.HL));
-                    Registers.BC--;
+                    /* (DE) <- (HL); HL++; DE++; BC--; */
+                    case OpcodeBytes.LDI:
+                    /* (DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat(); */
+                    case OpcodeBytes.LDIR:
+                    /* (DE) <- (HL); HL--; DE--; BC--; */
+                    case OpcodeBytes.LDD:
+                    /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
+                    case OpcodeBytes.LDDR:
+                    {
+                        WriteMemory(Registers.DE, ReadMemory(Registers.HL));
+                        Registers.BC--;
 
-                    if (opcode.Code == OpcodeBytes.LDI || opcode.Code == OpcodeBytes.LDIR)
-                    {
-                        Registers.HL++;
-                        Registers.DE++;
-                    }
-                    else if (opcode.Code == OpcodeBytes.LDD || opcode.Code == OpcodeBytes.LDDR)
-                    {
-                        Registers.HL--;
-                        Registers.DE--;
-                    }
+                        if (opcode.Code == OpcodeBytes.LDI || opcode.Code == OpcodeBytes.LDIR)
+                        {
+                            Registers.HL++;
+                            Registers.DE++;
+                        }
+                        else if (opcode.Code == OpcodeBytes.LDD || opcode.Code == OpcodeBytes.LDDR)
+                        {
+                            Registers.HL--;
+                            Registers.DE--;
+                        }
 
-                    if (opcode.Code == OpcodeBytes.LDIR || opcode.Code == OpcodeBytes.LDDR)
-                    {
-                        if (Registers.BC != 0)
-                            incrementProgramCounter = false; // repeat operation
+                        if (opcode.Code == OpcodeBytes.LDIR || opcode.Code == OpcodeBytes.LDDR)
+                        {
+                            if (Registers.BC != 0)
+                                incrementProgramCounter = false; // repeat operation
+                            else
+                                useAlternateCycleCount = true;
+                        }
+
+                        SetFlags(null, subtract: false, auxCarry: false);
+
+                        if (opcode.Code == OpcodeBytes.LDDR)
+                            Flags.Parity = false;
                         else
-                            useAlternateCycleCount = true;
+                            Flags.Parity = Registers.BC - 1 != 0 ? true : false;
+
+                        break;
                     }
 
-                    SetFlags(null, subtract: false, auxCarry: false);
+                    /* (NN) <- BC */
+                    case OpcodeBytes.LD_MNN_BC:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        WriteMemory16(address, Registers.BC);
+                        break;
+                    }
 
-                    if (opcode.Code == OpcodeBytes.LDDR)
-                        Flags.Parity = false;
-                    else
-                        Flags.Parity = Registers.BC - 1 != 0 ? true : false;
+                    /* (NN) <- DE */
+                    case OpcodeBytes.LD_MNN_DE:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        WriteMemory16(address, Registers.DE);
+                        break;
+                    }
 
-                    break;
-                }
+                    /* (NN) <- HL */
+                    case OpcodeBytes.LD_MNN_HL_2:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        WriteMemory16(address, Registers.HL);
+                        break;
+                    }
 
-            #endregion
+                    /* (NN) <- SP */
+                    case OpcodeBytes.LD_MNN_SP:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        WriteMemory16(address, StackPointer);
+                        break;
+                    }
+
+                    /* BC <- (NN) */
+                    case OpcodeBytes.LD_BC_MNN:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        Registers.BC = ReadMemory16(address);
+                        break;
+                    }
+
+                    /* DE <- (NN) */
+                    case OpcodeBytes.LD_DE_MNN:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        Registers.DE = ReadMemory16(address);
+                        break;
+                    }
+
+                    /* HL <- (NN) */
+                    case OpcodeBytes.LD_HL_MNN_2:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        Registers.HL = ReadMemory16(address);
+                        break;
+                    }
+
+                    /* SP <- (NN) */
+                    case OpcodeBytes.LD_SP_MNN:
+                    {
+                        var address = ReadMemory16(ProgramCounter + 2);
+                        StackPointer = ReadMemory16(address);
+                        break;
+                    }
+
+                #endregion
 
                 #region Set Interrupt Mode
 

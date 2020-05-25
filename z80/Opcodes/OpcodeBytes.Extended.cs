@@ -83,6 +83,30 @@ namespace JustinCredible.ZilogZ80
             /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
             public const byte LDDR = 0xB8;
 
+            /* (NN) <- BC */
+            public const byte LD_MNN_BC = 0x43;
+
+            /* (NN) <- DE */
+            public const byte LD_MNN_DE = 0x53;
+
+            /* (NN) <- HL */
+            public const byte LD_MNN_HL_2 = 0x63;
+
+            /* (NN) <- SP */
+            public const byte LD_MNN_SP = 0x73;
+
+            /* BC <- (NN) */
+            public const byte LD_BC_MNN = 0x4B;
+
+            /* DE <- (NN) */
+            public const byte LD_DE_MNN = 0x5B;
+
+            /* HL <- (NN) */
+            public const byte LD_HL_MNN_2 = 0x6B;
+
+            /* SP <- (NN) */
+            public const byte LD_SP_MNN = 0x7B;
+
         #endregion
 
         #region Set Interrupt Mode

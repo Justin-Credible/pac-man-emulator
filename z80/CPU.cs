@@ -455,6 +455,14 @@ namespace JustinCredible.ZilogZ80
             return result.Value;
         }
 
+        private UInt16 ReadMemory16(int address)
+        {
+            var lower = ReadMemory(address);
+            var upper = ReadMemory(address + 1) << 8;
+            var value = (UInt16)(upper | lower);
+            return value;
+        }
+
         private void WriteMemory(int address, byte value)
         {
             // Determine if we should allow the write to memory based on the address
@@ -498,6 +506,14 @@ namespace JustinCredible.ZilogZ80
                 var mirrorEndAddressFormatted = String.Format("0x{0:X4}", Config.MirrorMemoryEnd);
                 throw new Exception($"Illegal memory address ({addressFormatted}) specified for write memory operation at address {programCounterFormatted}; expected address to be between {startAddressFormatted} and {(mirroringEnabled ? mirrorEndAddressFormatted : endAddressFormatted)} inclusive.");
             }
+        }
+
+        private void WriteMemory16(int address, UInt16 value)
+        {
+            var lower = (byte)(value & 0x00FF);
+            var upper = (byte)((value & 0xFF00) >> 8);
+            WriteMemory(address, lower);
+            WriteMemory(address + 1, upper);
         }
 
         #endregion
