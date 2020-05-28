@@ -46,7 +46,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (5*3), state.Cycles);
-            Assert.Equal(0x03, state.ProgramCounter);
+            Assert.Equal(0x03, state.Registers.PC);
         }
 
         [Fact]
@@ -62,7 +62,10 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                StackPointer = 0x3902,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x3902
+                },
                 Flags = new ConditionFlags()
                 {
                     Sign = true,
@@ -76,14 +79,14 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x38FF, state.StackPointer);
+            Assert.Equal(0x38FF, state.Registers.SP);
 
             // This opcode shouldn't affect flags.
             AssertFlagsSame(initialState, state);
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (5*3), state.Cycles);
-            Assert.Equal(0x03, state.ProgramCounter);
+            Assert.Equal(0x03, state.Registers.PC);
         }
     }
 }

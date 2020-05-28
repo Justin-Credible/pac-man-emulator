@@ -24,7 +24,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 10, state.Cycles);
-            Assert.Equal(0x03, state.ProgramCounter);
+            Assert.Equal(0x03, state.Registers.PC);
         }
 
         [Fact]
@@ -38,13 +38,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom);
 
-            Assert.Equal(0x4277, state.StackPointer);
+            Assert.Equal(0x4277, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 10, state.Cycles);
-            Assert.Equal(0x03, state.ProgramCounter);
+            Assert.Equal(0x03, state.Registers.PC);
         }
     }
 }

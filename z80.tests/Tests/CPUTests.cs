@@ -16,8 +16,11 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 InterruptsEnabled = initialIFF1,
                 InterruptsEnabledPreviousValue = initialIFF2,
-                ProgramCounter = 0x1234,
-                StackPointer = 0x3FFF,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x1234,
+                    SP = 0x3FFF,
+                },
             };
 
             var cpu = new CPU(initialState);
@@ -27,7 +30,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(17, cycles);
 
             // We should've jumped to 0x0066.
-            Assert.Equal(0x0066, cpu.ProgramCounter);
+            Assert.Equal(0x0066, cpu.Registers.PC);
 
             // Interrupts should be disabled (IFF1).
             Assert.False(cpu.InterruptsEnabled);
@@ -36,7 +39,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(initialIFF1, cpu.InterruptsEnabledPreviousValue);
 
             // Ensure the previous program counter value was pushed onto the stack.
-            Assert.Equal(0x3FFD, cpu.StackPointer);
+            Assert.Equal(0x3FFD, cpu.Registers.SP);
             Assert.Equal(0x12, cpu.Memory[0x3FFE]);
             Assert.Equal(0x34, cpu.Memory[0x3FFD]);
         }
@@ -47,8 +50,11 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 InterruptsEnabled = false,
-                ProgramCounter = 0x1234,
-                StackPointer = 0x3FFF,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x1234,
+                    SP = 0x3FFF,
+                },
             };
 
             var cpu = new CPU(initialState);
@@ -57,8 +63,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(0, cycles);
             Assert.False(cpu.InterruptsEnabled);
-            Assert.Equal(0x1234, cpu.ProgramCounter);
-            Assert.Equal(0x3FFF, cpu.StackPointer);
+            Assert.Equal(0x1234, cpu.Registers.PC);
+            Assert.Equal(0x3FFF, cpu.Registers.SP);
         }
 
         [Theory]
@@ -76,8 +82,11 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 InterruptsEnabled = true,
                 InterruptMode = InterruptMode.Zero,
-                ProgramCounter = 0x1234,
-                StackPointer = 0x3FFF,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x1234,
+                    SP = 0x3FFF,
+                },
             };
 
             var cpu = new CPU(initialState);
@@ -90,10 +99,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(cpu.InterruptsEnabled);
 
             // We should've jumped somewhere.
-            Assert.Equal(expectedProgramCounter, cpu.ProgramCounter);
+            Assert.Equal(expectedProgramCounter, cpu.Registers.PC);
 
             // Ensure the previous program counter value was pushed onto the stack.
-            Assert.Equal(0x3FFD, cpu.StackPointer);
+            Assert.Equal(0x3FFD, cpu.Registers.SP);
             Assert.Equal(0x12, cpu.Memory[0x3FFE]);
             Assert.Equal(0x34, cpu.Memory[0x3FFD]);
         }
@@ -105,8 +114,11 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 InterruptsEnabled = true,
                 InterruptMode = InterruptMode.One,
-                ProgramCounter = 0x1234,
-                StackPointer = 0x3FFF,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x1234,
+                    SP = 0x3FFF,
+                },
             };
 
             var cpu = new CPU(initialState);
@@ -119,10 +131,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(cpu.InterruptsEnabled);
 
             // We should've jumped here.
-            Assert.Equal(0x0038, cpu.ProgramCounter);
+            Assert.Equal(0x0038, cpu.Registers.PC);
 
             // Ensure the previous program counter value was pushed onto the stack.
-            Assert.Equal(0x3FFD, cpu.StackPointer);
+            Assert.Equal(0x3FFD, cpu.Registers.SP);
             Assert.Equal(0x12, cpu.Memory[0x3FFE]);
             Assert.Equal(0x34, cpu.Memory[0x3FFD]);
         }
@@ -136,10 +148,10 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 InterruptsEnabled = true,
                 InterruptMode = InterruptMode.Two,
-                ProgramCounter = 0x1234,
-                StackPointer = 0x3FFF,
                 Registers = new CPURegisters()
                 {
+                    PC = 0x1234,
+                    SP = 0x3FFF,
                     I = interruptVector,
                 },
             };
@@ -154,10 +166,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(cpu.InterruptsEnabled);
 
             // We should've jumped here; MSB from interrupt vector and LSB from data bus combine to form address.
-            Assert.Equal(expectedProgramCounter, cpu.ProgramCounter);
+            Assert.Equal(expectedProgramCounter, cpu.Registers.PC);
 
             // Ensure the previous program counter value was pushed onto the stack.
-            Assert.Equal(0x3FFD, cpu.StackPointer);
+            Assert.Equal(0x3FFD, cpu.Registers.SP);
             Assert.Equal(0x12, cpu.Memory[0x3FFE]);
             Assert.Equal(0x34, cpu.Memory[0x3FFD]);
         }

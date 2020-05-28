@@ -61,7 +61,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 18, state.Cycles);
-            Assert.Equal(0x0002, state.ProgramCounter);
+            Assert.Equal(0x0002, state.Registers.PC);
         }
     }
 }

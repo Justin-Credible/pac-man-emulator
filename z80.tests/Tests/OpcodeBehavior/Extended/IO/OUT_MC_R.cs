@@ -20,7 +20,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var initialState = GetCPUConfig();
+            var initialState = new CPUConfig();
 
             initialState.Registers = new CPURegisters();
             initialState.Registers.C = deviceId;
@@ -59,7 +59,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var initialState = GetCPUConfig();
+            var initialState = new CPUConfig();
 
             initialState.Registers = new CPURegisters();
             initialState.Registers.C = 213;
@@ -97,7 +97,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var initialState = GetCPUConfig();
+            var initialState = new CPUConfig();
 
             initialState.Registers = new CPURegisters();
             initialState.Registers.C = 123;

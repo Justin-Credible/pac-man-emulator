@@ -33,7 +33,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 20, state.Cycles);
-            Assert.Equal(0x04, state.ProgramCounter);
+            Assert.Equal(0x04, state.Registers.PC);
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 20, state.Cycles);
-            Assert.Equal(0x04, state.ProgramCounter);
+            Assert.Equal(0x04, state.Registers.PC);
         }
 
         [Fact]
@@ -86,7 +86,10 @@ namespace JustinCredible.ZilogZ80.Tests
                 MemorySize = 20490,
                 WriteableMemoryStart = 0x0000,
                 WriteableMemoryEnd = 0x500A,
-                StackPointer = 0x6677,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x6677
+                },
             };
 
             var state = Execute(rom, initialState);
@@ -98,7 +101,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 20, state.Cycles);
-            Assert.Equal(0x04, state.ProgramCounter);
+            Assert.Equal(0x04, state.Registers.PC);
         }
     }
 }

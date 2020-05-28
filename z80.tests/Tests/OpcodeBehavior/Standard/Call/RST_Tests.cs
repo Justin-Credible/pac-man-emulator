@@ -53,14 +53,17 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0040,
-                StackPointer = 0x2720,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0040,
+                    SP = 0x2720,
+                },
                 MemorySize = memory.Length,
             };
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x271E, state.StackPointer);
+            Assert.Equal(0x271E, state.Registers.SP);
             Assert.Equal(0xFF, state.Memory[0x2720]);
             Assert.Equal(0x00, state.Memory[0x271F]);
             Assert.Equal(0x41, state.Memory[0x271E]);
@@ -70,7 +73,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 11, state.Cycles);
-            Assert.Equal(expectedProgramCounterValue, state.ProgramCounter);
+            Assert.Equal(expectedProgramCounterValue, state.Registers.PC);
         }
 
         [Fact]
@@ -133,14 +136,17 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0040,
-                StackPointer = 0x2720,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0040,
+                    SP = 0x2720,
+                },
                 MemorySize = memory.Length,
             };
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x2720, state.StackPointer);
+            Assert.Equal(0x2720, state.Registers.SP);
             Assert.Equal(0xFF, state.Memory[0x2720]);
             Assert.Equal(0x00, state.Memory[0x271F]);
             Assert.Equal(0x46, state.Memory[0x271E]);
@@ -154,7 +160,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(23, state.Iterations);
             Assert.Equal(4 + (11 * 8) + (10 * 8) + (7 * 6), state.Cycles);
-            Assert.Equal(0x46, state.ProgramCounter);
+            Assert.Equal(0x46, state.Registers.PC);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 7, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 10, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
     }
 }

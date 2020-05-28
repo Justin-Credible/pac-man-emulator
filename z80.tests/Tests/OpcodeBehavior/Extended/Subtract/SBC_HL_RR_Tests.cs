@@ -45,7 +45,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Theory]
@@ -89,7 +89,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Theory]
@@ -133,7 +133,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Theory]
@@ -177,7 +177,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Theory]
@@ -221,7 +221,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Theory]
@@ -265,7 +265,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -277,9 +277,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var registers = new CPURegisters();
-            registers.HL = 0x42;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
@@ -288,15 +285,18 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 Flags = flags,
-                StackPointer = 0x15,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x15,
+                    HL = 0x42,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x2C, state.Registers.HL);
-            Assert.Equal(0x15, state.StackPointer);
+            Assert.Equal(0x15, state.Registers.SP);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -307,7 +307,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -319,9 +319,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var registers = new CPURegisters();
-            registers.HL = 0x02;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
@@ -330,15 +327,18 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 Flags = flags,
-                StackPointer = 0x03,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x03,
+                    HL = 0x02,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0xFFFE, state.Registers.HL);
-            Assert.Equal(0x03, state.StackPointer);
+            Assert.Equal(0x03, state.Registers.SP);
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -349,7 +349,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -360,10 +360,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 SBC HL, SP
                 HALT
             ");
-
-            var registers = new CPURegisters();
-            registers.HL = 0x02;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
@@ -372,15 +368,18 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 Flags = flags,
-                StackPointer = 0x02,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x02,
+                    HL = 0x02,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0xFFFF, state.Registers.HL);
-            Assert.Equal(0x02, state.StackPointer);
+            Assert.Equal(0x02, state.Registers.SP);
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -391,7 +390,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -403,9 +402,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var registers = new CPURegisters();
-            registers.HL = 0x02;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
@@ -414,15 +410,18 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 Flags = flags,
-                StackPointer = 0x01,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x01,
+                    HL = 0x02,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x00, state.Registers.HL);
-            Assert.Equal(0x01, state.StackPointer);
+            Assert.Equal(0x01, state.Registers.SP);
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
@@ -433,7 +432,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -445,9 +444,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var registers = new CPURegisters();
-            registers.HL = 0x44;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
@@ -456,15 +452,18 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 Flags = flags,
-                StackPointer = 0x32,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x32,
+                    HL = 0x44,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x11, state.Registers.HL);
-            Assert.Equal(0x32, state.StackPointer);
+            Assert.Equal(0x32, state.Registers.SP);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -475,7 +474,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -487,9 +486,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var registers = new CPURegisters();
-            registers.HL = 0x8D8D;
-
             var flags = new ConditionFlags()
             {
                 Carry = true,
@@ -498,15 +494,18 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 Flags = flags,
-                StackPointer = 0x09,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x09,
+                    HL = 0x8D8D,
+                },
             };
 
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x8D83, state.Registers.HL);
-            Assert.Equal(0x09, state.StackPointer);
+            Assert.Equal(0x09, state.Registers.SP);
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -517,7 +516,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
 
         [Fact]
@@ -557,7 +556,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 15, state.Cycles);
-            Assert.Equal(0x02, state.ProgramCounter);
+            Assert.Equal(0x02, state.Registers.PC);
         }
     }
 }

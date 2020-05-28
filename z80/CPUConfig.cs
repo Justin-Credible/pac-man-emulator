@@ -23,14 +23,10 @@ namespace JustinCredible.ZilogZ80
         public UInt16 MirrorMemoryEnd { get; set; }
 
         /** The CPU registers (A B C D E H L I R IX IY PC SP) */
-        public CPURegisters Registers { get; set; }
+        public CPURegisters Registers { get; set; } = new CPURegisters();
 
         /** The encapsulated condition/flags register (F) */
-        public ConditionFlags Flags { get; set; }
-
-        public UInt16 ProgramCounter { get; set; } = 0x0000;
-
-        public UInt16 StackPointer { get; set; } = 0x0000;
+        public ConditionFlags Flags { get; set; } = new ConditionFlags();
 
         /** Indicates if interrupts are enabled or not: IFF1. */
         public bool InterruptsEnabled { get; set; } = false;

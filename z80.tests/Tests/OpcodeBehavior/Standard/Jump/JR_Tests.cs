@@ -23,13 +23,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(6, state.Iterations);
             Assert.Equal(4 + (4*4) + 12, state.Cycles);
-            Assert.Equal(0x0006, state.ProgramCounter);
+            Assert.Equal(0x0006, state.Registers.PC);
         }
 
         // Flags: S Z - H - P N C
@@ -60,18 +60,21 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0000,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0000
+                },
             };
 
             initialState.Flags.SetFromByte(initialFlags);
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             Assert.Equal(expectedJump ? 6 : 7, state.Iterations);
             Assert.Equal(4 + (4*4) + (expectedJump ? 0 : 4) + (expectedJump ? 12 : 7), state.Cycles);
-            Assert.Equal(expectedJump ? 0x0008 : 0x0007, state.ProgramCounter);
+            Assert.Equal(expectedJump ? 0x0008 : 0x0007, state.Registers.PC);
         }
 
         [Fact]
@@ -93,13 +96,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(6, state.Iterations);
             Assert.Equal(4 + (4*4) + 12, state.Cycles);
-            Assert.Equal(0x0009, state.ProgramCounter);
+            Assert.Equal(0x0009, state.Registers.PC);
         }
 
         [Fact]
@@ -121,18 +124,21 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0001,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0001
+                },
             };
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(5, state.Iterations);
             Assert.Equal(4 + (4*3) + 12, state.Cycles);
-            Assert.Equal(0x0000, state.ProgramCounter);
+            Assert.Equal(0x0000, state.Registers.PC);
         }
 
         [Fact]
@@ -154,18 +160,21 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0003,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0003
+                },
             };
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(3, state.Iterations);
             Assert.Equal(4 + (4*1) + 12, state.Cycles);
-            Assert.Equal(0x0002, state.ProgramCounter);
+            Assert.Equal(0x0002, state.Registers.PC);
         }
 
         [Theory]
@@ -195,18 +204,21 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0001,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0001
+                },
             };
 
             initialState.Flags.SetFromByte(initialFlags);
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             Assert.Equal(expectedJump ? 5 : 6, state.Iterations);
             Assert.Equal(4 + (4*3) + (expectedJump ? 0 : 4) + (expectedJump ? 12 : 7), state.Cycles);
-            Assert.Equal(expectedJump ? 0x0000 : 0x0007, state.ProgramCounter);
+            Assert.Equal(expectedJump ? 0x0000 : 0x0007, state.Registers.PC);
         }
     }
 }

@@ -23,8 +23,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     H = 0x42,
                     L = 0x77,
+                    SP = 0x2222,
                 },
-                StackPointer = 0x2222,
                 MemorySize = memory.Length,
             };
 
@@ -34,13 +34,13 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x99, state.Registers.L);
             Assert.Equal(0x77, state.Memory[0x2222]);
             Assert.Equal(0x42, state.Memory[0x2223]);
-            Assert.Equal(0x2222, state.StackPointer);
+            Assert.Equal(0x2222, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 18, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
     }
 }

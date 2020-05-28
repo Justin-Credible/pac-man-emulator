@@ -30,8 +30,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0007,
-                StackPointer = 0x271E,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0007,
+                    SP = 0x271E,
+                },
                 Flags = new ConditionFlags()
                 {
                     Parity = true,
@@ -43,7 +46,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             AssertFlagsSame(initialState, state);
 
-            Assert.Equal(0x2720, state.StackPointer);
+            Assert.Equal(0x2720, state.Registers.SP);
             Assert.Equal(0xFF, state.Memory[0x2720]);
             Assert.Equal(0x00, state.Memory[0x271F]);
             Assert.Equal(0x02, state.Memory[0x271E]);
@@ -51,7 +54,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(3, state.Iterations);
             Assert.Equal(4 + 11 + 4, state.Cycles);
-            Assert.Equal(0x0003, state.ProgramCounter);
+            Assert.Equal(0x0003, state.Registers.PC);
         }
 
         [Fact]
@@ -80,8 +83,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                ProgramCounter = 0x0007,
-                StackPointer = 0x271E,
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0007,
+                    SP = 0x271E,
+                },
                 Flags = new ConditionFlags()
                 {
                     Parity = false,
@@ -93,7 +99,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             AssertFlagsSame(initialState, state);
 
-            Assert.Equal(0x271E, state.StackPointer);
+            Assert.Equal(0x271E, state.Registers.SP);
             Assert.Equal(0xFF, state.Memory[0x2720]);
             Assert.Equal(0x00, state.Memory[0x271F]);
             Assert.Equal(0x02, state.Memory[0x271E]);
@@ -101,7 +107,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + 5 + (2*4), state.Cycles);
-            Assert.Equal(0x000A, state.ProgramCounter);
+            Assert.Equal(0x000A, state.Registers.PC);
         }
     }
 }

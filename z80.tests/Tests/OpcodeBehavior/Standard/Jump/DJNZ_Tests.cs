@@ -31,13 +31,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x0000, state.StackPointer);
+            Assert.Equal(0x0000, state.Registers.SP);
 
             AssertFlagsFalse(state);
 
             Assert.Equal(14, state.Iterations);
             Assert.Equal(4 + (4*6) + (13*3) + (10*3) + 8, state.Cycles);
-            Assert.Equal(0x0005, state.ProgramCounter);
+            Assert.Equal(0x0005, state.Registers.PC);
         }
     }
 }

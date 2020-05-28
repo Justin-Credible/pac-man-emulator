@@ -28,7 +28,10 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                StackPointer = 0x2720,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x2720
+                },
                 Flags = new ConditionFlags()
                 {
                     Carry = true,
@@ -40,7 +43,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             AssertFlagsSame(initialState, state);
 
-            Assert.Equal(0x271E, state.StackPointer);
+            Assert.Equal(0x271E, state.Registers.SP);
             Assert.Equal(0xFF, state.Memory[0x2720]);
             Assert.Equal(0x00, state.Memory[0x271F]);
             Assert.Equal(0x05, state.Memory[0x271E]);
@@ -48,7 +51,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (4*2) + 17, state.Cycles);
-            Assert.Equal(0x000A, state.ProgramCounter);
+            Assert.Equal(0x000A, state.Registers.PC);
         }
 
         [Fact]
@@ -75,7 +78,10 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                StackPointer = 0x2720,
+                Registers = new CPURegisters()
+                {
+                    SP = 0x2720
+                },
                 Flags = new ConditionFlags()
                 {
                     Carry = false,
@@ -87,7 +93,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             AssertFlagsSame(initialState, state);
 
-            Assert.Equal(0x2720, state.StackPointer);
+            Assert.Equal(0x2720, state.Registers.SP);
             Assert.Equal(0xFF, state.Memory[0x2720]);
             Assert.Equal(0xFF, state.Memory[0x271F]);
             Assert.Equal(0xFF, state.Memory[0x271E]);
@@ -95,7 +101,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (4*2) + 11, state.Cycles);
-            Assert.Equal(0x0005, state.ProgramCounter);
+            Assert.Equal(0x0005, state.Registers.PC);
         }
     }
 }

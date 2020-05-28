@@ -90,8 +90,6 @@ namespace JustinCredible.ZilogZ80
             Memory = new byte[Config.MemorySize];
             Registers = Config.Registers ?? new CPURegisters();
             Flags = Config.Flags ?? new ConditionFlags();
-            ProgramCounter = Config.ProgramCounter;
-            StackPointer = Config.StackPointer;
             InterruptsEnabled = Config.InterruptsEnabled;
             InterruptsEnabledPreviousValue = Config.InterruptsEnabledPreviousValue;
             InterruptMode = Config.InterruptMode;

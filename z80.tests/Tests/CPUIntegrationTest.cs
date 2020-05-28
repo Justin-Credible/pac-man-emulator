@@ -22,7 +22,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var memory = new byte[0x100 + originalBinary.Length];
             Array.Copy(originalBinary, 0, memory, 0x100, originalBinary.Length);
 
-            var cpuConfig = GetCPUConfig();
+            var cpuConfig = new CPUConfig();
 
             // Ensure we're running the CPU in a special diagnostics mode.
             // This allows for special behavior as if CP/M was running our
@@ -34,7 +34,7 @@ namespace JustinCredible.ZilogZ80.Tests
             cpuConfig.WriteableMemoryEnd = 0;
 
             // The ZEX program is assembled with it's first instruction at $100.
-            cpuConfig.ProgramCounter = 0x100;
+            cpuConfig.Registers.PC = 0x100;
 
             // Values as per: https://floooh.github.io/2016/07/12/z80-rust-ms1.html
             cpuConfig.MemorySize = 64 * 1024;

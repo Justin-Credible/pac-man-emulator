@@ -10,12 +10,6 @@ namespace JustinCredible.ZilogZ80.Tests
 {
     public class BaseTest
     {
-        protected CPUConfig GetCPUConfig()
-        {
-            // Uses the defaults from the "overridden" unit test CPUConfig.
-            return new CPUConfig();
-        }
-
         protected static byte[] AssembleSource(string source)
         {
             var tempFilePath = Path.GetTempFileName();
@@ -65,7 +59,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         protected CPUResults Execute(byte[] memory, CPUConfig cpuConfig = null)
         {
-            var cpu = new CPU(cpuConfig ?? GetCPUConfig());
+            var cpu = new CPU(cpuConfig ?? new CPUConfig());
 
             return Execute(memory, cpu);
         }

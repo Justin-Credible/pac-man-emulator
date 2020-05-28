@@ -49,7 +49,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Theory]
@@ -97,7 +97,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Theory]
@@ -145,7 +145,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Theory]
@@ -193,7 +193,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Theory]
@@ -241,7 +241,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Theory]
@@ -289,7 +289,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Fact]
@@ -329,7 +329,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Fact]
@@ -375,7 +375,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 7, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Fact]
@@ -421,7 +421,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 7, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
 
         [Fact]
@@ -467,7 +467,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 7, state.Cycles);
-            Assert.Equal(0x01, state.ProgramCounter);
+            Assert.Equal(0x01, state.Registers.PC);
         }
     }
 }
