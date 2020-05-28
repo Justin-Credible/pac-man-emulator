@@ -22,20 +22,6 @@ namespace JustinCredible.ZilogZ80
         /** The encapsulated condition/flags register (F) */
         public ConditionFlags Flags { get; set; }
 
-        /** Program Counter; 16-bits */
-        public UInt16 ProgramCounter
-        {
-            get { return Registers.PC; }
-            set { Registers.PC = value; }
-        }
-
-        /** Program Counter; 16-bits */
-        public UInt16 StackPointer
-        {
-            get { return Registers.SP; }
-            set { Registers.SP = value; }
-        }
-
         /** Indicates if interrupts are enabled or not: IFF1. */
         public bool InterruptsEnabled { get; set; }
 
@@ -52,8 +38,6 @@ namespace JustinCredible.ZilogZ80
 
         /** Fired on CALL 0x05 when EnableCPUDiagMode is true. */
         public event CPUDiagDebugEvent OnCPUDiagDebugEvent;
-
-        // TODO: Is device I/O handled differently on Z80?
 
         /**
          * Event handler for handling CPU writes to devices.
@@ -121,12 +105,12 @@ namespace JustinCredible.ZilogZ80
 
         public void PrintDebugSummary()
         {
-            var opcodeByte = ReadMemory(ProgramCounter);
-            var opcodeInstruction = Opcodes.GetOpcode(ProgramCounter, Memory).Instruction;
+            var opcodeByte = ReadMemory(Registers.PC);
+            var opcodeInstruction = Opcodes.GetOpcode(Registers.PC, Memory).Instruction;
 
             var opcode = String.Format("0x{0:X2} {1}", opcodeByte, opcodeInstruction);
-            var pc = String.Format("0x{0:X4}", ProgramCounter);
-            var sp = String.Format("0x{0:X4}", StackPointer);
+            var pc = String.Format("0x{0:X4}", Registers.PC);
+            var sp = String.Format("0x{0:X4}", Registers.SP);
             var regA = String.Format("0x{0:X2}", Registers.A);
             var regB = String.Format("0x{0:X2}", Registers.B);
             var regC = String.Format("0x{0:X2}", Registers.C);
@@ -160,7 +144,7 @@ namespace JustinCredible.ZilogZ80
             InterruptsEnabledPreviousValue = InterruptsEnabled;
             InterruptsEnabled = false;
 
-            ExecuteCALL(0x0066, ProgramCounter);
+            ExecuteCALL(0x0066, Registers.PC);
 
             // TODO: Guessing here for cycle count.
             return Opcodes.CALL.Cycles;
@@ -181,28 +165,28 @@ namespace JustinCredible.ZilogZ80
                     switch (dataBusValue)
                     {
                         case OpcodeBytes.RST_00:
-                            ExecuteCALL(0x000, ProgramCounter);
+                            ExecuteCALL(0x000, Registers.PC);
                             return Opcodes.RST_00.Cycles;
                         case OpcodeBytes.RST_08:
-                            ExecuteCALL(0x0008, ProgramCounter);
+                            ExecuteCALL(0x0008, Registers.PC);
                             return Opcodes.RST_08.Cycles;
                         case OpcodeBytes.RST_10:
-                            ExecuteCALL(0x0010, ProgramCounter);
+                            ExecuteCALL(0x0010, Registers.PC);
                             return Opcodes.RST_10.Cycles;
                         case OpcodeBytes.RST_18:
-                            ExecuteCALL(0x0018, ProgramCounter);
+                            ExecuteCALL(0x0018, Registers.PC);
                             return Opcodes.RST_18.Cycles;
                         case OpcodeBytes.RST_20:
-                            ExecuteCALL(0x0020, ProgramCounter);
+                            ExecuteCALL(0x0020, Registers.PC);
                             return Opcodes.RST_20.Cycles;
                         case OpcodeBytes.RST_28:
-                            ExecuteCALL(0x0028, ProgramCounter);
+                            ExecuteCALL(0x0028, Registers.PC);
                             return Opcodes.RST_28.Cycles;
                         case OpcodeBytes.RST_30:
-                            ExecuteCALL(0x0030, ProgramCounter);
+                            ExecuteCALL(0x0030, Registers.PC);
                             return Opcodes.RST_30.Cycles;
                         case OpcodeBytes.RST_38:
-                            ExecuteCALL(0x0038, ProgramCounter);
+                            ExecuteCALL(0x0038, Registers.PC);
                             return Opcodes.RST_38.Cycles;
                         default:
                             // TODO: Implement accepting arbitrary opcode instruction bytes as per:
@@ -216,7 +200,7 @@ namespace JustinCredible.ZilogZ80
 
                 case InterruptMode.One:
                 {
-                    ExecuteCALL(0x0038, ProgramCounter);
+                    ExecuteCALL(0x0038, Registers.PC);
                     return Opcodes.RST_38.Cycles; // TODO: Seems the same as a RST 38h... same cycle count as well?
                 }
 
@@ -224,7 +208,7 @@ namespace JustinCredible.ZilogZ80
                 {
                     // The MSB bits are from the interrupt vector while the LSB are from the data bus.
                     var address = (Registers.I & 0xFF00) | dataBusValue;
-                    ExecuteCALL((UInt16)address, ProgramCounter);
+                    ExecuteCALL((UInt16)address, Registers.PC);
 
                     // TODO: Guessing here for cycle count.
                     return Opcodes.CALL.Cycles;
@@ -243,11 +227,11 @@ namespace JustinCredible.ZilogZ80
                 throw new Exception("Program has finished execution; Reset() must be invoked before invoking Step() again.");
 
             // Fetch the next opcode to be executed, as indicated by the program counter.
-            var opcode = Opcodes.GetOpcode(ProgramCounter, Memory);
+            var opcode = Opcodes.GetOpcode(Registers.PC, Memory);
 
             // Sanity check: unimplemented opcode?
             if (opcode == null)
-                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", Memory[ProgramCounter], ProgramCounter));
+                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", Memory[Registers.PC], Registers.PC));
 
             // Indicates if we should increment the program counter after executing the instruction.
             // This is almost always the case, but there are a few cases where we don't want to.
@@ -268,14 +252,14 @@ namespace JustinCredible.ZilogZ80
             {
                 // Sanity check; if this fails an opcode definition or implementation is invalid.
                 if (opcode.AlternateCycles == null)
-                    throw new Exception(String.Format("The implementation for opcode 0x{0:X2} at memory address 0x{1:X4} indicated the alternate number of cycles should be used, but was not defined.", opcode, ProgramCounter));
+                    throw new Exception(String.Format("The implementation for opcode 0x{0:X2} at memory address 0x{1:X4} indicated the alternate number of cycles should be used, but was not defined.", opcode, Registers.PC));
 
                 elapsedCycles = opcode.AlternateCycles.Value;
             }
 
             // Increment the program counter.
             if (incrementProgramCounter)
-               ProgramCounter += (UInt16)opcode.Size;
+               Registers.PC += (UInt16)opcode.Size;
 
             return elapsedCycles;
         }
@@ -426,7 +410,7 @@ namespace JustinCredible.ZilogZ80
 
             if (error)
             {
-                var programCounterFormatted = String.Format("0x{0:X4}", ProgramCounter);
+                var programCounterFormatted = String.Format("0x{0:X4}", Registers.PC);
                 var addressFormatted = String.Format("0x{0:X4}", address);
                 var startAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryStart);
                 var endAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryEnd);
@@ -484,7 +468,7 @@ namespace JustinCredible.ZilogZ80
 
             if (error)
             {
-                var programCounterFormatted = String.Format("0x{0:X4}", ProgramCounter);
+                var programCounterFormatted = String.Format("0x{0:X4}", Registers.PC);
                 var addressFormatted = String.Format("0x{0:X4}", address);
                 var startAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryStart);
                 var endAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryEnd);

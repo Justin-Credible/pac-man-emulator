@@ -274,7 +274,7 @@ namespace JustinCredible.ZilogZ80
                     /* (NN) <- BC */
                     case OpcodeBytes.LD_MNN_BC:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
+                        var address = ReadMemory16(Registers.PC + 2);
                         WriteMemory16(address, Registers.BC);
                         break;
                     }
@@ -282,7 +282,7 @@ namespace JustinCredible.ZilogZ80
                     /* (NN) <- DE */
                     case OpcodeBytes.LD_MNN_DE:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
+                        var address = ReadMemory16(Registers.PC + 2);
                         WriteMemory16(address, Registers.DE);
                         break;
                     }
@@ -290,7 +290,7 @@ namespace JustinCredible.ZilogZ80
                     /* (NN) <- HL */
                     case OpcodeBytes.LD_MNN_HL_2:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
+                        var address = ReadMemory16(Registers.PC + 2);
                         WriteMemory16(address, Registers.HL);
                         break;
                     }
@@ -298,15 +298,15 @@ namespace JustinCredible.ZilogZ80
                     /* (NN) <- SP */
                     case OpcodeBytes.LD_MNN_SP:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
-                        WriteMemory16(address, StackPointer);
+                        var address = ReadMemory16(Registers.PC + 2);
+                        WriteMemory16(address, Registers.SP);
                         break;
                     }
 
                     /* BC <- (NN) */
                     case OpcodeBytes.LD_BC_MNN:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
+                        var address = ReadMemory16(Registers.PC + 2);
                         Registers.BC = ReadMemory16(address);
                         break;
                     }
@@ -314,7 +314,7 @@ namespace JustinCredible.ZilogZ80
                     /* DE <- (NN) */
                     case OpcodeBytes.LD_DE_MNN:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
+                        var address = ReadMemory16(Registers.PC + 2);
                         Registers.DE = ReadMemory16(address);
                         break;
                     }
@@ -322,7 +322,7 @@ namespace JustinCredible.ZilogZ80
                     /* HL <- (NN) */
                     case OpcodeBytes.LD_HL_MNN_2:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
+                        var address = ReadMemory16(Registers.PC + 2);
                         Registers.HL = ReadMemory16(address);
                         break;
                     }
@@ -330,8 +330,8 @@ namespace JustinCredible.ZilogZ80
                     /* SP <- (NN) */
                     case OpcodeBytes.LD_SP_MNN:
                     {
-                        var address = ReadMemory16(ProgramCounter + 2);
-                        StackPointer = ReadMemory16(address);
+                        var address = ReadMemory16(Registers.PC + 2);
+                        Registers.SP = ReadMemory16(address);
                         break;
                     }
 
@@ -442,7 +442,7 @@ namespace JustinCredible.ZilogZ80
                         Execute_ADC_HL(Registers.HL);
                         break;
                     case OpcodeBytes.ADC_HL_SP:
-                        Execute_ADC_HL(StackPointer);
+                        Execute_ADC_HL(Registers.SP);
                         break;
 
                 #endregion
@@ -459,7 +459,7 @@ namespace JustinCredible.ZilogZ80
                         Execute_SBC_HL(Registers.HL);
                         break;
                     case OpcodeBytes.SBC_HL_SP:
-                        Execute_SBC_HL(StackPointer);
+                        Execute_SBC_HL(Registers.SP);
                         break;
 
                 #endregion
@@ -494,7 +494,7 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 default:
-                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
+                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }
         }
 

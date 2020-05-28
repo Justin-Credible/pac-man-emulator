@@ -89,7 +89,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 if (iterations > 100)
                     throw new Exception("More than 100 iterations occurred.");
 
-                pcAddresses.Add(cpu.ProgramCounter);
+                pcAddresses.Add(cpu.Registers.PC);
 
                 cycles += cpu.Step();
 
@@ -106,8 +106,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 Memory = cpu.Memory,
                 Registers = cpu.Registers,
                 Flags = cpu.Flags,
-                ProgramCounter = cpu.ProgramCounter,
-                StackPointer = cpu.StackPointer,
+                ProgramCounter = cpu.Registers.PC,
+                StackPointer = cpu.Registers.SP,
                 InterruptsEnabled = cpu.InterruptsEnabled,
                 InterruptsEnabledPreviousValue = cpu.InterruptsEnabledPreviousValue,
                 InterruptMode = cpu.InterruptMode,

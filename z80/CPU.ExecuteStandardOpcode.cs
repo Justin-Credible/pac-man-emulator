@@ -679,7 +679,7 @@ namespace JustinCredible.ZilogZ80
                             Registers.HL++;
                             break;
                         case OpcodeBytes.INC_SP:
-                            StackPointer++;
+                            Registers.SP++;
                             break;
 
                     #endregion
@@ -696,7 +696,7 @@ namespace JustinCredible.ZilogZ80
                             Registers.HL--;
                             break;
                         case OpcodeBytes.DEC_SP:
-                            StackPointer--;
+                            Registers.SP--;
                             break;
 
                     #endregion
@@ -704,24 +704,24 @@ namespace JustinCredible.ZilogZ80
                     #region PUSH rr - Push data onto the stack
 
                         case OpcodeBytes.PUSH_BC:
-                            WriteMemory(StackPointer - 1, Registers.B);
-                            WriteMemory(StackPointer - 2, Registers.C);
-                            StackPointer = (UInt16)(StackPointer - 2);
+                            WriteMemory(Registers.SP - 1, Registers.B);
+                            WriteMemory(Registers.SP - 2, Registers.C);
+                            Registers.SP = (UInt16)(Registers.SP - 2);
                             break;
                         case OpcodeBytes.PUSH_DE:
-                            WriteMemory(StackPointer - 1, Registers.D);
-                            WriteMemory(StackPointer - 2, Registers.E);
-                            StackPointer = (UInt16)(StackPointer - 2);
+                            WriteMemory(Registers.SP - 1, Registers.D);
+                            WriteMemory(Registers.SP - 2, Registers.E);
+                            Registers.SP = (UInt16)(Registers.SP - 2);
                             break;
                         case OpcodeBytes.PUSH_HL:
-                            WriteMemory(StackPointer - 1, Registers.H);
-                            WriteMemory(StackPointer - 2, Registers.L);
-                            StackPointer = (UInt16)(StackPointer - 2);
+                            WriteMemory(Registers.SP - 1, Registers.H);
+                            WriteMemory(Registers.SP - 2, Registers.L);
+                            Registers.SP = (UInt16)(Registers.SP - 2);
                             break;
                         case OpcodeBytes.PUSH_AF:
-                            WriteMemory(StackPointer - 1, Registers.A);
-                            WriteMemory(StackPointer - 2, Flags.ToByte());
-                            StackPointer = (UInt16)(StackPointer - 2);
+                            WriteMemory(Registers.SP - 1, Registers.A);
+                            WriteMemory(Registers.SP - 2, Flags.ToByte());
+                            Registers.SP = (UInt16)(Registers.SP - 2);
                             break;
 
                     #endregion
@@ -729,24 +729,24 @@ namespace JustinCredible.ZilogZ80
                     #region POP rr - Pop data off of the stack
 
                         case OpcodeBytes.POP_BC:
-                            Registers.B = ReadMemory(StackPointer + 1);
-                            Registers.C = ReadMemory(StackPointer);
-                            StackPointer = (UInt16)(StackPointer + 2);
+                            Registers.B = ReadMemory(Registers.SP + 1);
+                            Registers.C = ReadMemory(Registers.SP);
+                            Registers.SP = (UInt16)(Registers.SP + 2);
                             break;
                         case OpcodeBytes.POP_DE:
-                            Registers.D = ReadMemory(StackPointer + 1);
-                            Registers.E = ReadMemory(StackPointer);
-                            StackPointer = (UInt16)(StackPointer + 2);
+                            Registers.D = ReadMemory(Registers.SP + 1);
+                            Registers.E = ReadMemory(Registers.SP);
+                            Registers.SP = (UInt16)(Registers.SP + 2);
                             break;
                         case OpcodeBytes.POP_HL:
-                            Registers.H = ReadMemory(StackPointer + 1);
-                            Registers.L = ReadMemory(StackPointer);
-                            StackPointer = (UInt16)(StackPointer + 2);
+                            Registers.H = ReadMemory(Registers.SP + 1);
+                            Registers.L = ReadMemory(Registers.SP);
+                            Registers.SP = (UInt16)(Registers.SP + 2);
                             break;
                         case OpcodeBytes.POP_AF:
-                            Registers.A = ReadMemory(StackPointer + 1);
-                            Flags.SetFromByte(ReadMemory(StackPointer));
-                            StackPointer = (UInt16)(StackPointer + 2);
+                            Registers.A = ReadMemory(Registers.SP + 1);
+                            Flags.SetFromByte(ReadMemory(Registers.SP));
+                            Registers.SP = (UInt16)(Registers.SP + 2);
                             break;
 
                     #endregion
@@ -763,14 +763,14 @@ namespace JustinCredible.ZilogZ80
                             ExecuteDAD(Registers.HL);
                             break;
                         case OpcodeBytes.ADD_HL_SP:
-                            ExecuteDAD(StackPointer);
+                            ExecuteDAD(Registers.SP);
                             break;
 
                     #endregion
 
                     // Load SP from H and L
                     case OpcodeBytes.LD_SP_HL:
-                        StackPointer = Registers.HL;
+                        Registers.SP = Registers.HL;
                         break;
 
                     // Exchange stack
@@ -779,10 +779,10 @@ namespace JustinCredible.ZilogZ80
                     {
                         var oldL = Registers.L;
                         var oldH = Registers.H;
-                        Registers.L = ReadMemory(StackPointer);
-                        WriteMemory(StackPointer, oldL);
-                        Registers.H = ReadMemory(StackPointer+1);
-                        WriteMemory(StackPointer+1, oldH);
+                        Registers.L = ReadMemory(Registers.SP);
+                        WriteMemory(Registers.SP, oldL);
+                        Registers.H = ReadMemory(Registers.SP+1);
+                        WriteMemory(Registers.SP+1, oldH);
                         break;
                     }
 
@@ -806,28 +806,28 @@ namespace JustinCredible.ZilogZ80
                     #region LD r, n - Load immediate data
 
                         case OpcodeBytes.LD_B_N:
-                            Registers.B = ReadMemory(ProgramCounter + 1);
+                            Registers.B = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_C_N:
-                            Registers.C = ReadMemory(ProgramCounter + 1);
+                            Registers.C = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_D_N:
-                            Registers.D = ReadMemory(ProgramCounter + 1);
+                            Registers.D = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_E_N:
-                            Registers.E = ReadMemory(ProgramCounter + 1);
+                            Registers.E = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_H_N:
-                            Registers.H = ReadMemory(ProgramCounter + 1);
+                            Registers.H = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_L_N:
-                            Registers.L = ReadMemory(ProgramCounter + 1);
+                            Registers.L = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_MHL_N:
-                            WriteMemory(Registers.HL, ReadMemory(ProgramCounter + 1));
+                            WriteMemory(Registers.HL, ReadMemory(Registers.PC + 1));
                             break;
                         case OpcodeBytes.LD_A_N:
-                            Registers.A = ReadMemory(ProgramCounter + 1);
+                            Registers.A = ReadMemory(Registers.PC + 1);
                             break;
 
                     #endregion
@@ -835,23 +835,23 @@ namespace JustinCredible.ZilogZ80
                     #region LD rr, nn - Load register pair immediate
 
                         case OpcodeBytes.LD_BC_NN:
-                            Registers.B = ReadMemory(ProgramCounter + 2);
-                            Registers.C = ReadMemory(ProgramCounter + 1);
+                            Registers.B = ReadMemory(Registers.PC + 2);
+                            Registers.C = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_DE_NN:
-                            Registers.D = ReadMemory(ProgramCounter + 2);
-                            Registers.E = ReadMemory(ProgramCounter + 1);
+                            Registers.D = ReadMemory(Registers.PC + 2);
+                            Registers.E = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_HL_NN:
-                            Registers.H = ReadMemory(ProgramCounter + 2);
-                            Registers.L = ReadMemory(ProgramCounter + 1);
+                            Registers.H = ReadMemory(Registers.PC + 2);
+                            Registers.L = ReadMemory(Registers.PC + 1);
                             break;
                         case OpcodeBytes.LD_SP_NN:
                         {
-                            var upper = ReadMemory(ProgramCounter + 2) << 8;
-                            var lower = ReadMemory(ProgramCounter + 1);
+                            var upper = ReadMemory(Registers.PC + 2) << 8;
+                            var lower = ReadMemory(Registers.PC + 1);
                             var address = upper | lower;
-                            StackPointer = (UInt16)address;
+                            Registers.SP = (UInt16)address;
                             break;
                         }
 
@@ -860,52 +860,52 @@ namespace JustinCredible.ZilogZ80
                     // Add immediate to accumulator
                     // A <- A + byte
                     case OpcodeBytes.ADD_A_N:
-                        ExecuteADD(ReadMemory(ProgramCounter+1));
+                        ExecuteADD(ReadMemory(Registers.PC+1));
                         break;
 
                     // Add immediate to accumulator with carry
                     // A <- A + data + CY
                     case OpcodeBytes.ADC_A_N:
-                        ExecuteADD(ReadMemory(ProgramCounter+1), true);
+                        ExecuteADD(ReadMemory(Registers.PC+1), true);
                         break;
 
                     // Subtract immediate from accumulator
                     // A <- A - data
                     case OpcodeBytes.SUB_N:
-                        ExecuteSUB(ReadMemory(ProgramCounter+1));
+                        ExecuteSUB(ReadMemory(Registers.PC+1));
                         break;
 
                     // Subtract immediate from accumulator with borrow
                     // A <- A - data - CY
                     case OpcodeBytes.SBC_A_N:
-                        ExecuteSUB(ReadMemory(ProgramCounter+1), true);
+                        ExecuteSUB(ReadMemory(Registers.PC+1), true);
                         break;
 
                     // Logical AND immediate with accumulator
                     // A <- A & data
                     case OpcodeBytes.AND_N:
-                        Registers.A = (byte)(Registers.A & ReadMemory(ProgramCounter+1));
+                        Registers.A = (byte)(Registers.A & ReadMemory(Registers.PC+1));
                         SetFlags(carry: false, result: Registers.A);
                         break;
 
                     // XOR immediate with accumulator
                     // A <- A ^ data
                     case OpcodeBytes.XOR_N:
-                        Registers.A = (byte)(Registers.A ^ ReadMemory(ProgramCounter+1));
+                        Registers.A = (byte)(Registers.A ^ ReadMemory(Registers.PC+1));
                         SetFlags(carry: false, result: Registers.A);
                         break;
 
                     // Logical OR immediate with accumulator
                     // A <- A | data
                     case OpcodeBytes.OR_N:
-                        Registers.A = (byte)(Registers.A | ReadMemory(ProgramCounter+1));
+                        Registers.A = (byte)(Registers.A | ReadMemory(Registers.PC+1));
                         SetFlags(carry: false, result: Registers.A);
                         break;
 
                     // Compare immediate with accumulator
                     // A - data
                     case OpcodeBytes.CP_N:
-                        ExecuteSUB(ReadMemory(ProgramCounter+1), false, false);
+                        ExecuteSUB(ReadMemory(Registers.PC+1), false, false);
                         break;
 
                 #endregion
@@ -915,8 +915,8 @@ namespace JustinCredible.ZilogZ80
                     // Store accumulator direct
                     case OpcodeBytes.LD_MNN_A:
                     {
-                        var upper = ReadMemory(ProgramCounter + 2) << 8;
-                        var lower = ReadMemory(ProgramCounter + 1);
+                        var upper = ReadMemory(Registers.PC + 2) << 8;
+                        var lower = ReadMemory(Registers.PC + 1);
                         var address = upper | lower;
                         WriteMemory(address, Registers.A);
                         break;
@@ -925,8 +925,8 @@ namespace JustinCredible.ZilogZ80
                     // Load accumulator direct
                     case OpcodeBytes.LD_A_MNN:
                     {
-                        var upper = ReadMemory(ProgramCounter + 2) << 8;
-                        var lower = ReadMemory(ProgramCounter + 1);
+                        var upper = ReadMemory(Registers.PC + 2) << 8;
+                        var lower = ReadMemory(Registers.PC + 1);
                         var address = upper | lower;
                         Registers.A = ReadMemory(address);
                         break;
@@ -935,8 +935,8 @@ namespace JustinCredible.ZilogZ80
                     // Store H and L direct
                     case OpcodeBytes.LD_MNN_HL:
                     {
-                        var upper = ReadMemory(ProgramCounter + 2) << 8;
-                        var lower = ReadMemory(ProgramCounter + 1);
+                        var upper = ReadMemory(Registers.PC + 2) << 8;
+                        var lower = ReadMemory(Registers.PC + 1);
                         var address = upper | lower;
                         WriteMemory(address, Registers.L);
                         WriteMemory(address + 1, Registers.H);
@@ -946,8 +946,8 @@ namespace JustinCredible.ZilogZ80
                     // Load H and L direct
                     case OpcodeBytes.LD_HL_MNN:
                     {
-                        var upper = ReadMemory(ProgramCounter + 2) << 8;
-                        var lower = ReadMemory(ProgramCounter + 1);
+                        var upper = ReadMemory(Registers.PC + 2) << 8;
+                        var lower = ReadMemory(Registers.PC + 1);
                         var address = upper | lower;
                         Registers.L = ReadMemory(address);
                         Registers.H = ReadMemory(address + 1);
@@ -1067,7 +1067,7 @@ namespace JustinCredible.ZilogZ80
                     // Relative jump
                     case OpcodeBytes.JR:
                     {
-                        ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                        ExecuteRelativeJump((sbyte)ReadMemory(Registers.PC + 1));
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1077,7 +1077,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Zero)
                         {
-                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            ExecuteRelativeJump((sbyte)ReadMemory(Registers.PC + 1));
                             incrementProgramCounter = false;
                         }
                         else
@@ -1091,7 +1091,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Zero)
                         {
-                            ExecuteRelativeJump((sbyte)(sbyte)ReadMemory(ProgramCounter + 1));
+                            ExecuteRelativeJump((sbyte)(sbyte)ReadMemory(Registers.PC + 1));
                             incrementProgramCounter = false;
                         }
                         else
@@ -1105,7 +1105,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Carry)
                         {
-                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            ExecuteRelativeJump((sbyte)ReadMemory(Registers.PC + 1));
                             incrementProgramCounter = false;
                         }
                         else
@@ -1119,7 +1119,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Carry)
                         {
-                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            ExecuteRelativeJump((sbyte)ReadMemory(Registers.PC + 1));
                             incrementProgramCounter = false;
                         }
                         else
@@ -1135,7 +1135,7 @@ namespace JustinCredible.ZilogZ80
 
                         if (Registers.B != 0)
                         {
-                            ExecuteRelativeJump((sbyte)ReadMemory(ProgramCounter + 1));
+                            ExecuteRelativeJump((sbyte)ReadMemory(Registers.PC + 1));
                             incrementProgramCounter = false;
                         }
                         else
@@ -1405,7 +1405,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_00:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0000, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1413,7 +1413,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_08:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0008, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1421,7 +1421,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_10:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0010, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1429,7 +1429,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_18:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0018, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1437,7 +1437,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_20:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0020, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1445,7 +1445,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_28:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0028, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1453,7 +1453,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_30:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0030, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1461,7 +1461,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RST_38:
                     {
-                        var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+                        var returnAddress = (UInt16)(Registers.PC + opcode.Size);
                         ExecuteCALL(0x0038, returnAddress);
                         incrementProgramCounter = false;
                         break;
@@ -1489,18 +1489,18 @@ namespace JustinCredible.ZilogZ80
 
                     // Output accumulator to given device number
                     case OpcodeBytes.OUT_MN_A:
-                        OnDeviceWrite?.Invoke(ReadMemory(ProgramCounter + 1), Registers.A);
+                        OnDeviceWrite?.Invoke(ReadMemory(Registers.PC + 1), Registers.A);
                         break;
 
                     // Retrieve input from given device number and populate accumulator
                     case OpcodeBytes.IN_A_MN:
-                        Registers.A = OnDeviceRead?.Invoke(ReadMemory(ProgramCounter + 1)) ?? 0;
+                        Registers.A = OnDeviceRead?.Invoke(ReadMemory(Registers.PC + 1)) ?? 0;
                         break;
 
                 #endregion
 
                 default:
-                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, ProgramCounter));
+                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }
         }
 
@@ -1558,8 +1558,8 @@ namespace JustinCredible.ZilogZ80
 
         private void ExecuteJump()
         {
-            var upper = ReadMemory(ProgramCounter + 2) << 8;
-            var lower = ReadMemory(ProgramCounter + 1);
+            var upper = ReadMemory(Registers.PC + 2) << 8;
+            var lower = ReadMemory(Registers.PC + 1);
             var address = (UInt16)(upper | lower);
 
             ExecuteJump(address);
@@ -1580,7 +1580,7 @@ namespace JustinCredible.ZilogZ80
 
             #endregion
 
-            ProgramCounter = address;
+            Registers.PC = address;
         }
 
         private void ExecuteRelativeJump(sbyte relativeAddress)
@@ -1588,7 +1588,7 @@ namespace JustinCredible.ZilogZ80
             // Calculate the address to jump to using the given relative address which
             // is signed.
             int offset = (int)unchecked(relativeAddress);
-            var address = ProgramCounter + offset;
+            var address = Registers.PC + offset;
 
             // The assembler adds the size of the opcode to the offset address during
             // assembly, attempting to account for the fact that normal hardware would
@@ -1603,10 +1603,10 @@ namespace JustinCredible.ZilogZ80
 
         private void ExecuteCALL(Opcode opcode)
         {
-            var returnAddress = (UInt16)(ProgramCounter + opcode.Size);
+            var returnAddress = (UInt16)(Registers.PC + opcode.Size);
 
-            var upper = ReadMemory(ProgramCounter + 2) << 8;
-            var lower = ReadMemory(ProgramCounter + 1);
+            var upper = ReadMemory(Registers.PC + 2) << 8;
+            var lower = ReadMemory(Registers.PC + 1);
             var address = (UInt16)(upper | lower);
 
             ExecuteCALL(address, returnAddress);
@@ -1619,10 +1619,10 @@ namespace JustinCredible.ZilogZ80
             var returnAddressLower = (byte)(returnAddress & 0x00FF);
 
             // Push the return address onto the stack.
-            WriteMemory(StackPointer - 1, returnAddressUpper);
-            WriteMemory(StackPointer - 2, returnAddressLower);
-            StackPointer--;
-            StackPointer--;
+            WriteMemory(Registers.SP - 1, returnAddressUpper);
+            WriteMemory(Registers.SP - 2, returnAddressLower);
+            Registers.SP--;
+            Registers.SP--;
 
             #region CPU Diagnostics Debugging Mode
 
@@ -1646,19 +1646,19 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
             // Jump to the given address.
-            ProgramCounter = address;
+            Registers.PC = address;
         }
 
         private void ExecuteRET()
         {
             // Pop the return address off of the stack.
-            var returnAddressUpper = ReadMemory(StackPointer + 1) << 8;
-            var returnAddressLower = ReadMemory(StackPointer);
+            var returnAddressUpper = ReadMemory(Registers.SP + 1) << 8;
+            var returnAddressLower = ReadMemory(Registers.SP);
             var returnAddress = (UInt16)(returnAddressUpper | returnAddressLower);
-            StackPointer++;
-            StackPointer++;
+            Registers.SP++;
+            Registers.SP++;
 
-            ProgramCounter = returnAddress;
+            Registers.PC = returnAddress;
         }
 
         private void ExecuteLD(Register dest, Register source)
