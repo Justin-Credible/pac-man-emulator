@@ -16,35 +16,25 @@ namespace JustinCredible.ZilogZ80
         /** The addressable memory; can include RAM and ROM. See CPUConfig. */
         public byte[] Memory { get; set; }
 
-        /** The primary CPU registers (A B C D E H L) */
+        /** The CPU registers (A B C D E H L I R IX IY PC SP) */
         public CPURegisters Registers { get; set; }
-
-        /** Alternative register set (A' B' C' D' E' H' L') */
-        public CPURegisters ShadowRegisters { get; set; }
 
         /** The encapsulated condition/flags register (F) */
         public ConditionFlags Flags { get; set; }
 
-        /** Alternative flag register (F') */
-        public ConditionFlags ShadowFlags { get; set; }
-
-        /** The interrupt vector register (I) */
-        public UInt16 InterruptVector { get; set; } // TODO
-
-        /** The memory refresh register (R) */
-        public UInt16 MemoryRefresh { get; set; } // TODO
-
-        /** The index register (IX) */
-        public UInt16 IndexIX { get; set; } // TODO
-
-        /** The index register (IY) */
-        public UInt16 IndexIY { get; set; } // TODO
+        /** Program Counter; 16-bits */
+        public UInt16 ProgramCounter
+        {
+            get { return Registers.PC; }
+            set { Registers.PC = value; }
+        }
 
         /** Program Counter; 16-bits */
-        public UInt16 ProgramCounter { get; set; }
-
-        /** Stack Pointer; 16-bits */
-        public UInt16 StackPointer { get; set; }
+        public UInt16 StackPointer
+        {
+            get { return Registers.SP; }
+            set { Registers.SP = value; }
+        }
 
         /** Indicates if interrupts are enabled or not: IFF1. */
         public bool InterruptsEnabled { get; set; }
@@ -99,10 +89,7 @@ namespace JustinCredible.ZilogZ80
             // Re-initialize the CPU based on configuration.
             Memory = new byte[Config.MemorySize];
             Registers = Config.Registers ?? new CPURegisters();
-            ShadowRegisters = Config.ShadowRegisters ?? new CPURegisters();
             Flags = Config.Flags ?? new ConditionFlags();
-            ShadowFlags = Config.ShadowFlags ?? new ConditionFlags();
-            InterruptVector = Config.InterruptVector;
             ProgramCounter = Config.ProgramCounter;
             StackPointer = Config.StackPointer;
             InterruptsEnabled = Config.InterruptsEnabled;
@@ -238,7 +225,7 @@ namespace JustinCredible.ZilogZ80
                 case InterruptMode.Two:
                 {
                     // The MSB bits are from the interrupt vector while the LSB are from the data bus.
-                    var address = (InterruptVector & 0xFF00) | dataBusValue;
+                    var address = (Registers.I & 0xFF00) | dataBusValue;
                     ExecuteCALL((UInt16)address, ProgramCounter);
 
                     // TODO: Guessing here for cycle count.

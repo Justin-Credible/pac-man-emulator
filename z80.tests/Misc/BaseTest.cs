@@ -111,12 +111,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 ProgramCounterAddresses = pcAddresses,
                 Memory = cpu.Memory,
                 Registers = cpu.Registers,
-                ShadowRegisters = cpu.ShadowRegisters,
                 Flags = cpu.Flags,
-                ShadowFlags = cpu.ShadowFlags,
-                MemoryRefresh = cpu.MemoryRefresh, // TODO
-                IndexIX = cpu.IndexIX, // TODO
-                IndexIY = cpu.IndexIY, // TODO
                 ProgramCounter = cpu.ProgramCounter,
                 StackPointer = cpu.StackPointer,
                 InterruptsEnabled = cpu.InterruptsEnabled,

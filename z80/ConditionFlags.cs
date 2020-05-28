@@ -2,7 +2,7 @@
 namespace JustinCredible.ZilogZ80
 {
     /**
-     * Represents the CPU flag register with named properties to access each bit.
+     * Represents the CPU flag register (F) with named properties to access each bit.
      *
      * Bit layout:
      * 7 6 5 4 3 2 1 0
@@ -30,6 +30,7 @@ namespace JustinCredible.ZilogZ80
 
         /**
          * P (Parity/Overflow) is set if the number of 1 bits in the result is even.
+         * TODO: Currently this only handles parity; needs to be changed to support overflow.
          */
         public bool Parity;
 
@@ -43,6 +44,29 @@ namespace JustinCredible.ZilogZ80
          * C (carry) set to 1 when the instruction resulted in a carry out or borrow into the high order bit.
          */
         public bool Carry;
+
+        /**
+         * The shadow/alternate value of the F register known as F'. Used by the swap method.
+         */
+        public byte Shadow;
+
+        public ConditionFlags(byte? registerValue = null)
+        {
+            if (registerValue.HasValue)
+                SetFromByte(registerValue.Value);
+        }
+
+        public void SwapShadowRegister()
+        {
+            // Save off shadow register values.
+            byte shadowF = Shadow;
+
+            // Copy regular register values to shadow registers.
+            Shadow = ToByte();
+
+            // Copy shadow register values to regular registers.
+            SetFromByte(shadowF);
+        }
 
         public byte ToByte()
         {

@@ -16,12 +16,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         public byte[] Memory { get; set; }
         public CPURegisters Registers { get; set; }
-        public CPURegisters ShadowRegisters { get; set; }
         public ConditionFlags Flags { get; set; }
-        public ConditionFlags ShadowFlags { get; set; }
-        public UInt16 MemoryRefresh { get; set; } // TODO
-        public UInt16 IndexIX { get; set; } // TODO
-        public UInt16 IndexIY { get; set; } // TODO
         public UInt16 ProgramCounter { get; set; }
         public UInt16 StackPointer { get; set; }
         public bool InterruptsEnabled { get; set; }

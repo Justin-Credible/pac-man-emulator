@@ -1,9 +1,12 @@
 
 namespace JustinCredible.ZilogZ80
 {
+    /**
+     * The 8-bit registers.
+     */
     public enum Register
     {
-        A, // Accumulator
+        A,
         B,
         C,
         D,

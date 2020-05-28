@@ -138,7 +138,10 @@ namespace JustinCredible.ZilogZ80.Tests
                 InterruptMode = InterruptMode.Two,
                 ProgramCounter = 0x1234,
                 StackPointer = 0x3FFF,
-                InterruptVector = interruptVector,
+                Registers = new CPURegisters()
+                {
+                    I = interruptVector,
+                },
             };
 
             var cpu = new CPU(initialState);

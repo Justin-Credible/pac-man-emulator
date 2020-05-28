@@ -24,6 +24,14 @@ namespace JustinCredible.ZilogZ80.Tests
                     E = 0x55,
                     H = 0x66,
                     L = 0x77,
+
+                    Shadow_A = 0x19,
+                    Shadow_B = 0x29,
+                    Shadow_C = 0x39,
+                    Shadow_D = 0x49,
+                    Shadow_E = 0x59,
+                    Shadow_H = 0x69,
+                    Shadow_L = 0x79,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -33,25 +41,16 @@ namespace JustinCredible.ZilogZ80.Tests
                     Parity = false,
                     Subtract = true,
                     Carry = false,
-                },
-                ShadowRegisters = new CPURegisters()
-                {
-                    A = 0x19,
-                    B = 0x29,
-                    C = 0x39,
-                    D = 0x49,
-                    E = 0x59,
-                    H = 0x69,
-                    L = 0x79,
-                },
-                ShadowFlags = new ConditionFlags()
-                {
-                    Sign = false,
-                    Zero = true,
-                    AuxCarry = false,
-                    Parity = true,
-                    Subtract = false,
-                    Carry = true,
+
+                    Shadow = (new ConditionFlags()
+                    {
+                        Sign = false,
+                        Zero = true,
+                        AuxCarry = false,
+                        Parity = true,
+                        Subtract = false,
+                        Carry = true,
+                    }).ToByte(),
                 },
             };
 
@@ -65,13 +64,13 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x66, state.Registers.H);
             Assert.Equal(0x77, state.Registers.L);
 
-            Assert.Equal(0x11, state.ShadowRegisters.A);
-            Assert.Equal(0x29, state.ShadowRegisters.B);
-            Assert.Equal(0x39, state.ShadowRegisters.C);
-            Assert.Equal(0x49, state.ShadowRegisters.D);
-            Assert.Equal(0x59, state.ShadowRegisters.E);
-            Assert.Equal(0x69, state.ShadowRegisters.H);
-            Assert.Equal(0x79, state.ShadowRegisters.L);
+            Assert.Equal(0x11, state.Registers.Shadow_A);
+            Assert.Equal(0x29, state.Registers.Shadow_B);
+            Assert.Equal(0x39, state.Registers.Shadow_C);
+            Assert.Equal(0x49, state.Registers.Shadow_D);
+            Assert.Equal(0x59, state.Registers.Shadow_E);
+            Assert.Equal(0x69, state.Registers.Shadow_H);
+            Assert.Equal(0x79, state.Registers.Shadow_L);
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
@@ -80,12 +79,14 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 
-            Assert.True(state.ShadowFlags.Sign);
-            Assert.False(state.ShadowFlags.Zero);
-            Assert.True(state.ShadowFlags.AuxCarry);
-            Assert.False(state.ShadowFlags.Parity);
-            Assert.True(state.ShadowFlags.Subtract);
-            Assert.False(state.ShadowFlags.Carry);
+            var shadowFlags = new ConditionFlags(state.Flags.Shadow);
+
+            Assert.True(shadowFlags.Sign);
+            Assert.False(shadowFlags.Zero);
+            Assert.True(shadowFlags.AuxCarry);
+            Assert.False(shadowFlags.Parity);
+            Assert.True(shadowFlags.Subtract);
+            Assert.False(shadowFlags.Carry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);

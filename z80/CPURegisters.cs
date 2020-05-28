@@ -11,15 +11,80 @@ namespace JustinCredible.ZilogZ80
      */
     public class CPURegisters
     {
-        /** Accumulator */
-        public byte A;
-
+        // Main Registers
+        public byte A; // Accumulator
         public byte B;
         public byte C;
         public byte D;
         public byte E;
         public byte H;
         public byte L;
+
+        // Alternate/Shadow Registers
+        public byte Shadow_A;
+        public byte Shadow_B;
+        public byte Shadow_C;
+        public byte Shadow_D;
+        public byte Shadow_E;
+        public byte Shadow_H;
+        public byte Shadow_L;
+
+        /** Interrupt Vector */
+        public UInt16 I { get; set; } // TODO
+
+        /** DRAM refresh counter */
+        public UInt16 R { get; set; } // TODO
+
+        /** Index/Base Register */
+        public UInt16 IX { get; set; } // TODO
+
+        /** Index/Base Register */
+        public UInt16 IY { get; set; } // TODO
+
+        /** Program Counter */
+        public UInt16 PC { get; set; }
+
+        /** Stack Pointer */
+        public UInt16 SP { get; set; }
+
+        public void SwapShadowRegisterA()
+        {
+            // Save off shadow register values.
+            byte shadowA = Shadow_A;
+
+            // Copy regular register values to shadow registers.
+            Shadow_A = A;
+
+            // Copy shadow register values to regular registers.
+            A = shadowA;
+        }
+
+        public void SwapShadowRegistersBCDEHL()
+        {
+            // Save off shadow register values.
+            byte shadowB = Shadow_B;
+            byte shadowC = Shadow_C;
+            byte shadowD = Shadow_D;
+            byte shadowE = Shadow_E;
+            byte shadowH = Shadow_H;
+            byte shadowL = Shadow_L;
+
+            // Copy regular register values to shadow registers.
+            Shadow_B = B;
+            Shadow_C = C;
+            Shadow_D = D;
+            Shadow_E = E;
+            Shadow_H = H;
+            Shadow_L = L;
+
+            // Copy shadow register values to regular registers.
+            B = shadowB;
+            C = shadowC;
+            D = shadowD;
+            E = shadowE;
+            H = shadowH;
+            L = shadowL;
+        }
 
         #region Register Pair Getter/Setters
 
@@ -93,6 +158,18 @@ namespace JustinCredible.ZilogZ80
                         return this.DE;
                     case RegisterPair.HL:
                         return this.HL;
+                    case RegisterPair.I:
+                        return I;
+                    case RegisterPair.R:
+                        return R;
+                    case RegisterPair.IX:
+                        return IX;
+                    case RegisterPair.IY:
+                        return IY;
+                    case RegisterPair.PC:
+                        return PC;
+                    case RegisterPair.SP:
+                        return SP;
                     default:
                         throw new System.NotImplementedException("Unhandled register pair: " + pair);
                 }
@@ -109,6 +186,24 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case RegisterPair.HL:
                         this.HL = value;
+                        break;
+                    case RegisterPair.I:
+                        I = value;
+                        break;
+                    case RegisterPair.R:
+                        R = value;
+                        break;
+                    case RegisterPair.IX:
+                        IX = value;
+                        break;
+                    case RegisterPair.IY:
+                        IY = value;
+                        break;
+                    case RegisterPair.PC:
+                        PC = value;
+                        break;
+                    case RegisterPair.SP:
+                        SP = value;
                         break;
                     default:
                         throw new System.NotImplementedException("Unhandled register pair: " + pair);

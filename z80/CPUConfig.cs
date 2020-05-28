@@ -22,29 +22,11 @@ namespace JustinCredible.ZilogZ80
         /** Ending memory location that should be mirrored to the writeable memory (RAM mirror) (leave bot to 0 to disable RAM mirror). */
         public UInt16 MirrorMemoryEnd { get; set; }
 
-        /** The primary CPU registers (A B C D E H L) */
+        /** The CPU registers (A B C D E H L I R IX IY PC SP) */
         public CPURegisters Registers { get; set; }
-
-        /** Alternative register set (A' B' C' D' E' H' L') */
-        public CPURegisters ShadowRegisters { get; set; }
 
         /** The encapsulated condition/flags register (F) */
         public ConditionFlags Flags { get; set; }
-
-        /** Alternative flag register (F') */
-        public ConditionFlags ShadowFlags { get; set; }
-
-        /** The interrupt vector register (I) */
-        public UInt16 InterruptVector { get; set; }
-
-        /** The memory refresh register (R) */
-        public UInt16 MemoryRefresh { get; set; } // TODO
-
-        /** The index register (IX) */
-        public UInt16 IndexIX { get; set; } // TODO
-
-        /** The index register (IY) */
-        public UInt16 IndexIY { get; set; } // TODO
 
         public UInt16 ProgramCounter { get; set; } = 0x0000;
 
