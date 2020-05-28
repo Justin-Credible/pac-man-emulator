@@ -71,6 +71,11 @@ namespace JustinCredible.ZilogZ80
 
         #region Load
 
+            public const byte LD_I_A = 0x47;
+            public const byte LD_A_I = 0x57;
+            public const byte LD_R_A = 0x4F;
+            public const byte LD_A_R = 0x5F;
+
             /* (DE) <- (HL); HL++; DE++; BC--; */
             public const byte LDI = 0xA0;
 

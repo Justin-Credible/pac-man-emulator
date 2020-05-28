@@ -230,6 +230,22 @@ namespace JustinCredible.ZilogZ80
 
                 #region Load
 
+                    case OpcodeBytes.LD_I_A:
+                        Registers.I = Registers.A;
+                        break;
+
+                    case OpcodeBytes.LD_A_I:
+                        Registers.A = Registers.I;
+                        break;
+
+                    case OpcodeBytes.LD_R_A:
+                        Registers.R = Registers.A;
+                        break;
+
+                    case OpcodeBytes.LD_A_R:
+                        Registers.A = Registers.R;
+                        break;
+
                     /* (DE) <- (HL); HL++; DE++; BC--; */
                     case OpcodeBytes.LDI:
                     /* (DE) <- (HL); HL++; DE++; BC--; if BC !=0, repeat(); */

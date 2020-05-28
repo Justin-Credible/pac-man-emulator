@@ -74,6 +74,11 @@ namespace JustinCredible.ZilogZ80
 
         #region Load
 
+            public static Opcode LD_I_A = new Opcode(OpcodeBytes.LD_I_A, instructionSet: InstructionSet.Extended, size: 2, instruction: "LD I, A", cycles: 9, pseudocode: "I <- A");
+            public static Opcode LD_A_I = new Opcode(OpcodeBytes.LD_A_I, instructionSet: InstructionSet.Extended, size: 2, instruction: "LD A, I", cycles: 9, pseudocode: "A <- I");
+            public static Opcode LD_R_A = new Opcode(OpcodeBytes.LD_R_A, instructionSet: InstructionSet.Extended, size: 2, instruction: "LD R, A", cycles: 9, pseudocode: "R <- A");
+            public static Opcode LD_A_R = new Opcode(OpcodeBytes.LD_A_R, instructionSet: InstructionSet.Extended, size: 2, instruction: "LD A, R", cycles: 9, pseudocode: "A <- R");
+
             /* (DE) <- (HL); HL++; DE++; BC--; */
             public static Opcode LDI = new Opcode(OpcodeBytes.LDI, instructionSet: InstructionSet.Extended, size: 2, instruction: "LDI", cycles: 16, pseudocode: "(DE) <- (HL); HL++; DE++; BC--;");
 
