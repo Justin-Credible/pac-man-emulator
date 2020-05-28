@@ -207,7 +207,7 @@ namespace JustinCredible.ZilogZ80
                 case InterruptMode.Two:
                 {
                     // The MSB bits are from the interrupt vector while the LSB are from the data bus.
-                    var address = (Registers.I & 0xFF00) | dataBusValue;
+                    var address = (Registers.I << 8) | dataBusValue;
                     ExecuteCALL((UInt16)address, Registers.PC);
 
                     // TODO: Guessing here for cycle count.

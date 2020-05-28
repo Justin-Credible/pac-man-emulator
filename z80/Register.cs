@@ -13,5 +13,11 @@ namespace JustinCredible.ZilogZ80
         E,
         H,
         L,
+
+        /** Interrupt Vector */
+        I,
+
+        /** DRAM refresh counter */
+        R,
     }
 }

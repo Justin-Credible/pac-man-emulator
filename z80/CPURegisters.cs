@@ -30,10 +30,10 @@ namespace JustinCredible.ZilogZ80
         public byte Shadow_L;
 
         /** Interrupt Vector */
-        public UInt16 I { get; set; } // TODO
+        public byte I { get; set; }
 
         /** DRAM refresh counter */
-        public UInt16 R { get; set; } // TODO
+        public byte R { get; set; } // TODO; should increment like the PC does?
 
         /** Index/Base Register */
         public UInt16 IX { get; set; } // TODO
@@ -158,10 +158,6 @@ namespace JustinCredible.ZilogZ80
                         return this.DE;
                     case RegisterPair.HL:
                         return this.HL;
-                    case RegisterPair.I:
-                        return I;
-                    case RegisterPair.R:
-                        return R;
                     case RegisterPair.IX:
                         return IX;
                     case RegisterPair.IY:
@@ -186,12 +182,6 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case RegisterPair.HL:
                         this.HL = value;
-                        break;
-                    case RegisterPair.I:
-                        I = value;
-                        break;
-                    case RegisterPair.R:
-                        R = value;
                         break;
                     case RegisterPair.IX:
                         IX = value;
@@ -235,6 +225,10 @@ namespace JustinCredible.ZilogZ80
                         return H;
                     case Register.L:
                         return L;
+                    case Register.I:
+                        return I;
+                    case Register.R:
+                        return R;
                     default:
                         throw new NotImplementedException("Unandled register: " + registerID);
                 }
@@ -263,6 +257,12 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case Register.L:
                         L = value;
+                        break;
+                    case Register.I:
+                        I = value;
+                        break;
+                    case Register.R:
+                        R = value;
                         break;
                     default:
                         throw new NotImplementedException("Unandled register: " + registerID);

@@ -10,12 +10,6 @@ namespace JustinCredible.ZilogZ80
         BC,
         DE,
 
-        /** Interrupt Vector */
-        I,
-
-        /** DRAM refresh counter */
-        R,
-
         /** Index/Base Register */
         IX,
 

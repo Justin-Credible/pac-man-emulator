@@ -140,9 +140,9 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Theory]
-        [InlineData(0x2211, 0x25, 0x2225)]
-        [InlineData(0x0512, 0xF3, 0x05F3)]
-        public void TestStepMaskableInterrupt_Mode2(UInt16 interruptVector, byte dataBusValue, UInt16 expectedProgramCounter)
+        [InlineData(0x22, 0x25, 0x2225)]
+        [InlineData(0x05, 0xF3, 0x05F3)]
+        public void TestStepMaskableInterrupt_Mode2(byte interruptVector, byte dataBusValue, UInt16 expectedProgramCounter)
         {
             var initialState = new CPUConfig()
             {
