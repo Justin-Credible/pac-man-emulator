@@ -642,25 +642,25 @@ namespace JustinCredible.ZilogZ80
                     // Rotate accumulator left
                     // A = A << 1; bit 0 = prev bit 7; CY = prev bit 7
                     case OpcodeBytes.RLCA:
-                        Registers.A = Rotate(value: Registers.A, left: true, setAllFlags: false);
+                        Registers.A = ExecuteRotate(value: Registers.A, left: true, setAllFlags: false);
                         break;
 
                     // Rotate accumulator right
                     // A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0
                     case OpcodeBytes.RRCA:
-                        Registers.A = Rotate(value: Registers.A, left: false, setAllFlags: false);
+                        Registers.A = ExecuteRotate(value: Registers.A, left: false, setAllFlags: false);
                         break;
 
                     // Rotate accumulator left through carry
                     // A = A << 1; bit 0 = prev CY; CY = prev bit 7
                     case OpcodeBytes.RLA:
-                        Registers.A = Rotate(value: Registers.A, left: true, rotateThroughCarry: true, setAllFlags: false);
+                        Registers.A = ExecuteRotate(value: Registers.A, left: true, rotateThroughCarry: true, setAllFlags: false);
                         break;
 
                     // Rotate accumulator right through carry
                     // A = A >> 1; bit 7 = prev CY; CY = prev bit 0
                     case OpcodeBytes.RRA:
-                        Registers.A = Rotate(value: Registers.A, left: false, rotateThroughCarry: true, setAllFlags: false);
+                        Registers.A = ExecuteRotate(value: Registers.A, left: false, rotateThroughCarry: true, setAllFlags: false);
                         break;
 
                 #endregion
