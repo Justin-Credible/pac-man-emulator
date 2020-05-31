@@ -98,8 +98,9 @@ namespace JustinCredible.ZilogZ80
                 if (opcodeByte2 == OpcodeBytes.PREAMBLE_IX_BIT)
                 {
                     // Extended Instructions, IX Register Bit Operations
-                    var opcodeByte3 = memory[programCounter + 2];
-                    return IXBit[opcodeByte3];
+                    // Third byte is an address offset, and the fourth byte is the actual opcode.
+                    var opcodeByte4 = memory[programCounter + 3];
+                    return IXBit[opcodeByte4];
                 }
                 else
                 {
@@ -114,8 +115,9 @@ namespace JustinCredible.ZilogZ80
                 if (opcodeByte2 == OpcodeBytes.PREAMBLE_IY_BIT)
                 {
                     // Extended Instructions, IY Register Bit Operations
-                    var opcodeByte3 = memory[programCounter + 2];
-                    return IY[opcodeByte3];
+                    // Third byte is an address offset, and the fourth byte is the actual opcode.
+                    var opcodeByte4 = memory[programCounter + 3];
+                    return IY[opcodeByte4];
                 }
                 else
                 {

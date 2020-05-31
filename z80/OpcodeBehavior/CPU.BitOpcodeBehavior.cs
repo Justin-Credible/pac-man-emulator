@@ -148,18 +148,6 @@ namespace JustinCredible.ZilogZ80
             }
         }
 
-        private void ExecuteIXBitOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        private void ExecuteIYBitOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
         #region Additional Opcode Implementation Logic
 
         private byte Rotate(byte value, bool left, bool rotateThroughCarry = false, bool setAllFlags = true)

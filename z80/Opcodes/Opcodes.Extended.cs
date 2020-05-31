@@ -5,7 +5,6 @@ namespace JustinCredible.ZilogZ80
     // These are all two byte opcodes, where the first byte is defined by OpcodeBytes.PREAMBLE_EXTENDED (0xED).
     public partial class Opcodes
     {
-
         #region Input/Output Instructions
 
             // Write to device at address as specified in register C.

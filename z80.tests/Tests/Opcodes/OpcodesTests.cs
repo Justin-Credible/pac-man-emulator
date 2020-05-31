@@ -30,7 +30,7 @@ namespace JustinCredible.ZilogZ80.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Not implemented yet")]
+        [Fact]
         public void TestExtendedTableHasExpectedContent()
         {
             foreach (var entry in Opcodes.Extended)
@@ -55,7 +55,7 @@ namespace JustinCredible.ZilogZ80.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Not implemented yet")]
+        [Fact]
         public void TestBitTableHasExpectedContent()
         {
             foreach (var entry in Opcodes.Bit)
@@ -105,7 +105,7 @@ namespace JustinCredible.ZilogZ80.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Not implemented yet")]
+        [Fact]
         public void TestIXBitTableHasExpectedContent()
         {
             foreach (var entry in Opcodes.IXBit)
@@ -155,7 +155,7 @@ namespace JustinCredible.ZilogZ80.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Not implemented yet")]
+        [Fact]
         public void TestIYBitTableHasExpectedContent()
         {
             foreach (var entry in Opcodes.IYBit)
