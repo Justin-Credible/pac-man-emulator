@@ -20,7 +20,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = GetAssemblerBinaryPath();
-            startInfo.Arguments = $"--z80 \"{sourceFilePath}\"";
+            startInfo.Arguments = $"--z80 \"{sourceFilePath}\" --ixcbr2";
             startInfo.RedirectStandardError = true;
 
             var process = new Process();

@@ -117,12 +117,12 @@ namespace JustinCredible.ZilogZ80
                     // Extended Instructions, IY Register Bit Operations
                     // Third byte is an address offset, and the fourth byte is the actual opcode.
                     var opcodeByte4 = memory[programCounter + 3];
-                    return IY[opcodeByte4];
+                    return IYBit[opcodeByte4];
                 }
                 else
                 {
                     // Extended Instructions, IY Register
-                    return IYBit[opcodeByte2];
+                    return IY[opcodeByte2];
                 }
             }
             else

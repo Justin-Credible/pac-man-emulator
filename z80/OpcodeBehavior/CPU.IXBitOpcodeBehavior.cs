@@ -15,49 +15,49 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RLC_IX_B:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.B = Rotate(Registers.B, left: true);
+                        Registers.B = Rotate(value, left: true);
                         break;
                     }
                     case OpcodeBytes.RLC_IX_C:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.C = Rotate(Registers.C, left: true);
+                        Registers.C = Rotate(value, left: true);
                         break;
                     }
                     case OpcodeBytes.RLC_IX_D:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.D = Rotate(Registers.D, left: true);
+                        Registers.D = Rotate(value, left: true);
                         break;
                     }
                     case OpcodeBytes.RLC_IX_E:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.E = Rotate(Registers.E, left: true);
+                        Registers.E = Rotate(value, left: true);
                         break;
                     }
                     case OpcodeBytes.RLC_IX_H:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.H = Rotate(Registers.H, left: true);
+                        Registers.H = Rotate(value, left: true);
                         break;
                     }
                     case OpcodeBytes.RLC_IX_L:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.L = Rotate(Registers.L, left: true);
+                        Registers.L = Rotate(value, left: true);
                         break;
                     }
                     case OpcodeBytes.RLC_IX:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
                         value = Rotate(value, left: true);
                         WriteMemory(Registers.IX + offset, value);
@@ -65,9 +65,9 @@ namespace JustinCredible.ZilogZ80
                     }
                     case OpcodeBytes.RLC_IX_A:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.A = Rotate(Registers.A, left: true);
+                        Registers.A = Rotate(value, left: true);
                         break;
                     }
 
@@ -77,49 +77,49 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RRC_IX_B:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.B = Rotate(Registers.B, left: false);
+                        Registers.B = Rotate(value, left: false);
                         break;
                     }
                     case OpcodeBytes.RRC_IX_C:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.C = Rotate(Registers.C, left: false);
+                        Registers.C = Rotate(value, left: false);
                         break;
                     }
                     case OpcodeBytes.RRC_IX_D:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.D = Rotate(Registers.D, left: false);
+                        Registers.D = Rotate(value, left: false);
                         break;
                     }
                     case OpcodeBytes.RRC_IX_E:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.E = Rotate(Registers.E, left: false);
+                        Registers.E = Rotate(value, left: false);
                         break;
                     }
                     case OpcodeBytes.RRC_IX_H:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.H = Rotate(Registers.H, left: false);
+                        Registers.H = Rotate(value, left: false);
                         break;
                     }
                     case OpcodeBytes.RRC_IX_L:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.L = Rotate(Registers.L, left: false);
+                        Registers.L = Rotate(value, left: false);
                         break;
                     }
                     case OpcodeBytes.RRC_IX:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
                         value = Rotate(value, left: false);
                         WriteMemory(Registers.IX + offset, value);
@@ -127,9 +127,9 @@ namespace JustinCredible.ZilogZ80
                     }
                     case OpcodeBytes.RRC_IX_A:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.A = Rotate(Registers.A, left: false);
+                        Registers.A = Rotate(value, left: false);
                         break;
                     }
 
@@ -139,49 +139,49 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RL_IX_B:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.B = Rotate(Registers.B, left: true, rotateThroughCarry: true);
+                        Registers.B = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RL_IX_C:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.C = Rotate(Registers.C, left: true, rotateThroughCarry: true);
+                        Registers.C = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RL_IX_D:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.D = Rotate(Registers.D, left: true, rotateThroughCarry: true);
+                        Registers.D = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RL_IX_E:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.E = Rotate(Registers.E, left: true, rotateThroughCarry: true);
+                        Registers.E = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RL_IX_H:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.H = Rotate(Registers.H, left: true, rotateThroughCarry: true);
+                        Registers.H = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RL_IX_L:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.L = Rotate(Registers.L, left: true, rotateThroughCarry: true);
+                        Registers.L = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RL_IX:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
                         value = Rotate(value, left: true, rotateThroughCarry: true);
                         WriteMemory(Registers.IX + offset, value);
@@ -189,9 +189,9 @@ namespace JustinCredible.ZilogZ80
                     }
                     case OpcodeBytes.RL_IX_A:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.A = Rotate(Registers.A, left: true, rotateThroughCarry: true);
+                        Registers.A = Rotate(value, left: true, rotateThroughCarry: true);
                         break;
                     }
 
@@ -201,49 +201,49 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RR_IX_B:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.B = Rotate(Registers.B, left: false, rotateThroughCarry: true);
+                        Registers.B = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RR_IX_C:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.C = Rotate(Registers.C, left: false, rotateThroughCarry: true);
+                        Registers.C = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RR_IX_D:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.D = Rotate(Registers.D, left: false, rotateThroughCarry: true);
+                        Registers.D = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RR_IX_E:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.E = Rotate(Registers.E, left: false, rotateThroughCarry: true);
+                        Registers.E = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RR_IX_H:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.H = Rotate(Registers.H, left: false, rotateThroughCarry: true);
+                        Registers.H = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RR_IX_L:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.L = Rotate(Registers.L, left: false, rotateThroughCarry: true);
+                        Registers.L = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
                     case OpcodeBytes.RR_IX:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
                         value = Rotate(value, left: false, rotateThroughCarry: true);
                         WriteMemory(Registers.IX + offset, value);
@@ -251,9 +251,9 @@ namespace JustinCredible.ZilogZ80
                     }
                     case OpcodeBytes.RR_IX_A:
                     {
-                        var offset = Memory[Registers.PC + 2];
+                        var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.A = Rotate(Registers.A, left: false, rotateThroughCarry: true);
+                        Registers.A = Rotate(value, left: false, rotateThroughCarry: true);
                         break;
                     }
 

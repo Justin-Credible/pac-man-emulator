@@ -17,5 +17,22 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public static List<Register> StandardRegisters
+        {
+            get
+            {
+                return new List<Register>()
+                {
+                    Register.A,
+                    Register.B,
+                    Register.C,
+                    Register.D,
+                    Register.E,
+                    Register.H,
+                    Register.L,
+                };
+            }
+        }
     }
 }
