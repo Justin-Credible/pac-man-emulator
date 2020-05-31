@@ -514,7 +514,7 @@ namespace JustinCredible.ZilogZ80
             }
         }
 
-        #region Opcodes - Additional Implementations
+        #region Additional Opcode Implementation Logic
 
         private void Execute_ADC_HL(UInt16 value)
         {
@@ -553,35 +553,5 @@ namespace JustinCredible.ZilogZ80
         }
 
         #endregion
-
-        private void ExecuteBitOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        private void ExecuteIXOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        private void ExecuteIYOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        private void ExecuteIXBitOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
-
-        private void ExecuteIYBitOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
-        {
-            // TODO
-            throw new NotImplementedException();
-        }
     }
 }

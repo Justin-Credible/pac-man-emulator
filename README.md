@@ -19,7 +19,7 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
     - [X] Handle executing multi-byte opcodes
     - [X] Get all 600+ original unit tests working again
     - [X] Add Z80 standard instructions
-    - [ ] Extended Instructions (ED)
+    - [X] Extended Instructions (ED)
     - [ ] Bit Instructions (CB)
     - [ ] IX Instructions (DD)
     - [ ] IX Bit Instructions (DDCB)

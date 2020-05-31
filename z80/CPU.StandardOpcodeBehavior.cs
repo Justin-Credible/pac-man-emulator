@@ -642,25 +642,25 @@ namespace JustinCredible.ZilogZ80
                     // Rotate accumulator left
                     // A = A << 1; bit 0 = prev bit 7; CY = prev bit 7
                     case OpcodeBytes.RLCA:
-                        ExecuteRotateAccumulator(left: true);
+                        Registers.A = Rotate(value: Registers.A, left: true, setAllFlags: false);
                         break;
 
                     // Rotate accumulator right
                     // A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0
                     case OpcodeBytes.RRCA:
-                        ExecuteRotateAccumulator(left: false);
+                        Registers.A = Rotate(value: Registers.A, left: false, setAllFlags: false);
                         break;
 
                     // Rotate accumulator left through carry
                     // A = A << 1; bit 0 = prev CY; CY = prev bit 7
                     case OpcodeBytes.RLA:
-                        ExecuteRotateAccumulator(left: true, rotateThroughCarry: true);
+                        Registers.A = Rotate(value: Registers.A, left: true, rotateThroughCarry: true, setAllFlags: false);
                         break;
 
                     // Rotate accumulator right through carry
                     // A = A >> 1; bit 7 = prev CY; CY = prev bit 0
                     case OpcodeBytes.RRA:
-                        ExecuteRotateAccumulator(left: false, rotateThroughCarry: true);
+                        Registers.A = Rotate(value: Registers.A, left: false, rotateThroughCarry: true, setAllFlags: false);
                         break;
 
                 #endregion
@@ -1504,7 +1504,7 @@ namespace JustinCredible.ZilogZ80
             }
         }
 
-        #region Opcodes - Additional Implementations
+        #region Additional Opcode Implementation Logic
 
         private void ExecuteDAA()
         {
@@ -1718,61 +1718,6 @@ namespace JustinCredible.ZilogZ80
             Flags.Subtract = false;
 
             // TODO: Set H flag
-        }
-
-        /**
-         * Encapsulates the rotate accumulator left/right (RRC and RLC) and the rotate
-         * accumulator left/right though carry (RAL and RAR) instruction behavior. The Intel
-         * Z80 programmers manual has excellent examples and diagrams of each instruction.
-         */
-        private void ExecuteRotateAccumulator(bool left, bool rotateThroughCarry = false)
-        {
-            var previousHighOrderBitSet = (Registers.A & 0x80) == 0x80;
-            var previousLowOrderBitSet = (Registers.A & 0x01) == 0x01;
-            var previousCarryFlagSet = Flags.Carry;
-
-            int result = Registers.A;
-
-            if (left)
-            {
-                result = result << 1;
-
-                if (rotateThroughCarry)
-                {
-                    if (previousCarryFlagSet)
-                        result = result | 0x01;
-
-                    Flags.Carry = previousHighOrderBitSet;
-                }
-                else
-                {
-                    if (previousHighOrderBitSet)
-                        result = result | 0x01;
-
-                    Flags.Carry = previousHighOrderBitSet;
-                }
-            }
-            else
-            {
-                result = result >> 1;
-
-                if (rotateThroughCarry)
-                {
-                    if (previousCarryFlagSet)
-                        result = result | 0x80;
-
-                    Flags.Carry = previousLowOrderBitSet;
-                }
-                else
-                {
-                    if (previousLowOrderBitSet)
-                        result = result | 0x80;
-
-                    Flags.Carry = previousLowOrderBitSet;
-                }
-            }
-
-            Registers.A = (byte)result;
         }
 
         #endregion

@@ -25,7 +25,17 @@ namespace JustinCredible.ZilogZ80.Tests
                 },
                 Flags = new ConditionFlags()
                 {
+                    // Should be affected.
                     Carry = initialCarryFlag,
+
+                    // Should remain unaffected.
+                    Sign = false,
+                    Zero = true,
+                    Parity = false,
+
+                    // Should be reset.
+                    Subtract = true,
+                    AuxCarry = true,
                 }
             };
 
@@ -33,12 +43,17 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(expectedValue, state.Registers.A);
 
-            Assert.False(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
-            Assert.False(state.Flags.Subtract);
+            // Should be affected.
             Assert.Equal(expectedCarryFlag, state.Flags.Carry);
+
+            // Should remain unaffected.
+            Assert.False(state.Flags.Sign);
+            Assert.True(state.Flags.Zero);
+            Assert.False(state.Flags.Parity);
+
+            // Should be reset.
+            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);
