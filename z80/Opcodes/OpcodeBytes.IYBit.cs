@@ -53,5 +53,55 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Shift
+
+            #region SLA (IY+n), r - Shift left (arithmetic)
+                public const byte SLA_IY_B = 0x20;
+                public const byte SLA_IY_C = 0x21;
+                public const byte SLA_IY_D = 0x22;
+                public const byte SLA_IY_E = 0x23;
+                public const byte SLA_IY_H = 0x24;
+                public const byte SLA_IY_L = 0x25;
+                public const byte SLA_IY = 0x26;
+                public const byte SLA_IY_A = 0x27;
+            #endregion
+
+            #region SRA (IY+n), r - Shift right (arithmetic)
+                public const byte SRA_IY_B = 0x28;
+                public const byte SRA_IY_C = 0x29;
+                public const byte SRA_IY_D = 0x2A;
+                public const byte SRA_IY_E = 0x2B;
+                public const byte SRA_IY_H = 0x2C;
+                public const byte SRA_IY_L = 0x2D;
+                public const byte SRA_IY = 0x2E;
+                public const byte SRA_IY_A = 0x2F;
+            #endregion
+
+            // Despite the SLL mnemonic, it's not really a "shift left logical" operation.
+            // See: https://spectrumcomputing.co.uk/forums/viewtopic.php?p=9956&sid=f2072dd8da32b1a27a449433d387ebe6#p9956
+            #region SLL (IY+n), r - Shift left ?? (undocumented)
+                public const byte SLL_IY_B = 0x30;
+                public const byte SLL_IY_C = 0x31;
+                public const byte SLL_IY_D = 0x32;
+                public const byte SLL_IY_E = 0x33;
+                public const byte SLL_IY_H = 0x34;
+                public const byte SLL_IY_L = 0x35;
+                public const byte SLL_IY = 0x36;
+                public const byte SLL_IY_A = 0x37;
+            #endregion
+
+            #region SRL (IY+n), r - Shift right logical
+                public const byte SRL_IY_B = 0x38;
+                public const byte SRL_IY_C = 0x39;
+                public const byte SRL_IY_D = 0x3A;
+                public const byte SRL_IY_E = 0x3B;
+                public const byte SRL_IY_H = 0x3C;
+                public const byte SRL_IY_L = 0x3D;
+                public const byte SRL_IY = 0x3E;
+                public const byte SRL_IY_A = 0x3F;
+            #endregion
+
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace JustinCredible.ZilogZ80
             {
                 #region Rotate
 
-                    #region RLC, r - Rotate left
+                    #region RLC r - Rotate left
 
                         case OpcodeBytes.RLC_B:
                             Registers.B = ExecuteRotate(Registers.B, left: true);
@@ -46,7 +46,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region RRC, r - Rotate right
+                    #region RRC r - Rotate right
 
                         case OpcodeBytes.RRC_B:
                             Registers.B = ExecuteRotate(Registers.B, left: false);
@@ -79,7 +79,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region RL, r - Rotate left through carry
+                    #region RL r - Rotate left through carry
 
                         case OpcodeBytes.RL_B:
                             Registers.B = ExecuteRotate(Registers.B, left: true, rotateThroughCarry: true);
@@ -112,7 +112,7 @@ namespace JustinCredible.ZilogZ80
 
                     #endregion
 
-                    #region RR, r - Rotate right through carry
+                    #region RR r - Rotate right through carry
 
                         case OpcodeBytes.RR_B:
                             Registers.B = ExecuteRotate(Registers.B, left: false, rotateThroughCarry: true);
@@ -149,7 +149,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Shift
 
-                    #region SLA, r - Shift left (arithmetic)
+                    #region SLA r - Shift left (arithmetic)
                         case OpcodeBytes.SLA_B:
                             Registers.B = ExecuteShiftArithmetic(value: Registers.B, left: true);
                             break;
@@ -180,7 +180,7 @@ namespace JustinCredible.ZilogZ80
                             break;
                     #endregion
 
-                    #region SRA, r - Shift right (arithmetic)
+                    #region SRA r - Shift right (arithmetic)
                         case OpcodeBytes.SRA_B:
                             Registers.B = ExecuteShiftArithmetic(value: Registers.B, left: false);
                             break;
@@ -213,7 +213,7 @@ namespace JustinCredible.ZilogZ80
 
                     // Despite the SLL mnemonic, it's not really a "shift left logical" operation.
                     // See: https://spectrumcomputing.co.uk/forums/viewtopic.php?p=9956&sid=f2072dd8da32b1a27a449433d387ebe6#p9956
-                    #region SLL, r - Shift left ?? (undocumented)
+                    #region SLL r - Shift left ?? (undocumented)
                         case OpcodeBytes.SLL_B:
                             Registers.B = ExecuteShiftLogical(value: Registers.B, left: true);
                             break;
@@ -244,7 +244,7 @@ namespace JustinCredible.ZilogZ80
                             break;
                     #endregion
 
-                    #region SRL, r - Shift right logical
+                    #region SRL r - Shift right logical
                         case OpcodeBytes.SRL_B:
                             Registers.B = ExecuteShiftLogical(value: Registers.B, left: false);
                             break;

@@ -53,5 +53,55 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Shift
+
+            #region SLA r - Shift left (arithmetic)
+                public static Opcode SLA_IY_B = new Opcode(OpcodeBytes.SLA_IY_B, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), B", cycles: 23, pseudocode: "B = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY_C = new Opcode(OpcodeBytes.SLA_IY_C, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), C", cycles: 23, pseudocode: "C = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY_D = new Opcode(OpcodeBytes.SLA_IY_D, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), D", cycles: 23, pseudocode: "D = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY_E = new Opcode(OpcodeBytes.SLA_IY_E, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), E", cycles: 23, pseudocode: "E = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY_H = new Opcode(OpcodeBytes.SLA_IY_H, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), H", cycles: 23, pseudocode: "H = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY_L = new Opcode(OpcodeBytes.SLA_IY_L, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), L", cycles: 23, pseudocode: "L = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY = new Opcode(OpcodeBytes.SLA_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), H", cycles: 23, pseudocode: "(IY+n) = (IY+n) >> 1; CY = prev bit 7");
+                public static Opcode SLA_IY_A = new Opcode(OpcodeBytes.SLA_IY_A, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLA (IY+n), A", cycles: 23, pseudocode: "A = (IY+n) >> 1; CY = prev bit 7");
+            #endregion
+
+            #region SRA r - Shift right (arithmetic)
+                public static Opcode SRA_IY_B = new Opcode(OpcodeBytes.SRA_IY_B, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), B", cycles: 23, pseudocode: "B = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY_C = new Opcode(OpcodeBytes.SRA_IY_C, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), C", cycles: 23, pseudocode: "C = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY_D = new Opcode(OpcodeBytes.SRA_IY_D, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), D", cycles: 23, pseudocode: "D = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY_E = new Opcode(OpcodeBytes.SRA_IY_E, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), E", cycles: 23, pseudocode: "E = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY_H = new Opcode(OpcodeBytes.SRA_IY_H, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), H", cycles: 23, pseudocode: "H = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY_L = new Opcode(OpcodeBytes.SRA_IY_L, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), L", cycles: 23, pseudocode: "L = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY = new Opcode(OpcodeBytes.SRA_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), H", cycles: 23, pseudocode: "(IY+n) = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+                public static Opcode SRA_IY_A = new Opcode(OpcodeBytes.SRA_IY_A, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRA (IY+n), A", cycles: 23, pseudocode: "A = (IY+n) >> 1; CY = prev bit 0; bit 7 = prev bit 7;");
+            #endregion
+
+            // Despite the SLL mnemonic, it's not really a "shift left logical" operation.
+            // See: https://spectrumcomputing.co.uk/forums/viewtopic.php?p=9956&sid=f2072dd8da32b1a27a449433d387ebe6#p9956
+            #region SLL r - Shift left ?? (undocumented)
+                public static Opcode SLL_IY_B = new Opcode(OpcodeBytes.SLL_IY_B, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), B", cycles: 23, pseudocode: "B = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY_C = new Opcode(OpcodeBytes.SLL_IY_C, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), C", cycles: 23, pseudocode: "C = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY_D = new Opcode(OpcodeBytes.SLL_IY_D, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), D", cycles: 23, pseudocode: "D = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY_E = new Opcode(OpcodeBytes.SLL_IY_E, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), E", cycles: 23, pseudocode: "E = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY_H = new Opcode(OpcodeBytes.SLL_IY_H, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), H", cycles: 23, pseudocode: "H = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY_L = new Opcode(OpcodeBytes.SLL_IY_L, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), L", cycles: 23, pseudocode: "L = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY = new Opcode(OpcodeBytes.SLL_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), H", cycles: 23, pseudocode: "(IY+n) = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+                public static Opcode SLL_IY_A = new Opcode(OpcodeBytes.SLL_IY_A, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SLL (IY+n), A", cycles: 23, pseudocode: "A = (IY+n) << 1; CY = prev bit 7; bit 0 = 1;");
+            #endregion
+
+            #region SRL r - Shift right logical
+                public static Opcode SRL_IY_B = new Opcode(OpcodeBytes.SRL_IY_B, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), B", cycles: 23, pseudocode: "B = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY_C = new Opcode(OpcodeBytes.SRL_IY_C, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), C", cycles: 23, pseudocode: "C = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY_D = new Opcode(OpcodeBytes.SRL_IY_D, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), D", cycles: 23, pseudocode: "D = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY_E = new Opcode(OpcodeBytes.SRL_IY_E, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), E", cycles: 23, pseudocode: "E = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY_H = new Opcode(OpcodeBytes.SRL_IY_H, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), H", cycles: 23, pseudocode: "H = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY_L = new Opcode(OpcodeBytes.SRL_IY_L, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), L", cycles: 23, pseudocode: "L = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY = new Opcode(OpcodeBytes.SRL_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), H", cycles: 23, pseudocode: "(IY+n) = (IY+n) << 1; CY = prev bit 0;");
+                public static Opcode SRL_IY_A = new Opcode(OpcodeBytes.SRL_IY_A, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SRL (IY+n), A", cycles: 23, pseudocode: "A = (IY+n) << 1; CY = prev bit 0;");
+            #endregion
+
+        #endregion
     }
 }

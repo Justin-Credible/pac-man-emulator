@@ -7,7 +7,7 @@ namespace JustinCredible.ZilogZ80
     {
         #region Rotate
 
-            #region RLC, r - Rotate left
+            #region RLC r - Rotate left
                 public const byte RLC_B = 0x00;
                 public const byte RLC_C = 0x01;
                 public const byte RLC_D = 0x02;
@@ -18,7 +18,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte RLC_A = 0x07;
             #endregion
 
-            #region RRC, r - Rotate right
+            #region RRC r - Rotate right
                 public const byte RRC_B = 0x08;
                 public const byte RRC_C = 0x09;
                 public const byte RRC_D = 0x0A;
@@ -29,7 +29,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte RRC_A = 0x0F;
             #endregion
 
-            #region RL, r - Rotate left through carry
+            #region RL r - Rotate left through carry
                 public const byte RL_B = 0x10;
                 public const byte RL_C = 0x11;
                 public const byte RL_D = 0x12;
@@ -40,7 +40,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte RL_A = 0x17;
             #endregion
 
-            #region RR, r - Rotate right through carry
+            #region RR r - Rotate right through carry
                 public const byte RR_B = 0x18;
                 public const byte RR_C = 0x19;
                 public const byte RR_D = 0x1A;
@@ -55,7 +55,7 @@ namespace JustinCredible.ZilogZ80
 
         #region Shift
 
-            #region SLA, r - Shift left (arithmetic)
+            #region SLA r - Shift left (arithmetic)
                 public const byte SLA_B = 0x20;
                 public const byte SLA_C = 0x21;
                 public const byte SLA_D = 0x22;
@@ -66,7 +66,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SLA_A = 0x27;
             #endregion
 
-            #region SRA, r - Shift right (arithmetic)
+            #region SRA r - Shift right (arithmetic)
                 public const byte SRA_B = 0x28;
                 public const byte SRA_C = 0x29;
                 public const byte SRA_D = 0x2A;
@@ -79,7 +79,7 @@ namespace JustinCredible.ZilogZ80
 
             // Despite the SLL mnemonic, it's not really a "shift left logical" operation.
             // See: https://spectrumcomputing.co.uk/forums/viewtopic.php?p=9956&sid=f2072dd8da32b1a27a449433d387ebe6#p9956
-            #region SLL, r - Shift left ?? (undocumented)
+            #region SLL r - Shift left ?? (undocumented)
                 public const byte SLL_B = 0x30;
                 public const byte SLL_C = 0x31;
                 public const byte SLL_D = 0x32;
@@ -90,7 +90,7 @@ namespace JustinCredible.ZilogZ80
                 public const byte SLL_A = 0x37;
             #endregion
 
-            #region SRL, r - Shift right logical
+            #region SRL r - Shift right logical
                 public const byte SRL_B = 0x38;
                 public const byte SRL_C = 0x39;
                 public const byte SRL_D = 0x3A;
