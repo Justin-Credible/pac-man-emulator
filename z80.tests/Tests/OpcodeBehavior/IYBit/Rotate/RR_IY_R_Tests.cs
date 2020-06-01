@@ -60,6 +60,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
+            Assert.Equal(0x2234, state.Registers.IY);
             Assert.Equal(expectedValue, state.Registers[register]);
 
             // Should be affected.
@@ -128,6 +129,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
+            Assert.Equal(0x2234, state.Registers.IY);
             Assert.Equal(expectedValue, state.Memory[0x2234 + offset]);
 
             // Should be affected.
