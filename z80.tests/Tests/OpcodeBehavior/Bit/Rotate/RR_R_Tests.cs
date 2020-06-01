@@ -74,7 +74,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(0b01001001, true, 0b10100100, true, false, true)]
         [InlineData(0b01001000, false, 0b00100100, false, true, false)]
         [InlineData(0b01001000, true, 0b10100100, false, false, true)]
-        public void Test_RR_HL(byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag, bool expectedSignFlag)
+        public void Test_RR_MHL(byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag, bool expectedSignFlag)
         {
             var rom = AssembleSource($@"
                 org 00h

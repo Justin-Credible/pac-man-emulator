@@ -83,7 +83,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForHLRegister))]
-        public void Test_SLA_HL(byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_SLA_MHL(byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h

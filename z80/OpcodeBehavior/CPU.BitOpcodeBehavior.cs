@@ -33,7 +33,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.RLC_L:
                             Registers.L = ExecuteRotate(Registers.L, left: true);
                             break;
-                        case OpcodeBytes.RLC_HL:
+                        case OpcodeBytes.RLC_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteRotate(value, left: true);
@@ -66,7 +66,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.RRC_L:
                             Registers.L = ExecuteRotate(Registers.L, left: false);
                             break;
-                        case OpcodeBytes.RRC_HL:
+                        case OpcodeBytes.RRC_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteRotate(value, left: false);
@@ -99,7 +99,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.RL_L:
                             Registers.L = ExecuteRotate(Registers.L, left: true, rotateThroughCarry: true);
                             break;
-                        case OpcodeBytes.RL_HL:
+                        case OpcodeBytes.RL_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteRotate(value, left: true, rotateThroughCarry: true);
@@ -132,7 +132,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.RR_L:
                             Registers.L = ExecuteRotate(Registers.L, left: false, rotateThroughCarry: true);
                             break;
-                        case OpcodeBytes.RR_HL:
+                        case OpcodeBytes.RR_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteRotate(value, left: false, rotateThroughCarry: true);
@@ -168,7 +168,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SLA_L:
                             Registers.L = ExecuteShiftArithmetic(value: Registers.L, left: true);
                             break;
-                        case OpcodeBytes.SLA_HL:
+                        case OpcodeBytes.SLA_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteShiftArithmetic(value: value, left: true);
@@ -199,7 +199,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SRA_L:
                             Registers.L = ExecuteShiftArithmetic(value: Registers.L, left: false);
                             break;
-                        case OpcodeBytes.SRA_HL:
+                        case OpcodeBytes.SRA_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteShiftArithmetic(value: value, left: false);
@@ -232,7 +232,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SLL_L:
                             Registers.L = ExecuteShiftLogical(value: Registers.L, left: true);
                             break;
-                        case OpcodeBytes.SLL_HL:
+                        case OpcodeBytes.SLL_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteShiftLogical(value: value, left: true);
@@ -263,7 +263,7 @@ namespace JustinCredible.ZilogZ80
                         case OpcodeBytes.SRL_L:
                             Registers.L = ExecuteShiftLogical(value: Registers.L, left: false);
                             break;
-                        case OpcodeBytes.SRL_HL:
+                        case OpcodeBytes.SRL_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
                             value = ExecuteShiftLogical(value: value, left: false);
@@ -274,6 +274,210 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = ExecuteShiftLogical(value: Registers.A, left: false);
                             break;
                     #endregion
+
+                #endregion
+
+                #region Test Bit
+
+                    case OpcodeBytes.BIT_0_B:
+                        ExecuteTestBit(0, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_0_C:
+                        ExecuteTestBit(0, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_0_D:
+                        ExecuteTestBit(0, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_0_E:
+                        ExecuteTestBit(0, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_0_H:
+                        ExecuteTestBit(0, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_0_L:
+                        ExecuteTestBit(0, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_0_MHL:
+                        ExecuteTestBit(0, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_0_A:
+                        ExecuteTestBit(0, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_1_B:
+                        ExecuteTestBit(1, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_1_C:
+                        ExecuteTestBit(1, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_1_D:
+                        ExecuteTestBit(1, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_1_E:
+                        ExecuteTestBit(1, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_1_H:
+                        ExecuteTestBit(1, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_1_L:
+                        ExecuteTestBit(1, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_1_MHL:
+                        ExecuteTestBit(1, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_1_A:
+                        ExecuteTestBit(1, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_2_B:
+                        ExecuteTestBit(2, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_2_C:
+                        ExecuteTestBit(2, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_2_D:
+                        ExecuteTestBit(2, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_2_E:
+                        ExecuteTestBit(2, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_2_H:
+                        ExecuteTestBit(2, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_2_L:
+                        ExecuteTestBit(2, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_2_MHL:
+                        ExecuteTestBit(2, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_2_A:
+                        ExecuteTestBit(2, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_3_B:
+                        ExecuteTestBit(3, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_3_C:
+                        ExecuteTestBit(3, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_3_D:
+                        ExecuteTestBit(3, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_3_E:
+                        ExecuteTestBit(3, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_3_H:
+                        ExecuteTestBit(3, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_3_L:
+                        ExecuteTestBit(3, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_3_MHL:
+                        ExecuteTestBit(3, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_3_A:
+                        ExecuteTestBit(3, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_4_B:
+                        ExecuteTestBit(4, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_4_C:
+                        ExecuteTestBit(4, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_4_D:
+                        ExecuteTestBit(4, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_4_E:
+                        ExecuteTestBit(4, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_4_H:
+                        ExecuteTestBit(4, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_4_L:
+                        ExecuteTestBit(4, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_4_MHL:
+                        ExecuteTestBit(4, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_4_A:
+                        ExecuteTestBit(4, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_5_B:
+                        ExecuteTestBit(5, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_5_C:
+                        ExecuteTestBit(5, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_5_D:
+                        ExecuteTestBit(5, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_5_E:
+                        ExecuteTestBit(5, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_5_H:
+                        ExecuteTestBit(5, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_5_L:
+                        ExecuteTestBit(5, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_5_MHL:
+                        ExecuteTestBit(5, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_5_A:
+                        ExecuteTestBit(5, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_6_B:
+                        ExecuteTestBit(6, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_6_C:
+                        ExecuteTestBit(6, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_6_D:
+                        ExecuteTestBit(6, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_6_E:
+                        ExecuteTestBit(6, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_6_H:
+                        ExecuteTestBit(6, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_6_L:
+                        ExecuteTestBit(6, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_6_MHL:
+                        ExecuteTestBit(6, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_6_A:
+                        ExecuteTestBit(6, Registers.A);
+                        break;
+
+                    case OpcodeBytes.BIT_7_B:
+                        ExecuteTestBit(7, Registers.B);
+                        break;
+                    case OpcodeBytes.BIT_7_C:
+                        ExecuteTestBit(7, Registers.C);
+                        break;
+                    case OpcodeBytes.BIT_7_D:
+                        ExecuteTestBit(7, Registers.D);
+                        break;
+                    case OpcodeBytes.BIT_7_E:
+                        ExecuteTestBit(7, Registers.E);
+                        break;
+                    case OpcodeBytes.BIT_7_H:
+                        ExecuteTestBit(7, Registers.H);
+                        break;
+                    case OpcodeBytes.BIT_7_L:
+                        ExecuteTestBit(7, Registers.L);
+                        break;
+                    case OpcodeBytes.BIT_7_MHL:
+                        ExecuteTestBit(7, ReadMemory(Registers.HL));
+                        break;
+                    case OpcodeBytes.BIT_7_A:
+                        ExecuteTestBit(7, Registers.A);
+                        break;
 
                 #endregion
 
@@ -399,6 +603,19 @@ namespace JustinCredible.ZilogZ80
             SetFlags((byte)result, subtract: false, auxCarry: false);
 
             return (byte)result;
+        }
+
+        public void ExecuteTestBit(int index, byte value)
+        {
+            if (index < 0 || index > 7)
+                throw new Exception("Expected index to be 0-7.");
+
+            int mask = 0x01 << index;
+
+            Flags.Zero = (value & mask) == mask ? false : true;
+
+            Flags.Subtract = false;
+            Flags.AuxCarry = false;
         }
 
         #endregion

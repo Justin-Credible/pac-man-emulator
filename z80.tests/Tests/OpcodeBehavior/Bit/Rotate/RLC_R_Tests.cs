@@ -103,7 +103,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_RLC_HL_SetsCarryFlagTrue()
+        public void Test_RLC_MHL_SetsCarryFlagTrue()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -154,7 +154,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_RLC_HL_SetsCarryFlagFalse()
+        public void Test_RLC_MHL_SetsCarryFlagFalse()
         {
             var rom = AssembleSource($@"
                 org 00h
