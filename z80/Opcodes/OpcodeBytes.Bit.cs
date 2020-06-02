@@ -178,5 +178,157 @@ namespace JustinCredible.ZilogZ80
             public const byte BIT_7_A = 0x7F;
 
         #endregion
+
+        #region Reset Bit
+
+            public const byte RES_0_B = 0x80;
+            public const byte RES_0_C = 0x81;
+            public const byte RES_0_D = 0x82;
+            public const byte RES_0_E = 0x83;
+            public const byte RES_0_H = 0x84;
+            public const byte RES_0_L = 0x85;
+            public const byte RES_0_MHL = 0x86;
+            public const byte RES_0_A = 0x87;
+
+            public const byte RES_1_B = 0x88;
+            public const byte RES_1_C = 0x89;
+            public const byte RES_1_D = 0x8A;
+            public const byte RES_1_E = 0x8B;
+            public const byte RES_1_H = 0x8C;
+            public const byte RES_1_L = 0x8D;
+            public const byte RES_1_MHL = 0x8E;
+            public const byte RES_1_A = 0x8F;
+
+            public const byte RES_2_B = 0x90;
+            public const byte RES_2_C = 0x91;
+            public const byte RES_2_D = 0x92;
+            public const byte RES_2_E = 0x93;
+            public const byte RES_2_H = 0x94;
+            public const byte RES_2_L = 0x95;
+            public const byte RES_2_MHL = 0x96;
+            public const byte RES_2_A = 0x97;
+
+            public const byte RES_3_B = 0x98;
+            public const byte RES_3_C = 0x99;
+            public const byte RES_3_D = 0x9A;
+            public const byte RES_3_E = 0x9B;
+            public const byte RES_3_H = 0x9C;
+            public const byte RES_3_L = 0x9D;
+            public const byte RES_3_MHL = 0x9E;
+            public const byte RES_3_A = 0x9F;
+
+            public const byte RES_4_B = 0xA0;
+            public const byte RES_4_C = 0xA1;
+            public const byte RES_4_D = 0xA2;
+            public const byte RES_4_E = 0xA3;
+            public const byte RES_4_H = 0xA4;
+            public const byte RES_4_L = 0xA5;
+            public const byte RES_4_MHL = 0xA6;
+            public const byte RES_4_A = 0xA7;
+
+            public const byte RES_5_B = 0xA8;
+            public const byte RES_5_C = 0xA9;
+            public const byte RES_5_D = 0xAA;
+            public const byte RES_5_E = 0xAB;
+            public const byte RES_5_H = 0xAC;
+            public const byte RES_5_L = 0xAD;
+            public const byte RES_5_MHL = 0xAE;
+            public const byte RES_5_A = 0xAF;
+
+            public const byte RES_6_B = 0xB0;
+            public const byte RES_6_C = 0xB1;
+            public const byte RES_6_D = 0xB2;
+            public const byte RES_6_E = 0xB3;
+            public const byte RES_6_H = 0xB4;
+            public const byte RES_6_L = 0xB5;
+            public const byte RES_6_MHL = 0xB6;
+            public const byte RES_6_A = 0xB7;
+
+            public const byte RES_7_B = 0xB8;
+            public const byte RES_7_C = 0xB9;
+            public const byte RES_7_D = 0xBA;
+            public const byte RES_7_E = 0xBB;
+            public const byte RES_7_H = 0xBC;
+            public const byte RES_7_L = 0xBD;
+            public const byte RES_7_MHL = 0xBE;
+            public const byte RES_7_A = 0xBF;
+
+        #endregion
+
+        #region Set Bit
+
+            public const byte SET_0_B = 0xC0;
+            public const byte SET_0_C = 0xC1;
+            public const byte SET_0_D = 0xC2;
+            public const byte SET_0_E = 0xC3;
+            public const byte SET_0_H = 0xC4;
+            public const byte SET_0_L = 0xC5;
+            public const byte SET_0_MHL = 0xC6;
+            public const byte SET_0_A = 0xC7;
+
+            public const byte SET_1_B = 0xC8;
+            public const byte SET_1_C = 0xC9;
+            public const byte SET_1_D = 0xCA;
+            public const byte SET_1_E = 0xCB;
+            public const byte SET_1_H = 0xCC;
+            public const byte SET_1_L = 0xCD;
+            public const byte SET_1_MHL = 0xCE;
+            public const byte SET_1_A = 0xCF;
+
+            public const byte SET_2_B = 0xD0;
+            public const byte SET_2_C = 0xD1;
+            public const byte SET_2_D = 0xD2;
+            public const byte SET_2_E = 0xD3;
+            public const byte SET_2_H = 0xD4;
+            public const byte SET_2_L = 0xD5;
+            public const byte SET_2_MHL = 0xD6;
+            public const byte SET_2_A = 0xD7;
+
+            public const byte SET_3_B = 0xD8;
+            public const byte SET_3_C = 0xD9;
+            public const byte SET_3_D = 0xDA;
+            public const byte SET_3_E = 0xDB;
+            public const byte SET_3_H = 0xDC;
+            public const byte SET_3_L = 0xDD;
+            public const byte SET_3_MHL = 0xDE;
+            public const byte SET_3_A = 0xDF;
+
+            public const byte SET_4_B = 0xE0;
+            public const byte SET_4_C = 0xE1;
+            public const byte SET_4_D = 0xE2;
+            public const byte SET_4_E = 0xE3;
+            public const byte SET_4_H = 0xE4;
+            public const byte SET_4_L = 0xE5;
+            public const byte SET_4_MHL = 0xE6;
+            public const byte SET_4_A = 0xE7;
+
+            public const byte SET_5_B = 0xE8;
+            public const byte SET_5_C = 0xE9;
+            public const byte SET_5_D = 0xEA;
+            public const byte SET_5_E = 0xEB;
+            public const byte SET_5_H = 0xEC;
+            public const byte SET_5_L = 0xED;
+            public const byte SET_5_MHL = 0xEE;
+            public const byte SET_5_A = 0xEF;
+
+            public const byte SET_6_B = 0xF0;
+            public const byte SET_6_C = 0xF1;
+            public const byte SET_6_D = 0xF2;
+            public const byte SET_6_E = 0xF3;
+            public const byte SET_6_H = 0xF4;
+            public const byte SET_6_L = 0xF5;
+            public const byte SET_6_MHL = 0xF6;
+            public const byte SET_6_A = 0xF7;
+
+            public const byte SET_7_B = 0xF8;
+            public const byte SET_7_C = 0xF9;
+            public const byte SET_7_D = 0xFA;
+            public const byte SET_7_E = 0xFB;
+            public const byte SET_7_H = 0xFC;
+            public const byte SET_7_L = 0xFD;
+            public const byte SET_7_MHL = 0xFE;
+            public const byte SET_7_A = 0xFF;
+
+        #endregion
     }
 }

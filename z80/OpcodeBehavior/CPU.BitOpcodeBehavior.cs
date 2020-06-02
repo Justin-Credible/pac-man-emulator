@@ -481,6 +481,478 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Reset Bit
+
+                    case OpcodeBytes.RES_0_B:
+                        Registers.B = ExecuteResetBit(0, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_0_C:
+                        Registers.C = ExecuteResetBit(0, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_0_D:
+                        Registers.D = ExecuteResetBit(0, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_0_E:
+                        Registers.E = ExecuteResetBit(0, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_0_H:
+                        Registers.H = ExecuteResetBit(0, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_0_L:
+                        Registers.L = ExecuteResetBit(0, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_0_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(0, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_0_A:
+                        Registers.A = ExecuteResetBit(0, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_1_B:
+                        Registers.B = ExecuteResetBit(1, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_1_C:
+                        Registers.C = ExecuteResetBit(1, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_1_D:
+                        Registers.D = ExecuteResetBit(1, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_1_E:
+                        Registers.E = ExecuteResetBit(1, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_1_H:
+                        Registers.H = ExecuteResetBit(1, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_1_L:
+                        Registers.L = ExecuteResetBit(1, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_1_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(1, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_1_A:
+                        Registers.A = ExecuteResetBit(1, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_2_B:
+                        Registers.B = ExecuteResetBit(2, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_2_C:
+                        Registers.C = ExecuteResetBit(2, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_2_D:
+                        Registers.D = ExecuteResetBit(2, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_2_E:
+                        Registers.E = ExecuteResetBit(2, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_2_H:
+                        Registers.H = ExecuteResetBit(2, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_2_L:
+                        Registers.L = ExecuteResetBit(2, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_2_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(2, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_2_A:
+                        Registers.A = ExecuteResetBit(2, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_3_B:
+                        Registers.B = ExecuteResetBit(3, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_3_C:
+                        Registers.C = ExecuteResetBit(3, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_3_D:
+                        Registers.D = ExecuteResetBit(3, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_3_E:
+                        Registers.E = ExecuteResetBit(3, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_3_H:
+                        Registers.H = ExecuteResetBit(3, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_3_L:
+                        Registers.L = ExecuteResetBit(3, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_3_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(3, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_3_A:
+                        Registers.A = ExecuteResetBit(3, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_4_B:
+                        Registers.B = ExecuteResetBit(4, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_4_C:
+                        Registers.C = ExecuteResetBit(4, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_4_D:
+                        Registers.D = ExecuteResetBit(4, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_4_E:
+                        Registers.E = ExecuteResetBit(4, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_4_H:
+                        Registers.H = ExecuteResetBit(4, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_4_L:
+                        Registers.L = ExecuteResetBit(4, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_4_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(4, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_4_A:
+                        Registers.A = ExecuteResetBit(4, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_5_B:
+                        Registers.B = ExecuteResetBit(5, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_5_C:
+                        Registers.C = ExecuteResetBit(5, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_5_D:
+                        Registers.D = ExecuteResetBit(5, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_5_E:
+                        Registers.E = ExecuteResetBit(5, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_5_H:
+                        Registers.H = ExecuteResetBit(5, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_5_L:
+                        Registers.L = ExecuteResetBit(5, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_5_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(5, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_5_A:
+                        Registers.A = ExecuteResetBit(5, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_6_B:
+                        Registers.B = ExecuteResetBit(6, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_6_C:
+                        Registers.C = ExecuteResetBit(6, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_6_D:
+                        Registers.D = ExecuteResetBit(6, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_6_E:
+                        Registers.E = ExecuteResetBit(6, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_6_H:
+                        Registers.H = ExecuteResetBit(6, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_6_L:
+                        Registers.L = ExecuteResetBit(6, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_6_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(6, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_6_A:
+                        Registers.A = ExecuteResetBit(6, Registers.A);
+                        break;
+
+                    case OpcodeBytes.RES_7_B:
+                        Registers.B = ExecuteResetBit(7, Registers.B);
+                        break;
+                    case OpcodeBytes.RES_7_C:
+                        Registers.C = ExecuteResetBit(7, Registers.C);
+                        break;
+                    case OpcodeBytes.RES_7_D:
+                        Registers.D = ExecuteResetBit(7, Registers.D);
+                        break;
+                    case OpcodeBytes.RES_7_E:
+                        Registers.E = ExecuteResetBit(7, Registers.E);
+                        break;
+                    case OpcodeBytes.RES_7_H:
+                        Registers.H = ExecuteResetBit(7, Registers.H);
+                        break;
+                    case OpcodeBytes.RES_7_L:
+                        Registers.L = ExecuteResetBit(7, Registers.L);
+                        break;
+                    case OpcodeBytes.RES_7_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteResetBit(7, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.RES_7_A:
+                        Registers.A = ExecuteResetBit(7, Registers.A);
+                        break;
+
+                #endregion
+
+                #region Set Bit
+
+                    case OpcodeBytes.SET_0_B:
+                        Registers.B = ExecuteSetBit(0, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_0_C:
+                        Registers.C = ExecuteSetBit(0, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_0_D:
+                        Registers.D = ExecuteSetBit(0, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_0_E:
+                        Registers.E = ExecuteSetBit(0, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_0_H:
+                        Registers.H = ExecuteSetBit(0, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_0_L:
+                        Registers.L = ExecuteSetBit(0, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_0_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(0, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_0_A:
+                        Registers.A = ExecuteSetBit(0, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_1_B:
+                        Registers.B = ExecuteSetBit(1, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_1_C:
+                        Registers.C = ExecuteSetBit(1, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_1_D:
+                        Registers.D = ExecuteSetBit(1, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_1_E:
+                        Registers.E = ExecuteSetBit(1, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_1_H:
+                        Registers.H = ExecuteSetBit(1, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_1_L:
+                        Registers.L = ExecuteSetBit(1, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_1_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(1, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_1_A:
+                        Registers.A = ExecuteSetBit(1, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_2_B:
+                        Registers.B = ExecuteSetBit(2, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_2_C:
+                        Registers.C = ExecuteSetBit(2, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_2_D:
+                        Registers.D = ExecuteSetBit(2, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_2_E:
+                        Registers.E = ExecuteSetBit(2, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_2_H:
+                        Registers.H = ExecuteSetBit(2, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_2_L:
+                        Registers.L = ExecuteSetBit(2, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_2_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(2, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_2_A:
+                        Registers.A = ExecuteSetBit(2, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_3_B:
+                        Registers.B = ExecuteSetBit(3, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_3_C:
+                        Registers.C = ExecuteSetBit(3, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_3_D:
+                        Registers.D = ExecuteSetBit(3, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_3_E:
+                        Registers.E = ExecuteSetBit(3, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_3_H:
+                        Registers.H = ExecuteSetBit(3, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_3_L:
+                        Registers.L = ExecuteSetBit(3, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_3_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(3, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_3_A:
+                        Registers.A = ExecuteSetBit(3, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_4_B:
+                        Registers.B = ExecuteSetBit(4, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_4_C:
+                        Registers.C = ExecuteSetBit(4, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_4_D:
+                        Registers.D = ExecuteSetBit(4, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_4_E:
+                        Registers.E = ExecuteSetBit(4, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_4_H:
+                        Registers.H = ExecuteSetBit(4, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_4_L:
+                        Registers.L = ExecuteSetBit(4, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_4_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(4, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_4_A:
+                        Registers.A = ExecuteSetBit(4, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_5_B:
+                        Registers.B = ExecuteSetBit(5, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_5_C:
+                        Registers.C = ExecuteSetBit(5, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_5_D:
+                        Registers.D = ExecuteSetBit(5, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_5_E:
+                        Registers.E = ExecuteSetBit(5, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_5_H:
+                        Registers.H = ExecuteSetBit(5, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_5_L:
+                        Registers.L = ExecuteSetBit(5, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_5_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(5, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_5_A:
+                        Registers.A = ExecuteSetBit(5, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_6_B:
+                        Registers.B = ExecuteSetBit(6, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_6_C:
+                        Registers.C = ExecuteSetBit(6, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_6_D:
+                        Registers.D = ExecuteSetBit(6, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_6_E:
+                        Registers.E = ExecuteSetBit(6, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_6_H:
+                        Registers.H = ExecuteSetBit(6, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_6_L:
+                        Registers.L = ExecuteSetBit(6, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_6_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(6, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_6_A:
+                        Registers.A = ExecuteSetBit(6, Registers.A);
+                        break;
+
+                    case OpcodeBytes.SET_7_B:
+                        Registers.B = ExecuteSetBit(7, Registers.B);
+                        break;
+                    case OpcodeBytes.SET_7_C:
+                        Registers.C = ExecuteSetBit(7, Registers.C);
+                        break;
+                    case OpcodeBytes.SET_7_D:
+                        Registers.D = ExecuteSetBit(7, Registers.D);
+                        break;
+                    case OpcodeBytes.SET_7_E:
+                        Registers.E = ExecuteSetBit(7, Registers.E);
+                        break;
+                    case OpcodeBytes.SET_7_H:
+                        Registers.H = ExecuteSetBit(7, Registers.H);
+                        break;
+                    case OpcodeBytes.SET_7_L:
+                        Registers.L = ExecuteSetBit(7, Registers.L);
+                        break;
+                    case OpcodeBytes.SET_7_MHL:
+                    {
+                        var value = ReadMemory(Registers.HL);
+                        value = ExecuteSetBit(7, value);
+                        WriteMemory(Registers.HL, value);
+                        break;
+                    }
+                    case OpcodeBytes.SET_7_A:
+                        Registers.A = ExecuteSetBit(7, Registers.A);
+                        break;
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }
@@ -616,6 +1088,26 @@ namespace JustinCredible.ZilogZ80
 
             Flags.Subtract = false;
             Flags.AuxCarry = false;
+        }
+
+        public byte ExecuteResetBit(int index, byte value)
+        {
+            if (index < 0 || index > 7)
+                throw new Exception("Expected index to be 0-7.");
+
+            int mask = ~(0x01 << index);
+
+            return (byte)(value & mask);
+        }
+
+        public byte ExecuteSetBit(int index, byte value)
+        {
+            if (index < 0 || index > 7)
+                throw new Exception("Expected index to be 0-7.");
+
+            int mask = 0x01 << index;
+
+            return (byte)(value | mask);
         }
 
         #endregion

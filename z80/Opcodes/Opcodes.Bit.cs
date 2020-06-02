@@ -178,5 +178,157 @@ namespace JustinCredible.ZilogZ80
             public static Opcode BIT_7_A = new Opcode(OpcodeBytes.BIT_7_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "BIT 7, A", cycles: 8, pseudocode: "Z = bit7 == 0");
 
         #endregion
+
+        #region Reset Bit
+
+            public static Opcode RES_0_B = new Opcode(OpcodeBytes.RES_0_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, B", cycles: 8, pseudocode: "Set bit 0 of B to 0");
+            public static Opcode RES_0_C = new Opcode(OpcodeBytes.RES_0_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, C", cycles: 8, pseudocode: "Set bit 0 of C to 0");
+            public static Opcode RES_0_D = new Opcode(OpcodeBytes.RES_0_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, D", cycles: 8, pseudocode: "Set bit 0 of D to 0");
+            public static Opcode RES_0_E = new Opcode(OpcodeBytes.RES_0_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, E", cycles: 8, pseudocode: "Set bit 0 of E to 0");
+            public static Opcode RES_0_H = new Opcode(OpcodeBytes.RES_0_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, H", cycles: 8, pseudocode: "Set bit 0 of H to 0");
+            public static Opcode RES_0_L = new Opcode(OpcodeBytes.RES_0_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, L", cycles: 8, pseudocode: "Set bit 0 of L to 0");
+            public static Opcode RES_0_MHL = new Opcode(OpcodeBytes.RES_0_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, (HL)", cycles: 15, pseudocode: "Set bit 0 of (HL) to 0");
+            public static Opcode RES_0_A = new Opcode(OpcodeBytes.RES_0_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 0, A", cycles: 8, pseudocode: "Set bit 0 of A to 0");
+
+            public static Opcode RES_1_B = new Opcode(OpcodeBytes.RES_1_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, B", cycles: 8, pseudocode: "Set bit 1 of B to 0");
+            public static Opcode RES_1_C = new Opcode(OpcodeBytes.RES_1_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, C", cycles: 8, pseudocode: "Set bit 1 of C to 0");
+            public static Opcode RES_1_D = new Opcode(OpcodeBytes.RES_1_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, D", cycles: 8, pseudocode: "Set bit 1 of D to 0");
+            public static Opcode RES_1_E = new Opcode(OpcodeBytes.RES_1_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, E", cycles: 8, pseudocode: "Set bit 1 of E to 0");
+            public static Opcode RES_1_H = new Opcode(OpcodeBytes.RES_1_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, H", cycles: 8, pseudocode: "Set bit 1 of H to 0");
+            public static Opcode RES_1_L = new Opcode(OpcodeBytes.RES_1_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, L", cycles: 8, pseudocode: "Set bit 1 of L to 0");
+            public static Opcode RES_1_MHL = new Opcode(OpcodeBytes.RES_1_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, (HL)", cycles: 15, pseudocode: "Set bit 1 of (HL) to 0");
+            public static Opcode RES_1_A = new Opcode(OpcodeBytes.RES_1_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 1, A", cycles: 8, pseudocode: "Set bit 1 of A to 0");
+
+            public static Opcode RES_2_B = new Opcode(OpcodeBytes.RES_2_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, B", cycles: 8, pseudocode: "Set bit 2 of B to 0");
+            public static Opcode RES_2_C = new Opcode(OpcodeBytes.RES_2_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, C", cycles: 8, pseudocode: "Set bit 2 of C to 0");
+            public static Opcode RES_2_D = new Opcode(OpcodeBytes.RES_2_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, D", cycles: 8, pseudocode: "Set bit 2 of D to 0");
+            public static Opcode RES_2_E = new Opcode(OpcodeBytes.RES_2_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, E", cycles: 8, pseudocode: "Set bit 2 of E to 0");
+            public static Opcode RES_2_H = new Opcode(OpcodeBytes.RES_2_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, H", cycles: 8, pseudocode: "Set bit 2 of H to 0");
+            public static Opcode RES_2_L = new Opcode(OpcodeBytes.RES_2_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, L", cycles: 8, pseudocode: "Set bit 2 of L to 0");
+            public static Opcode RES_2_MHL = new Opcode(OpcodeBytes.RES_2_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, (HL)", cycles: 15, pseudocode: "Set bit 2 of (HL) to 0");
+            public static Opcode RES_2_A = new Opcode(OpcodeBytes.RES_2_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 2, A", cycles: 8, pseudocode: "Set bit 2 of A to 0");
+
+            public static Opcode RES_3_B = new Opcode(OpcodeBytes.RES_3_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, B", cycles: 8, pseudocode: "Set bit 3 of B to 0");
+            public static Opcode RES_3_C = new Opcode(OpcodeBytes.RES_3_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, C", cycles: 8, pseudocode: "Set bit 3 of C to 0");
+            public static Opcode RES_3_D = new Opcode(OpcodeBytes.RES_3_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, D", cycles: 8, pseudocode: "Set bit 3 of D to 0");
+            public static Opcode RES_3_E = new Opcode(OpcodeBytes.RES_3_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, E", cycles: 8, pseudocode: "Set bit 3 of E to 0");
+            public static Opcode RES_3_H = new Opcode(OpcodeBytes.RES_3_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, H", cycles: 8, pseudocode: "Set bit 3 of H to 0");
+            public static Opcode RES_3_L = new Opcode(OpcodeBytes.RES_3_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, L", cycles: 8, pseudocode: "Set bit 3 of L to 0");
+            public static Opcode RES_3_MHL = new Opcode(OpcodeBytes.RES_3_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, (HL)", cycles: 15, pseudocode: "Set bit 3 of (HL) to 0");
+            public static Opcode RES_3_A = new Opcode(OpcodeBytes.RES_3_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 3, A", cycles: 8, pseudocode: "Set bit 3 of A to 0");
+
+            public static Opcode RES_4_B = new Opcode(OpcodeBytes.RES_4_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, B", cycles: 8, pseudocode: "Set bit 4 of B to 0");
+            public static Opcode RES_4_C = new Opcode(OpcodeBytes.RES_4_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, C", cycles: 8, pseudocode: "Set bit 4 of C to 0");
+            public static Opcode RES_4_D = new Opcode(OpcodeBytes.RES_4_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, D", cycles: 8, pseudocode: "Set bit 4 of D to 0");
+            public static Opcode RES_4_E = new Opcode(OpcodeBytes.RES_4_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, E", cycles: 8, pseudocode: "Set bit 4 of E to 0");
+            public static Opcode RES_4_H = new Opcode(OpcodeBytes.RES_4_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, H", cycles: 8, pseudocode: "Set bit 4 of H to 0");
+            public static Opcode RES_4_L = new Opcode(OpcodeBytes.RES_4_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, L", cycles: 8, pseudocode: "Set bit 4 of L to 0");
+            public static Opcode RES_4_MHL = new Opcode(OpcodeBytes.RES_4_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, (HL)", cycles: 15, pseudocode: "Set bit 4 of (HL) to 0");
+            public static Opcode RES_4_A = new Opcode(OpcodeBytes.RES_4_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 4, A", cycles: 8, pseudocode: "Set bit 4 of A to 0");
+
+            public static Opcode RES_5_B = new Opcode(OpcodeBytes.RES_5_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, B", cycles: 8, pseudocode: "Set bit 5 of B to 0");
+            public static Opcode RES_5_C = new Opcode(OpcodeBytes.RES_5_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, C", cycles: 8, pseudocode: "Set bit 5 of C to 0");
+            public static Opcode RES_5_D = new Opcode(OpcodeBytes.RES_5_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, D", cycles: 8, pseudocode: "Set bit 5 of D to 0");
+            public static Opcode RES_5_E = new Opcode(OpcodeBytes.RES_5_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, E", cycles: 8, pseudocode: "Set bit 5 of E to 0");
+            public static Opcode RES_5_H = new Opcode(OpcodeBytes.RES_5_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, H", cycles: 8, pseudocode: "Set bit 5 of H to 0");
+            public static Opcode RES_5_L = new Opcode(OpcodeBytes.RES_5_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, L", cycles: 8, pseudocode: "Set bit 5 of L to 0");
+            public static Opcode RES_5_MHL = new Opcode(OpcodeBytes.RES_5_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, (HL)", cycles: 15, pseudocode: "Set bit 5 of (HL) to 0");
+            public static Opcode RES_5_A = new Opcode(OpcodeBytes.RES_5_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 5, A", cycles: 8, pseudocode: "Set bit 5 of A to 0");
+
+            public static Opcode RES_6_B = new Opcode(OpcodeBytes.RES_6_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, B", cycles: 8, pseudocode: "Set bit 6 of B to 0");
+            public static Opcode RES_6_C = new Opcode(OpcodeBytes.RES_6_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, C", cycles: 8, pseudocode: "Set bit 6 of C to 0");
+            public static Opcode RES_6_D = new Opcode(OpcodeBytes.RES_6_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, D", cycles: 8, pseudocode: "Set bit 6 of D to 0");
+            public static Opcode RES_6_E = new Opcode(OpcodeBytes.RES_6_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, E", cycles: 8, pseudocode: "Set bit 6 of E to 0");
+            public static Opcode RES_6_H = new Opcode(OpcodeBytes.RES_6_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, H", cycles: 8, pseudocode: "Set bit 6 of H to 0");
+            public static Opcode RES_6_L = new Opcode(OpcodeBytes.RES_6_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, L", cycles: 8, pseudocode: "Set bit 6 of L to 0");
+            public static Opcode RES_6_MHL = new Opcode(OpcodeBytes.RES_6_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, (HL)", cycles: 15, pseudocode: "Set bit 6 of (HL) to 0");
+            public static Opcode RES_6_A = new Opcode(OpcodeBytes.RES_6_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 6, A", cycles: 8, pseudocode: "Set bit 6 of A to 0");
+
+            public static Opcode RES_7_B = new Opcode(OpcodeBytes.RES_7_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, B", cycles: 8, pseudocode: "Set bit 7 of B to 0");
+            public static Opcode RES_7_C = new Opcode(OpcodeBytes.RES_7_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, C", cycles: 8, pseudocode: "Set bit 7 of C to 0");
+            public static Opcode RES_7_D = new Opcode(OpcodeBytes.RES_7_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, D", cycles: 8, pseudocode: "Set bit 7 of D to 0");
+            public static Opcode RES_7_E = new Opcode(OpcodeBytes.RES_7_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, E", cycles: 8, pseudocode: "Set bit 7 of E to 0");
+            public static Opcode RES_7_H = new Opcode(OpcodeBytes.RES_7_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, H", cycles: 8, pseudocode: "Set bit 7 of H to 0");
+            public static Opcode RES_7_L = new Opcode(OpcodeBytes.RES_7_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, L", cycles: 8, pseudocode: "Set bit 7 of L to 0");
+            public static Opcode RES_7_MHL = new Opcode(OpcodeBytes.RES_7_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, (HL)", cycles: 15, pseudocode: "Set bit 7 of (HL) to 0");
+            public static Opcode RES_7_A = new Opcode(OpcodeBytes.RES_7_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "RES 7, A", cycles: 8, pseudocode: "Set bit 7 of A to 0");
+
+        #endregion
+
+        #region Set Bit
+
+            public static Opcode SET_0_B = new Opcode(OpcodeBytes.SET_0_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, B", cycles: 8, pseudocode: "Set bit 0 of B to 1");
+            public static Opcode SET_0_C = new Opcode(OpcodeBytes.SET_0_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, C", cycles: 8, pseudocode: "Set bit 0 of C to 1");
+            public static Opcode SET_0_D = new Opcode(OpcodeBytes.SET_0_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, D", cycles: 8, pseudocode: "Set bit 0 of D to 1");
+            public static Opcode SET_0_E = new Opcode(OpcodeBytes.SET_0_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, E", cycles: 8, pseudocode: "Set bit 0 of E to 1");
+            public static Opcode SET_0_H = new Opcode(OpcodeBytes.SET_0_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, H", cycles: 8, pseudocode: "Set bit 0 of H to 1");
+            public static Opcode SET_0_L = new Opcode(OpcodeBytes.SET_0_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, L", cycles: 8, pseudocode: "Set bit 0 of L to 1");
+            public static Opcode SET_0_MHL = new Opcode(OpcodeBytes.SET_0_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, (HL)", cycles: 15, pseudocode: "Set bit 0 of (HL) to 1");
+            public static Opcode SET_0_A = new Opcode(OpcodeBytes.SET_0_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 0, A", cycles: 8, pseudocode: "Set bit 0 of A to 1");
+
+            public static Opcode SET_1_B = new Opcode(OpcodeBytes.SET_1_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, B", cycles: 8, pseudocode: "Set bit 1 of B to 1");
+            public static Opcode SET_1_C = new Opcode(OpcodeBytes.SET_1_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, C", cycles: 8, pseudocode: "Set bit 1 of C to 1");
+            public static Opcode SET_1_D = new Opcode(OpcodeBytes.SET_1_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, D", cycles: 8, pseudocode: "Set bit 1 of D to 1");
+            public static Opcode SET_1_E = new Opcode(OpcodeBytes.SET_1_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, E", cycles: 8, pseudocode: "Set bit 1 of E to 1");
+            public static Opcode SET_1_H = new Opcode(OpcodeBytes.SET_1_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, H", cycles: 8, pseudocode: "Set bit 1 of H to 1");
+            public static Opcode SET_1_L = new Opcode(OpcodeBytes.SET_1_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, L", cycles: 8, pseudocode: "Set bit 1 of L to 1");
+            public static Opcode SET_1_MHL = new Opcode(OpcodeBytes.SET_1_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, (HL)", cycles: 15, pseudocode: "Set bit 1 of (HL) to 1");
+            public static Opcode SET_1_A = new Opcode(OpcodeBytes.SET_1_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 1, A", cycles: 8, pseudocode: "Set bit 1 of A to 1");
+
+            public static Opcode SET_2_B = new Opcode(OpcodeBytes.SET_2_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, B", cycles: 8, pseudocode: "Set bit 2 of B to 1");
+            public static Opcode SET_2_C = new Opcode(OpcodeBytes.SET_2_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, C", cycles: 8, pseudocode: "Set bit 2 of C to 1");
+            public static Opcode SET_2_D = new Opcode(OpcodeBytes.SET_2_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, D", cycles: 8, pseudocode: "Set bit 2 of D to 1");
+            public static Opcode SET_2_E = new Opcode(OpcodeBytes.SET_2_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, E", cycles: 8, pseudocode: "Set bit 2 of E to 1");
+            public static Opcode SET_2_H = new Opcode(OpcodeBytes.SET_2_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, H", cycles: 8, pseudocode: "Set bit 2 of H to 1");
+            public static Opcode SET_2_L = new Opcode(OpcodeBytes.SET_2_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, L", cycles: 8, pseudocode: "Set bit 2 of L to 1");
+            public static Opcode SET_2_MHL = new Opcode(OpcodeBytes.SET_2_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, (HL)", cycles: 15, pseudocode: "Set bit 2 of (HL) to 1");
+            public static Opcode SET_2_A = new Opcode(OpcodeBytes.SET_2_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 2, A", cycles: 8, pseudocode: "Set bit 2 of A to 1");
+
+            public static Opcode SET_3_B = new Opcode(OpcodeBytes.SET_3_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, B", cycles: 8, pseudocode: "Set bit 3 of B to 1");
+            public static Opcode SET_3_C = new Opcode(OpcodeBytes.SET_3_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, C", cycles: 8, pseudocode: "Set bit 3 of C to 1");
+            public static Opcode SET_3_D = new Opcode(OpcodeBytes.SET_3_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, D", cycles: 8, pseudocode: "Set bit 3 of D to 1");
+            public static Opcode SET_3_E = new Opcode(OpcodeBytes.SET_3_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, E", cycles: 8, pseudocode: "Set bit 3 of E to 1");
+            public static Opcode SET_3_H = new Opcode(OpcodeBytes.SET_3_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, H", cycles: 8, pseudocode: "Set bit 3 of H to 1");
+            public static Opcode SET_3_L = new Opcode(OpcodeBytes.SET_3_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, L", cycles: 8, pseudocode: "Set bit 3 of L to 1");
+            public static Opcode SET_3_MHL = new Opcode(OpcodeBytes.SET_3_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, (HL)", cycles: 15, pseudocode: "Set bit 3 of (HL) to 1");
+            public static Opcode SET_3_A = new Opcode(OpcodeBytes.SET_3_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 3, A", cycles: 8, pseudocode: "Set bit 3 of A to 1");
+
+            public static Opcode SET_4_B = new Opcode(OpcodeBytes.SET_4_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, B", cycles: 8, pseudocode: "Set bit 4 of B to 1");
+            public static Opcode SET_4_C = new Opcode(OpcodeBytes.SET_4_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, C", cycles: 8, pseudocode: "Set bit 4 of C to 1");
+            public static Opcode SET_4_D = new Opcode(OpcodeBytes.SET_4_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, D", cycles: 8, pseudocode: "Set bit 4 of D to 1");
+            public static Opcode SET_4_E = new Opcode(OpcodeBytes.SET_4_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, E", cycles: 8, pseudocode: "Set bit 4 of E to 1");
+            public static Opcode SET_4_H = new Opcode(OpcodeBytes.SET_4_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, H", cycles: 8, pseudocode: "Set bit 4 of H to 1");
+            public static Opcode SET_4_L = new Opcode(OpcodeBytes.SET_4_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, L", cycles: 8, pseudocode: "Set bit 4 of L to 1");
+            public static Opcode SET_4_MHL = new Opcode(OpcodeBytes.SET_4_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, (HL)", cycles: 15, pseudocode: "Set bit 4 of (HL) to 1");
+            public static Opcode SET_4_A = new Opcode(OpcodeBytes.SET_4_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 4, A", cycles: 8, pseudocode: "Set bit 4 of A to 1");
+
+            public static Opcode SET_5_B = new Opcode(OpcodeBytes.SET_5_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, B", cycles: 8, pseudocode: "Set bit 5 of B to 1");
+            public static Opcode SET_5_C = new Opcode(OpcodeBytes.SET_5_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, C", cycles: 8, pseudocode: "Set bit 5 of C to 1");
+            public static Opcode SET_5_D = new Opcode(OpcodeBytes.SET_5_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, D", cycles: 8, pseudocode: "Set bit 5 of D to 1");
+            public static Opcode SET_5_E = new Opcode(OpcodeBytes.SET_5_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, E", cycles: 8, pseudocode: "Set bit 5 of E to 1");
+            public static Opcode SET_5_H = new Opcode(OpcodeBytes.SET_5_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, H", cycles: 8, pseudocode: "Set bit 5 of H to 1");
+            public static Opcode SET_5_L = new Opcode(OpcodeBytes.SET_5_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, L", cycles: 8, pseudocode: "Set bit 5 of L to 1");
+            public static Opcode SET_5_MHL = new Opcode(OpcodeBytes.SET_5_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, (HL)", cycles: 15, pseudocode: "Set bit 5 of (HL) to 1");
+            public static Opcode SET_5_A = new Opcode(OpcodeBytes.SET_5_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 5, A", cycles: 8, pseudocode: "Set bit 5 of A to 1");
+
+            public static Opcode SET_6_B = new Opcode(OpcodeBytes.SET_6_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, B", cycles: 8, pseudocode: "Set bit 6 of B to 1");
+            public static Opcode SET_6_C = new Opcode(OpcodeBytes.SET_6_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, C", cycles: 8, pseudocode: "Set bit 6 of C to 1");
+            public static Opcode SET_6_D = new Opcode(OpcodeBytes.SET_6_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, D", cycles: 8, pseudocode: "Set bit 6 of D to 1");
+            public static Opcode SET_6_E = new Opcode(OpcodeBytes.SET_6_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, E", cycles: 8, pseudocode: "Set bit 6 of E to 1");
+            public static Opcode SET_6_H = new Opcode(OpcodeBytes.SET_6_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, H", cycles: 8, pseudocode: "Set bit 6 of H to 1");
+            public static Opcode SET_6_L = new Opcode(OpcodeBytes.SET_6_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, L", cycles: 8, pseudocode: "Set bit 6 of L to 1");
+            public static Opcode SET_6_MHL = new Opcode(OpcodeBytes.SET_6_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, (HL)", cycles: 15, pseudocode: "Set bit 6 of (HL) to 1");
+            public static Opcode SET_6_A = new Opcode(OpcodeBytes.SET_6_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 6, A", cycles: 8, pseudocode: "Set bit 6 of A to 1");
+
+            public static Opcode SET_7_B = new Opcode(OpcodeBytes.SET_7_B, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, B", cycles: 8, pseudocode: "Set bit 7 of B to 1");
+            public static Opcode SET_7_C = new Opcode(OpcodeBytes.SET_7_C, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, C", cycles: 8, pseudocode: "Set bit 7 of C to 1");
+            public static Opcode SET_7_D = new Opcode(OpcodeBytes.SET_7_D, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, D", cycles: 8, pseudocode: "Set bit 7 of D to 1");
+            public static Opcode SET_7_E = new Opcode(OpcodeBytes.SET_7_E, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, E", cycles: 8, pseudocode: "Set bit 7 of E to 1");
+            public static Opcode SET_7_H = new Opcode(OpcodeBytes.SET_7_H, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, H", cycles: 8, pseudocode: "Set bit 7 of H to 1");
+            public static Opcode SET_7_L = new Opcode(OpcodeBytes.SET_7_L, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, L", cycles: 8, pseudocode: "Set bit 7 of L to 1");
+            public static Opcode SET_7_MHL = new Opcode(OpcodeBytes.SET_7_MHL, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, (HL)", cycles: 15, pseudocode: "Set bit 7 of (HL) to 1");
+            public static Opcode SET_7_A = new Opcode(OpcodeBytes.SET_7_A, instructionSet: InstructionSet.Bit, size: 2, instruction: "SET 7, A", cycles: 8, pseudocode: "Set bit 7 of A to 1");
+
+        #endregion
     }
 }
