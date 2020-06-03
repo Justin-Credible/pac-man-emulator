@@ -20,13 +20,14 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
     - [X] Get all 600+ original unit tests working again
     - [X] Add Z80 standard instructions
     - [X] Extended Instructions (ED)
-    - [ ] Bit Instructions (CB)
+    - [X] Bit Instructions (CB)
     - [ ] IX Instructions (DD)
-    - [ ] IX Bit Instructions (DDCB)
+    - [X] IX Bit Instructions (DDCB)
     - [ ] IY Instructions (FB)
-    - [ ] IY Bit Instructions (FDCB)
+    - [X] IY Bit Instructions (FDCB)
   - [ ] Handle Intel 8080 -> Z80 instruction differences
   - [ ] Pass ZEX integration test
+  - [ ] Re-work flag setting for arithmetic vs logical operations
 - [ ] Pac-Man Hardware
   - [ ] Copy Space Invaders emulator project
   - [ ] CPU / Memory configuration
