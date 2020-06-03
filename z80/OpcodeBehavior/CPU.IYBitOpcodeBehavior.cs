@@ -509,6 +509,394 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Test Bit
+
+                    case OpcodeBytes.BIT_0_IY_2:
+                    case OpcodeBytes.BIT_0_IY_3:
+                    case OpcodeBytes.BIT_0_IY_4:
+                    case OpcodeBytes.BIT_0_IY_5:
+                    case OpcodeBytes.BIT_0_IY_6:
+                    case OpcodeBytes.BIT_0_IY_7:
+                    case OpcodeBytes.BIT_0_IY:
+                    case OpcodeBytes.BIT_0_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(0, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_1_IY_2:
+                    case OpcodeBytes.BIT_1_IY_3:
+                    case OpcodeBytes.BIT_1_IY_4:
+                    case OpcodeBytes.BIT_1_IY_5:
+                    case OpcodeBytes.BIT_1_IY_6:
+                    case OpcodeBytes.BIT_1_IY_7:
+                    case OpcodeBytes.BIT_1_IY:
+                    case OpcodeBytes.BIT_1_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(1, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_2_IY_2:
+                    case OpcodeBytes.BIT_2_IY_3:
+                    case OpcodeBytes.BIT_2_IY_4:
+                    case OpcodeBytes.BIT_2_IY_5:
+                    case OpcodeBytes.BIT_2_IY_6:
+                    case OpcodeBytes.BIT_2_IY_7:
+                    case OpcodeBytes.BIT_2_IY:
+                    case OpcodeBytes.BIT_2_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(2, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_3_IY_2:
+                    case OpcodeBytes.BIT_3_IY_3:
+                    case OpcodeBytes.BIT_3_IY_4:
+                    case OpcodeBytes.BIT_3_IY_5:
+                    case OpcodeBytes.BIT_3_IY_6:
+                    case OpcodeBytes.BIT_3_IY_7:
+                    case OpcodeBytes.BIT_3_IY:
+                    case OpcodeBytes.BIT_3_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(3, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_4_IY_2:
+                    case OpcodeBytes.BIT_4_IY_3:
+                    case OpcodeBytes.BIT_4_IY_4:
+                    case OpcodeBytes.BIT_4_IY_5:
+                    case OpcodeBytes.BIT_4_IY_6:
+                    case OpcodeBytes.BIT_4_IY_7:
+                    case OpcodeBytes.BIT_4_IY:
+                    case OpcodeBytes.BIT_4_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(4, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_5_IY_2:
+                    case OpcodeBytes.BIT_5_IY_3:
+                    case OpcodeBytes.BIT_5_IY_4:
+                    case OpcodeBytes.BIT_5_IY_5:
+                    case OpcodeBytes.BIT_5_IY_6:
+                    case OpcodeBytes.BIT_5_IY_7:
+                    case OpcodeBytes.BIT_5_IY:
+                    case OpcodeBytes.BIT_5_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(5, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_6_IY_2:
+                    case OpcodeBytes.BIT_6_IY_3:
+                    case OpcodeBytes.BIT_6_IY_4:
+                    case OpcodeBytes.BIT_6_IY_5:
+                    case OpcodeBytes.BIT_6_IY_6:
+                    case OpcodeBytes.BIT_6_IY_7:
+                    case OpcodeBytes.BIT_6_IY:
+                    case OpcodeBytes.BIT_6_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(6, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.BIT_7_IY_2:
+                    case OpcodeBytes.BIT_7_IY_3:
+                    case OpcodeBytes.BIT_7_IY_4:
+                    case OpcodeBytes.BIT_7_IY_5:
+                    case OpcodeBytes.BIT_7_IY_6:
+                    case OpcodeBytes.BIT_7_IY_7:
+                    case OpcodeBytes.BIT_7_IY:
+                    case OpcodeBytes.BIT_7_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            ExecuteTestBit(7, value);
+                            break;
+                        }
+
+                #endregion
+
+                #region Reset Bit
+
+                    case OpcodeBytes.RES_0_IY_2:
+                    case OpcodeBytes.RES_0_IY_3:
+                    case OpcodeBytes.RES_0_IY_4:
+                    case OpcodeBytes.RES_0_IY_5:
+                    case OpcodeBytes.RES_0_IY_6:
+                    case OpcodeBytes.RES_0_IY_7:
+                    case OpcodeBytes.RES_0_IY:
+                    case OpcodeBytes.RES_0_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(0, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_1_IY_2:
+                    case OpcodeBytes.RES_1_IY_3:
+                    case OpcodeBytes.RES_1_IY_4:
+                    case OpcodeBytes.RES_1_IY_5:
+                    case OpcodeBytes.RES_1_IY_6:
+                    case OpcodeBytes.RES_1_IY_7:
+                    case OpcodeBytes.RES_1_IY:
+                    case OpcodeBytes.RES_1_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(1, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_2_IY_2:
+                    case OpcodeBytes.RES_2_IY_3:
+                    case OpcodeBytes.RES_2_IY_4:
+                    case OpcodeBytes.RES_2_IY_5:
+                    case OpcodeBytes.RES_2_IY_6:
+                    case OpcodeBytes.RES_2_IY_7:
+                    case OpcodeBytes.RES_2_IY:
+                    case OpcodeBytes.RES_2_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(2, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_3_IY_2:
+                    case OpcodeBytes.RES_3_IY_3:
+                    case OpcodeBytes.RES_3_IY_4:
+                    case OpcodeBytes.RES_3_IY_5:
+                    case OpcodeBytes.RES_3_IY_6:
+                    case OpcodeBytes.RES_3_IY_7:
+                    case OpcodeBytes.RES_3_IY:
+                    case OpcodeBytes.RES_3_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(3, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_4_IY_2:
+                    case OpcodeBytes.RES_4_IY_3:
+                    case OpcodeBytes.RES_4_IY_4:
+                    case OpcodeBytes.RES_4_IY_5:
+                    case OpcodeBytes.RES_4_IY_6:
+                    case OpcodeBytes.RES_4_IY_7:
+                    case OpcodeBytes.RES_4_IY:
+                    case OpcodeBytes.RES_4_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(4, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_5_IY_2:
+                    case OpcodeBytes.RES_5_IY_3:
+                    case OpcodeBytes.RES_5_IY_4:
+                    case OpcodeBytes.RES_5_IY_5:
+                    case OpcodeBytes.RES_5_IY_6:
+                    case OpcodeBytes.RES_5_IY_7:
+                    case OpcodeBytes.RES_5_IY:
+                    case OpcodeBytes.RES_5_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(5, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_6_IY_2:
+                    case OpcodeBytes.RES_6_IY_3:
+                    case OpcodeBytes.RES_6_IY_4:
+                    case OpcodeBytes.RES_6_IY_5:
+                    case OpcodeBytes.RES_6_IY_6:
+                    case OpcodeBytes.RES_6_IY_7:
+                    case OpcodeBytes.RES_6_IY:
+                    case OpcodeBytes.RES_6_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(6, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.RES_7_IY_2:
+                    case OpcodeBytes.RES_7_IY_3:
+                    case OpcodeBytes.RES_7_IY_4:
+                    case OpcodeBytes.RES_7_IY_5:
+                    case OpcodeBytes.RES_7_IY_6:
+                    case OpcodeBytes.RES_7_IY_7:
+                    case OpcodeBytes.RES_7_IY:
+                    case OpcodeBytes.RES_7_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteResetBit(7, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                #endregion
+
+                #region Set Bit
+
+                    case OpcodeBytes.SET_0_IY_2:
+                    case OpcodeBytes.SET_0_IY_3:
+                    case OpcodeBytes.SET_0_IY_4:
+                    case OpcodeBytes.SET_0_IY_5:
+                    case OpcodeBytes.SET_0_IY_6:
+                    case OpcodeBytes.SET_0_IY_7:
+                    case OpcodeBytes.SET_0_IY:
+                    case OpcodeBytes.SET_0_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(0, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_1_IY_2:
+                    case OpcodeBytes.SET_1_IY_3:
+                    case OpcodeBytes.SET_1_IY_4:
+                    case OpcodeBytes.SET_1_IY_5:
+                    case OpcodeBytes.SET_1_IY_6:
+                    case OpcodeBytes.SET_1_IY_7:
+                    case OpcodeBytes.SET_1_IY:
+                    case OpcodeBytes.SET_1_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(1, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_2_IY_2:
+                    case OpcodeBytes.SET_2_IY_3:
+                    case OpcodeBytes.SET_2_IY_4:
+                    case OpcodeBytes.SET_2_IY_5:
+                    case OpcodeBytes.SET_2_IY_6:
+                    case OpcodeBytes.SET_2_IY_7:
+                    case OpcodeBytes.SET_2_IY:
+                    case OpcodeBytes.SET_2_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(2, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_3_IY_2:
+                    case OpcodeBytes.SET_3_IY_3:
+                    case OpcodeBytes.SET_3_IY_4:
+                    case OpcodeBytes.SET_3_IY_5:
+                    case OpcodeBytes.SET_3_IY_6:
+                    case OpcodeBytes.SET_3_IY_7:
+                    case OpcodeBytes.SET_3_IY:
+                    case OpcodeBytes.SET_3_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(3, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_4_IY_2:
+                    case OpcodeBytes.SET_4_IY_3:
+                    case OpcodeBytes.SET_4_IY_4:
+                    case OpcodeBytes.SET_4_IY_5:
+                    case OpcodeBytes.SET_4_IY_6:
+                    case OpcodeBytes.SET_4_IY_7:
+                    case OpcodeBytes.SET_4_IY:
+                    case OpcodeBytes.SET_4_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(4, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_5_IY_2:
+                    case OpcodeBytes.SET_5_IY_3:
+                    case OpcodeBytes.SET_5_IY_4:
+                    case OpcodeBytes.SET_5_IY_5:
+                    case OpcodeBytes.SET_5_IY_6:
+                    case OpcodeBytes.SET_5_IY_7:
+                    case OpcodeBytes.SET_5_IY:
+                    case OpcodeBytes.SET_5_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(5, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_6_IY_2:
+                    case OpcodeBytes.SET_6_IY_3:
+                    case OpcodeBytes.SET_6_IY_4:
+                    case OpcodeBytes.SET_6_IY_5:
+                    case OpcodeBytes.SET_6_IY_6:
+                    case OpcodeBytes.SET_6_IY_7:
+                    case OpcodeBytes.SET_6_IY:
+                    case OpcodeBytes.SET_6_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(6, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                    case OpcodeBytes.SET_7_IY_2:
+                    case OpcodeBytes.SET_7_IY_3:
+                    case OpcodeBytes.SET_7_IY_4:
+                    case OpcodeBytes.SET_7_IY_5:
+                    case OpcodeBytes.SET_7_IY_6:
+                    case OpcodeBytes.SET_7_IY_7:
+                    case OpcodeBytes.SET_7_IY:
+                    case OpcodeBytes.SET_7_IY_8:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IY + offset);
+                            value = ExecuteSetBit(7, value);
+                            WriteMemory(Registers.IY + offset, value);
+                            break;
+                        }
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }

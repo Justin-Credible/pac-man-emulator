@@ -103,5 +103,233 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Test Bit
+
+            public static Opcode BIT_0_IY_2 = new Opcode(OpcodeBytes.BIT_0_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY_3 = new Opcode(OpcodeBytes.BIT_0_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY_4 = new Opcode(OpcodeBytes.BIT_0_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY_5 = new Opcode(OpcodeBytes.BIT_0_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY_6 = new Opcode(OpcodeBytes.BIT_0_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY_7 = new Opcode(OpcodeBytes.BIT_0_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY = new Opcode(OpcodeBytes.BIT_0_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+            public static Opcode BIT_0_IY_8 = new Opcode(OpcodeBytes.BIT_0_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 0, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit0 == 0");
+
+            public static Opcode BIT_1_IY_2 = new Opcode(OpcodeBytes.BIT_1_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY_3 = new Opcode(OpcodeBytes.BIT_1_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY_4 = new Opcode(OpcodeBytes.BIT_1_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY_5 = new Opcode(OpcodeBytes.BIT_1_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY_6 = new Opcode(OpcodeBytes.BIT_1_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY_7 = new Opcode(OpcodeBytes.BIT_1_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY = new Opcode(OpcodeBytes.BIT_1_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+            public static Opcode BIT_1_IY_8 = new Opcode(OpcodeBytes.BIT_1_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 1, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit1 == 0");
+
+            public static Opcode BIT_2_IY_2 = new Opcode(OpcodeBytes.BIT_2_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY_3 = new Opcode(OpcodeBytes.BIT_2_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY_4 = new Opcode(OpcodeBytes.BIT_2_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY_5 = new Opcode(OpcodeBytes.BIT_2_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY_6 = new Opcode(OpcodeBytes.BIT_2_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY_7 = new Opcode(OpcodeBytes.BIT_2_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY = new Opcode(OpcodeBytes.BIT_2_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+            public static Opcode BIT_2_IY_8 = new Opcode(OpcodeBytes.BIT_2_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 2, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit2 == 0");
+
+            public static Opcode BIT_3_IY_2 = new Opcode(OpcodeBytes.BIT_3_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY_3 = new Opcode(OpcodeBytes.BIT_3_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY_4 = new Opcode(OpcodeBytes.BIT_3_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY_5 = new Opcode(OpcodeBytes.BIT_3_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY_6 = new Opcode(OpcodeBytes.BIT_3_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY_7 = new Opcode(OpcodeBytes.BIT_3_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY = new Opcode(OpcodeBytes.BIT_3_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+            public static Opcode BIT_3_IY_8 = new Opcode(OpcodeBytes.BIT_3_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 3, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit3 == 0");
+
+            public static Opcode BIT_4_IY_2 = new Opcode(OpcodeBytes.BIT_4_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY_3 = new Opcode(OpcodeBytes.BIT_4_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY_4 = new Opcode(OpcodeBytes.BIT_4_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY_5 = new Opcode(OpcodeBytes.BIT_4_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY_6 = new Opcode(OpcodeBytes.BIT_4_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY_7 = new Opcode(OpcodeBytes.BIT_4_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY = new Opcode(OpcodeBytes.BIT_4_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+            public static Opcode BIT_4_IY_8 = new Opcode(OpcodeBytes.BIT_4_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 4, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit4 == 0");
+
+            public static Opcode BIT_5_IY_2 = new Opcode(OpcodeBytes.BIT_5_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY_3 = new Opcode(OpcodeBytes.BIT_5_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY_4 = new Opcode(OpcodeBytes.BIT_5_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY_5 = new Opcode(OpcodeBytes.BIT_5_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY_6 = new Opcode(OpcodeBytes.BIT_5_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY_7 = new Opcode(OpcodeBytes.BIT_5_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY = new Opcode(OpcodeBytes.BIT_5_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+            public static Opcode BIT_5_IY_8 = new Opcode(OpcodeBytes.BIT_5_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 5, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit5 == 0");
+
+            public static Opcode BIT_6_IY_2 = new Opcode(OpcodeBytes.BIT_6_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY_3 = new Opcode(OpcodeBytes.BIT_6_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY_4 = new Opcode(OpcodeBytes.BIT_6_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY_5 = new Opcode(OpcodeBytes.BIT_6_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY_6 = new Opcode(OpcodeBytes.BIT_6_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY_7 = new Opcode(OpcodeBytes.BIT_6_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY = new Opcode(OpcodeBytes.BIT_6_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+            public static Opcode BIT_6_IY_8 = new Opcode(OpcodeBytes.BIT_6_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 6, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit6 == 0");
+
+            public static Opcode BIT_7_IY_2 = new Opcode(OpcodeBytes.BIT_7_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY_3 = new Opcode(OpcodeBytes.BIT_7_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY_4 = new Opcode(OpcodeBytes.BIT_7_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY_5 = new Opcode(OpcodeBytes.BIT_7_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY_6 = new Opcode(OpcodeBytes.BIT_7_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY_7 = new Opcode(OpcodeBytes.BIT_7_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY = new Opcode(OpcodeBytes.BIT_7_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+            public static Opcode BIT_7_IY_8 = new Opcode(OpcodeBytes.BIT_7_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "BIT 7, (IY+n)", cycles: 20, pseudocode: "Z = (IY+n) bit7 == 0");
+
+        #endregion
+
+        #region Reset Bit
+
+            public static Opcode RES_0_IY_2 = new Opcode(OpcodeBytes.RES_0_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+            public static Opcode RES_0_IY_3 = new Opcode(OpcodeBytes.RES_0_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+            public static Opcode RES_0_IY_4 = new Opcode(OpcodeBytes.RES_0_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+            public static Opcode RES_0_IY_5 = new Opcode(OpcodeBytes.RES_0_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+            public static Opcode RES_0_IY_6 = new Opcode(OpcodeBytes.RES_0_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+            public static Opcode RES_0_IY_7 = new Opcode(OpcodeBytes.RES_0_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+            public static Opcode RES_0_IY = new Opcode(OpcodeBytes.RES_0_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 15, pseudocode: "Set bit 0 of (HL) to 0");
+            public static Opcode RES_0_IY_8 = new Opcode(OpcodeBytes.RES_0_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 0");
+
+            public static Opcode RES_1_IY_2 = new Opcode(OpcodeBytes.RES_1_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+            public static Opcode RES_1_IY_3 = new Opcode(OpcodeBytes.RES_1_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+            public static Opcode RES_1_IY_4 = new Opcode(OpcodeBytes.RES_1_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+            public static Opcode RES_1_IY_5 = new Opcode(OpcodeBytes.RES_1_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+            public static Opcode RES_1_IY_6 = new Opcode(OpcodeBytes.RES_1_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+            public static Opcode RES_1_IY_7 = new Opcode(OpcodeBytes.RES_1_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+            public static Opcode RES_1_IY = new Opcode(OpcodeBytes.RES_1_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 15, pseudocode: "Set bit 1 of (HL) to 0");
+            public static Opcode RES_1_IY_8 = new Opcode(OpcodeBytes.RES_1_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 0");
+
+            public static Opcode RES_2_IY_2 = new Opcode(OpcodeBytes.RES_2_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+            public static Opcode RES_2_IY_3 = new Opcode(OpcodeBytes.RES_2_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+            public static Opcode RES_2_IY_4 = new Opcode(OpcodeBytes.RES_2_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+            public static Opcode RES_2_IY_5 = new Opcode(OpcodeBytes.RES_2_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+            public static Opcode RES_2_IY_6 = new Opcode(OpcodeBytes.RES_2_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+            public static Opcode RES_2_IY_7 = new Opcode(OpcodeBytes.RES_2_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+            public static Opcode RES_2_IY = new Opcode(OpcodeBytes.RES_2_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 15, pseudocode: "Set bit 2 of (HL) to 0");
+            public static Opcode RES_2_IY_8 = new Opcode(OpcodeBytes.RES_2_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 0");
+
+            public static Opcode RES_3_IY_2 = new Opcode(OpcodeBytes.RES_3_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+            public static Opcode RES_3_IY_3 = new Opcode(OpcodeBytes.RES_3_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+            public static Opcode RES_3_IY_4 = new Opcode(OpcodeBytes.RES_3_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+            public static Opcode RES_3_IY_5 = new Opcode(OpcodeBytes.RES_3_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+            public static Opcode RES_3_IY_6 = new Opcode(OpcodeBytes.RES_3_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+            public static Opcode RES_3_IY_7 = new Opcode(OpcodeBytes.RES_3_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+            public static Opcode RES_3_IY = new Opcode(OpcodeBytes.RES_3_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 15, pseudocode: "Set bit 3 of (HL) to 0");
+            public static Opcode RES_3_IY_8 = new Opcode(OpcodeBytes.RES_3_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 0");
+
+            public static Opcode RES_4_IY_2 = new Opcode(OpcodeBytes.RES_4_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+            public static Opcode RES_4_IY_3 = new Opcode(OpcodeBytes.RES_4_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+            public static Opcode RES_4_IY_4 = new Opcode(OpcodeBytes.RES_4_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+            public static Opcode RES_4_IY_5 = new Opcode(OpcodeBytes.RES_4_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+            public static Opcode RES_4_IY_6 = new Opcode(OpcodeBytes.RES_4_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+            public static Opcode RES_4_IY_7 = new Opcode(OpcodeBytes.RES_4_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+            public static Opcode RES_4_IY = new Opcode(OpcodeBytes.RES_4_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 15, pseudocode: "Set bit 4 of (HL) to 0");
+            public static Opcode RES_4_IY_8 = new Opcode(OpcodeBytes.RES_4_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 0");
+
+            public static Opcode RES_5_IY_2 = new Opcode(OpcodeBytes.RES_5_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+            public static Opcode RES_5_IY_3 = new Opcode(OpcodeBytes.RES_5_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+            public static Opcode RES_5_IY_4 = new Opcode(OpcodeBytes.RES_5_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+            public static Opcode RES_5_IY_5 = new Opcode(OpcodeBytes.RES_5_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+            public static Opcode RES_5_IY_6 = new Opcode(OpcodeBytes.RES_5_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+            public static Opcode RES_5_IY_7 = new Opcode(OpcodeBytes.RES_5_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+            public static Opcode RES_5_IY = new Opcode(OpcodeBytes.RES_5_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 15, pseudocode: "Set bit 5 of (HL) to 0");
+            public static Opcode RES_5_IY_8 = new Opcode(OpcodeBytes.RES_5_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 0");
+
+            public static Opcode RES_6_IY_2 = new Opcode(OpcodeBytes.RES_6_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+            public static Opcode RES_6_IY_3 = new Opcode(OpcodeBytes.RES_6_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+            public static Opcode RES_6_IY_4 = new Opcode(OpcodeBytes.RES_6_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+            public static Opcode RES_6_IY_5 = new Opcode(OpcodeBytes.RES_6_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+            public static Opcode RES_6_IY_6 = new Opcode(OpcodeBytes.RES_6_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+            public static Opcode RES_6_IY_7 = new Opcode(OpcodeBytes.RES_6_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+            public static Opcode RES_6_IY = new Opcode(OpcodeBytes.RES_6_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 15, pseudocode: "Set bit 6 of (HL) to 0");
+            public static Opcode RES_6_IY_8 = new Opcode(OpcodeBytes.RES_6_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 0");
+
+            public static Opcode RES_7_IY_2 = new Opcode(OpcodeBytes.RES_7_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+            public static Opcode RES_7_IY_3 = new Opcode(OpcodeBytes.RES_7_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+            public static Opcode RES_7_IY_4 = new Opcode(OpcodeBytes.RES_7_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+            public static Opcode RES_7_IY_5 = new Opcode(OpcodeBytes.RES_7_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+            public static Opcode RES_7_IY_6 = new Opcode(OpcodeBytes.RES_7_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+            public static Opcode RES_7_IY_7 = new Opcode(OpcodeBytes.RES_7_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+            public static Opcode RES_7_IY = new Opcode(OpcodeBytes.RES_7_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 15, pseudocode: "Set bit 7 of (HL) to 0");
+            public static Opcode RES_7_IY_8 = new Opcode(OpcodeBytes.RES_7_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "RES 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 0");
+
+        #endregion
+
+        #region Set Bit
+
+            public static Opcode SET_0_IY_2 = new Opcode(OpcodeBytes.SET_0_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+            public static Opcode SET_0_IY_3 = new Opcode(OpcodeBytes.SET_0_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+            public static Opcode SET_0_IY_4 = new Opcode(OpcodeBytes.SET_0_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+            public static Opcode SET_0_IY_5 = new Opcode(OpcodeBytes.SET_0_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+            public static Opcode SET_0_IY_6 = new Opcode(OpcodeBytes.SET_0_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+            public static Opcode SET_0_IY_7 = new Opcode(OpcodeBytes.SET_0_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+            public static Opcode SET_0_IY = new Opcode(OpcodeBytes.SET_0_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 15, pseudocode: "Set bit 0 of (HL) to 1");
+            public static Opcode SET_0_IY_8 = new Opcode(OpcodeBytes.SET_0_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 0, (IY+n)", cycles: 23, pseudocode: "Set bit 0 of (IY+n) to 1");
+
+            public static Opcode SET_1_IY_2 = new Opcode(OpcodeBytes.SET_1_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+            public static Opcode SET_1_IY_3 = new Opcode(OpcodeBytes.SET_1_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+            public static Opcode SET_1_IY_4 = new Opcode(OpcodeBytes.SET_1_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+            public static Opcode SET_1_IY_5 = new Opcode(OpcodeBytes.SET_1_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+            public static Opcode SET_1_IY_6 = new Opcode(OpcodeBytes.SET_1_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+            public static Opcode SET_1_IY_7 = new Opcode(OpcodeBytes.SET_1_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+            public static Opcode SET_1_IY = new Opcode(OpcodeBytes.SET_1_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 15, pseudocode: "Set bit 1 of (HL) to 1");
+            public static Opcode SET_1_IY_8 = new Opcode(OpcodeBytes.SET_1_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 1, (IY+n)", cycles: 23, pseudocode: "Set bit 1 of (IY+n) to 1");
+
+            public static Opcode SET_2_IY_2 = new Opcode(OpcodeBytes.SET_2_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+            public static Opcode SET_2_IY_3 = new Opcode(OpcodeBytes.SET_2_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+            public static Opcode SET_2_IY_4 = new Opcode(OpcodeBytes.SET_2_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+            public static Opcode SET_2_IY_5 = new Opcode(OpcodeBytes.SET_2_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+            public static Opcode SET_2_IY_6 = new Opcode(OpcodeBytes.SET_2_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+            public static Opcode SET_2_IY_7 = new Opcode(OpcodeBytes.SET_2_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+            public static Opcode SET_2_IY = new Opcode(OpcodeBytes.SET_2_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 15, pseudocode: "Set bit 2 of (HL) to 1");
+            public static Opcode SET_2_IY_8 = new Opcode(OpcodeBytes.SET_2_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 2, (IY+n)", cycles: 23, pseudocode: "Set bit 2 of (IY+n) to 1");
+
+            public static Opcode SET_3_IY_2 = new Opcode(OpcodeBytes.SET_3_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+            public static Opcode SET_3_IY_3 = new Opcode(OpcodeBytes.SET_3_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+            public static Opcode SET_3_IY_4 = new Opcode(OpcodeBytes.SET_3_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+            public static Opcode SET_3_IY_5 = new Opcode(OpcodeBytes.SET_3_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+            public static Opcode SET_3_IY_6 = new Opcode(OpcodeBytes.SET_3_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+            public static Opcode SET_3_IY_7 = new Opcode(OpcodeBytes.SET_3_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+            public static Opcode SET_3_IY = new Opcode(OpcodeBytes.SET_3_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 15, pseudocode: "Set bit 3 of (HL) to 1");
+            public static Opcode SET_3_IY_8 = new Opcode(OpcodeBytes.SET_3_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 3, (IY+n)", cycles: 23, pseudocode: "Set bit 3 of (IY+n) to 1");
+
+            public static Opcode SET_4_IY_2 = new Opcode(OpcodeBytes.SET_4_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+            public static Opcode SET_4_IY_3 = new Opcode(OpcodeBytes.SET_4_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+            public static Opcode SET_4_IY_4 = new Opcode(OpcodeBytes.SET_4_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+            public static Opcode SET_4_IY_5 = new Opcode(OpcodeBytes.SET_4_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+            public static Opcode SET_4_IY_6 = new Opcode(OpcodeBytes.SET_4_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+            public static Opcode SET_4_IY_7 = new Opcode(OpcodeBytes.SET_4_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+            public static Opcode SET_4_IY = new Opcode(OpcodeBytes.SET_4_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 15, pseudocode: "Set bit 4 of (HL) to 1");
+            public static Opcode SET_4_IY_8 = new Opcode(OpcodeBytes.SET_4_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 4, (IY+n)", cycles: 23, pseudocode: "Set bit 4 of (IY+n) to 1");
+
+            public static Opcode SET_5_IY_2 = new Opcode(OpcodeBytes.SET_5_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+            public static Opcode SET_5_IY_3 = new Opcode(OpcodeBytes.SET_5_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+            public static Opcode SET_5_IY_4 = new Opcode(OpcodeBytes.SET_5_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+            public static Opcode SET_5_IY_5 = new Opcode(OpcodeBytes.SET_5_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+            public static Opcode SET_5_IY_6 = new Opcode(OpcodeBytes.SET_5_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+            public static Opcode SET_5_IY_7 = new Opcode(OpcodeBytes.SET_5_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+            public static Opcode SET_5_IY = new Opcode(OpcodeBytes.SET_5_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 15, pseudocode: "Set bit 5 of (HL) to 1");
+            public static Opcode SET_5_IY_8 = new Opcode(OpcodeBytes.SET_5_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 5, (IY+n)", cycles: 23, pseudocode: "Set bit 5 of (IY+n) to 1");
+
+            public static Opcode SET_6_IY_2 = new Opcode(OpcodeBytes.SET_6_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+            public static Opcode SET_6_IY_3 = new Opcode(OpcodeBytes.SET_6_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+            public static Opcode SET_6_IY_4 = new Opcode(OpcodeBytes.SET_6_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+            public static Opcode SET_6_IY_5 = new Opcode(OpcodeBytes.SET_6_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+            public static Opcode SET_6_IY_6 = new Opcode(OpcodeBytes.SET_6_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+            public static Opcode SET_6_IY_7 = new Opcode(OpcodeBytes.SET_6_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+            public static Opcode SET_6_IY = new Opcode(OpcodeBytes.SET_6_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 15, pseudocode: "Set bit 6 of (HL) to 1");
+            public static Opcode SET_6_IY_8 = new Opcode(OpcodeBytes.SET_6_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 6, (IY+n)", cycles: 23, pseudocode: "Set bit 6 of (IY+n) to 1");
+
+            public static Opcode SET_7_IY_2 = new Opcode(OpcodeBytes.SET_7_IY_2, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+            public static Opcode SET_7_IY_3 = new Opcode(OpcodeBytes.SET_7_IY_3, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+            public static Opcode SET_7_IY_4 = new Opcode(OpcodeBytes.SET_7_IY_4, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+            public static Opcode SET_7_IY_5 = new Opcode(OpcodeBytes.SET_7_IY_5, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+            public static Opcode SET_7_IY_6 = new Opcode(OpcodeBytes.SET_7_IY_6, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+            public static Opcode SET_7_IY_7 = new Opcode(OpcodeBytes.SET_7_IY_7, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+            public static Opcode SET_7_IY = new Opcode(OpcodeBytes.SET_7_IY, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 15, pseudocode: "Set bit 7 of (HL) to 1");
+            public static Opcode SET_7_IY_8 = new Opcode(OpcodeBytes.SET_7_IY_8, instructionSet: InstructionSet.IYBit, size: 4, instruction: "SET 7, (IY+n)", cycles: 23, pseudocode: "Set bit 7 of (IY+n) to 1");
+
+        #endregion
     }
 }
