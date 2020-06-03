@@ -188,7 +188,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_0_IX_5 = new Opcode(OpcodeBytes.RES_0_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 0");
             public static Opcode RES_0_IX_6 = new Opcode(OpcodeBytes.RES_0_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 0");
             public static Opcode RES_0_IX_7 = new Opcode(OpcodeBytes.RES_0_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 0");
-            public static Opcode RES_0_IX = new Opcode(OpcodeBytes.RES_0_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 0, (IX+n)", cycles: 15, pseudocode: "Set bit 0 of (HL) to 0");
+            public static Opcode RES_0_IX = new Opcode(OpcodeBytes.RES_0_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (HL) to 0");
             public static Opcode RES_0_IX_8 = new Opcode(OpcodeBytes.RES_0_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 0");
 
             public static Opcode RES_1_IX_2 = new Opcode(OpcodeBytes.RES_1_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 0");
@@ -197,7 +197,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_1_IX_5 = new Opcode(OpcodeBytes.RES_1_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 0");
             public static Opcode RES_1_IX_6 = new Opcode(OpcodeBytes.RES_1_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 0");
             public static Opcode RES_1_IX_7 = new Opcode(OpcodeBytes.RES_1_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 0");
-            public static Opcode RES_1_IX = new Opcode(OpcodeBytes.RES_1_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 15, pseudocode: "Set bit 1 of (HL) to 0");
+            public static Opcode RES_1_IX = new Opcode(OpcodeBytes.RES_1_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (HL) to 0");
             public static Opcode RES_1_IX_8 = new Opcode(OpcodeBytes.RES_1_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 0");
 
             public static Opcode RES_2_IX_2 = new Opcode(OpcodeBytes.RES_2_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 0");
@@ -206,7 +206,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_2_IX_5 = new Opcode(OpcodeBytes.RES_2_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 0");
             public static Opcode RES_2_IX_6 = new Opcode(OpcodeBytes.RES_2_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 0");
             public static Opcode RES_2_IX_7 = new Opcode(OpcodeBytes.RES_2_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 0");
-            public static Opcode RES_2_IX = new Opcode(OpcodeBytes.RES_2_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 15, pseudocode: "Set bit 2 of (HL) to 0");
+            public static Opcode RES_2_IX = new Opcode(OpcodeBytes.RES_2_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (HL) to 0");
             public static Opcode RES_2_IX_8 = new Opcode(OpcodeBytes.RES_2_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 0");
 
             public static Opcode RES_3_IX_2 = new Opcode(OpcodeBytes.RES_3_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 0");
@@ -215,7 +215,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_3_IX_5 = new Opcode(OpcodeBytes.RES_3_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 0");
             public static Opcode RES_3_IX_6 = new Opcode(OpcodeBytes.RES_3_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 0");
             public static Opcode RES_3_IX_7 = new Opcode(OpcodeBytes.RES_3_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 0");
-            public static Opcode RES_3_IX = new Opcode(OpcodeBytes.RES_3_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 15, pseudocode: "Set bit 3 of (HL) to 0");
+            public static Opcode RES_3_IX = new Opcode(OpcodeBytes.RES_3_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (HL) to 0");
             public static Opcode RES_3_IX_8 = new Opcode(OpcodeBytes.RES_3_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 0");
 
             public static Opcode RES_4_IX_2 = new Opcode(OpcodeBytes.RES_4_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 0");
@@ -224,7 +224,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_4_IX_5 = new Opcode(OpcodeBytes.RES_4_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 0");
             public static Opcode RES_4_IX_6 = new Opcode(OpcodeBytes.RES_4_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 0");
             public static Opcode RES_4_IX_7 = new Opcode(OpcodeBytes.RES_4_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 0");
-            public static Opcode RES_4_IX = new Opcode(OpcodeBytes.RES_4_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 15, pseudocode: "Set bit 4 of (HL) to 0");
+            public static Opcode RES_4_IX = new Opcode(OpcodeBytes.RES_4_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (HL) to 0");
             public static Opcode RES_4_IX_8 = new Opcode(OpcodeBytes.RES_4_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 0");
 
             public static Opcode RES_5_IX_2 = new Opcode(OpcodeBytes.RES_5_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 0");
@@ -233,7 +233,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_5_IX_5 = new Opcode(OpcodeBytes.RES_5_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 0");
             public static Opcode RES_5_IX_6 = new Opcode(OpcodeBytes.RES_5_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 0");
             public static Opcode RES_5_IX_7 = new Opcode(OpcodeBytes.RES_5_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 0");
-            public static Opcode RES_5_IX = new Opcode(OpcodeBytes.RES_5_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 15, pseudocode: "Set bit 5 of (HL) to 0");
+            public static Opcode RES_5_IX = new Opcode(OpcodeBytes.RES_5_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (HL) to 0");
             public static Opcode RES_5_IX_8 = new Opcode(OpcodeBytes.RES_5_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 0");
 
             public static Opcode RES_6_IX_2 = new Opcode(OpcodeBytes.RES_6_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 0");
@@ -242,7 +242,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_6_IX_5 = new Opcode(OpcodeBytes.RES_6_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 0");
             public static Opcode RES_6_IX_6 = new Opcode(OpcodeBytes.RES_6_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 0");
             public static Opcode RES_6_IX_7 = new Opcode(OpcodeBytes.RES_6_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 0");
-            public static Opcode RES_6_IX = new Opcode(OpcodeBytes.RES_6_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 15, pseudocode: "Set bit 6 of (HL) to 0");
+            public static Opcode RES_6_IX = new Opcode(OpcodeBytes.RES_6_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (HL) to 0");
             public static Opcode RES_6_IX_8 = new Opcode(OpcodeBytes.RES_6_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 0");
 
             public static Opcode RES_7_IX_2 = new Opcode(OpcodeBytes.RES_7_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 0");
@@ -251,7 +251,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode RES_7_IX_5 = new Opcode(OpcodeBytes.RES_7_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 0");
             public static Opcode RES_7_IX_6 = new Opcode(OpcodeBytes.RES_7_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 0");
             public static Opcode RES_7_IX_7 = new Opcode(OpcodeBytes.RES_7_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 0");
-            public static Opcode RES_7_IX = new Opcode(OpcodeBytes.RES_7_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 15, pseudocode: "Set bit 7 of (HL) to 0");
+            public static Opcode RES_7_IX = new Opcode(OpcodeBytes.RES_7_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (HL) to 0");
             public static Opcode RES_7_IX_8 = new Opcode(OpcodeBytes.RES_7_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "RES 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 0");
 
         #endregion
@@ -264,7 +264,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_0_IX_5 = new Opcode(OpcodeBytes.SET_0_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 1");
             public static Opcode SET_0_IX_6 = new Opcode(OpcodeBytes.SET_0_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 1");
             public static Opcode SET_0_IX_7 = new Opcode(OpcodeBytes.SET_0_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 1");
-            public static Opcode SET_0_IX = new Opcode(OpcodeBytes.SET_0_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 0, (IX+n)", cycles: 15, pseudocode: "Set bit 0 of (HL) to 1");
+            public static Opcode SET_0_IX = new Opcode(OpcodeBytes.SET_0_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (HL) to 1");
             public static Opcode SET_0_IX_8 = new Opcode(OpcodeBytes.SET_0_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 0, (IX+n)", cycles: 23, pseudocode: "Set bit 0 of (IX+n) to 1");
 
             public static Opcode SET_1_IX_2 = new Opcode(OpcodeBytes.SET_1_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 1");
@@ -273,7 +273,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_1_IX_5 = new Opcode(OpcodeBytes.SET_1_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 1");
             public static Opcode SET_1_IX_6 = new Opcode(OpcodeBytes.SET_1_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 1");
             public static Opcode SET_1_IX_7 = new Opcode(OpcodeBytes.SET_1_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 1");
-            public static Opcode SET_1_IX = new Opcode(OpcodeBytes.SET_1_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 15, pseudocode: "Set bit 1 of (HL) to 1");
+            public static Opcode SET_1_IX = new Opcode(OpcodeBytes.SET_1_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (HL) to 1");
             public static Opcode SET_1_IX_8 = new Opcode(OpcodeBytes.SET_1_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 1, (IX+n)", cycles: 23, pseudocode: "Set bit 1 of (IX+n) to 1");
 
             public static Opcode SET_2_IX_2 = new Opcode(OpcodeBytes.SET_2_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 1");
@@ -282,7 +282,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_2_IX_5 = new Opcode(OpcodeBytes.SET_2_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 1");
             public static Opcode SET_2_IX_6 = new Opcode(OpcodeBytes.SET_2_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 1");
             public static Opcode SET_2_IX_7 = new Opcode(OpcodeBytes.SET_2_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 1");
-            public static Opcode SET_2_IX = new Opcode(OpcodeBytes.SET_2_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 15, pseudocode: "Set bit 2 of (HL) to 1");
+            public static Opcode SET_2_IX = new Opcode(OpcodeBytes.SET_2_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (HL) to 1");
             public static Opcode SET_2_IX_8 = new Opcode(OpcodeBytes.SET_2_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 2, (IX+n)", cycles: 23, pseudocode: "Set bit 2 of (IX+n) to 1");
 
             public static Opcode SET_3_IX_2 = new Opcode(OpcodeBytes.SET_3_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 1");
@@ -291,7 +291,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_3_IX_5 = new Opcode(OpcodeBytes.SET_3_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 1");
             public static Opcode SET_3_IX_6 = new Opcode(OpcodeBytes.SET_3_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 1");
             public static Opcode SET_3_IX_7 = new Opcode(OpcodeBytes.SET_3_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 1");
-            public static Opcode SET_3_IX = new Opcode(OpcodeBytes.SET_3_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 15, pseudocode: "Set bit 3 of (HL) to 1");
+            public static Opcode SET_3_IX = new Opcode(OpcodeBytes.SET_3_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (HL) to 1");
             public static Opcode SET_3_IX_8 = new Opcode(OpcodeBytes.SET_3_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 3, (IX+n)", cycles: 23, pseudocode: "Set bit 3 of (IX+n) to 1");
 
             public static Opcode SET_4_IX_2 = new Opcode(OpcodeBytes.SET_4_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 1");
@@ -300,7 +300,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_4_IX_5 = new Opcode(OpcodeBytes.SET_4_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 1");
             public static Opcode SET_4_IX_6 = new Opcode(OpcodeBytes.SET_4_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 1");
             public static Opcode SET_4_IX_7 = new Opcode(OpcodeBytes.SET_4_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 1");
-            public static Opcode SET_4_IX = new Opcode(OpcodeBytes.SET_4_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 15, pseudocode: "Set bit 4 of (HL) to 1");
+            public static Opcode SET_4_IX = new Opcode(OpcodeBytes.SET_4_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (HL) to 1");
             public static Opcode SET_4_IX_8 = new Opcode(OpcodeBytes.SET_4_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 4, (IX+n)", cycles: 23, pseudocode: "Set bit 4 of (IX+n) to 1");
 
             public static Opcode SET_5_IX_2 = new Opcode(OpcodeBytes.SET_5_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 1");
@@ -309,7 +309,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_5_IX_5 = new Opcode(OpcodeBytes.SET_5_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 1");
             public static Opcode SET_5_IX_6 = new Opcode(OpcodeBytes.SET_5_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 1");
             public static Opcode SET_5_IX_7 = new Opcode(OpcodeBytes.SET_5_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 1");
-            public static Opcode SET_5_IX = new Opcode(OpcodeBytes.SET_5_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 15, pseudocode: "Set bit 5 of (HL) to 1");
+            public static Opcode SET_5_IX = new Opcode(OpcodeBytes.SET_5_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (HL) to 1");
             public static Opcode SET_5_IX_8 = new Opcode(OpcodeBytes.SET_5_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 5, (IX+n)", cycles: 23, pseudocode: "Set bit 5 of (IX+n) to 1");
 
             public static Opcode SET_6_IX_2 = new Opcode(OpcodeBytes.SET_6_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 1");
@@ -318,7 +318,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_6_IX_5 = new Opcode(OpcodeBytes.SET_6_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 1");
             public static Opcode SET_6_IX_6 = new Opcode(OpcodeBytes.SET_6_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 1");
             public static Opcode SET_6_IX_7 = new Opcode(OpcodeBytes.SET_6_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 1");
-            public static Opcode SET_6_IX = new Opcode(OpcodeBytes.SET_6_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 15, pseudocode: "Set bit 6 of (HL) to 1");
+            public static Opcode SET_6_IX = new Opcode(OpcodeBytes.SET_6_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (HL) to 1");
             public static Opcode SET_6_IX_8 = new Opcode(OpcodeBytes.SET_6_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 6, (IX+n)", cycles: 23, pseudocode: "Set bit 6 of (IX+n) to 1");
 
             public static Opcode SET_7_IX_2 = new Opcode(OpcodeBytes.SET_7_IX_2, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 1");
@@ -327,7 +327,7 @@ namespace JustinCredible.ZilogZ80
             public static Opcode SET_7_IX_5 = new Opcode(OpcodeBytes.SET_7_IX_5, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 1");
             public static Opcode SET_7_IX_6 = new Opcode(OpcodeBytes.SET_7_IX_6, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 1");
             public static Opcode SET_7_IX_7 = new Opcode(OpcodeBytes.SET_7_IX_7, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 1");
-            public static Opcode SET_7_IX = new Opcode(OpcodeBytes.SET_7_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 15, pseudocode: "Set bit 7 of (HL) to 1");
+            public static Opcode SET_7_IX = new Opcode(OpcodeBytes.SET_7_IX, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (HL) to 1");
             public static Opcode SET_7_IX_8 = new Opcode(OpcodeBytes.SET_7_IX_8, instructionSet: InstructionSet.IXBit, size: 4, instruction: "SET 7, (IX+n)", cycles: 23, pseudocode: "Set bit 7 of (IX+n) to 1");
 
         #endregion

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RES_Tests : BaseTest
+    public class RES_X_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
