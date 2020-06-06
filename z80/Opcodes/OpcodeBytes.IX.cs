@@ -14,6 +14,12 @@ namespace JustinCredible.ZilogZ80
                 public const byte ADD_IX_SP = 0x39;
             #endregion
 
+            #region ADD A, (IX+n)
+                public const byte ADD_A_IXH = 0x84;
+                public const byte ADD_A_IXL = 0x85;
+                public const byte ADD_A_IX = 0x86;
+            #endregion
+
         #endregion
     }
 }

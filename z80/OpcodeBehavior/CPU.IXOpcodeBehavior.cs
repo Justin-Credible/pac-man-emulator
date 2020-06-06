@@ -16,17 +16,43 @@ namespace JustinCredible.ZilogZ80
                     #region ADD IX, rr
 
                         case OpcodeBytes.ADD_IX_BC:
-                            Registers.IX = ExecuteAdd(Registers.IX, Registers.BC);
+                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.BC);
                             break;
                         case OpcodeBytes.ADD_IX_DE:
-                            Registers.IX = ExecuteAdd(Registers.IX, Registers.DE);
+                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.DE);
                             break;
                         case OpcodeBytes.ADD_IX_IX:
-                            Registers.IX = ExecuteAdd(Registers.IX, Registers.IX);
+                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.IX);
                             break;
                         case OpcodeBytes.ADD_IX_SP:
-                            Registers.IX = ExecuteAdd(Registers.IX, Registers.SP);
+                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.SP);
                             break;
+
+                    #endregion
+
+                    #region ADD A, (IX+n)
+
+                        case OpcodeBytes.ADD_A_IXH:
+                        {
+                            var offset = (sbyte)Registers.H;
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = ExecuteAdd(Registers.A, value);
+                            break;
+                        }
+                        case OpcodeBytes.ADD_A_IXL:
+                        {
+                            var offset = (sbyte)Registers.L;
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = ExecuteAdd(Registers.A, value);
+                            break;
+                        }
+                        case OpcodeBytes.ADD_A_IX:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = ExecuteAdd(Registers.A, value);
+                            break;
+                        }
 
                     #endregion
 

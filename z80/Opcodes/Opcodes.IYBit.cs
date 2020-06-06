@@ -2,8 +2,9 @@
 namespace JustinCredible.ZilogZ80
 {
     // A list of all the "IY bit" opcodes and their metadata.
-    // These are all three byte opcodes, where the first byte is defined by OpcodeBytes.PREAMBLE_IY (0xFD)
-    // and the second byte is defined by OpcodeBytes.PREAMBLE_IY_BIT (0xCB).
+    // These are all four byte opcodes, where the first byte is defined by OpcodeBytes.PREAMBLE_IY (0xFD)
+    // and the second byte is defined by OpcodeBytes.PREAMBLE_IY_BIT (0xCB), the third byte is the IY offset,
+    // and the fourth byte is the operation.
     public partial class Opcodes
     {
         #region Rotate
