@@ -19,5 +19,17 @@ namespace JustinCredible.ZilogZ80
 
         /** DRAM refresh counter */
         R,
+
+        /** IX "half register", high byte */
+        IXH,
+
+        /** IX "half register", low byte */
+        IXL,
+
+        /** IY "half register", high byte */
+        IYH,
+
+        /** IY "half register", low byte */
+        IYL,
     }
 }

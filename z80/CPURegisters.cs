@@ -36,10 +36,10 @@ namespace JustinCredible.ZilogZ80
         public byte R { get; set; } // TODO; should increment like the PC does?
 
         /** Index/Base Register */
-        public UInt16 IX { get; set; } // TODO
+        public UInt16 IX { get; set; }
 
         /** Index/Base Register */
-        public UInt16 IY { get; set; } // TODO
+        public UInt16 IY { get; set; }
 
         /** Program Counter */
         public UInt16 PC { get; set; }
@@ -144,6 +144,55 @@ namespace JustinCredible.ZilogZ80
 
         #endregion
 
+        #region Half-Register Getter/Settings
+
+        public byte IXH
+        {
+            get
+            {
+                return (byte)(IX >> 8);
+            }
+            set
+            {
+                IX = (UInt16)((IX & 0x0F) | (value << 8));
+            }
+        }
+        public byte IXL
+        {
+            get
+            {
+                return (byte)IX;
+            }
+            set
+            {
+                IX = (UInt16)((IX & 0xF0)| value);
+            }
+        }
+        public byte IYH
+        {
+            get
+            {
+                return (byte)(IY >> 8);
+            }
+            set
+            {
+                IY = (UInt16)((IY & 0x0F) | (value << 8));
+            }
+        }
+        public byte IYL
+        {
+            get
+            {
+                return (byte)IY;
+            }
+            set
+            {
+                IY = (UInt16)((IY & 0xF0)| value);
+            }
+        }
+
+        #endregion
+
         #region Register Pair Indexer
 
         public UInt16 this[RegisterPair pair]
@@ -229,6 +278,14 @@ namespace JustinCredible.ZilogZ80
                         return I;
                     case Register.R:
                         return R;
+                    case Register.IXH:
+                        return IXH;
+                    case Register.IXL:
+                        return IXL;
+                    case Register.IYH:
+                        return IYH;
+                    case Register.IYL:
+                        return IYL;
                     default:
                         throw new NotImplementedException("Unandled register: " + registerID);
                 }
@@ -263,6 +320,18 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case Register.R:
                         R = value;
+                        break;
+                    case Register.IXH:
+                        IXH = value;
+                        break;
+                    case Register.IXL:
+                        IXL = value;
+                        break;
+                    case Register.IYH:
+                        IYH = value;
+                        break;
+                    case Register.IYL:
+                        IYL = value;
                         break;
                     default:
                         throw new NotImplementedException("Unandled register: " + registerID);

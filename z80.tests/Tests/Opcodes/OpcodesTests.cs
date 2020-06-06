@@ -80,7 +80,7 @@ namespace JustinCredible.ZilogZ80.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Not implemented yet")]
+        [Fact]
         public void TestIXTableHasExpectedContent()
         {
             foreach (var entry in Opcodes.IX)

@@ -32,20 +32,6 @@ namespace JustinCredible.ZilogZ80
 
                     #region ADD A, (IX+n)
 
-                        case OpcodeBytes.ADD_A_IXH:
-                        {
-                            var offset = (sbyte)Registers.H;
-                            var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = ExecuteAdd(Registers.A, value);
-                            break;
-                        }
-                        case OpcodeBytes.ADD_A_IXL:
-                        {
-                            var offset = (sbyte)Registers.L;
-                            var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = ExecuteAdd(Registers.A, value);
-                            break;
-                        }
                         case OpcodeBytes.ADD_A_IX:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
@@ -53,6 +39,18 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = ExecuteAdd(Registers.A, value);
                             break;
                         }
+
+                    #endregion
+
+                    #region #region ADD A, IX.hi/low
+
+                        case OpcodeBytes.ADD_A_IXH:
+                            Registers.A = ExecuteAdd(Registers.A, Registers.IXH);
+                            break;
+
+                        case OpcodeBytes.ADD_A_IXL:
+                            Registers.A = ExecuteAdd(Registers.A, Registers.IXL);
+                            break;
 
                     #endregion
 
