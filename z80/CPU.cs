@@ -144,7 +144,7 @@ namespace JustinCredible.ZilogZ80
             InterruptsEnabledPreviousValue = InterruptsEnabled;
             InterruptsEnabled = false;
 
-            ExecuteCALL(0x0066, Registers.PC);
+            ExecuteCall(0x0066, Registers.PC);
 
             // TODO: Guessing here for cycle count.
             return Opcodes.CALL.Cycles;
@@ -165,28 +165,28 @@ namespace JustinCredible.ZilogZ80
                     switch (dataBusValue)
                     {
                         case OpcodeBytes.RST_00:
-                            ExecuteCALL(0x000, Registers.PC);
+                            ExecuteCall(0x000, Registers.PC);
                             return Opcodes.RST_00.Cycles;
                         case OpcodeBytes.RST_08:
-                            ExecuteCALL(0x0008, Registers.PC);
+                            ExecuteCall(0x0008, Registers.PC);
                             return Opcodes.RST_08.Cycles;
                         case OpcodeBytes.RST_10:
-                            ExecuteCALL(0x0010, Registers.PC);
+                            ExecuteCall(0x0010, Registers.PC);
                             return Opcodes.RST_10.Cycles;
                         case OpcodeBytes.RST_18:
-                            ExecuteCALL(0x0018, Registers.PC);
+                            ExecuteCall(0x0018, Registers.PC);
                             return Opcodes.RST_18.Cycles;
                         case OpcodeBytes.RST_20:
-                            ExecuteCALL(0x0020, Registers.PC);
+                            ExecuteCall(0x0020, Registers.PC);
                             return Opcodes.RST_20.Cycles;
                         case OpcodeBytes.RST_28:
-                            ExecuteCALL(0x0028, Registers.PC);
+                            ExecuteCall(0x0028, Registers.PC);
                             return Opcodes.RST_28.Cycles;
                         case OpcodeBytes.RST_30:
-                            ExecuteCALL(0x0030, Registers.PC);
+                            ExecuteCall(0x0030, Registers.PC);
                             return Opcodes.RST_30.Cycles;
                         case OpcodeBytes.RST_38:
-                            ExecuteCALL(0x0038, Registers.PC);
+                            ExecuteCall(0x0038, Registers.PC);
                             return Opcodes.RST_38.Cycles;
                         default:
                             // TODO: Implement accepting arbitrary opcode instruction bytes as per:
@@ -200,7 +200,7 @@ namespace JustinCredible.ZilogZ80
 
                 case InterruptMode.One:
                 {
-                    ExecuteCALL(0x0038, Registers.PC);
+                    ExecuteCall(0x0038, Registers.PC);
                     return Opcodes.RST_38.Cycles; // TODO: Seems the same as a RST 38h... same cycle count as well?
                 }
 
@@ -208,7 +208,7 @@ namespace JustinCredible.ZilogZ80
                 {
                     // The MSB bits are from the interrupt vector while the LSB are from the data bus.
                     var address = (Registers.I << 8) | dataBusValue;
-                    ExecuteCALL((UInt16)address, Registers.PC);
+                    ExecuteCall((UInt16)address, Registers.PC);
 
                     // TODO: Guessing here for cycle count.
                     return Opcodes.CALL.Cycles;

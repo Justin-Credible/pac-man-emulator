@@ -384,7 +384,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RETN_6:
                     case OpcodeBytes.RETN_7:
                     {
-                        ExecuteRET();
+                        ExecuteReturn();
 
                         // Copy IFF2 back to IFF1; this is the only difference between RET and RETN.
                         InterruptsEnabled = InterruptsEnabledPreviousValue;
@@ -402,7 +402,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.RETI:
                     {
-                        ExecuteRET();
+                        ExecuteReturn();
 
                         // TODO: Support daisy-chainable interrupts; signal here to allow the
                         // next interrupt to occur (if any).

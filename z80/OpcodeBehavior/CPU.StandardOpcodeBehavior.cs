@@ -123,7 +123,7 @@ namespace JustinCredible.ZilogZ80
 
                     /** Decimal Adjust Accumulator */
                     case OpcodeBytes.DAA:
-                        ExecuteDAA();
+                        Execute_DAA();
                         break;
 
                 #endregion
@@ -367,28 +367,28 @@ namespace JustinCredible.ZilogZ80
                     #region ADD r - Add register or memory to accumulator
 
                         case OpcodeBytes.ADD_A_B:
-                            ExecuteADD(Registers.B);
+                            Execute_ADD_A(Registers.B);
                             break;
                         case OpcodeBytes.ADD_A_C:
-                            ExecuteADD(Registers.C);
+                            Execute_ADD_A(Registers.C);
                             break;
                         case OpcodeBytes.ADD_A_D:
-                            ExecuteADD(Registers.D);
+                            Execute_ADD_A(Registers.D);
                             break;
                         case OpcodeBytes.ADD_A_E:
-                            ExecuteADD(Registers.E);
+                            Execute_ADD_A(Registers.E);
                             break;
                         case OpcodeBytes.ADD_A_H:
-                            ExecuteADD(Registers.H);
+                            Execute_ADD_A(Registers.H);
                             break;
                         case OpcodeBytes.ADD_A_L:
-                            ExecuteADD(Registers.L);
+                            Execute_ADD_A(Registers.L);
                             break;
                         case OpcodeBytes.ADD_A_MHL:
-                            ExecuteADD(ReadMemory(Registers.HL));
+                            Execute_ADD_A(ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.ADD_A_A:
-                            ExecuteADD(Registers.A);
+                            Execute_ADD_A(Registers.A);
                             break;
 
                     #endregion
@@ -396,28 +396,28 @@ namespace JustinCredible.ZilogZ80
                     #region SUB r - Subtract register or memory from accumulator
 
                         case OpcodeBytes.SUB_B:
-                            ExecuteSUB(Registers.B);
+                            ExecuteSubtract(Registers.B);
                             break;
                         case OpcodeBytes.SUB_C:
-                            ExecuteSUB(Registers.C);
+                            ExecuteSubtract(Registers.C);
                             break;
                         case OpcodeBytes.SUB_D:
-                            ExecuteSUB(Registers.D);
+                            ExecuteSubtract(Registers.D);
                             break;
                         case OpcodeBytes.SUB_E:
-                            ExecuteSUB(Registers.E);
+                            ExecuteSubtract(Registers.E);
                             break;
                         case OpcodeBytes.SUB_H:
-                            ExecuteSUB(Registers.H);
+                            ExecuteSubtract(Registers.H);
                             break;
                         case OpcodeBytes.SUB_L:
-                            ExecuteSUB(Registers.L);
+                            ExecuteSubtract(Registers.L);
                             break;
                         case OpcodeBytes.SUB_MHL:
-                            ExecuteSUB(ReadMemory(Registers.HL));
+                            ExecuteSubtract(ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.SUB_A:
-                            ExecuteSUB(Registers.A);
+                            ExecuteSubtract(Registers.A);
                             break;
 
                     #endregion
@@ -499,28 +499,28 @@ namespace JustinCredible.ZilogZ80
                     #region ADC A, r - Add register or memory to accumulator with carry
 
                         case OpcodeBytes.ADC_A_B:
-                            ExecuteADD(Registers.B, true);
+                            Execute_ADD_A(Registers.B, true);
                             break;
                         case OpcodeBytes.ADC_A_C:
-                            ExecuteADD(Registers.C, true);
+                            Execute_ADD_A(Registers.C, true);
                             break;
                         case OpcodeBytes.ADC_A_D:
-                            ExecuteADD(Registers.D, true);
+                            Execute_ADD_A(Registers.D, true);
                             break;
                         case OpcodeBytes.ADC_A_E:
-                            ExecuteADD(Registers.E, true);
+                            Execute_ADD_A(Registers.E, true);
                             break;
                         case OpcodeBytes.ADC_A_H:
-                            ExecuteADD(Registers.H, true);
+                            Execute_ADD_A(Registers.H, true);
                             break;
                         case OpcodeBytes.ADC_A_L:
-                            ExecuteADD(Registers.L, true);
+                            Execute_ADD_A(Registers.L, true);
                             break;
                         case OpcodeBytes.ADC_A_MHL:
-                            ExecuteADD(ReadMemory(Registers.HL), true);
+                            Execute_ADD_A(ReadMemory(Registers.HL), true);
                             break;
                         case OpcodeBytes.ADC_A_A:
-                            ExecuteADD(Registers.A, true);
+                            Execute_ADD_A(Registers.A, true);
                             break;
 
                     #endregion
@@ -528,28 +528,28 @@ namespace JustinCredible.ZilogZ80
                     #region SBC A, r - Subtract register or memory from accumulator with borrow
 
                         case OpcodeBytes.SBC_A_B:
-                            ExecuteSUB(Registers.B, true);
+                            ExecuteSubtract(Registers.B, true);
                             break;
                         case OpcodeBytes.SBC_A_C:
-                            ExecuteSUB(Registers.C, true);
+                            ExecuteSubtract(Registers.C, true);
                             break;
                         case OpcodeBytes.SBC_A_D:
-                            ExecuteSUB(Registers.D, true);
+                            ExecuteSubtract(Registers.D, true);
                             break;
                         case OpcodeBytes.SBC_A_E:
-                            ExecuteSUB(Registers.E, true);
+                            ExecuteSubtract(Registers.E, true);
                             break;
                         case OpcodeBytes.SBC_A_H:
-                            ExecuteSUB(Registers.H, true);
+                            ExecuteSubtract(Registers.H, true);
                             break;
                         case OpcodeBytes.SBC_A_L:
-                            ExecuteSUB(Registers.L, true);
+                            ExecuteSubtract(Registers.L, true);
                             break;
                         case OpcodeBytes.SBC_A_MHL:
-                            ExecuteSUB(ReadMemory(Registers.HL), true);
+                            ExecuteSubtract(ReadMemory(Registers.HL), true);
                             break;
                         case OpcodeBytes.SBC_A_A:
-                            ExecuteSUB(Registers.A, true);
+                            ExecuteSubtract(Registers.A, true);
                             break;
 
                     #endregion
@@ -594,28 +594,28 @@ namespace JustinCredible.ZilogZ80
                     #region CP r - Compare register or memory with accumulator
 
                         case OpcodeBytes.CP_B:
-                            ExecuteSUB(Registers.B, false, false);
+                            ExecuteSubtract(Registers.B, false, false);
                             break;
                         case OpcodeBytes.CP_C:
-                            ExecuteSUB(Registers.C, false, false);
+                            ExecuteSubtract(Registers.C, false, false);
                             break;
                         case OpcodeBytes.CP_D:
-                            ExecuteSUB(Registers.D, false, false);
+                            ExecuteSubtract(Registers.D, false, false);
                             break;
                         case OpcodeBytes.CP_E:
-                            ExecuteSUB(Registers.E, false, false);
+                            ExecuteSubtract(Registers.E, false, false);
                             break;
                         case OpcodeBytes.CP_H:
-                            ExecuteSUB(Registers.H, false, false);
+                            ExecuteSubtract(Registers.H, false, false);
                             break;
                         case OpcodeBytes.CP_L:
-                            ExecuteSUB(Registers.L, false, false);
+                            ExecuteSubtract(Registers.L, false, false);
                             break;
                         case OpcodeBytes.CP_MHL:
-                            ExecuteSUB(ReadMemory(Registers.HL), false, false);
+                            ExecuteSubtract(ReadMemory(Registers.HL), false, false);
                             break;
                         case OpcodeBytes.CP_A:
-                            ExecuteSUB(Registers.A, false, false);
+                            ExecuteSubtract(Registers.A, false, false);
                             break;
 
                     #endregion
@@ -754,16 +754,16 @@ namespace JustinCredible.ZilogZ80
                     #region ADD HL, rr - Double (16-bit) add
 
                         case OpcodeBytes.ADD_HL_BC:
-                            ExecuteDAD(Registers.BC);
+                            Registers.HL = ExecuteAdd(Registers.HL, Registers.BC);
                             break;
                         case OpcodeBytes.ADD_HL_DE:
-                            ExecuteDAD(Registers.DE);
+                            Registers.HL = ExecuteAdd(Registers.HL, Registers.DE);
                             break;
                         case OpcodeBytes.ADD_HL_HL:
-                            ExecuteDAD(Registers.HL);
+                            Registers.HL = ExecuteAdd(Registers.HL, Registers.HL);
                             break;
                         case OpcodeBytes.ADD_HL_SP:
-                            ExecuteDAD(Registers.SP);
+                            Registers.HL = ExecuteAdd(Registers.HL, Registers.SP);
                             break;
 
                     #endregion
@@ -860,25 +860,25 @@ namespace JustinCredible.ZilogZ80
                     // Add immediate to accumulator
                     // A <- A + byte
                     case OpcodeBytes.ADD_A_N:
-                        ExecuteADD(ReadMemory(Registers.PC+1));
+                        Execute_ADD_A(ReadMemory(Registers.PC+1));
                         break;
 
                     // Add immediate to accumulator with carry
                     // A <- A + data + CY
                     case OpcodeBytes.ADC_A_N:
-                        ExecuteADD(ReadMemory(Registers.PC+1), true);
+                        Execute_ADD_A(ReadMemory(Registers.PC+1), true);
                         break;
 
                     // Subtract immediate from accumulator
                     // A <- A - data
                     case OpcodeBytes.SUB_N:
-                        ExecuteSUB(ReadMemory(Registers.PC+1));
+                        ExecuteSubtract(ReadMemory(Registers.PC+1));
                         break;
 
                     // Subtract immediate from accumulator with borrow
                     // A <- A - data - CY
                     case OpcodeBytes.SBC_A_N:
-                        ExecuteSUB(ReadMemory(Registers.PC+1), true);
+                        ExecuteSubtract(ReadMemory(Registers.PC+1), true);
                         break;
 
                     // Logical AND immediate with accumulator
@@ -905,7 +905,7 @@ namespace JustinCredible.ZilogZ80
                     // Compare immediate with accumulator
                     // A - data
                     case OpcodeBytes.CP_N:
-                        ExecuteSUB(ReadMemory(Registers.PC+1), false, false);
+                        ExecuteSubtract(ReadMemory(Registers.PC+1), false, false);
                         break;
 
                 #endregion
@@ -1150,7 +1150,7 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.CALL:
                     {
-                        ExecuteCALL(opcode);
+                        ExecuteCall(opcode);
 
                         // Don't increment the program counter because we just updated it to
                         // the given address.
@@ -1164,7 +1164,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Sign)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1178,7 +1178,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Parity)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1192,7 +1192,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Carry)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1206,7 +1206,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Zero)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1220,7 +1220,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Sign)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1234,7 +1234,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Parity)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1248,7 +1248,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Carry)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1262,7 +1262,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Zero)
                         {
-                            ExecuteCALL(opcode);
+                            ExecuteCall(opcode);
                             incrementProgramCounter = false;
                         }
                         else
@@ -1278,7 +1278,7 @@ namespace JustinCredible.ZilogZ80
                     // Return from subroutine
                     case OpcodeBytes.RET:
                     {
-                        ExecuteRET();
+                        ExecuteReturn();
 
                         // Don't increment the program counter because we just updated it to
                         // the given address.
@@ -1292,7 +1292,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Zero)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1306,7 +1306,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Zero)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1320,7 +1320,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Carry)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1334,7 +1334,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Carry)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1348,7 +1348,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Parity)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1362,7 +1362,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Parity)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1376,7 +1376,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (!Flags.Sign)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1390,7 +1390,7 @@ namespace JustinCredible.ZilogZ80
                     {
                         if (Flags.Sign)
                         {
-                            ExecuteRET();
+                            ExecuteReturn();
                             incrementProgramCounter = false;
                         }
                         else
@@ -1406,7 +1406,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_00:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0000, returnAddress);
+                        ExecuteCall(0x0000, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1414,7 +1414,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_08:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0008, returnAddress);
+                        ExecuteCall(0x0008, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1422,7 +1422,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_10:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0010, returnAddress);
+                        ExecuteCall(0x0010, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1430,7 +1430,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_18:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0018, returnAddress);
+                        ExecuteCall(0x0018, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1438,7 +1438,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_20:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0020, returnAddress);
+                        ExecuteCall(0x0020, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1446,7 +1446,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_28:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0028, returnAddress);
+                        ExecuteCall(0x0028, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1454,7 +1454,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_30:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0030, returnAddress);
+                        ExecuteCall(0x0030, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1462,7 +1462,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RST_38:
                     {
                         var returnAddress = (UInt16)(Registers.PC + opcode.Size);
-                        ExecuteCALL(0x0038, returnAddress);
+                        ExecuteCall(0x0038, returnAddress);
                         incrementProgramCounter = false;
                         break;
                     }
@@ -1506,7 +1506,7 @@ namespace JustinCredible.ZilogZ80
 
         #region Additional Opcode Implementation Logic
 
-        private void ExecuteDAA()
+        private void Execute_DAA()
         {
             // Decimal Adjust Accumulator
             // This occurs in two steps below. Step descriptions are taken directly
@@ -1601,7 +1601,7 @@ namespace JustinCredible.ZilogZ80
             ExecuteJump((UInt16)address);
         }
 
-        private void ExecuteCALL(Opcode opcode)
+        private void ExecuteCall(Opcode opcode)
         {
             var returnAddress = (UInt16)(Registers.PC + opcode.Size);
 
@@ -1609,10 +1609,10 @@ namespace JustinCredible.ZilogZ80
             var lower = ReadMemory(Registers.PC + 1);
             var address = (UInt16)(upper | lower);
 
-            ExecuteCALL(address, returnAddress);
+            ExecuteCall(address, returnAddress);
         }
 
-        private void ExecuteCALL(UInt16 address, UInt16 returnAddress)
+        private void ExecuteCall(UInt16 address, UInt16 returnAddress)
         {
             // We need to break this into two bytes so we can push it onto the stack.
             var returnAddressUpper = (byte)((returnAddress & 0xFF00) >> 8);
@@ -1639,7 +1639,7 @@ namespace JustinCredible.ZilogZ80
                 if (OnCPUDiagDebugEvent != null)
                     OnCPUDiagDebugEvent(Registers.C);
 
-                ExecuteRET();
+                ExecuteReturn();
                 return;
             }
 
@@ -1649,7 +1649,7 @@ namespace JustinCredible.ZilogZ80
             Registers.PC = address;
         }
 
-        private void ExecuteRET()
+        private void ExecuteReturn()
         {
             // Pop the return address off of the stack.
             var returnAddressUpper = ReadMemory(Registers.SP + 1) << 8;
@@ -1661,12 +1661,7 @@ namespace JustinCredible.ZilogZ80
             Registers.PC = returnAddress;
         }
 
-        private void ExecuteLD(Register dest, Register source)
-        {
-            Registers[dest] = Registers[source];
-        }
-
-        private void ExecuteADD(byte value, bool addCarryFlag = false)
+        private void Execute_ADD_A(byte value, bool addCarryFlag = false)
         {
             var result = Registers.A + value;
 
@@ -1683,7 +1678,7 @@ namespace JustinCredible.ZilogZ80
             Registers.A = (byte)result;
         }
 
-        private void ExecuteSUB(byte value, bool subtractCarryFlag = false, bool updateAccumulator = true)
+        private void ExecuteSubtract(byte value, bool subtractCarryFlag = false, bool updateAccumulator = true)
         {
             var borrowOccurred = (subtractCarryFlag && Flags.Carry)
                 ? value >= Registers.A // Account for the extra minus one from the carry flag subtraction.
@@ -1703,21 +1698,20 @@ namespace JustinCredible.ZilogZ80
                 Registers.A = (byte)result;
         }
 
-        private void ExecuteDAD(UInt16 value)
+        private UInt16 ExecuteAdd(UInt16 value1, UInt16 value2)
         {
-            var result = Registers.HL + value;
+            var result = value1 + value2;
 
             var carryOccurred = result > 65535;
 
             if (carryOccurred)
                 result = result - 65536;
 
-            Registers.HL = (UInt16)result;
-
             Flags.Carry = carryOccurred;
             Flags.Subtract = false;
-
             // TODO: Set H flag
+
+            return (UInt16)result;
         }
 
         #endregion
