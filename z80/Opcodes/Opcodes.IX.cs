@@ -24,5 +24,18 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Subtract
+
+            #region SUB (IX+n)
+                public static Opcode SUB_IX = new Opcode(OpcodeBytes.SUB_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "SUB (IX+n)", cycles: 19, pseudocode: "A = A - (IX+n)");
+            #endregion
+
+            #region SUB IXH/IXL
+                public static Opcode SUB_IXH = new Opcode(OpcodeBytes.SUB_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "SUB IXH", cycles: 8, pseudocode: "A = A - IX.hi");
+                public static Opcode SUB_IXL = new Opcode(OpcodeBytes.SUB_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "SUB IXL", cycles: 8, pseudocode: "A = A - IX.lo");
+            #endregion
+
+        #endregion
     }
 }

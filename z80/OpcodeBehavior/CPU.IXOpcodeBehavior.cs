@@ -56,6 +56,33 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Subtract
+
+                    #region SUB (IX+n)
+
+                        case OpcodeBytes.SUB_IX:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = ExecuteSubtract(Registers.A, value);
+                            break;
+                        }
+
+                    #endregion
+
+                    #region SUB IXH/IXL
+
+                        case OpcodeBytes.SUB_IXH:
+                            Registers.A = ExecuteSubtract(Registers.A, Registers.IXH);
+                            break;
+                        case OpcodeBytes.SUB_IXL:
+                            Registers.A = ExecuteSubtract(Registers.A, Registers.IXL);
+                            break;
+
+                    #endregion
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }
