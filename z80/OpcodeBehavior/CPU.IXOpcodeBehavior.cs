@@ -13,73 +13,72 @@ namespace JustinCredible.ZilogZ80
             {
                 #region Add
 
-                    #region ADD IX, rr
+                    case OpcodeBytes.ADD_IX_BC:
+                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.BC);
+                        break;
+                    case OpcodeBytes.ADD_IX_DE:
+                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.DE);
+                        break;
+                    case OpcodeBytes.ADD_IX_IX:
+                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.IX);
+                        break;
+                    case OpcodeBytes.ADD_IX_SP:
+                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.SP);
+                        break;
 
-                        case OpcodeBytes.ADD_IX_BC:
-                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.BC);
-                            break;
-                        case OpcodeBytes.ADD_IX_DE:
-                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.DE);
-                            break;
-                        case OpcodeBytes.ADD_IX_IX:
-                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.IX);
-                            break;
-                        case OpcodeBytes.ADD_IX_SP:
-                            Registers.IX = ExecuteAdd16(Registers.IX, Registers.SP);
-                            break;
+                    case OpcodeBytes.ADD_A_IX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = ReadMemory(Registers.IX + offset);
+                        Registers.A = ExecuteAdd(Registers.A, value);
+                        break;
+                    }
 
-                    #endregion
+                    case OpcodeBytes.ADD_A_IXH:
+                        Registers.A = ExecuteAdd(Registers.A, Registers.IXH);
+                        break;
 
-                    #region ADD A, (IX+n)
-
-                        case OpcodeBytes.ADD_A_IX:
-                        {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = ExecuteAdd(Registers.A, value);
-                            break;
-                        }
-
-                    #endregion
-
-                    #region #region ADD A, IX.hi/low
-
-                        case OpcodeBytes.ADD_A_IXH:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.IXH);
-                            break;
-
-                        case OpcodeBytes.ADD_A_IXL:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.IXL);
-                            break;
-
-                    #endregion
+                    case OpcodeBytes.ADD_A_IXL:
+                        Registers.A = ExecuteAdd(Registers.A, Registers.IXL);
+                        break;
 
                 #endregion
 
                 #region Subtract
 
-                    #region SUB (IX+n)
+                    case OpcodeBytes.SUB_IX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = ReadMemory(Registers.IX + offset);
+                        Registers.A = ExecuteSubtract(Registers.A, value);
+                        break;
+                    }
 
-                        case OpcodeBytes.SUB_IX:
-                        {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = ExecuteSubtract(Registers.A, value);
-                            break;
-                        }
+                    case OpcodeBytes.SUB_IXH:
+                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXH);
+                        break;
+                    case OpcodeBytes.SUB_IXL:
+                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXL);
+                        break;
 
-                    #endregion
+                #endregion
 
-                    #region SUB IXH/IXL
+                #region Compare
 
-                        case OpcodeBytes.SUB_IXH:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.IXH);
-                            break;
-                        case OpcodeBytes.SUB_IXL:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.IXL);
-                            break;
+                    case OpcodeBytes.CP_IX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = ReadMemory(Registers.IX + offset);
+                        ExecuteSubtract(Registers.A, value);
+                        break;
+                    }
 
-                    #endregion
+                    case OpcodeBytes.CP_IXH:
+                        ExecuteSubtract(Registers.A, Registers.IXH);
+                        break;
+                    case OpcodeBytes.CP_IXL:
+                        ExecuteSubtract(Registers.A, Registers.IXL);
+                        break;
 
                 #endregion
 
@@ -87,14 +86,6 @@ namespace JustinCredible.ZilogZ80
 
                     #region Bitwise AND
 
-                        case OpcodeBytes.AND_IXH:
-                            Registers.A = (byte)(Registers.A & Registers.IXH);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
-                            break;
-                        case OpcodeBytes.AND_IXL:
-                            Registers.A = (byte)(Registers.A & Registers.IXL);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
-                            break;
                         case OpcodeBytes.AND_IX:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
@@ -104,18 +95,19 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
+                        case OpcodeBytes.AND_IXH:
+                            Registers.A = (byte)(Registers.A & Registers.IXH);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            break;
+                        case OpcodeBytes.AND_IXL:
+                            Registers.A = (byte)(Registers.A & Registers.IXL);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            break;
+
                     #endregion
 
                     #region Bitwise OR
 
-                        case OpcodeBytes.OR_IXH:
-                            Registers.A = (byte)(Registers.A | Registers.IXH);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
-                            break;
-                        case OpcodeBytes.OR_IXL:
-                            Registers.A = (byte)(Registers.A | Registers.IXL);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
-                            break;
                         case OpcodeBytes.OR_IX:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
@@ -125,9 +117,27 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
+                        case OpcodeBytes.OR_IXH:
+                            Registers.A = (byte)(Registers.A | Registers.IXH);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        case OpcodeBytes.OR_IXL:
+                            Registers.A = (byte)(Registers.A | Registers.IXL);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+
                     #endregion
 
                     #region Bitwise XOR
+
+                        case OpcodeBytes.XOR_IX:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = (byte)(Registers.A ^ value);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        }
 
                         case OpcodeBytes.XOR_IXH:
                             Registers.A = (byte)(Registers.A ^ Registers.IXH);
@@ -137,14 +147,6 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = (byte)(Registers.A ^ Registers.IXL);
                             SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
                             break;
-                        case OpcodeBytes.XOR_IX:
-                        {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = (byte)(Registers.A ^ value);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
-                            break;
-                        }
 
                     #endregion
 
