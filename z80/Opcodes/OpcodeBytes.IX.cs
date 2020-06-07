@@ -37,5 +37,33 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Bitwise Operations
+
+            #region Bitwise AND
+
+                public const byte AND_IXH = 0xA4;
+                public const byte AND_IXL = 0xA5;
+                public const byte AND_IX = 0xA6;
+
+            #endregion
+
+            #region Bitwise OR
+
+                public const byte OR_IXH = 0xB4;
+                public const byte OR_IXL = 0xB5;
+                public const byte OR_IX = 0xB6;
+
+            #endregion
+
+            #region Bitwise XOR
+
+                public const byte XOR_IXH = 0xAC;
+                public const byte XOR_IXL = 0xAD;
+                public const byte XOR_IX = 0xAE;
+
+            #endregion
+
+        #endregion
     }
 }

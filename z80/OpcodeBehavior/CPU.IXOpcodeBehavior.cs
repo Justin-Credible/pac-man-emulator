@@ -83,6 +83,73 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Bitwise Operations
+
+                    #region Bitwise AND
+
+                        case OpcodeBytes.AND_IXH:
+                            Registers.A = (byte)(Registers.A & Registers.IXH);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            break;
+                        case OpcodeBytes.AND_IXL:
+                            Registers.A = (byte)(Registers.A & Registers.IXL);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            break;
+                        case OpcodeBytes.AND_IX:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = (byte)(Registers.A & value);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            break;
+                        }
+
+                    #endregion
+
+                    #region Bitwise OR
+
+                        case OpcodeBytes.OR_IXH:
+                            Registers.A = (byte)(Registers.A | Registers.IXH);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        case OpcodeBytes.OR_IXL:
+                            Registers.A = (byte)(Registers.A | Registers.IXL);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        case OpcodeBytes.OR_IX:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = (byte)(Registers.A | value);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        }
+
+                    #endregion
+
+                    #region Bitwise XOR
+
+                        case OpcodeBytes.XOR_IXH:
+                            Registers.A = (byte)(Registers.A ^ Registers.IXH);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        case OpcodeBytes.XOR_IXL:
+                            Registers.A = (byte)(Registers.A ^ Registers.IXL);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        case OpcodeBytes.XOR_IX:
+                        {
+                            var offset = (sbyte)Memory[Registers.PC + 2];
+                            var value = ReadMemory(Registers.IX + offset);
+                            Registers.A = (byte)(Registers.A ^ value);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            break;
+                        }
+
+                    #endregion
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }

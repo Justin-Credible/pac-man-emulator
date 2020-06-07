@@ -37,5 +37,33 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Bitwise Operations
+
+            #region Bitwise AND
+
+                public static Opcode AND_IXH = new Opcode(OpcodeBytes.AND_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "AND IXH", cycles: 8, pseudocode: "A = A & IXH");
+                public static Opcode AND_IXL = new Opcode(OpcodeBytes.AND_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "AND IXL", cycles: 8, pseudocode: "A = A & IXL");
+                public static Opcode AND_IX = new Opcode(OpcodeBytes.AND_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "AND IX", cycles: 19, pseudocode: "A = A & (IX+x)");
+
+            #endregion
+
+            #region Bitwise OR
+
+                public static Opcode OR_IXH = new Opcode(OpcodeBytes.OR_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "OR IXH", cycles: 8, pseudocode: "A = A | XH");
+                public static Opcode OR_IXL = new Opcode(OpcodeBytes.OR_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "OR IXL", cycles: 8, pseudocode: "A = A | XL");
+                public static Opcode OR_IX = new Opcode(OpcodeBytes.OR_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "OR (IX+n)", cycles: 19, pseudocode: "A = A & (IX+x)");
+
+            #endregion
+
+            #region Bitwise XOR
+
+                public static Opcode XOR_IXH = new Opcode(OpcodeBytes.XOR_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "XOR IXH", cycles: 8, pseudocode: "A = A ^ IXH");
+                public static Opcode XOR_IXL = new Opcode(OpcodeBytes.XOR_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "XOR IXL", cycles: 8, pseudocode: "A = A ^ IXL");
+                public static Opcode XOR_IX = new Opcode(OpcodeBytes.XOR_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "XOR (IX+n)", cycles: 19, pseudocode: "A = A & (IX+x)");
+
+            #endregion
+
+        #endregion
     }
 }
