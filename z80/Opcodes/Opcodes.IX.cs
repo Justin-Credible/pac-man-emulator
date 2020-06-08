@@ -104,6 +104,35 @@ namespace JustinCredible.ZilogZ80
             public static Opcode LD_L_MIX = new Opcode(OpcodeBytes.LD_L_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "LD L, (IX+n)", cycles: 19, pseudocode: "L = (IX+n)");
             public static Opcode LD_A_MIX = new Opcode(OpcodeBytes.LD_A_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "LD A, (IX+n)", cycles: 19, pseudocode: "A = (IX+n)");
 
+            public static Opcode LD_A_IXH = new Opcode(OpcodeBytes.LD_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD A, IXH", cycles: 8, pseudocode: "A = IXH");
+            public static Opcode LD_B_IXH = new Opcode(OpcodeBytes.LD_B_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD B, IXH", cycles: 8, pseudocode: "B = IXH");
+            public static Opcode LD_C_IXH = new Opcode(OpcodeBytes.LD_C_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD C, IXH", cycles: 8, pseudocode: "C = IXH");
+            public static Opcode LD_D_IXH = new Opcode(OpcodeBytes.LD_D_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD D, IXH", cycles: 8, pseudocode: "D = IXH");
+            public static Opcode LD_E_IXH = new Opcode(OpcodeBytes.LD_E_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD E, IXH", cycles: 8, pseudocode: "E = IXH");
+
+            public static Opcode LD_A_IXL = new Opcode(OpcodeBytes.LD_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD A, IXL", cycles: 8, pseudocode: "A = IXL");
+            public static Opcode LD_B_IXL = new Opcode(OpcodeBytes.LD_B_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD B, IXL", cycles: 8, pseudocode: "B = IXL");
+            public static Opcode LD_C_IXL = new Opcode(OpcodeBytes.LD_C_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD C, IXL", cycles: 8, pseudocode: "C = IXL");
+            public static Opcode LD_D_IXL = new Opcode(OpcodeBytes.LD_D_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD D, IXL", cycles: 8, pseudocode: "D = IXL");
+            public static Opcode LD_E_IXL = new Opcode(OpcodeBytes.LD_E_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD E, IXL", cycles: 8, pseudocode: "E = IXL");
+
+            public static Opcode LD_IXH_A = new Opcode(OpcodeBytes.LD_IXH_A, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, A", cycles: 8, pseudocode: "IXH = A");
+            public static Opcode LD_IXH_B = new Opcode(OpcodeBytes.LD_IXH_B, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, B", cycles: 8, pseudocode: "IXH = B");
+            public static Opcode LD_IXH_C = new Opcode(OpcodeBytes.LD_IXH_C, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, C", cycles: 8, pseudocode: "IXH = C");
+            public static Opcode LD_IXH_D = new Opcode(OpcodeBytes.LD_IXH_D, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, D", cycles: 8, pseudocode: "IXH = D");
+            public static Opcode LD_IXH_E = new Opcode(OpcodeBytes.LD_IXH_E, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, E", cycles: 8, pseudocode: "IXH = E");
+
+            public static Opcode LD_IXL_A = new Opcode(OpcodeBytes.LD_IXL_A, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, A", cycles: 8, pseudocode: "IXL = A");
+            public static Opcode LD_IXL_B = new Opcode(OpcodeBytes.LD_IXL_B, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, B", cycles: 8, pseudocode: "IXL = B");
+            public static Opcode LD_IXL_C = new Opcode(OpcodeBytes.LD_IXL_C, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, C", cycles: 8, pseudocode: "IXL = C");
+            public static Opcode LD_IXL_D = new Opcode(OpcodeBytes.LD_IXL_D, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, D", cycles: 8, pseudocode: "IXL = D");
+            public static Opcode LD_IXL_E = new Opcode(OpcodeBytes.LD_IXL_E, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, E", cycles: 8, pseudocode: "IXL = E");
+
+            public static Opcode LD_IXH_IXH = new Opcode(OpcodeBytes.LD_IXH_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, IXH", cycles: 8, pseudocode: "IXH = IXH");
+            public static Opcode LD_IXH_IXL = new Opcode(OpcodeBytes.LD_IXH_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXH, IXL", cycles: 8, pseudocode: "IXH = IXL");
+            public static Opcode LD_IXL_IXH = new Opcode(OpcodeBytes.LD_IXL_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, IXH", cycles: 8, pseudocode: "IXL = IXH");
+            public static Opcode LD_IXL_IXL = new Opcode(OpcodeBytes.LD_IXL_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "LD IXL, IXL", cycles: 8, pseudocode: "IXL = IXL");
+
         #endregion
     }
 }

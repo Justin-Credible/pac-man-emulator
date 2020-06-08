@@ -278,6 +278,83 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
+                    case OpcodeBytes.LD_A_IXH:
+                        Registers.A = Registers.IXH;
+                        break;
+                    case OpcodeBytes.LD_B_IXH:
+                        Registers.B = Registers.IXH;
+                        break;
+                    case OpcodeBytes.LD_C_IXH:
+                        Registers.C = Registers.IXH;
+                        break;
+                    case OpcodeBytes.LD_D_IXH:
+                        Registers.D = Registers.IXH;
+                        break;
+                    case OpcodeBytes.LD_E_IXH:
+                        Registers.E = Registers.IXH;
+                        break;
+
+                    case OpcodeBytes.LD_A_IXL:
+                        Registers.A = Registers.IXL;
+                        break;
+                    case OpcodeBytes.LD_B_IXL:
+                        Registers.B = Registers.IXL;
+                        break;
+                    case OpcodeBytes.LD_C_IXL:
+                        Registers.C = Registers.IXL;
+                        break;
+                    case OpcodeBytes.LD_D_IXL:
+                        Registers.D = Registers.IXL;
+                        break;
+                    case OpcodeBytes.LD_E_IXL:
+                        Registers.E = Registers.IXL;
+                        break;
+
+                    case OpcodeBytes.LD_IXH_A:
+                        Registers.IXH = Registers.A;
+                        break;
+                    case OpcodeBytes.LD_IXH_B:
+                        Registers.IXH = Registers.B;
+                        break;
+                    case OpcodeBytes.LD_IXH_C:
+                        Registers.IXH = Registers.C;
+                        break;
+                    case OpcodeBytes.LD_IXH_D:
+                        Registers.IXH = Registers.D;
+                        break;
+                    case OpcodeBytes.LD_IXH_E:
+                        Registers.IXH = Registers.E;
+                        break;
+
+                    case OpcodeBytes.LD_IXL_A:
+                        Registers.IXL = Registers.A;
+                        break;
+                    case OpcodeBytes.LD_IXL_B:
+                        Registers.IXL = Registers.B;
+                        break;
+                    case OpcodeBytes.LD_IXL_C:
+                        Registers.IXL = Registers.C;
+                        break;
+                    case OpcodeBytes.LD_IXL_D:
+                        Registers.IXL = Registers.D;
+                        break;
+                    case OpcodeBytes.LD_IXL_E:
+                        Registers.IXL = Registers.E;
+                        break;
+
+                    case OpcodeBytes.LD_IXH_IXH:
+                        // NOP
+                        break;
+                    case OpcodeBytes.LD_IXH_IXL:
+                        Registers.IXH = Registers.IXL;
+                        break;
+                    case OpcodeBytes.LD_IXL_IXH:
+                        Registers.IXL = Registers.IXH;
+                        break;
+                    case OpcodeBytes.LD_IXL_IXL:
+                        // NOP
+                        break;
+
                 #endregion
 
                 default:

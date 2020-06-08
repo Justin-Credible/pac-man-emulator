@@ -104,6 +104,35 @@ namespace JustinCredible.ZilogZ80
             public const byte LD_L_MIX = 0x6E;
             public const byte LD_A_MIX = 0x7E;
 
+            public const byte LD_A_IXH = 0x7C;
+            public const byte LD_B_IXH = 0x44;
+            public const byte LD_C_IXH = 0x4C;
+            public const byte LD_D_IXH = 0x54;
+            public const byte LD_E_IXH = 0x5C;
+
+            public const byte LD_A_IXL = 0x7D;
+            public const byte LD_B_IXL = 0x45;
+            public const byte LD_C_IXL = 0x4D;
+            public const byte LD_D_IXL = 0x55;
+            public const byte LD_E_IXL = 0x5D;
+
+            public const byte LD_IXH_A = 0x67;
+            public const byte LD_IXH_B = 0x60;
+            public const byte LD_IXH_C = 0x61;
+            public const byte LD_IXH_D = 0x62;
+            public const byte LD_IXH_E = 0x63;
+
+            public const byte LD_IXL_A = 0x6F;
+            public const byte LD_IXL_B = 0x68;
+            public const byte LD_IXL_C = 0x69;
+            public const byte LD_IXL_D = 0x6A;
+            public const byte LD_IXL_E = 0x6B;
+
+            public const byte LD_IXH_IXH = 0x64;
+            public const byte LD_IXH_IXL = 0x65;
+            public const byte LD_IXL_IXH = 0x6C;
+            public const byte LD_IXL_IXL = 0x6D;
+
         #endregion
     }
 }

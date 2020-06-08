@@ -154,7 +154,7 @@ namespace JustinCredible.ZilogZ80
             }
             set
             {
-                IX = (UInt16)((IX & 0x0F) | (value << 8));
+                IX = (UInt16)((IX & 0x00FF) | (value << 8));
             }
         }
         public byte IXL
@@ -165,7 +165,7 @@ namespace JustinCredible.ZilogZ80
             }
             set
             {
-                IX = (UInt16)((IX & 0xF0)| value);
+                IX = (UInt16)((IX & 0xFF00)| value);
             }
         }
         public byte IYH
@@ -176,7 +176,7 @@ namespace JustinCredible.ZilogZ80
             }
             set
             {
-                IY = (UInt16)((IY & 0x0F) | (value << 8));
+                IY = (UInt16)((IY & 0x00FF) | (value << 8));
             }
         }
         public byte IYL
@@ -187,7 +187,7 @@ namespace JustinCredible.ZilogZ80
             }
             set
             {
-                IY = (UInt16)((IY & 0xF0)| value);
+                IY = (UInt16)((IY & 0xFF00)| value);
             }
         }
 
