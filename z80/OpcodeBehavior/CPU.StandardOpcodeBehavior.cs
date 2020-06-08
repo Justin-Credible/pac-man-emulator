@@ -1500,7 +1500,7 @@ namespace JustinCredible.ZilogZ80
                 #endregion
 
                 default:
-                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
+                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode.Code, Registers.PC));
             }
         }
 

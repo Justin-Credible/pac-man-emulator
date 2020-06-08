@@ -192,6 +192,14 @@ namespace JustinCredible.ZilogZ80
 
                 #region Load
 
+                    case OpcodeBytes.LD_MIX_N:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = Memory[Registers.PC + 3];
+                        WriteMemory(Registers.IX + offset, value);
+                        break;
+                    }
+
                     case OpcodeBytes.LD_MIX_B:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
@@ -355,10 +363,17 @@ namespace JustinCredible.ZilogZ80
                         // NOP
                         break;
 
+                    case OpcodeBytes.LD_IXH_N:
+                        Registers.IXH = Memory[Registers.PC + 2];
+                        break;
+                    case OpcodeBytes.LD_IXL_N:
+                        Registers.IXL = Memory[Registers.PC + 2];
+                        break;
+
                 #endregion
 
                 default:
-                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
+                    throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode.Code, Registers.PC));
             }
         }
     }
