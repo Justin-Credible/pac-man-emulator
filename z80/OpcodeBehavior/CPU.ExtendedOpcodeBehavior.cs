@@ -449,16 +449,16 @@ namespace JustinCredible.ZilogZ80
                 #region ADC HL, rr - Add register or memory to HL with carry
 
                     case OpcodeBytes.ADC_HL_BC:
-                        Execute_ADC_HL(Registers.BC);
+                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.BC, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_DE:
-                        Execute_ADC_HL(Registers.DE);
+                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.DE, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_HL:
-                        Execute_ADC_HL(Registers.HL);
+                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.HL, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_SP:
-                        Execute_ADC_HL(Registers.SP);
+                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.SP, addCarryFlag: true);
                         break;
 
                 #endregion
@@ -466,16 +466,16 @@ namespace JustinCredible.ZilogZ80
                 #region SBC HL, rr - Subtract register or memory from HL with borrow
 
                     case OpcodeBytes.SBC_HL_BC:
-                        Execute_SBC_HL(Registers.BC);
+                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.BC, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_HL_DE:
-                        Execute_SBC_HL(Registers.DE);
+                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.DE, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_HL_HL:
-                        Execute_SBC_HL(Registers.HL);
+                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.HL, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_HL_SP:
-                        Execute_SBC_HL(Registers.SP);
+                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.SP, subtractCarryFlag: true);
                         break;
 
                 #endregion
@@ -513,45 +513,5 @@ namespace JustinCredible.ZilogZ80
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }
         }
-
-        #region Additional Opcode Implementation Logic
-
-        private void Execute_ADC_HL(UInt16 value)
-        {
-            var result = Registers.HL + value;
-
-            if (Flags.Carry)
-                result += 1;
-
-            var carryOccurred = result > 65535;
-
-            if (carryOccurred)
-                result = result - 65536;
-
-            SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
-
-            Registers.HL = (UInt16)result;
-        }
-
-        private void Execute_SBC_HL(UInt16 value)
-        {
-            var borrowOccurred = Flags.Carry
-                ? value >= Registers.HL // Account for the extra minus one from the carry flag subtraction.
-                : value > Registers.HL;
-
-            var result = Registers.HL - value;
-
-            if (Flags.Carry)
-                result -= 1;
-
-            if (borrowOccurred)
-                result = 65536 + result;
-
-            SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
-
-            Registers.HL = (UInt16)result;
-        }
-
-        #endregion
     }
 }

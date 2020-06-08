@@ -754,16 +754,16 @@ namespace JustinCredible.ZilogZ80
                     #region ADD HL, rr - Double (16-bit) add
 
                         case OpcodeBytes.ADD_HL_BC:
-                            Registers.HL = ExecuteAdd16(Registers.HL, Registers.BC);
+                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.BC);
                             break;
                         case OpcodeBytes.ADD_HL_DE:
-                            Registers.HL = ExecuteAdd16(Registers.HL, Registers.DE);
+                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.DE);
                             break;
                         case OpcodeBytes.ADD_HL_HL:
-                            Registers.HL = ExecuteAdd16(Registers.HL, Registers.HL);
+                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.HL);
                             break;
                         case OpcodeBytes.ADD_HL_SP:
-                            Registers.HL = ExecuteAdd16(Registers.HL, Registers.SP);
+                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.SP);
                             break;
 
                     #endregion
@@ -1679,7 +1679,25 @@ namespace JustinCredible.ZilogZ80
             return (byte)result;
         }
 
-        private UInt16 ExecuteAdd16(UInt16 value1, UInt16 value2)
+        private UInt16 ExecuteAdd16(UInt16 value1, UInt16 value2, bool addCarryFlag = false)
+        {
+            var result = value1 + value2;
+
+            if (addCarryFlag && Flags.Carry)
+                result += 1;
+
+            var carryOccurred = result > 65535;
+
+            if (carryOccurred)
+                result = result - 65536;
+
+            // TODO: Set H flag.
+            SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
+
+            return (UInt16)result;
+        }
+
+        private UInt16 ExecuteAdd16NonArithmetic(UInt16 value1, UInt16 value2)
         {
             var result = value1 + value2;
 
@@ -1713,6 +1731,26 @@ namespace JustinCredible.ZilogZ80
             SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
 
             return (byte)result;
+        }
+
+        private UInt16 ExecuteSubtract16(UInt16 value1, UInt16 value2, bool subtractCarryFlag = false)
+        {
+            var borrowOccurred = Flags.Carry
+                ? value2 >= value1 // Account for the extra minus one from the carry flag subtraction.
+                : value2 > value1;
+
+            var result = value1 - value2;
+
+            if (subtractCarryFlag && Flags.Carry)
+                result -= 1;
+
+            if (borrowOccurred)
+                result = 65536 + result;
+
+            // TODO: Set H flag
+            SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
+
+            return (UInt16)result;
         }
 
         #endregion

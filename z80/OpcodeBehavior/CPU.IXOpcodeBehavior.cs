@@ -14,16 +14,16 @@ namespace JustinCredible.ZilogZ80
                 #region Add
 
                     case OpcodeBytes.ADD_IX_BC:
-                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.BC);
+                        Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.BC);
                         break;
                     case OpcodeBytes.ADD_IX_DE:
-                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.DE);
+                        Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.DE);
                         break;
                     case OpcodeBytes.ADD_IX_IX:
-                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.IX);
+                        Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.IX);
                         break;
                     case OpcodeBytes.ADD_IX_SP:
-                        Registers.IX = ExecuteAdd16(Registers.IX, Registers.SP);
+                        Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.SP);
                         break;
 
                     case OpcodeBytes.ADD_A_IX:
