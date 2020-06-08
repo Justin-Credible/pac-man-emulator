@@ -84,6 +84,21 @@ namespace JustinCredible.ZilogZ80
                         Registers.A = ExecuteSubtract(Registers.A, Registers.IXL);
                         break;
 
+                    case OpcodeBytes.SBC_A_IX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = ReadMemory(Registers.IX + offset);
+                        Registers.A = ExecuteSubtract(Registers.A, value, subtractCarryFlag: true);
+                        break;
+                    }
+
+                    case OpcodeBytes.SBC_A_IXH:
+                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXH, subtractCarryFlag: true);
+                        break;
+                    case OpcodeBytes.SBC_A_IXL:
+                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXL, subtractCarryFlag: true);
+                        break;
+
                 #endregion
 
                 #region Compare

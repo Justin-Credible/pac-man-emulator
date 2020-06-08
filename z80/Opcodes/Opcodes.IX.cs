@@ -25,8 +25,8 @@ namespace JustinCredible.ZilogZ80
 
                 public static Opcode ADC_A_IX = new Opcode(OpcodeBytes.ADC_A_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "ADC A, (IX+n)", cycles: 19, pseudocode: "A = A + (IX+n) + CY");
 
-                public static Opcode ADC_A_IXH = new Opcode(OpcodeBytes.ADC_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "ADC A, IXH", cycles: 8, pseudocode: "ADC A, IXH");
-                public static Opcode ADC_A_IXL = new Opcode(OpcodeBytes.ADC_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "ADC A, IXL", cycles: 8, pseudocode: "ADC A, IXL");
+                public static Opcode ADC_A_IXH = new Opcode(OpcodeBytes.ADC_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "ADC A, IXH", cycles: 8, pseudocode: "A = A + IX.hi + CY");
+                public static Opcode ADC_A_IXL = new Opcode(OpcodeBytes.ADC_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "ADC A, IXL", cycles: 8, pseudocode: "A = A + IX.lo + CY");
 
             #endregion
 
@@ -38,6 +38,11 @@ namespace JustinCredible.ZilogZ80
 
             public static Opcode SUB_IXH = new Opcode(OpcodeBytes.SUB_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "SUB IXH", cycles: 8, pseudocode: "A = A - IX.hi");
             public static Opcode SUB_IXL = new Opcode(OpcodeBytes.SUB_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "SUB IXL", cycles: 8, pseudocode: "A = A - IX.lo");
+
+            public static Opcode SBC_A_IX = new Opcode(OpcodeBytes.SBC_A_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "SBC A, (IX+n)", cycles: 19, pseudocode: "A = A - (IX+n) - CY");
+
+            public static Opcode SBC_A_IXH = new Opcode(OpcodeBytes.SBC_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "SBC A, IXH", cycles: 8, pseudocode: "A = A - IX.hi - CY");
+            public static Opcode SBC_A_IXL = new Opcode(OpcodeBytes.SBC_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "SBC A, IXL", cycles: 8, pseudocode: "A = A - IX.lo - CY");
 
         #endregion
 

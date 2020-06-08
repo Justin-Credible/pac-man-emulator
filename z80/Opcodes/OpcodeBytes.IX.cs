@@ -39,6 +39,11 @@ namespace JustinCredible.ZilogZ80
             public const byte SUB_IXH = 0x94;
             public const byte SUB_IXL = 0x95;
 
+            public const byte SBC_A_IX = 0x9E;
+
+            public const byte SBC_A_IXH = 0x9C;
+            public const byte SBC_A_IXL = 0x9D;
+
         #endregion
 
         #region Compare
