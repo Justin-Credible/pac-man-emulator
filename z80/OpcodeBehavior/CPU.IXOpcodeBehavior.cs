@@ -235,6 +235,49 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
+                    case OpcodeBytes.LD_B_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.B = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+                    case OpcodeBytes.LD_C_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.C = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+                    case OpcodeBytes.LD_D_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.D = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+                    case OpcodeBytes.LD_E_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.E = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+                    case OpcodeBytes.LD_H_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.H = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+                    case OpcodeBytes.LD_L_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.L = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+                    case OpcodeBytes.LD_A_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        Registers.A = ReadMemory(Registers.IX + offset);
+                        break;
+                    }
+
                 #endregion
 
                 default:
