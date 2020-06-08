@@ -4,21 +4,21 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RL_IX_R_Tests : BaseTest
+    public class SRL_MIX_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
             var offsets = new List<int>() { 0, 1, 2, 27, -33, -62 };
             var list = new List<object[]>();
 
-            foreach (var register in RegistersClassData.StandardRegisters)
+            foreach (var offset in offsets)
             {
-                foreach (var offset in offsets)
+                foreach (var register in RegistersClassData.StandardRegisters)
                 {
-                    list.Add(new object[] { register, offset, 0b11001001, false, 0b10010010, true, false });
-                    list.Add(new object[] { register, offset, 0b11001001, true, 0b10010011, true, true });
-                    list.Add(new object[] { register, offset, 0b01001000, false, 0b10010000, false, true });
-                    list.Add(new object[] { register, offset, 0b01001000, true, 0b10010001, false, false });
+                    list.Add(new object[] { register, offset, 0b11001001, 0b01100100, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
+                    list.Add(new object[] { register, offset, 0b11100100, 0b01110010, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = true } });
+                    list.Add(new object[] { register, offset, 0b00000001, 0b00000000, new ConditionFlags() { Carry = true, Zero = true, Sign = false, Parity = true } });
+                    list.Add(new object[] { register, offset, 0b00000000, 0b00000000, new ConditionFlags() { Carry = false, Zero = true, Sign = false, Parity = true } });
                 }
             }
 
@@ -27,11 +27,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RL_IX_R(Register register, int offset, byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag)
+        public void Test_SRL_MIX_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RL (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                SRL (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
@@ -47,10 +47,10 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     // Should be affected.
-                    Carry = initialCarryFlag,
-                    Zero = true,
-                    Sign = false,
-                    Parity = !expectedPartyFlag,
+                    Carry = !expectedFlags.Carry,
+                    Sign = !expectedFlags.Sign,
+                    Zero = !expectedFlags.Zero,
+                    Parity = !expectedFlags.Parity,
 
                     // Should be reset.
                     Subtract = true,
@@ -64,10 +64,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(expectedValue, state.Registers[register]);
 
             // Should be affected.
-            Assert.Equal(expectedCarryFlag, state.Flags.Carry);
-            Assert.True(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.Equal(expectedPartyFlag, state.Flags.Parity);
+            Assert.Equal(expectedFlags.Carry, state.Flags.Carry);
+            Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
+            Assert.Equal(expectedFlags.Sign, state.Flags.Sign);
+            Assert.Equal(expectedFlags.Parity, state.Flags.Parity);
 
             // Should be reset.
             Assert.False(state.Flags.AuxCarry);
@@ -78,29 +78,29 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x04, state.Registers.PC);
         }
 
-        public static IEnumerable<object[]> GetData()
+        public static IEnumerable<object[]> GetDataForHLRegister()
         {
             var offsets = new List<int>() { 0, 1, 2, 27, -33, -62 };
             var list = new List<object[]>();
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0b11001001, false, 0b10010010, true, false });
-                list.Add(new object[] { offset, 0b11001001, true, 0b10010011, true, true });
-                list.Add(new object[] { offset, 0b01001000, false, 0b10010000, false, true });
-                list.Add(new object[] { offset, 0b01001000, true, 0b10010001, false, false });
+                list.Add(new object[] { offset, 0b11001001, 0b01100100, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
+                list.Add(new object[] { offset, 0b11100100, 0b01110010, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = true } });
+                list.Add(new object[] { offset, 0b00000001, 0b00000000, new ConditionFlags() { Carry = true, Zero = true, Sign = false, Parity = true } });
+                list.Add(new object[] { offset, 0b00000000, 0b00000000, new ConditionFlags() { Carry = false, Zero = true, Sign = false, Parity = true } });
             }
 
             return list;
         }
 
         [Theory]
-        [MemberData(nameof(GetData))]
-        public void Test_RL_IX(int offset, byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag)
+        [MemberData(nameof(GetDataForHLRegister))]
+        public void Test_SRL_MIX(int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RL (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                SRL (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -116,10 +116,10 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     // Should be affected.
-                    Carry = initialCarryFlag,
-                    Zero = true,
-                    Sign = false,
-                    Parity = !expectedPartyFlag,
+                    Carry = !expectedFlags.Carry,
+                    Sign = !expectedFlags.Sign,
+                    Zero = !expectedFlags.Zero,
+                    Parity = !expectedFlags.Parity,
 
                     // Should be reset.
                     Subtract = true,
@@ -133,10 +133,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(expectedValue, state.Memory[0x2234 + offset]);
 
             // Should be affected.
-            Assert.Equal(expectedCarryFlag, state.Flags.Carry);
-            Assert.True(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.Equal(expectedPartyFlag, state.Flags.Parity);
+            Assert.Equal(expectedFlags.Carry, state.Flags.Carry);
+            Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
+            Assert.Equal(expectedFlags.Sign, state.Flags.Sign);
+            Assert.Equal(expectedFlags.Parity, state.Flags.Parity);
 
             // Should be reset.
             Assert.False(state.Flags.AuxCarry);

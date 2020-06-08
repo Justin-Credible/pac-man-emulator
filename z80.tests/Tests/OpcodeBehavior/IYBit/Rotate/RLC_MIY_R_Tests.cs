@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RLC_IY_R_Tests : BaseTest
+    public class RLC_MIY_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -24,7 +24,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RLC_IY_R_SetsCarryFlagTrue(Register register, int offset)
+        public void Test_RLC_MIY_R_SetsCarryFlagTrue(Register register, int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -77,7 +77,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RLC_IY_R_SetsCarryFlagFalse(Register register, int offset)
+        public void Test_RLC_MIY_R_SetsCarryFlagFalse(Register register, int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -135,7 +135,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(27)]
         [InlineData(-33)]
         [InlineData(-62)]
-        public void Test_RLC_IY_SetsCarryFlagTrue(int offset)
+        public void Test_RLC_MIY_SetsCarryFlagTrue(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -192,7 +192,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(27)]
         [InlineData(-33)]
         [InlineData(-62)]
-        public void Test_RLC_IY_SetsCarryFlagFalse(int offset)
+        public void Test_RLC_MIY_SetsCarryFlagFalse(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h

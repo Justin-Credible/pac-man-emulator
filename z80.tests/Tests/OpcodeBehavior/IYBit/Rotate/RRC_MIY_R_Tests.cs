@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RRC_IX_R_Tests : BaseTest
+    public class RRC_MIY_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -24,11 +24,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RRC_IX_R_SetsCarryFlagTrue(Register register, int offset)
+        public void Test_RRC_MIY_R_SetsCarryFlagTrue(Register register, int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                RRC (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
@@ -39,7 +39,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -57,7 +57,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x2234, state.Registers.IX);
+            Assert.Equal(0x2234, state.Registers.IY);
             Assert.Equal(0b10110010, state.Registers[register]);
 
             // Should be affected.
@@ -77,11 +77,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RRC_IX_R_SetsCarryFlagFalse(Register register, int offset)
+        public void Test_RRC_MIY_R_SetsCarryFlagFalse(Register register, int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                RRC (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
@@ -92,7 +92,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -110,7 +110,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x2234, state.Registers.IX);
+            Assert.Equal(0x2234, state.Registers.IY);
             Assert.Equal(0b01110010, state.Registers[register]);
 
             // Should be affected.
@@ -135,11 +135,11 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(27)]
         [InlineData(-33)]
         [InlineData(-62)]
-        public void Test_RRC_IX_SetsCarryFlagTrue(int offset)
+        public void Test_RRC_MIY_SetsCarryFlagTrue(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                RRC (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -150,7 +150,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -192,11 +192,11 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(27)]
         [InlineData(-33)]
         [InlineData(-62)]
-        public void Test_RRC_IX_SetsCarryFlagFalse(int offset)
+        public void Test_RRC_MIY_SetsCarryFlagFalse(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                RRC (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -207,7 +207,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {

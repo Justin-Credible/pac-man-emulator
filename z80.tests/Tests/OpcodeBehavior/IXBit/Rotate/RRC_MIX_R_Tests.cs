@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RLC_IX_R_Tests : BaseTest
+    public class RRC_MIX_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -24,16 +24,16 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RLC_IX_R_SetsCarryFlagTrue(Register register, int offset)
+        public void Test_RRC_MIX_R_SetsCarryFlagTrue(Register register, int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RLC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x2234 + offset] = 0b11100100;
+            memory[0x2234 + offset] = 0b01100101;
 
             var initialState = new CPUConfig()
             {
@@ -58,7 +58,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var state = Execute(rom, memory, initialState);
 
             Assert.Equal(0x2234, state.Registers.IX);
-            Assert.Equal(0b11001001, state.Registers[register]);
+            Assert.Equal(0b10110010, state.Registers[register]);
 
             // Should be affected.
             Assert.True(state.Flags.Carry);
@@ -77,16 +77,16 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RLC_IX_R_SetsCarryFlagFalse(Register register, int offset)
+        public void Test_RRC_MIX_R_SetsCarryFlagFalse(Register register, int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RLC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x2234 + offset] = 0b01100101;
+            memory[0x2234 + offset] = 0b11100100;
 
             var initialState = new CPUConfig()
             {
@@ -111,11 +111,11 @@ namespace JustinCredible.ZilogZ80.Tests
             var state = Execute(rom, memory, initialState);
 
             Assert.Equal(0x2234, state.Registers.IX);
-            Assert.Equal(0b11001010, state.Registers[register]);
+            Assert.Equal(0b01110010, state.Registers[register]);
 
             // Should be affected.
             Assert.False(state.Flags.Carry);
-            Assert.True(state.Flags.Sign);
+            Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.True(state.Flags.Parity);
 
@@ -135,16 +135,16 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(27)]
         [InlineData(-33)]
         [InlineData(-62)]
-        public void Test_RLC_IX_SetsCarryFlagTrue(int offset)
+        public void Test_RRC_MIX_SetsCarryFlagTrue(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RLC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x2234 + offset] = 0b11100100;
+            memory[0x2234 + offset] = 0b01100101;
 
             var initialState = new CPUConfig()
             {
@@ -168,7 +168,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0b11001001, state.Memory[0x2234 + offset]);
+            Assert.Equal(0b10110010, memory[0x2234 + offset]);
 
             // Should be affected.
             Assert.True(state.Flags.Carry);
@@ -192,16 +192,16 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(27)]
         [InlineData(-33)]
         [InlineData(-62)]
-        public void Test_RLC_IX_SetsCarryFlagFalse(int offset)
+        public void Test_RRC_MIX_SetsCarryFlagFalse(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RLC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                RRC (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x2234 + offset] = 0b01100101;
+            memory[0x2234 + offset] = 0b11100100;
 
             var initialState = new CPUConfig()
             {
@@ -225,11 +225,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0b11001010, state.Memory[0x2234 + offset]);
+            Assert.Equal(0b01110010, memory[0x2234 + offset]);
 
             // Should be affected.
             Assert.False(state.Flags.Carry);
-            Assert.True(state.Flags.Sign);
+            Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.True(state.Flags.Parity);
 

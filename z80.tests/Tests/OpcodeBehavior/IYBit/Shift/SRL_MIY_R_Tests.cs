@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class SLL_IY_R_Tests : BaseTest
+    public class SRL_MIY_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -15,11 +15,10 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 foreach (var register in RegistersClassData.StandardRegisters)
                 {
-                    list.Add(new object[] { register, offset, 0b11001001, 0b10010011, new ConditionFlags() { Carry = true, Zero = false, Sign = true, Parity = true } });
-                    list.Add(new object[] { register, offset, 0b10010010, 0b00100101, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
-                    list.Add(new object[] { register, offset, 0b00100100, 0b01001001, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = false } });
-                    list.Add(new object[] { register, offset, 0b10000000, 0b00000001, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
-                    list.Add(new object[] { register, offset, 0b00000000, 0b00000001, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = false } });
+                    list.Add(new object[] { register, offset, 0b11001001, 0b01100100, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
+                    list.Add(new object[] { register, offset, 0b11100100, 0b01110010, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = true } });
+                    list.Add(new object[] { register, offset, 0b00000001, 0b00000000, new ConditionFlags() { Carry = true, Zero = true, Sign = false, Parity = true } });
+                    list.Add(new object[] { register, offset, 0b00000000, 0b00000000, new ConditionFlags() { Carry = false, Zero = true, Sign = false, Parity = true } });
                 }
             }
 
@@ -28,11 +27,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_SLL_IY_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_SRL_MIY_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                SLL (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                SRL (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
@@ -86,11 +85,10 @@ namespace JustinCredible.ZilogZ80.Tests
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0b11001001, 0b10010011, new ConditionFlags() { Carry = true, Zero = false, Sign = true, Parity = true } });
-                list.Add(new object[] { offset, 0b10010010, 0b00100101, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
-                list.Add(new object[] { offset, 0b00100100, 0b01001001, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = false } });
-                list.Add(new object[] { offset, 0b10000000, 0b00000001, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
-                list.Add(new object[] { offset, 0b00000000, 0b00000001, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = false } });
+                list.Add(new object[] { offset, 0b11001001, 0b01100100, new ConditionFlags() { Carry = true, Zero = false, Sign = false, Parity = false } });
+                list.Add(new object[] { offset, 0b11100100, 0b01110010, new ConditionFlags() { Carry = false, Zero = false, Sign = false, Parity = true } });
+                list.Add(new object[] { offset, 0b00000001, 0b00000000, new ConditionFlags() { Carry = true, Zero = true, Sign = false, Parity = true } });
+                list.Add(new object[] { offset, 0b00000000, 0b00000000, new ConditionFlags() { Carry = false, Zero = true, Sign = false, Parity = true } });
             }
 
             return list;
@@ -98,11 +96,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForHLRegister))]
-        public void Test_SLL_IY(int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_SRL_MIY(int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                SLL (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                SRL (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 

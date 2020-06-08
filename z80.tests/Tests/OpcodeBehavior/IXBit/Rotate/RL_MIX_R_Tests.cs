@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RR_IX_R_Tests : BaseTest
+    public class RL_MIX_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -15,10 +15,10 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 foreach (var offset in offsets)
                 {
-                    list.Add(new object[] { register, offset, 0b01001001, false, 0b00100100, true, true, false });
-                    list.Add(new object[] { register, offset, 0b01001001, true, 0b10100100, true, false, true });
-                    list.Add(new object[] { register, offset, 0b01001000, false, 0b00100100, false, true, false });
-                    list.Add(new object[] { register, offset, 0b01001000, true, 0b10100100, false, false, true });
+                    list.Add(new object[] { register, offset, 0b11001001, false, 0b10010010, true, false });
+                    list.Add(new object[] { register, offset, 0b11001001, true, 0b10010011, true, true });
+                    list.Add(new object[] { register, offset, 0b01001000, false, 0b10010000, false, true });
+                    list.Add(new object[] { register, offset, 0b01001000, true, 0b10010001, false, false });
                 }
             }
 
@@ -27,11 +27,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_RR_IX_R(Register register, int offset, byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag, bool expectedSignFlag)
+        public void Test_RL_MIX_R(Register register, int offset, byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RR (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                RL (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
@@ -65,7 +65,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Should be affected.
             Assert.Equal(expectedCarryFlag, state.Flags.Carry);
-            Assert.Equal(expectedSignFlag, state.Flags.Sign);
+            Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.Equal(expectedPartyFlag, state.Flags.Parity);
 
@@ -85,10 +85,10 @@ namespace JustinCredible.ZilogZ80.Tests
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0b01001001, false, 0b00100100, true, true, false });
-                list.Add(new object[] { offset, 0b01001001, true, 0b10100100, true, false, true });
-                list.Add(new object[] { offset, 0b01001000, false, 0b00100100, false, true, false });
-                list.Add(new object[] { offset, 0b01001000, true, 0b10100100, false, false, true });
+                list.Add(new object[] { offset, 0b11001001, false, 0b10010010, true, false });
+                list.Add(new object[] { offset, 0b11001001, true, 0b10010011, true, true });
+                list.Add(new object[] { offset, 0b01001000, false, 0b10010000, false, true });
+                list.Add(new object[] { offset, 0b01001000, true, 0b10010001, false, false });
             }
 
             return list;
@@ -96,11 +96,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_RR_IX(int offset, byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag, bool expectedSignFlag)
+        public void Test_RL_MIX(int offset, byte initialValue, bool initialCarryFlag, byte expectedValue, bool expectedCarryFlag, bool expectedPartyFlag)
         {
             var rom = AssembleSource($@"
                 org 00h
-                RR (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                RL (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -134,7 +134,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Should be affected.
             Assert.Equal(expectedCarryFlag, state.Flags.Carry);
-            Assert.Equal(expectedSignFlag, state.Flags.Sign);
+            Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.Equal(expectedPartyFlag, state.Flags.Parity);
 

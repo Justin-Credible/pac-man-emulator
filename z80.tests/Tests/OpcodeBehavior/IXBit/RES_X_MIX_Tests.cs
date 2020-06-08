@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class RES_X_IX_Tests : BaseTest
+    public class RES_X_MIX_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForStandardOpcodes()
         {
@@ -127,7 +127,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_RES_X_IX(int offset, byte initialValue, int? index, int? opcodeByte, byte expectedValue)
+        public void Test_RES_X_MIX(int offset, byte initialValue, int? index, int? opcodeByte, byte expectedValue)
         {
             if ((index == null && opcodeByte == null) || (index != null && opcodeByte != null))
                 throw new Exception("A bit index or opcode byte are required, but not both.");

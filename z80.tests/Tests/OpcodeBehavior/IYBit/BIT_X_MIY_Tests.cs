@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class BIT_X_IX_Tests : BaseTest
+    public class BIT_X_MIY_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForStandardOpcodes()
         {
@@ -111,7 +111,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_BIT_X_R(int offset, byte value, int? index, int? opcodeByte, ConditionFlags expectedFlags)
+        public void Test_BIT_X_MIY(int offset, byte value, int? index, int? opcodeByte, ConditionFlags expectedFlags)
         {
             if ((index == null && opcodeByte == null) || (index != null && opcodeByte != null))
                 throw new Exception("A bit index or opcode byte are required, but not both.");
@@ -123,7 +123,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var rom = AssembleSource($@"
                 org 00h
-                BIT {index}, (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                BIT {index}, (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -133,8 +133,8 @@ namespace JustinCredible.ZilogZ80.Tests
             //  DD CB ** XX
             //  ┃     ┃  ┃
             //  ┃     ┃  ┗━━ opcode byte
-            //  ┃     ┗━━━━━ IX address offset
-            //  ┗━━━━━━━━━━━ IX Bit instructions preamble (0xDD 0xCB)
+            //  ┃     ┗━━━━━ IY address offset
+            //  ┗━━━━━━━━━━━ IY Bit instructions preamble (0xDD 0xCB)
             if (opcodeByte != null)
                 rom[3] = (byte)opcodeByte.Value;
 
@@ -145,7 +145,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {

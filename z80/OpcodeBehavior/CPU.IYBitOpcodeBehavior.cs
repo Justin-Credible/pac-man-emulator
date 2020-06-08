@@ -15,49 +15,49 @@ namespace JustinCredible.ZilogZ80
 
                     #region RLC (IY+n), r - Rotate left
 
-                        case OpcodeBytes.RLC_IY_B:
+                        case OpcodeBytes.RLC_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: true);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY_C:
+                        case OpcodeBytes.RLC_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: true);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY_D:
+                        case OpcodeBytes.RLC_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: true);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY_E:
+                        case OpcodeBytes.RLC_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: true);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY_H:
+                        case OpcodeBytes.RLC_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: true);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY_L:
+                        case OpcodeBytes.RLC_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: true);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY:
+                        case OpcodeBytes.RLC_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -65,7 +65,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.RLC_IY_A:
+                        case OpcodeBytes.RLC_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -77,49 +77,49 @@ namespace JustinCredible.ZilogZ80
 
                     #region RRC (IY+n), r - Rotate right
 
-                        case OpcodeBytes.RRC_IY_B:
+                        case OpcodeBytes.RRC_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: false);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY_C:
+                        case OpcodeBytes.RRC_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: false);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY_D:
+                        case OpcodeBytes.RRC_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: false);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY_E:
+                        case OpcodeBytes.RRC_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: false);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY_H:
+                        case OpcodeBytes.RRC_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: false);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY_L:
+                        case OpcodeBytes.RRC_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: false);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY:
+                        case OpcodeBytes.RRC_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -127,7 +127,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.RRC_IY_A:
+                        case OpcodeBytes.RRC_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -139,49 +139,49 @@ namespace JustinCredible.ZilogZ80
 
                     #region RL (IY+n), r - Rotate left through carry
 
-                        case OpcodeBytes.RL_IY_B:
+                        case OpcodeBytes.RL_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RL_IY_C:
+                        case OpcodeBytes.RL_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RL_IY_D:
+                        case OpcodeBytes.RL_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RL_IY_E:
+                        case OpcodeBytes.RL_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RL_IY_H:
+                        case OpcodeBytes.RL_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RL_IY_L:
+                        case OpcodeBytes.RL_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RL_IY:
+                        case OpcodeBytes.RL_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -189,7 +189,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.RL_IY_A:
+                        case OpcodeBytes.RL_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -201,49 +201,49 @@ namespace JustinCredible.ZilogZ80
 
                     #region RR (IY+n), r - Rotate right through carry
 
-                        case OpcodeBytes.RR_IY_B:
+                        case OpcodeBytes.RR_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RR_IY_C:
+                        case OpcodeBytes.RR_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RR_IY_D:
+                        case OpcodeBytes.RR_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RR_IY_E:
+                        case OpcodeBytes.RR_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RR_IY_H:
+                        case OpcodeBytes.RR_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RR_IY_L:
+                        case OpcodeBytes.RR_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
-                        case OpcodeBytes.RR_IY:
+                        case OpcodeBytes.RR_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -251,7 +251,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.RR_IY_A:
+                        case OpcodeBytes.RR_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -266,49 +266,49 @@ namespace JustinCredible.ZilogZ80
                 #region Shift
 
                     #region SLA (IY+n), r - Shift left (arithmetic)
-                        case OpcodeBytes.SLA_IY_B:
+                        case OpcodeBytes.SLA_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY_C:
+                        case OpcodeBytes.SLA_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY_D:
+                        case OpcodeBytes.SLA_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY_E:
+                        case OpcodeBytes.SLA_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY_H:
+                        case OpcodeBytes.SLA_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY_L:
+                        case OpcodeBytes.SLA_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY:
+                        case OpcodeBytes.SLA_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -316,7 +316,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.SLA_IY_A:
+                        case OpcodeBytes.SLA_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -326,49 +326,49 @@ namespace JustinCredible.ZilogZ80
                     #endregion
 
                     #region SRA (IY+n), r - Shift right (arithmetic)
-                        case OpcodeBytes.SRA_IY_B:
+                        case OpcodeBytes.SRA_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY_C:
+                        case OpcodeBytes.SRA_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY_D:
+                        case OpcodeBytes.SRA_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY_E:
+                        case OpcodeBytes.SRA_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY_H:
+                        case OpcodeBytes.SRA_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY_L:
+                        case OpcodeBytes.SRA_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY:
+                        case OpcodeBytes.SRA_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -376,7 +376,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.SRA_IY_A:
+                        case OpcodeBytes.SRA_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -388,49 +388,49 @@ namespace JustinCredible.ZilogZ80
                     // Despite the SLL mnemonic, it's not really a "shift left logical" operation.
                     // See: https://spectrumcomputing.co.uk/forums/viewtopic.php?p=9956&sid=f2072dd8da32b1a27a449433d387ebe6#p9956
                     #region SLL (IY+n), r - Shift left ?? (undocumented)
-                        case OpcodeBytes.SLL_IY_B:
+                        case OpcodeBytes.SLL_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY_C:
+                        case OpcodeBytes.SLL_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY_D:
+                        case OpcodeBytes.SLL_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY_E:
+                        case OpcodeBytes.SLL_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY_H:
+                        case OpcodeBytes.SLL_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY_L:
+                        case OpcodeBytes.SLL_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY:
+                        case OpcodeBytes.SLL_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -438,7 +438,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.SLL_IY_A:
+                        case OpcodeBytes.SLL_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -448,49 +448,49 @@ namespace JustinCredible.ZilogZ80
                     #endregion
 
                     #region SRL (IY+n), r - Shift right logical
-                        case OpcodeBytes.SRL_IY_B:
+                        case OpcodeBytes.SRL_MIY_B:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.B = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY_C:
+                        case OpcodeBytes.SRL_MIY_C:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.C = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY_D:
+                        case OpcodeBytes.SRL_MIY_D:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.D = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY_E:
+                        case OpcodeBytes.SRL_MIY_E:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.E = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY_H:
+                        case OpcodeBytes.SRL_MIY_H:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.H = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY_L:
+                        case OpcodeBytes.SRL_MIY_L:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.L = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY:
+                        case OpcodeBytes.SRL_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -498,7 +498,7 @@ namespace JustinCredible.ZilogZ80
                             WriteMemory(Registers.IY + offset, value);
                             break;
                         }
-                        case OpcodeBytes.SRL_IY_A:
+                        case OpcodeBytes.SRL_MIY_A:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -511,14 +511,14 @@ namespace JustinCredible.ZilogZ80
 
                 #region Test Bit
 
-                    case OpcodeBytes.BIT_0_IY_2:
-                    case OpcodeBytes.BIT_0_IY_3:
-                    case OpcodeBytes.BIT_0_IY_4:
-                    case OpcodeBytes.BIT_0_IY_5:
-                    case OpcodeBytes.BIT_0_IY_6:
-                    case OpcodeBytes.BIT_0_IY_7:
-                    case OpcodeBytes.BIT_0_IY:
-                    case OpcodeBytes.BIT_0_IY_8:
+                    case OpcodeBytes.BIT_0_MIY_2:
+                    case OpcodeBytes.BIT_0_MIY_3:
+                    case OpcodeBytes.BIT_0_MIY_4:
+                    case OpcodeBytes.BIT_0_MIY_5:
+                    case OpcodeBytes.BIT_0_MIY_6:
+                    case OpcodeBytes.BIT_0_MIY_7:
+                    case OpcodeBytes.BIT_0_MIY:
+                    case OpcodeBytes.BIT_0_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -526,14 +526,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_1_IY_2:
-                    case OpcodeBytes.BIT_1_IY_3:
-                    case OpcodeBytes.BIT_1_IY_4:
-                    case OpcodeBytes.BIT_1_IY_5:
-                    case OpcodeBytes.BIT_1_IY_6:
-                    case OpcodeBytes.BIT_1_IY_7:
-                    case OpcodeBytes.BIT_1_IY:
-                    case OpcodeBytes.BIT_1_IY_8:
+                    case OpcodeBytes.BIT_1_MIY_2:
+                    case OpcodeBytes.BIT_1_MIY_3:
+                    case OpcodeBytes.BIT_1_MIY_4:
+                    case OpcodeBytes.BIT_1_MIY_5:
+                    case OpcodeBytes.BIT_1_MIY_6:
+                    case OpcodeBytes.BIT_1_MIY_7:
+                    case OpcodeBytes.BIT_1_MIY:
+                    case OpcodeBytes.BIT_1_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -541,14 +541,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_2_IY_2:
-                    case OpcodeBytes.BIT_2_IY_3:
-                    case OpcodeBytes.BIT_2_IY_4:
-                    case OpcodeBytes.BIT_2_IY_5:
-                    case OpcodeBytes.BIT_2_IY_6:
-                    case OpcodeBytes.BIT_2_IY_7:
-                    case OpcodeBytes.BIT_2_IY:
-                    case OpcodeBytes.BIT_2_IY_8:
+                    case OpcodeBytes.BIT_2_MIY_2:
+                    case OpcodeBytes.BIT_2_MIY_3:
+                    case OpcodeBytes.BIT_2_MIY_4:
+                    case OpcodeBytes.BIT_2_MIY_5:
+                    case OpcodeBytes.BIT_2_MIY_6:
+                    case OpcodeBytes.BIT_2_MIY_7:
+                    case OpcodeBytes.BIT_2_MIY:
+                    case OpcodeBytes.BIT_2_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -556,14 +556,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_3_IY_2:
-                    case OpcodeBytes.BIT_3_IY_3:
-                    case OpcodeBytes.BIT_3_IY_4:
-                    case OpcodeBytes.BIT_3_IY_5:
-                    case OpcodeBytes.BIT_3_IY_6:
-                    case OpcodeBytes.BIT_3_IY_7:
-                    case OpcodeBytes.BIT_3_IY:
-                    case OpcodeBytes.BIT_3_IY_8:
+                    case OpcodeBytes.BIT_3_MIY_2:
+                    case OpcodeBytes.BIT_3_MIY_3:
+                    case OpcodeBytes.BIT_3_MIY_4:
+                    case OpcodeBytes.BIT_3_MIY_5:
+                    case OpcodeBytes.BIT_3_MIY_6:
+                    case OpcodeBytes.BIT_3_MIY_7:
+                    case OpcodeBytes.BIT_3_MIY:
+                    case OpcodeBytes.BIT_3_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -571,14 +571,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_4_IY_2:
-                    case OpcodeBytes.BIT_4_IY_3:
-                    case OpcodeBytes.BIT_4_IY_4:
-                    case OpcodeBytes.BIT_4_IY_5:
-                    case OpcodeBytes.BIT_4_IY_6:
-                    case OpcodeBytes.BIT_4_IY_7:
-                    case OpcodeBytes.BIT_4_IY:
-                    case OpcodeBytes.BIT_4_IY_8:
+                    case OpcodeBytes.BIT_4_MIY_2:
+                    case OpcodeBytes.BIT_4_MIY_3:
+                    case OpcodeBytes.BIT_4_MIY_4:
+                    case OpcodeBytes.BIT_4_MIY_5:
+                    case OpcodeBytes.BIT_4_MIY_6:
+                    case OpcodeBytes.BIT_4_MIY_7:
+                    case OpcodeBytes.BIT_4_MIY:
+                    case OpcodeBytes.BIT_4_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -586,14 +586,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_5_IY_2:
-                    case OpcodeBytes.BIT_5_IY_3:
-                    case OpcodeBytes.BIT_5_IY_4:
-                    case OpcodeBytes.BIT_5_IY_5:
-                    case OpcodeBytes.BIT_5_IY_6:
-                    case OpcodeBytes.BIT_5_IY_7:
-                    case OpcodeBytes.BIT_5_IY:
-                    case OpcodeBytes.BIT_5_IY_8:
+                    case OpcodeBytes.BIT_5_MIY_2:
+                    case OpcodeBytes.BIT_5_MIY_3:
+                    case OpcodeBytes.BIT_5_MIY_4:
+                    case OpcodeBytes.BIT_5_MIY_5:
+                    case OpcodeBytes.BIT_5_MIY_6:
+                    case OpcodeBytes.BIT_5_MIY_7:
+                    case OpcodeBytes.BIT_5_MIY:
+                    case OpcodeBytes.BIT_5_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -601,14 +601,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_6_IY_2:
-                    case OpcodeBytes.BIT_6_IY_3:
-                    case OpcodeBytes.BIT_6_IY_4:
-                    case OpcodeBytes.BIT_6_IY_5:
-                    case OpcodeBytes.BIT_6_IY_6:
-                    case OpcodeBytes.BIT_6_IY_7:
-                    case OpcodeBytes.BIT_6_IY:
-                    case OpcodeBytes.BIT_6_IY_8:
+                    case OpcodeBytes.BIT_6_MIY_2:
+                    case OpcodeBytes.BIT_6_MIY_3:
+                    case OpcodeBytes.BIT_6_MIY_4:
+                    case OpcodeBytes.BIT_6_MIY_5:
+                    case OpcodeBytes.BIT_6_MIY_6:
+                    case OpcodeBytes.BIT_6_MIY_7:
+                    case OpcodeBytes.BIT_6_MIY:
+                    case OpcodeBytes.BIT_6_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -616,14 +616,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.BIT_7_IY_2:
-                    case OpcodeBytes.BIT_7_IY_3:
-                    case OpcodeBytes.BIT_7_IY_4:
-                    case OpcodeBytes.BIT_7_IY_5:
-                    case OpcodeBytes.BIT_7_IY_6:
-                    case OpcodeBytes.BIT_7_IY_7:
-                    case OpcodeBytes.BIT_7_IY:
-                    case OpcodeBytes.BIT_7_IY_8:
+                    case OpcodeBytes.BIT_7_MIY_2:
+                    case OpcodeBytes.BIT_7_MIY_3:
+                    case OpcodeBytes.BIT_7_MIY_4:
+                    case OpcodeBytes.BIT_7_MIY_5:
+                    case OpcodeBytes.BIT_7_MIY_6:
+                    case OpcodeBytes.BIT_7_MIY_7:
+                    case OpcodeBytes.BIT_7_MIY:
+                    case OpcodeBytes.BIT_7_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -635,14 +635,14 @@ namespace JustinCredible.ZilogZ80
 
                 #region Reset Bit
 
-                    case OpcodeBytes.RES_0_IY_2:
-                    case OpcodeBytes.RES_0_IY_3:
-                    case OpcodeBytes.RES_0_IY_4:
-                    case OpcodeBytes.RES_0_IY_5:
-                    case OpcodeBytes.RES_0_IY_6:
-                    case OpcodeBytes.RES_0_IY_7:
-                    case OpcodeBytes.RES_0_IY:
-                    case OpcodeBytes.RES_0_IY_8:
+                    case OpcodeBytes.RES_0_MIY_2:
+                    case OpcodeBytes.RES_0_MIY_3:
+                    case OpcodeBytes.RES_0_MIY_4:
+                    case OpcodeBytes.RES_0_MIY_5:
+                    case OpcodeBytes.RES_0_MIY_6:
+                    case OpcodeBytes.RES_0_MIY_7:
+                    case OpcodeBytes.RES_0_MIY:
+                    case OpcodeBytes.RES_0_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -651,14 +651,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_1_IY_2:
-                    case OpcodeBytes.RES_1_IY_3:
-                    case OpcodeBytes.RES_1_IY_4:
-                    case OpcodeBytes.RES_1_IY_5:
-                    case OpcodeBytes.RES_1_IY_6:
-                    case OpcodeBytes.RES_1_IY_7:
-                    case OpcodeBytes.RES_1_IY:
-                    case OpcodeBytes.RES_1_IY_8:
+                    case OpcodeBytes.RES_1_MIY_2:
+                    case OpcodeBytes.RES_1_MIY_3:
+                    case OpcodeBytes.RES_1_MIY_4:
+                    case OpcodeBytes.RES_1_MIY_5:
+                    case OpcodeBytes.RES_1_MIY_6:
+                    case OpcodeBytes.RES_1_MIY_7:
+                    case OpcodeBytes.RES_1_MIY:
+                    case OpcodeBytes.RES_1_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -667,14 +667,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_2_IY_2:
-                    case OpcodeBytes.RES_2_IY_3:
-                    case OpcodeBytes.RES_2_IY_4:
-                    case OpcodeBytes.RES_2_IY_5:
-                    case OpcodeBytes.RES_2_IY_6:
-                    case OpcodeBytes.RES_2_IY_7:
-                    case OpcodeBytes.RES_2_IY:
-                    case OpcodeBytes.RES_2_IY_8:
+                    case OpcodeBytes.RES_2_MIY_2:
+                    case OpcodeBytes.RES_2_MIY_3:
+                    case OpcodeBytes.RES_2_MIY_4:
+                    case OpcodeBytes.RES_2_MIY_5:
+                    case OpcodeBytes.RES_2_MIY_6:
+                    case OpcodeBytes.RES_2_MIY_7:
+                    case OpcodeBytes.RES_2_MIY:
+                    case OpcodeBytes.RES_2_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -683,14 +683,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_3_IY_2:
-                    case OpcodeBytes.RES_3_IY_3:
-                    case OpcodeBytes.RES_3_IY_4:
-                    case OpcodeBytes.RES_3_IY_5:
-                    case OpcodeBytes.RES_3_IY_6:
-                    case OpcodeBytes.RES_3_IY_7:
-                    case OpcodeBytes.RES_3_IY:
-                    case OpcodeBytes.RES_3_IY_8:
+                    case OpcodeBytes.RES_3_MIY_2:
+                    case OpcodeBytes.RES_3_MIY_3:
+                    case OpcodeBytes.RES_3_MIY_4:
+                    case OpcodeBytes.RES_3_MIY_5:
+                    case OpcodeBytes.RES_3_MIY_6:
+                    case OpcodeBytes.RES_3_MIY_7:
+                    case OpcodeBytes.RES_3_MIY:
+                    case OpcodeBytes.RES_3_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -699,14 +699,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_4_IY_2:
-                    case OpcodeBytes.RES_4_IY_3:
-                    case OpcodeBytes.RES_4_IY_4:
-                    case OpcodeBytes.RES_4_IY_5:
-                    case OpcodeBytes.RES_4_IY_6:
-                    case OpcodeBytes.RES_4_IY_7:
-                    case OpcodeBytes.RES_4_IY:
-                    case OpcodeBytes.RES_4_IY_8:
+                    case OpcodeBytes.RES_4_MIY_2:
+                    case OpcodeBytes.RES_4_MIY_3:
+                    case OpcodeBytes.RES_4_MIY_4:
+                    case OpcodeBytes.RES_4_MIY_5:
+                    case OpcodeBytes.RES_4_MIY_6:
+                    case OpcodeBytes.RES_4_MIY_7:
+                    case OpcodeBytes.RES_4_MIY:
+                    case OpcodeBytes.RES_4_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -715,14 +715,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_5_IY_2:
-                    case OpcodeBytes.RES_5_IY_3:
-                    case OpcodeBytes.RES_5_IY_4:
-                    case OpcodeBytes.RES_5_IY_5:
-                    case OpcodeBytes.RES_5_IY_6:
-                    case OpcodeBytes.RES_5_IY_7:
-                    case OpcodeBytes.RES_5_IY:
-                    case OpcodeBytes.RES_5_IY_8:
+                    case OpcodeBytes.RES_5_MIY_2:
+                    case OpcodeBytes.RES_5_MIY_3:
+                    case OpcodeBytes.RES_5_MIY_4:
+                    case OpcodeBytes.RES_5_MIY_5:
+                    case OpcodeBytes.RES_5_MIY_6:
+                    case OpcodeBytes.RES_5_MIY_7:
+                    case OpcodeBytes.RES_5_MIY:
+                    case OpcodeBytes.RES_5_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -731,14 +731,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_6_IY_2:
-                    case OpcodeBytes.RES_6_IY_3:
-                    case OpcodeBytes.RES_6_IY_4:
-                    case OpcodeBytes.RES_6_IY_5:
-                    case OpcodeBytes.RES_6_IY_6:
-                    case OpcodeBytes.RES_6_IY_7:
-                    case OpcodeBytes.RES_6_IY:
-                    case OpcodeBytes.RES_6_IY_8:
+                    case OpcodeBytes.RES_6_MIY_2:
+                    case OpcodeBytes.RES_6_MIY_3:
+                    case OpcodeBytes.RES_6_MIY_4:
+                    case OpcodeBytes.RES_6_MIY_5:
+                    case OpcodeBytes.RES_6_MIY_6:
+                    case OpcodeBytes.RES_6_MIY_7:
+                    case OpcodeBytes.RES_6_MIY:
+                    case OpcodeBytes.RES_6_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -747,14 +747,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.RES_7_IY_2:
-                    case OpcodeBytes.RES_7_IY_3:
-                    case OpcodeBytes.RES_7_IY_4:
-                    case OpcodeBytes.RES_7_IY_5:
-                    case OpcodeBytes.RES_7_IY_6:
-                    case OpcodeBytes.RES_7_IY_7:
-                    case OpcodeBytes.RES_7_IY:
-                    case OpcodeBytes.RES_7_IY_8:
+                    case OpcodeBytes.RES_7_MIY_2:
+                    case OpcodeBytes.RES_7_MIY_3:
+                    case OpcodeBytes.RES_7_MIY_4:
+                    case OpcodeBytes.RES_7_MIY_5:
+                    case OpcodeBytes.RES_7_MIY_6:
+                    case OpcodeBytes.RES_7_MIY_7:
+                    case OpcodeBytes.RES_7_MIY:
+                    case OpcodeBytes.RES_7_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -767,14 +767,14 @@ namespace JustinCredible.ZilogZ80
 
                 #region Set Bit
 
-                    case OpcodeBytes.SET_0_IY_2:
-                    case OpcodeBytes.SET_0_IY_3:
-                    case OpcodeBytes.SET_0_IY_4:
-                    case OpcodeBytes.SET_0_IY_5:
-                    case OpcodeBytes.SET_0_IY_6:
-                    case OpcodeBytes.SET_0_IY_7:
-                    case OpcodeBytes.SET_0_IY:
-                    case OpcodeBytes.SET_0_IY_8:
+                    case OpcodeBytes.SET_0_MIY_2:
+                    case OpcodeBytes.SET_0_MIY_3:
+                    case OpcodeBytes.SET_0_MIY_4:
+                    case OpcodeBytes.SET_0_MIY_5:
+                    case OpcodeBytes.SET_0_MIY_6:
+                    case OpcodeBytes.SET_0_MIY_7:
+                    case OpcodeBytes.SET_0_MIY:
+                    case OpcodeBytes.SET_0_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -783,14 +783,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_1_IY_2:
-                    case OpcodeBytes.SET_1_IY_3:
-                    case OpcodeBytes.SET_1_IY_4:
-                    case OpcodeBytes.SET_1_IY_5:
-                    case OpcodeBytes.SET_1_IY_6:
-                    case OpcodeBytes.SET_1_IY_7:
-                    case OpcodeBytes.SET_1_IY:
-                    case OpcodeBytes.SET_1_IY_8:
+                    case OpcodeBytes.SET_1_MIY_2:
+                    case OpcodeBytes.SET_1_MIY_3:
+                    case OpcodeBytes.SET_1_MIY_4:
+                    case OpcodeBytes.SET_1_MIY_5:
+                    case OpcodeBytes.SET_1_MIY_6:
+                    case OpcodeBytes.SET_1_MIY_7:
+                    case OpcodeBytes.SET_1_MIY:
+                    case OpcodeBytes.SET_1_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -799,14 +799,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_2_IY_2:
-                    case OpcodeBytes.SET_2_IY_3:
-                    case OpcodeBytes.SET_2_IY_4:
-                    case OpcodeBytes.SET_2_IY_5:
-                    case OpcodeBytes.SET_2_IY_6:
-                    case OpcodeBytes.SET_2_IY_7:
-                    case OpcodeBytes.SET_2_IY:
-                    case OpcodeBytes.SET_2_IY_8:
+                    case OpcodeBytes.SET_2_MIY_2:
+                    case OpcodeBytes.SET_2_MIY_3:
+                    case OpcodeBytes.SET_2_MIY_4:
+                    case OpcodeBytes.SET_2_MIY_5:
+                    case OpcodeBytes.SET_2_MIY_6:
+                    case OpcodeBytes.SET_2_MIY_7:
+                    case OpcodeBytes.SET_2_MIY:
+                    case OpcodeBytes.SET_2_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -815,14 +815,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_3_IY_2:
-                    case OpcodeBytes.SET_3_IY_3:
-                    case OpcodeBytes.SET_3_IY_4:
-                    case OpcodeBytes.SET_3_IY_5:
-                    case OpcodeBytes.SET_3_IY_6:
-                    case OpcodeBytes.SET_3_IY_7:
-                    case OpcodeBytes.SET_3_IY:
-                    case OpcodeBytes.SET_3_IY_8:
+                    case OpcodeBytes.SET_3_MIY_2:
+                    case OpcodeBytes.SET_3_MIY_3:
+                    case OpcodeBytes.SET_3_MIY_4:
+                    case OpcodeBytes.SET_3_MIY_5:
+                    case OpcodeBytes.SET_3_MIY_6:
+                    case OpcodeBytes.SET_3_MIY_7:
+                    case OpcodeBytes.SET_3_MIY:
+                    case OpcodeBytes.SET_3_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -831,14 +831,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_4_IY_2:
-                    case OpcodeBytes.SET_4_IY_3:
-                    case OpcodeBytes.SET_4_IY_4:
-                    case OpcodeBytes.SET_4_IY_5:
-                    case OpcodeBytes.SET_4_IY_6:
-                    case OpcodeBytes.SET_4_IY_7:
-                    case OpcodeBytes.SET_4_IY:
-                    case OpcodeBytes.SET_4_IY_8:
+                    case OpcodeBytes.SET_4_MIY_2:
+                    case OpcodeBytes.SET_4_MIY_3:
+                    case OpcodeBytes.SET_4_MIY_4:
+                    case OpcodeBytes.SET_4_MIY_5:
+                    case OpcodeBytes.SET_4_MIY_6:
+                    case OpcodeBytes.SET_4_MIY_7:
+                    case OpcodeBytes.SET_4_MIY:
+                    case OpcodeBytes.SET_4_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -847,14 +847,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_5_IY_2:
-                    case OpcodeBytes.SET_5_IY_3:
-                    case OpcodeBytes.SET_5_IY_4:
-                    case OpcodeBytes.SET_5_IY_5:
-                    case OpcodeBytes.SET_5_IY_6:
-                    case OpcodeBytes.SET_5_IY_7:
-                    case OpcodeBytes.SET_5_IY:
-                    case OpcodeBytes.SET_5_IY_8:
+                    case OpcodeBytes.SET_5_MIY_2:
+                    case OpcodeBytes.SET_5_MIY_3:
+                    case OpcodeBytes.SET_5_MIY_4:
+                    case OpcodeBytes.SET_5_MIY_5:
+                    case OpcodeBytes.SET_5_MIY_6:
+                    case OpcodeBytes.SET_5_MIY_7:
+                    case OpcodeBytes.SET_5_MIY:
+                    case OpcodeBytes.SET_5_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -863,14 +863,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_6_IY_2:
-                    case OpcodeBytes.SET_6_IY_3:
-                    case OpcodeBytes.SET_6_IY_4:
-                    case OpcodeBytes.SET_6_IY_5:
-                    case OpcodeBytes.SET_6_IY_6:
-                    case OpcodeBytes.SET_6_IY_7:
-                    case OpcodeBytes.SET_6_IY:
-                    case OpcodeBytes.SET_6_IY_8:
+                    case OpcodeBytes.SET_6_MIY_2:
+                    case OpcodeBytes.SET_6_MIY_3:
+                    case OpcodeBytes.SET_6_MIY_4:
+                    case OpcodeBytes.SET_6_MIY_5:
+                    case OpcodeBytes.SET_6_MIY_6:
+                    case OpcodeBytes.SET_6_MIY_7:
+                    case OpcodeBytes.SET_6_MIY:
+                    case OpcodeBytes.SET_6_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -879,14 +879,14 @@ namespace JustinCredible.ZilogZ80
                             break;
                         }
 
-                    case OpcodeBytes.SET_7_IY_2:
-                    case OpcodeBytes.SET_7_IY_3:
-                    case OpcodeBytes.SET_7_IY_4:
-                    case OpcodeBytes.SET_7_IY_5:
-                    case OpcodeBytes.SET_7_IY_6:
-                    case OpcodeBytes.SET_7_IY_7:
-                    case OpcodeBytes.SET_7_IY:
-                    case OpcodeBytes.SET_7_IY_8:
+                    case OpcodeBytes.SET_7_MIY_2:
+                    case OpcodeBytes.SET_7_MIY_3:
+                    case OpcodeBytes.SET_7_MIY_4:
+                    case OpcodeBytes.SET_7_MIY_5:
+                    case OpcodeBytes.SET_7_MIY_6:
+                    case OpcodeBytes.SET_7_MIY_7:
+                    case OpcodeBytes.SET_7_MIY:
+                    case OpcodeBytes.SET_7_MIY_8:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class SLL_IX_R_Tests : BaseTest
+    public class SLL_MIX_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -28,7 +28,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_SLL_IX_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_SLL_MIX_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -98,7 +98,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForHLRegister))]
-        public void Test_SLL_IX(int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_SLL_MIX(int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h

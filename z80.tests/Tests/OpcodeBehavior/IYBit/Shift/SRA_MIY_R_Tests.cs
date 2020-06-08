@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class SRA_IX_R_Tests : BaseTest
+    public class SRA_MIY_R_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetDataForRegisters()
         {
@@ -27,11 +27,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetDataForRegisters))]
-        public void Test_SRA_IX_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_SRA_MIY_R(Register register, int offset, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                SRA (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
+                SRA (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)}), {register}
                 HALT
             ");
 
@@ -42,7 +42,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -60,7 +60,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x2234, state.Registers.IX);
+            Assert.Equal(0x2234, state.Registers.IY);
             Assert.Equal(expectedValue, state.Registers[register]);
 
             // Should be affected.
@@ -100,7 +100,7 @@ namespace JustinCredible.ZilogZ80.Tests
         {
             var rom = AssembleSource($@"
                 org 00h
-                SRA (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                SRA (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -111,7 +111,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -129,7 +129,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x2234, state.Registers.IX);
+            Assert.Equal(0x2234, state.Registers.IY);
             Assert.Equal(expectedValue, state.Memory[0x2234 + offset]);
 
             // Should be affected.
