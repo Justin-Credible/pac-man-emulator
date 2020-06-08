@@ -88,6 +88,11 @@ namespace JustinCredible.ZilogZ80
 
         #region Load
 
+            public static Opcode LD_IX_NN = new Opcode(OpcodeBytes.LD_IX_NN, instructionSet: InstructionSet.IX, size: 4, instruction: "LD IX, D16", cycles: 14, pseudocode: "IX <- D16");
+
+            public static Opcode LD_MNN_IX = new Opcode(OpcodeBytes.LD_MNN_IX, instructionSet: InstructionSet.IX, size: 4, instruction: "LD (D16), IX", cycles: 20, pseudocode: "(D16) <- IX");
+            public static Opcode LD_IX_MNN = new Opcode(OpcodeBytes.LD_IX_MNN, instructionSet: InstructionSet.IX, size: 4, instruction: "LD IX, (D16)", cycles: 20, pseudocode: "IX <- (D16)");
+
             public static Opcode LD_MIX_N = new Opcode(OpcodeBytes.LD_MIX_N, instructionSet: InstructionSet.IX, size: 4, instruction: "LD (IX+n), D8", cycles: 19, pseudocode: "(IX+n) <- D8");
 
             public static Opcode LD_MIX_B = new Opcode(OpcodeBytes.LD_MIX_B, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), B", cycles: 19, pseudocode: "(IX+n) <- B");

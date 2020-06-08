@@ -88,6 +88,11 @@ namespace JustinCredible.ZilogZ80
 
         #region Load
 
+            public const byte LD_IX_NN = 0x21;
+
+            public const byte LD_MNN_IX = 0x22;
+            public const byte LD_IX_MNN = 0x2A;
+
             public const byte LD_MIX_N = 0x36;
 
             public const byte LD_MIX_B = 0x70;

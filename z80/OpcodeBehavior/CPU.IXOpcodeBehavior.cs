@@ -192,6 +192,26 @@ namespace JustinCredible.ZilogZ80
 
                 #region Load
 
+                    case OpcodeBytes.LD_IX_NN:
+                    {
+                        var value = ReadMemory16(Registers.PC + 2);
+                        Registers.IX = value;
+                        break;
+                    }
+
+                    case OpcodeBytes.LD_MNN_IX:
+                    {
+                        var address = ReadMemory16(Registers.PC + 2);
+                        WriteMemory16(address, Registers.IX);
+                        break;
+                    }
+                    case OpcodeBytes.LD_IX_MNN:
+                    {
+                        var address = ReadMemory16(Registers.PC + 2);
+                        Registers.IX = ReadMemory16(address);
+                        break;
+                    }
+
                     case OpcodeBytes.LD_MIX_N:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
