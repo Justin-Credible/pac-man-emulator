@@ -85,5 +85,17 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Load
+
+            public const byte LD_MIX_B = 0x70;
+            public const byte LD_MIX_C = 0x71;
+            public const byte LD_MIX_D = 0x72;
+            public const byte LD_MIX_E = 0x73;
+            public const byte LD_MIX_H = 0x74;
+            public const byte LD_MIX_L = 0x75;
+            public const byte LD_MIX_A = 0x77;
+
+        #endregion
     }
 }

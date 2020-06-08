@@ -85,5 +85,17 @@ namespace JustinCredible.ZilogZ80
             #endregion
 
         #endregion
+
+        #region Load
+
+            public static Opcode LD_MIX_B = new Opcode(OpcodeBytes.LD_MIX_B, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), B", cycles: 19, pseudocode: "(IX+n) = B");
+            public static Opcode LD_MIX_C = new Opcode(OpcodeBytes.LD_MIX_C, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), C", cycles: 19, pseudocode: "(IX+n) = C");
+            public static Opcode LD_MIX_D = new Opcode(OpcodeBytes.LD_MIX_D, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), D", cycles: 19, pseudocode: "(IX+n) = D");
+            public static Opcode LD_MIX_E = new Opcode(OpcodeBytes.LD_MIX_E, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), E", cycles: 19, pseudocode: "(IX+n) = E");
+            public static Opcode LD_MIX_H = new Opcode(OpcodeBytes.LD_MIX_H, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), H", cycles: 19, pseudocode: "(IX+n) = H");
+            public static Opcode LD_MIX_L = new Opcode(OpcodeBytes.LD_MIX_L, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), L", cycles: 19, pseudocode: "(IX+n) = L");
+            public static Opcode LD_MIX_A = new Opcode(OpcodeBytes.LD_MIX_A, instructionSet: InstructionSet.IX, size: 3, instruction: "LD (IX+n), A", cycles: 19, pseudocode: "(IX+n) = A");
+
+        #endregion
     }
 }

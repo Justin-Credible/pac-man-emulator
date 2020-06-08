@@ -190,6 +190,53 @@ namespace JustinCredible.ZilogZ80
 
                 #endregion
 
+                #region Load
+
+                    case OpcodeBytes.LD_MIX_B:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.B);
+                        break;
+                    }
+                    case OpcodeBytes.LD_MIX_C:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.C);
+                        break;
+                    }
+                    case OpcodeBytes.LD_MIX_D:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.D);
+                        break;
+                    }
+                    case OpcodeBytes.LD_MIX_E:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.E);
+                        break;
+                    }
+                    case OpcodeBytes.LD_MIX_H:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.H);
+                        break;
+                    }
+                    case OpcodeBytes.LD_MIX_L:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.L);
+                        break;
+                    }
+                    case OpcodeBytes.LD_MIX_A:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        WriteMemory(Registers.IX + offset, Registers.A);
+                        break;
+                    }
+
+                #endregion
+
                 default:
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode, Registers.PC));
             }
