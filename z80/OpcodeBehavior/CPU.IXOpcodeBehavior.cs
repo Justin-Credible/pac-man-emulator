@@ -192,6 +192,10 @@ namespace JustinCredible.ZilogZ80
 
                 #region Load
 
+                    case OpcodeBytes.LD_SP_IX:
+                        Registers.SP = Registers.IX;
+                        break;
+
                     case OpcodeBytes.LD_IX_NN:
                     {
                         var value = ReadMemory16(Registers.PC + 2);

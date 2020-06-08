@@ -160,5 +160,45 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(4 + 8, state.Cycles);
             Assert.Equal(0x02, state.Registers.PC);
         }
+
+        [Fact]
+        public void Test_LD_SP_IX()
+        {
+            var rom = AssembleSource($@"
+                org 00h
+                LD SP, IX
+                HALT
+            ");
+
+            var initialState = new CPUConfig()
+            {
+                Registers = new CPURegisters()
+                {
+                    IX = 0x1234,
+                },
+                Flags = new ConditionFlags()
+                {
+                    // Should be unaffected.
+                    Carry = true,
+                    Sign = true,
+                    Zero = true,
+                    Subtract = true,
+                    AuxCarry = true,
+                    Parity = true,
+                },
+            };
+
+            var state = Execute(rom, initialState);
+
+            Assert.Equal(0x1234, state.Registers.IX);
+            Assert.Equal(0x1234, state.Registers.SP);
+
+            // Should be unaffected.
+            AssertFlagsSame(initialState, state);
+
+            Assert.Equal(2, state.Iterations);
+            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(0x02, state.Registers.PC);
+        }
     }
 }
