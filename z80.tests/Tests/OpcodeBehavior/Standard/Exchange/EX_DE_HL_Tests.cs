@@ -5,7 +5,7 @@ namespace JustinCredible.ZilogZ80.Tests
     public class EX_DE_HL_Tests : BaseTest
     {
         [Fact]
-        public void TestXCHG_NoFlags()
+        public void TestXCHG()
         {
             var rom = AssembleSource($@"
                 org 00h

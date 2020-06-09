@@ -16,17 +16,34 @@ namespace JustinCredible.ZilogZ80
                     incrementProgramCounter = false;
                     break;
 
-                case OpcodeBytes.POP_IX:
-                    Registers.IXH = ReadMemory(Registers.SP + 1);
-                    Registers.IXL = ReadMemory(Registers.SP);
-                    Registers.SP = (UInt16)(Registers.SP + 2);
-                    break;
+                #region Stack Operations
 
-                case OpcodeBytes.PUSH_IX:
-                    WriteMemory(Registers.SP - 1, Registers.IXH);
-                    WriteMemory(Registers.SP - 2, Registers.IXL);
-                    Registers.SP = (UInt16)(Registers.SP - 2);
-                    break;
+                    case OpcodeBytes.POP_IX:
+                        Registers.IXH = ReadMemory(Registers.SP + 1);
+                        Registers.IXL = ReadMemory(Registers.SP);
+                        Registers.SP = (UInt16)(Registers.SP + 2);
+                        break;
+
+                    case OpcodeBytes.PUSH_IX:
+                        WriteMemory(Registers.SP - 1, Registers.IXH);
+                        WriteMemory(Registers.SP - 2, Registers.IXL);
+                        Registers.SP = (UInt16)(Registers.SP - 2);
+                        break;
+
+                    // Exchange stack
+                    //  IXL <-> (SP); IXH <-> (SP+1)
+                    case OpcodeBytes.EX_MSP_IX:
+                    {
+                        var oldIXL = Registers.IXL;
+                        var oldIXH = Registers.IXH;
+                        Registers.IXL = ReadMemory(Registers.SP);
+                        WriteMemory(Registers.SP, oldIXL);
+                        Registers.IXH = ReadMemory(Registers.SP+1);
+                        WriteMemory(Registers.SP+1, oldIXH);
+                        break;
+                    }
+
+                #endregion
 
                 #region Add
 

@@ -7,8 +7,13 @@ namespace JustinCredible.ZilogZ80
     {
         public const byte JP_IX = 0xE9;
 
-        public const byte POP_IX = 0xE1;
-        public const byte PUSH_IX = 0xE5;
+        #region Stack Operations
+
+            public const byte POP_IX = 0xE1;
+            public const byte PUSH_IX = 0xE5;
+            public const byte EX_MSP_IX = 0xE3;
+
+        #endregion
 
         #region Add
 

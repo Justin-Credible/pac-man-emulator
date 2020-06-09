@@ -2,14 +2,14 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class EX_MSP_HL_Tests : BaseTest
+    public class EX_MSP_IX_Tests : BaseTest
     {
         [Fact]
-        public void Test_EX_MSP_HL()
+        public void Test_EX_MSP_IX()
         {
             var rom = AssembleSource($@"
                 org 00h
-                EX (SP), HL
+                EX (SP), IX
                 HALT
             ");
 
@@ -21,8 +21,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    H = 0x42,
-                    L = 0x77,
+                    IX = 0x4277,
                     SP = 0x2222,
                 },
                 MemorySize = memory.Length,
@@ -30,8 +29,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x88, state.Registers.H);
-            Assert.Equal(0x99, state.Registers.L);
+            Assert.Equal(0x8899, state.Registers.IX);
             Assert.Equal(0x77, state.Memory[0x2222]);
             Assert.Equal(0x42, state.Memory[0x2223]);
             Assert.Equal(0x2222, state.Registers.SP);
@@ -39,8 +37,8 @@ namespace JustinCredible.ZilogZ80.Tests
             AssertFlagsFalse(state);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 18, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
+            Assert.Equal(4 + 23, state.Cycles);
+            Assert.Equal(0x02, state.Registers.PC);
         }
     }
 }
