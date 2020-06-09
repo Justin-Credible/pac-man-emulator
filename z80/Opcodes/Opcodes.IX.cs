@@ -12,6 +12,12 @@ namespace JustinCredible.ZilogZ80
             public static Opcode INC_IX = new Opcode(OpcodeBytes.INC_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "INC IX", cycles: 10, pseudocode: "IX++");
             public static Opcode DEC_IX = new Opcode(OpcodeBytes.DEC_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "DEC IX", cycles: 10, pseudocode: "IX--");
 
+            public static Opcode INC_IXH = new Opcode(OpcodeBytes.INC_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "INC IXH", cycles: 8, pseudocode: "IXH++");
+            public static Opcode DEC_IXH = new Opcode(OpcodeBytes.DEC_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "DEC IXH", cycles: 8, pseudocode: "IXH--");
+
+            public static Opcode INC_IXL = new Opcode(OpcodeBytes.INC_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "INC IXL", cycles: 8, pseudocode: "IXL++");
+            public static Opcode DEC_IXL = new Opcode(OpcodeBytes.DEC_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "DEC IXL", cycles: 8, pseudocode: "IXL--");
+
             public static Opcode INC_MIX = new Opcode(OpcodeBytes.INC_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "INC (IX+n)", cycles: 23, pseudocode: "(IX+n)++");
             public static Opcode DEC_MIX = new Opcode(OpcodeBytes.DEC_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "DEC (IX+n)", cycles: 23, pseudocode: "(IX+n)--");
 

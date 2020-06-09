@@ -25,6 +25,24 @@ namespace JustinCredible.ZilogZ80
                         Registers.IX--;
                         break;
 
+                    case OpcodeBytes.INC_IXH:
+                        Registers.IXH++;
+                        SetFlags(subtract: false, result: Registers.IX);
+                        break;
+                    case OpcodeBytes.DEC_IXH:
+                        Registers.IXH--;
+                        SetFlags(subtract: true, result: Registers.IX);
+                        break;
+
+                    case OpcodeBytes.INC_IXL:
+                        Registers.IXL++;
+                        SetFlags(subtract: false, result: Registers.IX);
+                        break;
+                    case OpcodeBytes.DEC_IXL:
+                        Registers.IXL--;
+                        SetFlags(subtract: true, result: Registers.IX);
+                        break;
+
                     case OpcodeBytes.INC_MIX:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];

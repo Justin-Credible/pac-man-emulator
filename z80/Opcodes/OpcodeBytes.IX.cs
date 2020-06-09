@@ -12,6 +12,12 @@ namespace JustinCredible.ZilogZ80
             public const byte INC_IX = 0x23;
             public const byte DEC_IX = 0x2B;
 
+            public const byte INC_IXH = 0x24;
+            public const byte DEC_IXH = 0x25;
+
+            public const byte INC_IXL = 0x2C;
+            public const byte DEC_IXL = 0x2D;
+
             public const byte INC_MIX = 0x34;
             public const byte DEC_MIX = 0x35;
 
