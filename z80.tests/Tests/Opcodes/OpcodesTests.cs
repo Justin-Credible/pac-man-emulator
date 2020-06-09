@@ -130,7 +130,7 @@ namespace JustinCredible.ZilogZ80.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Not implemented yet")]
+        [Fact]
         public void TestIYTableHasExpectedContent()
         {
             foreach (var entry in Opcodes.IY)
