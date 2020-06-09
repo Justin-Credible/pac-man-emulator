@@ -7,6 +7,16 @@ namespace JustinCredible.ZilogZ80
     {
         public const byte JP_IX = 0xE9;
 
+        #region Increment/Decrement
+
+            public const byte INC_IX = 0x23;
+            public const byte DEC_IX = 0x2B;
+
+            public const byte INC_MIX = 0x34;
+            public const byte DEC_MIX = 0x35;
+
+        #endregion
+
         #region Stack Operations
 
             public const byte POP_IX = 0xE1;

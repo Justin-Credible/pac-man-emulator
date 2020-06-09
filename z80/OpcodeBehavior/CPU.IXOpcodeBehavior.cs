@@ -16,6 +16,36 @@ namespace JustinCredible.ZilogZ80
                     incrementProgramCounter = false;
                     break;
 
+                #region Increment/Decrement
+
+                    case OpcodeBytes.INC_IX:
+                        Registers.IX++;
+                        break;
+                    case OpcodeBytes.DEC_IX:
+                        Registers.IX--;
+                        break;
+
+                    case OpcodeBytes.INC_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = ReadMemory(Registers.IX + offset);
+                        value++;
+                        WriteMemory(Registers.IX + offset, value);
+                        SetFlags(carry: false, result: value, subtract: false);
+                        break;
+                    }
+                    case OpcodeBytes.DEC_MIX:
+                    {
+                        var offset = (sbyte)Memory[Registers.PC + 2];
+                        var value = ReadMemory(Registers.IX + offset);
+                        value--;
+                        WriteMemory(Registers.IX + offset, value);
+                        SetFlags(carry: false, result: value, subtract: true);
+                        break;
+                    }
+
+                #endregion
+
                 #region Stack Operations
 
                     case OpcodeBytes.POP_IX:

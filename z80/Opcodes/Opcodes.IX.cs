@@ -7,6 +7,16 @@ namespace JustinCredible.ZilogZ80
     {
         public static Opcode JP_IX = new Opcode(OpcodeBytes.JP_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "JP (IX)", cycles: 8, pseudocode: "PC <- IX");
 
+        #region Increment/Decrement
+
+            public static Opcode INC_IX = new Opcode(OpcodeBytes.INC_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "INC IX", cycles: 10, pseudocode: "IX++");
+            public static Opcode DEC_IX = new Opcode(OpcodeBytes.DEC_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "DEC IX", cycles: 10, pseudocode: "IX--");
+
+            public static Opcode INC_MIX = new Opcode(OpcodeBytes.INC_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "INC (IX+n)", cycles: 23, pseudocode: "(IX+n)++");
+            public static Opcode DEC_MIX = new Opcode(OpcodeBytes.DEC_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "DEC (IX+n)", cycles: 23, pseudocode: "(IX+n)--");
+
+        #endregion
+
         #region Stack Operations
 
             public static Opcode POP_IX = new Opcode(OpcodeBytes.POP_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "POP IX", cycles: 14, pseudocode: "IXL <- (sp); IXH <- (sp + 1); sp <- sp + 2");
