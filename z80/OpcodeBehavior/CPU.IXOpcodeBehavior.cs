@@ -16,6 +16,18 @@ namespace JustinCredible.ZilogZ80
                     incrementProgramCounter = false;
                     break;
 
+                case OpcodeBytes.POP_IX:
+                    Registers.IXH = ReadMemory(Registers.SP + 1);
+                    Registers.IXL = ReadMemory(Registers.SP);
+                    Registers.SP = (UInt16)(Registers.SP + 2);
+                    break;
+
+                case OpcodeBytes.PUSH_IX:
+                    WriteMemory(Registers.SP - 1, Registers.IXH);
+                    WriteMemory(Registers.SP - 2, Registers.IXL);
+                    Registers.SP = (UInt16)(Registers.SP - 2);
+                    break;
+
                 #region Add
 
                     #region Add (Addresses)
