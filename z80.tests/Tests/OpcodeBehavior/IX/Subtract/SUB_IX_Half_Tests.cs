@@ -7,7 +7,7 @@ namespace JustinCredible.ZilogZ80.Tests
     public class SUB_IX_Half_Tests : BaseTest
     {
 
-        [Fact(Skip = "TODO: 'LD IX, nn' Not implemented yet")]
+        [Fact]
         public void Test_SUB_IXH_ArbitraryExample()
         {
             var rom = AssembleSource($@"
@@ -23,7 +23,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x20, state.Registers.A);
         }
 
-        [Fact(Skip = "TODO: 'LD IX, nn' Not implemented yet")]
+        [Fact]
         public void Test_SUB_IXL_ArbitraryExample()
         {
             var rom = AssembleSource($@"
