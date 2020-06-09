@@ -5,6 +5,8 @@ namespace JustinCredible.ZilogZ80
     // These are all two byte opcodes, where the first byte is defined by OpcodeBytes.PREAMBLE_IX (0xDD).
     public partial class OpcodeBytes
     {
+        public const byte JP_IX = 0xE9;
+
         #region Add
 
             #region Add (Addresses)

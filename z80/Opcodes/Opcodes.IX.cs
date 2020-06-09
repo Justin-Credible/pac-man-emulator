@@ -5,6 +5,8 @@ namespace JustinCredible.ZilogZ80
     // These are multi-byte opcodes, where the first byte is defined by OpcodeBytes.PREAMBLE_IX (0xDD).
     public partial class Opcodes
     {
+        public static Opcode JP_IX = new Opcode(OpcodeBytes.JP_IX, instructionSet: InstructionSet.IX, size: 2, instruction: "JP (IX)", cycles: 8, pseudocode: "PC <- IX");
+
         #region Add
 
             #region Add (Addresses)

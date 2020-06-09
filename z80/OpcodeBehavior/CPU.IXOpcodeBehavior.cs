@@ -11,6 +11,11 @@ namespace JustinCredible.ZilogZ80
 
             switch (opcode.Code)
             {
+                case OpcodeBytes.JP_IX:
+                    ExecuteJump(Registers.IX);
+                    incrementProgramCounter = false;
+                    break;
+
                 #region Add
 
                     #region Add (Addresses)
