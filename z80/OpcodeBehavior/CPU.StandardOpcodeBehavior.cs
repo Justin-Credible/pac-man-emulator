@@ -979,7 +979,7 @@ namespace JustinCredible.ZilogZ80
                     // Jump if parity odd
                     case OpcodeBytes.JP_PO:
                     {
-                        if (!Flags.Parity)
+                        if (!Flags.ParityOverflow)
                         {
                             ExecuteJump();
                             incrementProgramCounter = false;
@@ -990,7 +990,7 @@ namespace JustinCredible.ZilogZ80
                     // Jump if parity even
                     case OpcodeBytes.JP_PE:
                     {
-                        if (Flags.Parity)
+                        if (Flags.ParityOverflow)
                         {
                             ExecuteJump();
                             incrementProgramCounter = false;
@@ -1176,7 +1176,7 @@ namespace JustinCredible.ZilogZ80
                     // Call if party even
                     case OpcodeBytes.CALL_PE:
                     {
-                        if (Flags.Parity)
+                        if (Flags.ParityOverflow)
                         {
                             ExecuteCall(opcode);
                             incrementProgramCounter = false;
@@ -1232,7 +1232,7 @@ namespace JustinCredible.ZilogZ80
                     // Call if party odd
                     case OpcodeBytes.CALL_PO:
                     {
-                        if (!Flags.Parity)
+                        if (!Flags.ParityOverflow)
                         {
                             ExecuteCall(opcode);
                             incrementProgramCounter = false;
@@ -1346,7 +1346,7 @@ namespace JustinCredible.ZilogZ80
                     // Return if parity odd
                     case OpcodeBytes.RET_PO:
                     {
-                        if (!Flags.Parity)
+                        if (!Flags.ParityOverflow)
                         {
                             ExecuteReturn();
                             incrementProgramCounter = false;
@@ -1360,7 +1360,7 @@ namespace JustinCredible.ZilogZ80
                     // Return if parity even
                     case OpcodeBytes.RET_PE:
                     {
-                        if (Flags.Parity)
+                        if (Flags.ParityOverflow)
                         {
                             ExecuteReturn();
                             incrementProgramCounter = false;
@@ -1525,7 +1525,7 @@ namespace JustinCredible.ZilogZ80
 
             int lsb = Registers.A & 0x0F;
 
-            if (lsb > 9 || Flags.AuxCarry)
+            if (lsb > 9 || Flags.HalfCarry)
             {
                 Registers.A += 6;
                 newAuxCarryValue = lsb >= 9;
@@ -1553,7 +1553,7 @@ namespace JustinCredible.ZilogZ80
             }
 
             // Update the condition flags.
-            SetFlags(carry: newCarryValue, result: Registers.A, auxCarry: newAuxCarryValue);
+            SetFlags(carry: newCarryValue, result: Registers.A, halfCarry: newAuxCarryValue);
         }
 
         private void ExecuteJump()

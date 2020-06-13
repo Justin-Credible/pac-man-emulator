@@ -25,8 +25,8 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Sign = sign,
                 Zero = zero,
-                AuxCarry = auxCarry,
-                Parity = parity,
+                HalfCarry = auxCarry,
+                ParityOverflow = parity,
                 Subtract = subtract,
                 Carry = carry,
             };
@@ -56,8 +56,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.Equal(expectedSign, flags.Sign);
             Assert.Equal(expectedZero, flags.Zero);
-            Assert.Equal(expectedAuxCarry, flags.AuxCarry);
-            Assert.Equal(expectedParity, flags.Parity);
+            Assert.Equal(expectedAuxCarry, flags.HalfCarry);
+            Assert.Equal(expectedParity, flags.ParityOverflow);
             Assert.Equal(exepectedsubtract, flags.Subtract);
             Assert.Equal(expectedCarry, flags.Carry);
         }

@@ -37,7 +37,7 @@ namespace JustinCredible.ZilogZ80.Tests
                     Subtract = false,
                     Sign = true,
                     // AuxCarry = true, // TODO
-                    Parity = true,
+                    ParityOverflow = true,
                 },
                 MemorySize = memory.Length,
             };
@@ -60,7 +60,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Sign);
             // Assert.True(state.Flags.AuxCarry); // TODO
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (21 * 2) + 16, state.Cycles);

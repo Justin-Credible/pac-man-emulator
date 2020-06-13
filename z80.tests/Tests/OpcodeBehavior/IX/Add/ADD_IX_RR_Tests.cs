@@ -28,8 +28,8 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Sign = true,
                 Zero = true,
-                AuxCarry = false,
-                Parity = true,
+                HalfCarry = false,
+                ParityOverflow = true,
                 Subtract = true,
                 Carry = false,
             };
@@ -48,9 +48,9 @@ namespace JustinCredible.ZilogZ80.Tests
             // Ensure these flags remain unchanged.
             Assert.True(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -85,8 +85,8 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Sign = true,
                 Zero = true,
-                AuxCarry = false,
-                Parity = true,
+                HalfCarry = false,
+                ParityOverflow = true,
                 Subtract = true,
                 Carry = false,
             };
@@ -105,9 +105,9 @@ namespace JustinCredible.ZilogZ80.Tests
             // Ensure these flags remain unchanged.
             Assert.True(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 

@@ -26,8 +26,8 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be unaffected.
                     Sign = true,
                     Zero = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Subtract = false,
                     Carry = true,
                 },

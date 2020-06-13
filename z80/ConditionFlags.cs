@@ -5,8 +5,8 @@ namespace JustinCredible.ZilogZ80
      * Represents the CPU flag register (F) with named properties to access each bit.
      *
      * Bit layout:
-     * 7 6 5 4 3 2 1 0
-     * S Z - H - P N C
+     * 7 6 5 4 3  2  1 0
+     * S Z - H - P/V N C
      *
      * Bits 5 and 3 are not used and always remain the same (zero).
      */
@@ -26,13 +26,13 @@ namespace JustinCredible.ZilogZ80
          * H (half carry) is used mostly for BCD (binary coded decimal) math.
          * TODO: I didn't implement this for the 8080 because it wasn't used by Space Invaders.
          */
-        public bool AuxCarry;
+        public bool HalfCarry;
 
         /**
-         * P (Parity/Overflow) is set if the number of 1 bits in the result is even.
+         * P/V (Parity/Overflow) is set if the number of 1 bits in the result is even.
          * TODO: Currently this only handles parity; needs to be changed to support overflow.
          */
-        public bool Parity;
+        public bool ParityOverflow;
 
         /**
          * N (Add/Subtract) is set to 1 if the operation was a subtract, 0 if it was an addition, or unmodified if neither.
@@ -71,8 +71,8 @@ namespace JustinCredible.ZilogZ80
         public byte ToByte()
         {
             /**
-             * 7 6 5 4 3 2 1 0
-             * S Z - H - P N C
+             * 7 6 5 4 3  2  1 0
+             * S Z - H - P/V N C
              */
             var flags = 0b00000000;
 
@@ -82,10 +82,10 @@ namespace JustinCredible.ZilogZ80
             if (Zero)
                 flags = flags | 0b01000000;
 
-            if (AuxCarry)
+            if (HalfCarry)
                 flags = flags | 0b00010000;
 
-            if (Parity)
+            if (ParityOverflow)
                 flags = flags | 0b00000100;
 
             if (Subtract)
@@ -101,8 +101,8 @@ namespace JustinCredible.ZilogZ80
         {
             Sign = (flags & 0b10000000) == 0b10000000;
             Zero = (flags & 0b01000000) == 0b01000000;
-            AuxCarry = (flags & 0b00010000) == 0b00010000;
-            Parity = (flags & 0b00000100) == 0b00000100;
+            HalfCarry = (flags & 0b00010000) == 0b00010000;
+            ParityOverflow = (flags & 0b00000100) == 0b00000100;
             Subtract = (flags & 0b00000010) == 0b00000010;
             Carry = (flags & 0b00000001) == 0b00000001;
         }

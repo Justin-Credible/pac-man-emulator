@@ -168,10 +168,10 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be unaffected.
                     Zero = true,
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                     Carry = true,
                     Sign = true,
-                    Parity = true,
+                    ParityOverflow = true,
                 }
             };
 

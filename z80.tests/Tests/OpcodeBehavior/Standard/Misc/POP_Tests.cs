@@ -55,9 +55,9 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var memory = new byte[16384];
 
-            // 7 6 5 4 3 2 1 0
-            // S Z - H - P N C
-            // 1 1 0 1 0 1 1 1
+            // 7 6 5 4 3  2  1 0
+            // S Z - H - P/V N C
+            // 1 1 0 1 0  1  1 1
             //       D 7
             memory[0x2FFE] = 0xD7;
 
@@ -85,8 +85,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.True(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);

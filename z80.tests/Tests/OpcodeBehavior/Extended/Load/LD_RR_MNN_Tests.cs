@@ -29,8 +29,8 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should remain unmodified.
                     Sign = true,
                     Zero = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Subtract = true,
                     Carry = true,
                 }
@@ -74,8 +74,8 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should remain unmodified.
                     Sign = true,
                     Zero = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Subtract = true,
                     Carry = true,
                 }
@@ -115,8 +115,8 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should remain unmodified.
                     Sign = true,
                     Zero = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Subtract = true,
                     Carry = true,
                 }

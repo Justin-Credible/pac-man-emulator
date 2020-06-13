@@ -35,8 +35,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -76,8 +76,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -117,8 +117,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -158,8 +158,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -191,8 +191,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -224,8 +224,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -257,8 +257,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -290,8 +290,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -329,8 +329,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -368,8 +368,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -407,8 +407,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -446,8 +446,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 

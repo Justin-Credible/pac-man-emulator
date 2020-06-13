@@ -29,7 +29,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
                 // Should be reset.
                 Subtract = true,
-                AuxCarry = true,
+                HalfCarry = true,
             };
 
             initialState.Registers = new CPURegisters();
@@ -55,12 +55,12 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Should be reset.
             Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
 
             // Affected flags.
             Assert.Equal(sign, state.Flags.Sign);
             Assert.Equal(zero, state.Flags.Zero);
-            Assert.Equal(parity, state.Flags.Parity);
+            Assert.Equal(parity, state.Flags.ParityOverflow);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 12, state.Cycles);
@@ -97,7 +97,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.ParityOverflow);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 12, state.Cycles);
@@ -127,7 +127,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 12, state.Cycles);

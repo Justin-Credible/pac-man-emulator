@@ -34,7 +34,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 },
                 Flags = new ConditionFlags()
                 {
-                    Parity = true,
+                    ParityOverflow = true,
                 },
                 MemorySize = memory.Length,
             };
@@ -84,7 +84,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 },
                 Flags = new ConditionFlags()
                 {
-                    Parity = false,
+                    ParityOverflow = false,
                 },
                 MemorySize = memory.Length,
             };

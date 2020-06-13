@@ -13,13 +13,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0b00010111, 0b11010101, 0b00010101, new ConditionFlags() { Sign = false, Zero = false, Parity = false } });
-                list.Add(new object[] { offset, 0b00010111, 0b11010111, 0b00010111, new ConditionFlags() { Sign = false, Zero = false, Parity = true } });
-                list.Add(new object[] { offset, 0b10010111, 0b11010111, 0b10010111, new ConditionFlags() { Sign = true, Zero = false, Parity = false } });
-                list.Add(new object[] { offset, 0b10010111, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, Parity = true } });
-                list.Add(new object[] { offset, 0b11111111, 0b11111111, 0b11111111, new ConditionFlags() { Sign = true, Zero = false, Parity = true } });
-                list.Add(new object[] { offset, 0b00000000, 0b11111111, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, Parity = true } });
-                list.Add(new object[] { offset, 0b00000000, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, Parity = true } });
+                list.Add(new object[] { offset, 0b00010111, 0b11010101, 0b00010101, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = false } });
+                list.Add(new object[] { offset, 0b00010111, 0b11010111, 0b00010111, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b10010111, 0b11010111, 0b10010111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = false } });
+                list.Add(new object[] { offset, 0b10010111, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b11111111, 0b11111111, 0b11111111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b00000000, 0b11111111, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b00000000, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
             }
 
             return list;
@@ -50,14 +50,14 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be affected.
                     Sign = !expectedFlags.Sign,
                     Zero = !expectedFlags.Zero,
-                    Parity = !expectedFlags.Parity,
+                    ParityOverflow = !expectedFlags.ParityOverflow,
 
                     // Should be reset.
                     Subtract = true,
                     Carry = true,
 
                     // Should be set.
-                    AuxCarry = false,
+                    HalfCarry = false,
                 },
             };
 
@@ -68,14 +68,14 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be affected.
             Assert.Equal(expectedFlags.Sign, state.Flags.Sign);
             Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
-            Assert.Equal(expectedFlags.Parity, state.Flags.Parity);
+            Assert.Equal(expectedFlags.ParityOverflow, state.Flags.ParityOverflow);
 
             // Should be reset.
             Assert.False(state.Flags.Carry);
             Assert.False(state.Flags.Subtract);
 
             // Should be set.
-            Assert.True(state.Flags.AuxCarry);
+            Assert.True(state.Flags.HalfCarry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 19, state.Cycles);

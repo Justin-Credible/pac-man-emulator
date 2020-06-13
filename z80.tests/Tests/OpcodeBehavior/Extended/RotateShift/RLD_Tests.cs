@@ -26,7 +26,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     // Should be reset.
-                    AuxCarry = true,
+                    HalfCarry = true,
                     Subtract = true,
 
                     // Should not be affected.
@@ -35,7 +35,7 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be affected.
                     Sign = true,
                     Zero = true,
-                    Parity = true,
+                    ParityOverflow = true,
                 },
                 MemorySize = 20490,
                 WriteableMemoryStart = 0x0000,
@@ -48,7 +48,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0b00011010, state.Memory[0x5000]);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             // Should not be affected.
@@ -57,7 +57,7 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be affected.
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.ParityOverflow);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 18, state.Cycles);

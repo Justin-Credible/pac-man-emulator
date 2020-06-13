@@ -28,8 +28,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     // Should remain unaffected.
                     Sign = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Carry = true,
                 },
                 MemorySize = memory.Length,
@@ -57,8 +57,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Should remain unaffected.
             Assert.True(state.Flags.Sign);
-            Assert.True(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Carry);
 
             Assert.False(state.Flags.Zero);
@@ -93,8 +93,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     // Should remain unaffected.
                     Sign = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Carry = true,
 
                     // Should get set.
@@ -125,8 +125,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Should remain unaffected.
             Assert.True(state.Flags.Sign);
-            Assert.True(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Carry);
 
             // Should get set.

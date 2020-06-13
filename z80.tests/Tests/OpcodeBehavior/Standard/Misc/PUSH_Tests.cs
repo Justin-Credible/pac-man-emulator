@@ -49,16 +49,16 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            // 7 6 5 4 3 2 1 0
-            // S Z - H - P N C
-            // 1 1 0 1 0 1 1 1
+            // 7 6 5 4 3  2  1 0
+            // S Z - H - P/V N C
+            // 1 1 0 1 0  1  1 1
             //       D 7
             var flags = new ConditionFlags()
             {
                 Sign = true,
                 Zero = true,
-                AuxCarry = true,
-                Parity = true,
+                HalfCarry = true,
+                ParityOverflow = true,
                 Subtract = true,
                 Carry = true,
             };
@@ -83,8 +83,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.True(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);

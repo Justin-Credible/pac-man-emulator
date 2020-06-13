@@ -47,11 +47,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = false,
                     Sign = false,
                     Zero = true,
-                    Parity = false,
+                    ParityOverflow = false,
 
                     // Should be reset.
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                 }
             };
 
@@ -64,10 +64,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Carry);
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);
@@ -100,11 +100,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = true,
                     Sign = false,
                     Zero = true,
-                    Parity = false,
+                    ParityOverflow = false,
 
                     // Should be reset.
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                 }
             };
 
@@ -117,10 +117,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Carry);
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);
@@ -158,11 +158,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = false,
                     Sign = false,
                     Zero = true,
-                    Parity = false,
+                    ParityOverflow = false,
 
                     // Should be reset.
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                 }
             };
 
@@ -174,10 +174,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Carry);
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);
@@ -215,11 +215,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = true,
                     Sign = false,
                     Zero = true,
-                    Parity = false,
+                    ParityOverflow = false,
 
                     // Should be reset.
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                 }
             };
 
@@ -231,10 +231,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Carry);
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.ParityOverflow);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);

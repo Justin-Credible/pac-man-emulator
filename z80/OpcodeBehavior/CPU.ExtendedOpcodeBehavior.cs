@@ -86,35 +86,35 @@ namespace JustinCredible.ZilogZ80
                     // R <- Device[C]
                     case OpcodeBytes.IN_A_MC:
                         Registers.A = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.A, subtract: false, auxCarry: false);
+                        SetFlags(Registers.A, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_B_MC:
                         Registers.B = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.B, subtract: false, auxCarry: false);
+                        SetFlags(Registers.B, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_C_MC:
                         Registers.C = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.C, subtract: false, auxCarry: false);
+                        SetFlags(Registers.C, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_D_MC:
                         Registers.D = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.D, subtract: false, auxCarry: false);
+                        SetFlags(Registers.D, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_E_MC:
                         Registers.E = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.E, subtract: false, auxCarry: false);
+                        SetFlags(Registers.E, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_H_MC:
                         Registers.H = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.H, subtract: false, auxCarry: false);
+                        SetFlags(Registers.H, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_L_MC:
                         Registers.L = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.L, subtract: false, auxCarry: false);
+                        SetFlags(Registers.L, subtract: false, halfCarry: false);
                         break;
                     case OpcodeBytes.IN_MC:
                         var value = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(value, subtract: false, auxCarry: false);
+                        SetFlags(value, subtract: false, halfCarry: false);
                         break;
 
                     // (HL) <- Device[C]; HL++; B--;
@@ -277,12 +277,12 @@ namespace JustinCredible.ZilogZ80
                                 useAlternateCycleCount = true;
                         }
 
-                        SetFlags(null, subtract: false, auxCarry: false);
+                        SetFlags(null, subtract: false, halfCarry: false);
 
                         if (opcode.Code == OpcodeBytes.LDDR)
-                            Flags.Parity = false;
+                            Flags.ParityOverflow = false;
                         else
-                            Flags.Parity = Registers.BC - 1 != 0 ? true : false;
+                            Flags.ParityOverflow = Registers.BC - 1 != 0 ? true : false;
 
                         break;
                     }
@@ -427,7 +427,7 @@ namespace JustinCredible.ZilogZ80
                         memValue = (byte)(((Registers.A & 0x0F) << 4) | (memValue & 0x0F)); // (HL).hi <- A.lo
                         Registers.A = (byte)((Registers.A & 0xF0) | tmp); //  A.lo <- tmp
                         WriteMemory(Registers.HL, memValue);
-                        SetFlags(Registers.A, auxCarry: false, subtract: false);
+                        SetFlags(Registers.A, halfCarry: false, subtract: false);
                         break;
                     }
 
@@ -440,7 +440,7 @@ namespace JustinCredible.ZilogZ80
                         Registers.A = (byte)(((memValue & 0xF0) >> 4) | (Registers.A & 0xF0)); // A.lo <- (HL).hi
                         memValue = (byte)((tmp << 4) | (memValue & 0x0F)); // (HL).hi <- tmp
                         WriteMemory(Registers.HL, memValue);
-                        SetFlags(Registers.A, auxCarry: false, subtract: false);
+                        SetFlags(Registers.A, halfCarry: false, subtract: false);
                         break;
                     }
 

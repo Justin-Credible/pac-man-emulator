@@ -28,8 +28,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     // Should remain unaffected.
                     Sign = true,
-                    AuxCarry = true,
-                    Parity = true,
+                    HalfCarry = true,
+                    ParityOverflow = true,
                     Carry = true,
 
                     // Should be affected.
@@ -72,8 +72,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Should remain unaffected.
             Assert.True(state.Flags.Sign);
-            Assert.True(state.Flags.AuxCarry);
-            Assert.True(state.Flags.Parity);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Carry);
 
             // Should be affected.

@@ -1008,19 +1008,19 @@ namespace JustinCredible.ZilogZ80
             }
 
             Flags.Subtract = false;
-            Flags.AuxCarry = false;
+            Flags.HalfCarry = false;
 
             if (setAllFlags)
             {
                 Flags.Zero = result == 0;
                 Flags.Sign = (result & 0b10000000) == 0b10000000;
-                Flags.Parity = CalculateParityBit((byte)result);
+                Flags.ParityOverflow = CalculateParityBit((byte)result);
             }
 
             // The standard RLA/RRA/RLCA/RRCA opcodes don't set the Z/S/P flags
             // but the bit opcodes RR/RL/RLC/RRC do set those flags. In both cases
             // the N and H flags are always reset.
-            SetFlags(result: setAllFlags ? (byte?)result : (byte?)null, subtract: false, auxCarry: false);
+            SetFlags(result: setAllFlags ? (byte?)result : (byte?)null, subtract: false, halfCarry: false);
 
             return (byte)result;
         }
@@ -1046,7 +1046,7 @@ namespace JustinCredible.ZilogZ80
                     result = result | 0x80;
             }
 
-            SetFlags((byte)result, subtract: false, auxCarry: false);
+            SetFlags((byte)result, subtract: false, halfCarry: false);
 
             return (byte)result;
         }
@@ -1072,7 +1072,7 @@ namespace JustinCredible.ZilogZ80
                 Flags.Carry = previousLowOrderBitSet;
             }
 
-            SetFlags((byte)result, subtract: false, auxCarry: false);
+            SetFlags((byte)result, subtract: false, halfCarry: false);
 
             return (byte)result;
         }
@@ -1087,7 +1087,7 @@ namespace JustinCredible.ZilogZ80
             Flags.Zero = (value & mask) == mask ? false : true;
 
             Flags.Subtract = false;
-            Flags.AuxCarry = false;
+            Flags.HalfCarry = false;
         }
 
         public byte ExecuteResetBit(int index, byte value)

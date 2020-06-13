@@ -130,7 +130,7 @@ namespace JustinCredible.ZilogZ80
             Console.WriteLine($"D: {regD}\t\tE: {regE}\t\tH: {regH}\t\tL: {regL}");
             Console.WriteLine($"(DE): {valueAtHL}\t\t\t(HL): {valueAtHL}");
             Console.WriteLine();
-            Console.WriteLine($"Zero: {Flags.Zero}\tSign: {Flags.Sign}\tParity: {Flags.Parity}\tCarry: {Flags.Carry}\tAux Carry: {Flags.AuxCarry}");
+            Console.WriteLine($"Sign: {Flags.Sign}\tZero: {Flags.Zero}\tSign: {Flags.Sign}\tParity: {Flags.ParityOverflow}\tCarry: {Flags.Carry}\tHalf Carry: {Flags.HalfCarry}");
         }
 
         #endregion
@@ -305,38 +305,38 @@ namespace JustinCredible.ZilogZ80
 
         #region Utilities
 
-        private void SetFlags(byte? result = null, bool? carry = null, bool? auxCarry = false, bool? subtract = null)
+        private void SetFlags(byte? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)
         {
             if (result != null)
             {
                 Flags.Zero = result == 0;
                 Flags.Sign = (result & 0b10000000) == 0b10000000;
-                Flags.Parity = CalculateParityBit((byte)result);
+                Flags.ParityOverflow = CalculateParityBit((byte)result);
             }
 
-            SetFlags(carry: carry, auxCarry: auxCarry, subtract: subtract);
+            SetFlags(carry: carry, halfCarry: halfCarry, subtract: subtract);
         }
 
-        private void SetFlags(UInt16? result = null, bool? carry = null, bool? auxCarry = false, bool? subtract = null)
+        private void SetFlags(UInt16? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)
         {
             if (result != null)
             {
                 Flags.Zero = result == 0;
                 Flags.Sign = (result & 0b1000000000000000) == 0b1000000000000000;
-                Flags.Parity = CalculateParityBit((UInt16)result);
+                Flags.ParityOverflow = CalculateParityBit((UInt16)result);
             }
 
-            SetFlags(carry: carry, auxCarry: auxCarry, subtract: subtract);
+            SetFlags(carry: carry, halfCarry: halfCarry, subtract: subtract);
         }
 
-        private void SetFlags(bool? carry = null, bool? auxCarry = false, bool? subtract = null)
+        private void SetFlags(bool? carry = null, bool? halfCarry = false, bool? subtract = null)
         {
             if (carry != null)
                 Flags.Carry = carry.Value;
 
             // TODO: This keeps the old 8080 behavior of always resetting the flag for all operations.
             // I believe this is wrong for Z80, there are many cases where it remains unmodified.
-            Flags.AuxCarry = auxCarry == null ? false : auxCarry.Value;
+            Flags.HalfCarry = halfCarry == null ? false : halfCarry.Value;
 
             // This flag isn't modified in all cases. If not provided, then don't modify.
             if (subtract != null)

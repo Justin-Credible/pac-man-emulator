@@ -50,11 +50,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = initialCarryFlag,
                     Zero = true,
                     Sign = false,
-                    Parity = !expectedPartyFlag,
+                    ParityOverflow = !expectedPartyFlag,
 
                     // Should be reset.
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                 }
             };
 
@@ -67,10 +67,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(expectedCarryFlag, state.Flags.Carry);
             Assert.Equal(expectedSignFlag, state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.Equal(expectedPartyFlag, state.Flags.Parity);
+            Assert.Equal(expectedPartyFlag, state.Flags.ParityOverflow);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);
@@ -119,11 +119,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = initialCarryFlag,
                     Zero = true,
                     Sign = false,
-                    Parity = !expectedPartyFlag,
+                    ParityOverflow = !expectedPartyFlag,
 
                     // Should be reset.
                     Subtract = true,
-                    AuxCarry = true,
+                    HalfCarry = true,
                 }
             };
 
@@ -136,10 +136,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(expectedCarryFlag, state.Flags.Carry);
             Assert.Equal(expectedSignFlag, state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.Equal(expectedPartyFlag, state.Flags.Parity);
+            Assert.Equal(expectedPartyFlag, state.Flags.ParityOverflow);
 
             // Should be reset.
-            Assert.False(state.Flags.AuxCarry);
+            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             Assert.Equal(2, state.Iterations);

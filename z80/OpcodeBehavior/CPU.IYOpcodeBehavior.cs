@@ -211,17 +211,17 @@ namespace JustinCredible.ZilogZ80
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.A = (byte)(Registers.A & value);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: true);
                             break;
                         }
 
                         case OpcodeBytes.AND_IYH:
                             Registers.A = (byte)(Registers.A & Registers.IYH);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: true);
                             break;
                         case OpcodeBytes.AND_IYL:
                             Registers.A = (byte)(Registers.A & Registers.IYL);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: true);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: true);
                             break;
 
                     #endregion
@@ -233,17 +233,17 @@ namespace JustinCredible.ZilogZ80
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.A = (byte)(Registers.A | value);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: false);
                             break;
                         }
 
                         case OpcodeBytes.OR_IYH:
                             Registers.A = (byte)(Registers.A | Registers.IYH);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: false);
                             break;
                         case OpcodeBytes.OR_IYL:
                             Registers.A = (byte)(Registers.A | Registers.IYL);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: false);
                             break;
 
                     #endregion
@@ -255,17 +255,17 @@ namespace JustinCredible.ZilogZ80
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
                             Registers.A = (byte)(Registers.A ^ value);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: false);
                             break;
                         }
 
                         case OpcodeBytes.XOR_IYH:
                             Registers.A = (byte)(Registers.A ^ Registers.IYH);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: false);
                             break;
                         case OpcodeBytes.XOR_IYL:
                             Registers.A = (byte)(Registers.A ^ Registers.IYL);
-                            SetFlags(result: Registers.A, carry: false, subtract: false, auxCarry: false);
+                            SetFlags(result: Registers.A, carry: false, subtract: false, halfCarry: false);
                             break;
 
                     #endregion

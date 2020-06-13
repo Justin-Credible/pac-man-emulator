@@ -23,9 +23,9 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Zero = true,
                 Sign = true,
-                Parity = true,
+                ParityOverflow = true,
                 Carry = false,
-                AuxCarry = false,
+                HalfCarry = false,
                 Subtract = true,
             };
 
@@ -40,11 +40,11 @@ namespace JustinCredible.ZilogZ80.Tests
             // Ensure these flags were updated.
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.Sign);
-            Assert.False(state.Flags.Parity);
+            Assert.False(state.Flags.ParityOverflow);
 
             // Both carry bits are set in this case.
             Assert.True(state.Flags.Carry);
-            Assert.True(state.Flags.AuxCarry);
+            Assert.True(state.Flags.HalfCarry);
 
             // Ensure this flag was unaffected.
             Assert.True(state.Flags.Subtract);

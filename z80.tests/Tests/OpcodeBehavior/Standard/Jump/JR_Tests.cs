@@ -32,7 +32,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x0006, state.Registers.PC);
         }
 
-        // Flags: S Z - H - P N C
+        // Flags: S Z - H - P/V N C
         [Theory]
         [InlineData("Z", 0b01000000, true)]
         [InlineData("Z", 0b00000000, false)]

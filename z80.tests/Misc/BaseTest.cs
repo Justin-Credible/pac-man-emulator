@@ -120,8 +120,8 @@ namespace JustinCredible.ZilogZ80.Tests
         {
             Assert.False(results.Flags.Sign);
             Assert.False(results.Flags.Zero);
-            Assert.False(results.Flags.AuxCarry);
-            Assert.False(results.Flags.Parity);
+            Assert.False(results.Flags.HalfCarry);
+            Assert.False(results.Flags.ParityOverflow);
             Assert.False(results.Flags.Subtract);
             Assert.False(results.Flags.Carry);
         }
@@ -130,8 +130,8 @@ namespace JustinCredible.ZilogZ80.Tests
         {
             Assert.Equal(initialState.Flags.Sign, results.Flags.Sign);
             Assert.Equal(initialState.Flags.Zero, results.Flags.Zero);
-            Assert.Equal(initialState.Flags.AuxCarry, results.Flags.AuxCarry);
-            Assert.Equal(initialState.Flags.Parity, results.Flags.Parity);
+            Assert.Equal(initialState.Flags.HalfCarry, results.Flags.HalfCarry);
+            Assert.Equal(initialState.Flags.ParityOverflow, results.Flags.ParityOverflow);
             Assert.Equal(initialState.Flags.Subtract, results.Flags.Subtract);
             Assert.Equal(initialState.Flags.Carry, results.Flags.Carry);
         }

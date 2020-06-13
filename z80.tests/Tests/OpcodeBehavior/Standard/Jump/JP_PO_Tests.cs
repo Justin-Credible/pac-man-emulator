@@ -24,7 +24,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Flags = new ConditionFlags()
                 {
-                    Parity = false,
+                    ParityOverflow = false,
                 },
             };
 
@@ -59,7 +59,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Flags = new ConditionFlags()
                 {
-                    Parity = true,
+                    ParityOverflow = true,
                 },
             };
 
