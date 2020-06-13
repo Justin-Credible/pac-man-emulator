@@ -39,7 +39,7 @@ namespace JustinCredible.ZilogZ80.Tests
             AssertFlagsFalse(state);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 18, state.Cycles);
+            Assert.Equal(4 + 19, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
     }

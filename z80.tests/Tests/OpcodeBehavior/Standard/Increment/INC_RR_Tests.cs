@@ -45,7 +45,7 @@ namespace JustinCredible.ZilogZ80.Tests
             AssertFlagsSame(initialState, state);
 
             Assert.Equal(4, state.Iterations);
-            Assert.Equal(4 + (5*3), state.Cycles);
+            Assert.Equal(4 + (6*3), state.Cycles);
             Assert.Equal(0x03, state.Registers.PC);
         }
 
@@ -85,7 +85,7 @@ namespace JustinCredible.ZilogZ80.Tests
             AssertFlagsSame(initialState, state);
 
             Assert.Equal(4, state.Iterations);
-            Assert.Equal(4 + (5*3), state.Cycles);
+            Assert.Equal(4 + (6*3), state.Cycles);
             Assert.Equal(0x03, state.Registers.PC);
         }
     }

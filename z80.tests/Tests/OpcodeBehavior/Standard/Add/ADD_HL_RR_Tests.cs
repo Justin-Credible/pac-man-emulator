@@ -55,7 +55,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(4 + 11, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
 
@@ -106,7 +106,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(4 + 11, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
 
@@ -157,7 +157,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(4 + 11, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
 
@@ -209,7 +209,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(4 + 11, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
 
@@ -257,7 +257,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(4 + 11, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
 
@@ -305,7 +305,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 10, state.Cycles);
+            Assert.Equal(4 + 11, state.Cycles);
             Assert.Equal(0x01, state.Registers.PC);
         }
     }

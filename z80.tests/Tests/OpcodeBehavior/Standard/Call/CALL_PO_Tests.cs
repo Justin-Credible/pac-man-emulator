@@ -100,7 +100,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0xFF, state.Memory[0x271D]);
 
             Assert.Equal(4, state.Iterations);
-            Assert.Equal(4 + (4*2) + 11, state.Cycles);
+            Assert.Equal(4 + (4*2) + 10, state.Cycles);
             Assert.Equal(0x0005, state.Registers.PC);
         }
     }
