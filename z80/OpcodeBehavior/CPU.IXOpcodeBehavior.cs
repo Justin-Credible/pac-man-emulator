@@ -98,16 +98,16 @@ namespace JustinCredible.ZilogZ80
                     #region Add (Addresses)
 
                         case OpcodeBytes.ADD_IX_BC:
-                            Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.BC);
+                            Registers.IX = Execute16BitAdditionNonArithmetic(Registers.IX, Registers.BC);
                             break;
                         case OpcodeBytes.ADD_IX_DE:
-                            Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.DE);
+                            Registers.IX = Execute16BitAdditionNonArithmetic(Registers.IX, Registers.DE);
                             break;
                         case OpcodeBytes.ADD_IX_IX:
-                            Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.IX);
+                            Registers.IX = Execute16BitAdditionNonArithmetic(Registers.IX, Registers.IX);
                             break;
                         case OpcodeBytes.ADD_IX_SP:
-                            Registers.IX = ExecuteAdd16NonArithmetic(Registers.IX, Registers.SP);
+                            Registers.IX = Execute16BitAdditionNonArithmetic(Registers.IX, Registers.SP);
                             break;
 
                     #endregion
@@ -118,31 +118,31 @@ namespace JustinCredible.ZilogZ80
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = ExecuteAdd(Registers.A, value);
+                            Registers.A = Execute8BitAddition(Registers.A, value);
                             break;
                         }
 
                         case OpcodeBytes.ADD_A_IXH:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.IXH);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.IXH);
                             break;
 
                         case OpcodeBytes.ADD_A_IXL:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.IXL);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.IXL);
                             break;
 
                         case OpcodeBytes.ADC_A_IX:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IX + offset);
-                            Registers.A = ExecuteAdd(Registers.A, value, addCarryFlag: true);
+                            Registers.A = Execute8BitAddition(Registers.A, value, addCarryFlag: true);
                             break;
                         }
 
                         case OpcodeBytes.ADC_A_IXH:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.IXH, addCarryFlag: true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.IXH, addCarryFlag: true);
                             break;
                         case OpcodeBytes.ADC_A_IXL:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.IXL, addCarryFlag: true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.IXL, addCarryFlag: true);
                             break;
 
                     #endregion

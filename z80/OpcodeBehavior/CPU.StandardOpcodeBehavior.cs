@@ -367,28 +367,28 @@ namespace JustinCredible.ZilogZ80
                     #region ADD r - Add register or memory to accumulator
 
                         case OpcodeBytes.ADD_A_B:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.B);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.B);
                             break;
                         case OpcodeBytes.ADD_A_C:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.C);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.C);
                             break;
                         case OpcodeBytes.ADD_A_D:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.D);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.D);
                             break;
                         case OpcodeBytes.ADD_A_E:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.E);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.E);
                             break;
                         case OpcodeBytes.ADD_A_H:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.H);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.H);
                             break;
                         case OpcodeBytes.ADD_A_L:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.L);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.L);
                             break;
                         case OpcodeBytes.ADD_A_MHL:
-                            Registers.A = ExecuteAdd(Registers.A, ReadMemory(Registers.HL));
+                            Registers.A = Execute8BitAddition(Registers.A, ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.ADD_A_A:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.A);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.A);
                             break;
 
                     #endregion
@@ -499,28 +499,28 @@ namespace JustinCredible.ZilogZ80
                     #region ADC A, r - Add register or memory to accumulator with carry
 
                         case OpcodeBytes.ADC_A_B:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.B, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.B, true);
                             break;
                         case OpcodeBytes.ADC_A_C:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.C, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.C, true);
                             break;
                         case OpcodeBytes.ADC_A_D:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.D, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.D, true);
                             break;
                         case OpcodeBytes.ADC_A_E:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.E, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.E, true);
                             break;
                         case OpcodeBytes.ADC_A_H:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.H, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.H, true);
                             break;
                         case OpcodeBytes.ADC_A_L:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.L, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.L, true);
                             break;
                         case OpcodeBytes.ADC_A_MHL:
-                            Registers.A = ExecuteAdd(Registers.A, ReadMemory(Registers.HL), true);
+                            Registers.A = Execute8BitAddition(Registers.A, ReadMemory(Registers.HL), true);
                             break;
                         case OpcodeBytes.ADC_A_A:
-                            Registers.A = ExecuteAdd(Registers.A, Registers.A, true);
+                            Registers.A = Execute8BitAddition(Registers.A, Registers.A, true);
                             break;
 
                     #endregion
@@ -754,16 +754,16 @@ namespace JustinCredible.ZilogZ80
                     #region ADD HL, rr - Double (16-bit) add
 
                         case OpcodeBytes.ADD_HL_BC:
-                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.BC);
+                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.BC);
                             break;
                         case OpcodeBytes.ADD_HL_DE:
-                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.DE);
+                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.DE);
                             break;
                         case OpcodeBytes.ADD_HL_HL:
-                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.HL);
+                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.HL);
                             break;
                         case OpcodeBytes.ADD_HL_SP:
-                            Registers.HL = ExecuteAdd16NonArithmetic(Registers.HL, Registers.SP);
+                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.SP);
                             break;
 
                     #endregion
@@ -860,13 +860,13 @@ namespace JustinCredible.ZilogZ80
                     // Add immediate to accumulator
                     // A <- A + byte
                     case OpcodeBytes.ADD_A_N:
-                        Registers.A = ExecuteAdd(Registers.A, ReadMemory(Registers.PC+1));
+                        Registers.A = Execute8BitAddition(Registers.A, ReadMemory(Registers.PC+1));
                         break;
 
                     // Add immediate to accumulator with carry
                     // A <- A + data + CY
                     case OpcodeBytes.ADC_A_N:
-                        Registers.A = ExecuteAdd(Registers.A, ReadMemory(Registers.PC+1), true);
+                        Registers.A = Execute8BitAddition(Registers.A, ReadMemory(Registers.PC+1), true);
                         break;
 
                     // Subtract immediate from accumulator
@@ -1661,8 +1661,7 @@ namespace JustinCredible.ZilogZ80
             Registers.PC = returnAddress;
         }
 
-        // TODO: Rename to: Execute8BitAdd
-        private byte ExecuteAdd(byte value1, byte value2, bool addCarryFlag = false)
+        private byte Execute8BitAddition(byte value1, byte value2, bool addCarryFlag = false)
         {
             var result = value1 + value2;
 
@@ -1688,8 +1687,7 @@ namespace JustinCredible.ZilogZ80
             return (byte)result;
         }
 
-        // TODO: Rename to: Execute16BitAdd
-        private UInt16 ExecuteAdd16(UInt16 value1, UInt16 value2, bool addCarryFlag = false)
+        private UInt16 Execute16BitAddition(UInt16 value1, UInt16 value2, bool addCarryFlag = false)
         {
             var result = value1 + value2;
 
@@ -1708,8 +1706,7 @@ namespace JustinCredible.ZilogZ80
             return (UInt16)result;
         }
 
-        // TODO: Rename to: Execute16BitAddNonArithmetic
-        private UInt16 ExecuteAdd16NonArithmetic(UInt16 value1, UInt16 value2)
+        private UInt16 Execute16BitAdditionNonArithmetic(UInt16 value1, UInt16 value2)
         {
             var result = value1 + value2;
 

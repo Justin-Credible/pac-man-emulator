@@ -449,16 +449,16 @@ namespace JustinCredible.ZilogZ80
                 #region ADC HL, rr - Add register or memory to HL with carry
 
                     case OpcodeBytes.ADC_HL_BC:
-                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.BC, addCarryFlag: true);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.BC, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_DE:
-                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.DE, addCarryFlag: true);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.DE, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_HL:
-                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.HL, addCarryFlag: true);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.HL, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_SP:
-                        Registers.HL = ExecuteAdd16(Registers.HL, Registers.SP, addCarryFlag: true);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.SP, addCarryFlag: true);
                         break;
 
                 #endregion
