@@ -13,13 +13,19 @@ namespace JustinCredible.ZilogZ80.Tests
             // 0000 1011 + 11
             // 0001 0000 = 16   Flags: H
             list.Add(new object[] { "5", "11", 16, 16, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = false } });
-            list.Add(new object[] { "5", "11", 16, 16, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = false } });
+            list.Add(new object[] { "11", "5", 16, 16, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = false } });
 
             // 0000 1111   15
             // 0000 0001 +  1
             // 0001 0000 = 16   Flags: H
             list.Add(new object[] { "15", "1", 16, 16, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = false } });
             list.Add(new object[] { "1", "15", 16, 16, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = false } });
+
+            // 0000 0101 +  5
+            // 0001 0000   16
+            // 0001 0101 = 21   Flags: None
+            list.Add(new object[] { "5", "16", 21, 21, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = false, ParityOverflow = false } });
+            list.Add(new object[] { "16", "5", 21, 21, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = false, ParityOverflow = false } });
 
             // 0000 1011   11
             // 0000 0111 +  7

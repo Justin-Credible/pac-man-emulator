@@ -306,9 +306,11 @@ namespace JustinCredible.ZilogZ80
         #region Utilities
 
         // TODO: Rename to: SetFlagsFrom8BitAddition
-        public void SetFlagsFromArithemticAddition(byte addend, byte augend)
+        private void SetFlagsFromArithemticAddition(byte addend, byte augend, bool addCarryFlag = false)
         {
-            var sum = addend + augend;
+            var originalCarryFlagSet = Flags.Carry;
+
+            var sum = addend + augend + (addCarryFlag && originalCarryFlagSet ? 1 : 0);
 
             // Check if the result is zero; only consider 8-bits for the case
             // of an overflow (e.g. 128 + 128 = 256 => 1 0000 0000 & 0xFF => 0).
@@ -321,14 +323,9 @@ namespace JustinCredible.ZilogZ80
             // Additions will always reset this flag.
             Flags.Subtract = false;
 
-            // If the seventh (highest) bit of either is set and sum is over
-            // the maximum value for an 8-bit number (255) then we know a
-            // carry out of the seventh bit occurred.
-            Flags.Carry =
-                // (((addend & 0x80) == 0x80) || ((augend & 0x80) == 0x80))
-                // &&
-                // ((addend + augend) > 255);
-                sum > 255;
+            // If the sum is over the maximum value for an 8-bit number (255)
+            // then we know a carry out of the seventh bit occurred.
+            Flags.Carry = sum > 255;
 
             // If the third bit (highest bit of the nibble) of either is set
             // and sum of lower nibble is over the maximum value for a 4-bit
@@ -338,11 +335,23 @@ namespace JustinCredible.ZilogZ80
                 &&
                 (((addend & 0x0F) + (augend & 0x0F)) > 15);
 
+            // In the case of Add With Carry, if the carry flag was set and added
+            // and we didn't detect a half carry yet, we need to also add the carry
+            // flag and then re-detect for a half carry.
+            if (addCarryFlag && originalCarryFlagSet & !Flags.HalfCarry)
+            {
+                Flags.HalfCarry =
+                    ((((addend + augend) & 0x08) == 0x08))
+                    &&
+                    ((((addend + augend) & 0x0F) + 1) > 15);
+            }
+
             // Overflow is calculated by performing signed addition using 2's
             // complement. If the result is outside of the max/min values of
             // 127 and -128, then it is counted as an overflow. Note that we
             // cast the addends to signed bytes and then perform the addition.
-            var signedSum = ((sbyte)addend) + ((sbyte)augend);
+            // var signedSum = ((sbyte)addend) + ((sbyte)augend);
+            var signedSum = ((sbyte)addend) + ((sbyte)augend) + (addCarryFlag && originalCarryFlagSet ? 1 : 0);
             Flags.ParityOverflow = signedSum > 127 || signedSum < -128;
         }
 
