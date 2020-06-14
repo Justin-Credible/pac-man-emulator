@@ -1673,8 +1673,16 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 256;
 
-            // TODO: Set H flag.
-            SetFlags(carry: carryOccurred, result: (byte)result, subtract: false);
+            if (addCarryFlag)
+            {
+                // TODO: Rework this to properly set flags when adding the carry flag.
+                // TODO: Set H flag.
+                SetFlags(carry: carryOccurred, result: (byte)result, subtract: false);
+            }
+            else
+            {
+                SetFlagsFromArithemticAddition(value1, value2);
+            }
 
             return (byte)result;
         }

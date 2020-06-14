@@ -305,6 +305,46 @@ namespace JustinCredible.ZilogZ80
 
         #region Utilities
 
+        public void SetFlagsFromArithemticAddition(byte addend, byte augend)
+        {
+            var sum = addend + augend;
+
+            // Check if the result is zero; only consider 8-bits for the case
+            // of an overflow (e.g. 128 + 128 = 256 => 1 0000 0000 & 0xFF => 0).
+            Flags.Zero = (sum & 0xFF) == 0;
+
+            // The highest order bit is used for 2's complement to indicate a
+            // negative number if it is set.
+            Flags.Sign = (sum & 0x80) == 0x80;
+
+            // Additions will always reset this flag.
+            Flags.Subtract = false;
+
+            // If the seventh (highest) bit of either is set and sum is over
+            // the maximum value for an 8-bit number (255) then we know a
+            // carry out of the seventh bit occurred.
+            Flags.Carry =
+                // (((addend & 0x80) == 0x80) || ((augend & 0x80) == 0x80))
+                // &&
+                // ((addend + augend) > 255);
+                sum > 255;
+
+            // If the third bit (highest bit of the nibble) of either is set
+            // and sum of lower nibble is over the maximum value for a 4-bit
+            // number (15) then we know a carry out of the third bit occurred.
+            Flags.HalfCarry =
+                (((addend & 0x08) == 0x08) || ((augend & 0x08) == 0x08))
+                &&
+                (((addend & 0x0F) + (augend & 0x0F)) > 15);
+
+            // Overflow is calculated by performing signed addition using 2's
+            // complement. If the result is outside of the max/min values of
+            // 127 and -128, then it is counted as an overflow. Note that we
+            // cast the addends to signed bytes and then perform the addition.
+            var signedSum = ((sbyte)addend) + ((sbyte)augend);
+            Flags.ParityOverflow = signedSum > 127 || signedSum < -128;
+        }
+
         private void SetFlags(byte? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)
         {
             if (result != null)
