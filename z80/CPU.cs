@@ -305,6 +305,7 @@ namespace JustinCredible.ZilogZ80
 
         #region Utilities
 
+        // TODO: Rename to: SetFlagsFrom8BitAddition
         public void SetFlagsFromArithemticAddition(byte addend, byte augend)
         {
             var sum = addend + augend;

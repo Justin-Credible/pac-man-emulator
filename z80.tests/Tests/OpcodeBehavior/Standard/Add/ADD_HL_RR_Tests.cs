@@ -7,6 +7,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [Theory]
         [InlineData(RegisterPair.BC)]
         [InlineData(RegisterPair.DE)]
+        [InlineData(RegisterPair.SP)]
         public void Test_ADD_HL_RR_NoCarry(RegisterPair pair)
         {
             var rom = AssembleSource($@"
@@ -60,7 +61,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADD_HL_RR_H_NoCarry()
+        public void Test_ADD_HL_HL_NoCarry()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -110,60 +111,10 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x01, state.Registers.PC);
         }
 
-        [Fact]
-        public void Test_ADD_HL_RR_SP_NoCarry()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                ADD HL, SP
-                HALT
-            ");
-
-            var flags = new ConditionFlags()
-            {
-                Sign = true,
-                Zero = true,
-                HalfCarry = false,
-                ParityOverflow = true,
-                Subtract = true,
-                Carry = false,
-            };
-
-            var initialState = new CPUConfig()
-            {
-                Registers = new CPURegisters()
-                {
-                    SP = 0x3434,
-                    HL = 0x1212,
-                },
-                Flags = flags,
-            };
-
-            var state = Execute(rom, initialState);
-
-            Assert.Equal(0x3434, state.Registers.SP);
-            Assert.Equal(0x4646, state.Registers.HL);
-
-            // Ensure these flags remain unchanged.
-            Assert.True(state.Flags.Sign);
-            Assert.True(state.Flags.Zero);
-            Assert.True(state.Flags.ParityOverflow);
-
-            Assert.False(state.Flags.HalfCarry);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
-
-            // No carry in this case.
-            Assert.False(state.Flags.Carry);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 11, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
-        }
-
         [Theory]
         [InlineData(RegisterPair.BC)]
         [InlineData(RegisterPair.DE)]
+        [InlineData(RegisterPair.SP)]
         public void Test_ADD_HL_RR_Carry(RegisterPair pair)
         {
             var rom = AssembleSource($@"
@@ -204,7 +155,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Zero);
             Assert.True(state.Flags.ParityOverflow);
 
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 
@@ -214,7 +165,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADD_HL_RR_HL_Carry()
+        public void Test_ADD_HL_HL_Carry()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -252,7 +203,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Zero);
             Assert.True(state.Flags.ParityOverflow);
 
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 
@@ -261,14 +212,23 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x01, state.Registers.PC);
         }
 
-        [Fact]
-        public void Test_ADD_HL_RR_SP_Carry()
+        [Theory]
+        [InlineData(RegisterPair.BC)]
+        [InlineData(RegisterPair.DE)]
+        [InlineData(RegisterPair.SP)]
+        public void Test_ADD_HL_RR_HalfCarry(RegisterPair pair)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADD HL, SP
+                ADD HL, {pair}
                 HALT
             ");
+
+            var registers = new CPURegisters()
+            {
+                HL = 3840,
+                [pair] = 256,
+            };
 
             var flags = new ConditionFlags()
             {
@@ -282,27 +242,71 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = new CPURegisters()
-                {
-                    SP = 0x0005,
-                    HL = 0xFFFE,
-                },
+                Registers = registers,
                 Flags = flags,
             };
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x0005, state.Registers.SP);
-            Assert.Equal(0x0003, state.Registers.HL);
+            Assert.Equal(256, state.Registers[pair]);
+            Assert.Equal(4096, state.Registers.HL);
 
             // Ensure these flags remain unchanged.
             Assert.True(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
             Assert.True(state.Flags.ParityOverflow);
 
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
-            Assert.True(state.Flags.Carry);
+            Assert.False(state.Flags.Carry);
+
+            Assert.Equal(2, state.Iterations);
+            Assert.Equal(4 + 11, state.Cycles);
+            Assert.Equal(0x01, state.Registers.PC);
+        }
+
+        [Fact]
+        public void Test_ADD_HL_HL_HalfCarry()
+        {
+            var rom = AssembleSource($@"
+                org 00h
+                ADD HL, HL
+                HALT
+            ");
+
+            var registers = new CPURegisters()
+            {
+                HL = 2048,
+            };
+
+            var flags = new ConditionFlags()
+            {
+                Sign = true,
+                Zero = true,
+                HalfCarry = false,
+                ParityOverflow = true,
+                Subtract = true,
+                Carry = false,
+            };
+
+            var initialState = new CPUConfig()
+            {
+                Registers = registers,
+                Flags = flags,
+            };
+
+            var state = Execute(rom, initialState);
+
+            Assert.Equal(4096, state.Registers.HL);
+
+            // Ensure these flags remain unchanged.
+            Assert.True(state.Flags.Sign);
+            Assert.True(state.Flags.Zero);
+            Assert.True(state.Flags.ParityOverflow);
+
+            Assert.True(state.Flags.HalfCarry);
+            Assert.False(state.Flags.Subtract);
+            Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 11, state.Cycles);

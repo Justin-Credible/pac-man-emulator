@@ -1661,6 +1661,7 @@ namespace JustinCredible.ZilogZ80
             Registers.PC = returnAddress;
         }
 
+        // TODO: Rename to: Execute8BitAdd
         private byte ExecuteAdd(byte value1, byte value2, bool addCarryFlag = false)
         {
             var result = value1 + value2;
@@ -1687,6 +1688,7 @@ namespace JustinCredible.ZilogZ80
             return (byte)result;
         }
 
+        // TODO: Rename to: Execute16BitAdd
         private UInt16 ExecuteAdd16(UInt16 value1, UInt16 value2, bool addCarryFlag = false)
         {
             var result = value1 + value2;
@@ -1700,11 +1702,13 @@ namespace JustinCredible.ZilogZ80
                 result = result - 65536;
 
             // TODO: Set H flag.
+            // Call: SetFlagsFrom16BitAddition
             SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
 
             return (UInt16)result;
         }
 
+        // TODO: Rename to: Execute16BitAddNonArithmetic
         private UInt16 ExecuteAdd16NonArithmetic(UInt16 value1, UInt16 value2)
         {
             var result = value1 + value2;
@@ -1714,9 +1718,16 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 65536;
 
-            Flags.Carry = carryOccurred;
             Flags.Subtract = false;
-            // TODO: Set H flag
+            Flags.Carry = carryOccurred;
+
+            // If the 11th bit (highest bit of the nibble) of either is set
+            // and sum of lower nibble is over the maximum value for a 12-bit
+            // number (4095) then we know a carry out of the third bit occurred.
+            Flags.HalfCarry =
+                (((value1 & 0x0800) == 0x0800) || ((value2 & 0x0800) == 0x0800))
+                &&
+                (((value1 & 0x0FFF) + (value2 & 0x0FFF)) > 4095);
 
             return (UInt16)result;
         }

@@ -43,16 +43,16 @@ namespace JustinCredible.ZilogZ80.Tests
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0x42, 0x19, 0x5B, new ConditionFlags() { Carry = false, Zero = false, Sign = false } });
-                list.Add(new object[] { offset, 0x42, 0x4A, 0x8C, new ConditionFlags() { Carry = false, Zero = false, Sign = true } });
-                list.Add(new object[] { offset, 0xEE, 0x1D, 0x0B, new ConditionFlags() { Carry = true, Zero = false, Sign = false } });
-                list.Add(new object[] { offset, 0xEE, 0x12, 0x00, new ConditionFlags() { Carry = true, Zero = true, Sign = false } });
+                list.Add(new object[] { offset, 0x42, 0x19, 0x5B, new ConditionFlags() { Carry = false, HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+                list.Add(new object[] { offset, 0x42, 0x4A, 0x8C, new ConditionFlags() { Carry = false, HalfCarry = false, ParityOverflow = true, Zero = false, Sign = true } });
+                list.Add(new object[] { offset, 0xEE, 0x1D, 0x0B, new ConditionFlags() { Carry = true, HalfCarry = true, ParityOverflow = false, Zero = false, Sign = false } });
+                list.Add(new object[] { offset, 0xEE, 0x12, 0x00, new ConditionFlags() { Carry = true, HalfCarry = true, ParityOverflow = false, Zero = true, Sign = false } });
+                list.Add(new object[] { offset, 0x7E, 0x02, 0x80, new ConditionFlags() { Carry = false, HalfCarry = true, ParityOverflow = true, Zero = false, Sign = true } });
             }
 
             return list;
         }
 
-        // TODO: Test Parity/Overflow and AuxCarry flags.
         [Theory]
         [MemberData(nameof(GetData))]
         public void Test_ADD_A_IY(int offset, byte initialValue, byte valueToAdd, byte expectedValue, ConditionFlags expectedFlags)
@@ -79,12 +79,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     Carry = !expectedFlags.Carry,
                     Sign = !expectedFlags.Sign,
                     Zero = !expectedFlags.Zero,
-                    // Parity = !expectedFlags.Parity,
+                    ParityOverflow = !expectedFlags.ParityOverflow,
+                    HalfCarry = !expectedFlags.HalfCarry,
 
                     // Should be reset.
                     Subtract = true,
-
-                    // AuxCarry = ???
                 },
             };
 
@@ -96,12 +95,11 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(expectedFlags.Carry, state.Flags.Carry);
             Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
             Assert.Equal(expectedFlags.Sign, state.Flags.Sign);
-            // Assert.Equal(expectedFlags.Parity, state.Flags.Parity);
+            Assert.Equal(expectedFlags.ParityOverflow, state.Flags.ParityOverflow);
+            Assert.Equal(expectedFlags.HalfCarry, state.Flags.HalfCarry);
 
             // Should be reset.
             Assert.False(state.Flags.Subtract);
-
-            // Assert.False(state.Flags.AuxCarry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 19, state.Cycles);

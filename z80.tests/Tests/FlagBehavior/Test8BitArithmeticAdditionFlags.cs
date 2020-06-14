@@ -3,7 +3,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class TestArithmeticAdditionFlags : BaseTest
+    public class Test8BitArithmeticAdditionFlags : BaseTest
     {
         public static IEnumerable<object[]> GetTestData()
         {
@@ -68,11 +68,17 @@ namespace JustinCredible.ZilogZ80.Tests
             list.Add(new object[] { "126", "1", 127, 127, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = false, ParityOverflow = false } });
             list.Add(new object[] { "1", "126", 127, 127, new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = false, ParityOverflow = false } });
 
-            //   1000 0010   130              -126
-            //   1111 1110 + 254             +  -2
-            // 1 1000 0000 = 384    = 128    =-128    Flags: S C H
+            //   0111 1110   126      126
+            //   0000 0010 +   2    +   2
+            // 0 1000 0000 = 128    =-128    Flags: S H V
             list.Add(new object[] { "126", "2", 128, -128, new ConditionFlags() { Zero = false, Sign = true, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = true } });
             list.Add(new object[] { "2", "126", 128, -128, new ConditionFlags() { Zero = false, Sign = true, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = true } });
+
+            //   0111 1110   126     126
+            //   0000 1011 +  11   +  11
+            // 0 1000 1001 = 137   =-119    Flags: S H V
+            list.Add(new object[] { "126", "11", 137, -119, new ConditionFlags() { Zero = false, Sign = true, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = true } });
+            list.Add(new object[] { "11", "126", 137, -119, new ConditionFlags() { Zero = false, Sign = true, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = true } });
 
             //   1000 1000   136     -120
             //   0000 0100 +   4    +   4
@@ -85,9 +91,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetTestData))]
-        public void TestArithmeticAdditionSetsFlags(string valueA, string valueB, int? expectedRegValue, int? expectedRegSignedValue, ConditionFlags expected)
+        public void TestArithmeticAdditionSetsFlags(string valueA, string valueB, int expectedRegValue, int expectedRegSignedValue, ConditionFlags expected)
         {
-            var x = new ConditionFlags() { Zero = false, Sign = false, Subtract = false, Carry = false, HalfCarry = true, ParityOverflow = false };
             var rom = AssembleSource($@"
                 org 00h
                 LD A, {valueA}
@@ -111,11 +116,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            if (expectedRegValue.HasValue)
-                Assert.Equal(expectedRegValue, state.Registers.A);
-
-            if (expectedRegValue.HasValue)
-                Assert.Equal(expectedRegSignedValue, (sbyte)state.Registers.A);
+            Assert.Equal(expectedRegValue, state.Registers.A);
+            Assert.Equal(expectedRegSignedValue, (sbyte)state.Registers.A);
 
             Assert.Equal(expected.Sign, state.Flags.Sign);
             Assert.Equal(expected.Zero, state.Flags.Zero);

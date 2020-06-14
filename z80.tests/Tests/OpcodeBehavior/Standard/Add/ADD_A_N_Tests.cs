@@ -43,11 +43,11 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_ADD_A_N_ParityFlag()
+        public void Test_ADD_A_N_OverflowFlag()
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADD A, 1Ah
+                ADD A, 2
                 HALT
             ");
 
@@ -55,17 +55,17 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    A = 0x42,
+                    A = 127,
                 },
             };
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x5C, state.Registers.A);
+            Assert.Equal(129, state.Registers.A);
 
-            Assert.False(state.Flags.Sign);
+            Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
@@ -99,7 +99,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.False(state.Flags.HalfCarry);
-            Assert.False(state.Flags.ParityOverflow);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -131,7 +131,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
@@ -164,8 +164,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
 
