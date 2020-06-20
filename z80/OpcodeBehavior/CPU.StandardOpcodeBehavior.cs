@@ -754,16 +754,16 @@ namespace JustinCredible.ZilogZ80
                     #region ADD HL, rr - Double (16-bit) add
 
                         case OpcodeBytes.ADD_HL_BC:
-                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.BC);
+                            Registers.HL = Execute16BitAddition(Registers.HL, Registers.BC);
                             break;
                         case OpcodeBytes.ADD_HL_DE:
-                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.DE);
+                            Registers.HL = Execute16BitAddition(Registers.HL, Registers.DE);
                             break;
                         case OpcodeBytes.ADD_HL_HL:
-                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.HL);
+                            Registers.HL = Execute16BitAddition(Registers.HL, Registers.HL);
                             break;
                         case OpcodeBytes.ADD_HL_SP:
-                            Registers.HL = Execute16BitAdditionNonArithmetic(Registers.HL, Registers.SP);
+                            Registers.HL = Execute16BitAddition(Registers.HL, Registers.SP);
                             break;
 
                     #endregion
@@ -1673,16 +1673,16 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 256;
 
-            SetFlagsFromArithemticAddition(value1, value2, addCarryFlag);
+            SetFlagsFrom8BitAddition(value1, value2, addCarryFlag);
 
             return (byte)result;
         }
 
-        private UInt16 Execute16BitAddition(UInt16 value1, UInt16 value2, bool addCarryFlag = false)
+        private UInt16 Execute16BitAdditionWithCarryFlag(UInt16 value1, UInt16 value2)
         {
             var result = value1 + value2;
 
-            if (addCarryFlag && Flags.Carry)
+            if (Flags.Carry)
                 result += 1;
 
             var carryOccurred = result > 65535;
@@ -1693,11 +1693,12 @@ namespace JustinCredible.ZilogZ80
             // TODO: Set H flag.
             // Call: SetFlagsFrom16BitAddition
             SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
+            // SetFlagsFrom16BitAddition(value1, value2, true);
 
             return (UInt16)result;
         }
 
-        private UInt16 Execute16BitAdditionNonArithmetic(UInt16 value1, UInt16 value2)
+        private UInt16 Execute16BitAddition(UInt16 value1, UInt16 value2)
         {
             var result = value1 + value2;
 
@@ -1706,16 +1707,7 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 65536;
 
-            Flags.Subtract = false;
-            Flags.Carry = carryOccurred;
-
-            // If the 11th bit (highest bit of the nibble) of either is set
-            // and sum of lower nibble is over the maximum value for a 12-bit
-            // number (4095) then we know a carry out of the third bit occurred.
-            Flags.HalfCarry =
-                (((value1 & 0x0800) == 0x0800) || ((value2 & 0x0800) == 0x0800))
-                &&
-                (((value1 & 0x0FFF) + (value2 & 0x0FFF)) > 4095);
+            SetFlagsFrom16BitAddition(addend: value1, augend: value2, addCarryFlag: false);
 
             return (UInt16)result;
         }
