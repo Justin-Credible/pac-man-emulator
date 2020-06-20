@@ -44,12 +44,12 @@ namespace JustinCredible.ZilogZ80
 
             #region Add (Arithmetic)
 
-                public const byte ADD_A_IY = 0x86;
+                public const byte ADD_A_MIY = 0x86;
 
                 public const byte ADD_A_IYH = 0x84;
                 public const byte ADD_A_IYL = 0x85;
 
-                public const byte ADC_A_IY = 0x8E;
+                public const byte ADC_A_MIY = 0x8E;
 
                 public const byte ADC_A_IYH = 0x8C;
                 public const byte ADC_A_IYL = 0x8D;
@@ -60,12 +60,12 @@ namespace JustinCredible.ZilogZ80
 
         #region Subtract
 
-            public const byte SUB_IY = 0x96;
+            public const byte SUB_MIY = 0x96;
 
             public const byte SUB_IYH = 0x94;
             public const byte SUB_IYL = 0x95;
 
-            public const byte SBC_A_IY = 0x9E;
+            public const byte SBC_A_MIY = 0x9E;
 
             public const byte SBC_A_IYH = 0x9C;
             public const byte SBC_A_IYL = 0x9D;
@@ -85,7 +85,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Bitwise AND
 
-                public const byte AND_IY = 0xA6;
+                public const byte AND_MIY = 0xA6;
 
                 public const byte AND_IYH = 0xA4;
                 public const byte AND_IYL = 0xA5;
@@ -94,7 +94,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Bitwise OR
 
-                public const byte OR_IY = 0xB6;
+                public const byte OR_MIY = 0xB6;
 
                 public const byte OR_IYH = 0xB4;
                 public const byte OR_IYL = 0xB5;
@@ -103,7 +103,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Bitwise XOR
 
-                public const byte XOR_IY = 0xAE;
+                public const byte XOR_MIY = 0xAE;
 
                 public const byte XOR_IYH = 0xAC;
                 public const byte XOR_IYL = 0xAD;

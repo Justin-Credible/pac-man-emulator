@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class ADC_A_IY_Tests : BaseTest
+    public class ADC_A_MIX_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetData()
         {
@@ -29,11 +29,11 @@ namespace JustinCredible.ZilogZ80.Tests
         // TODO: Test Parity/Overflow and AuxCarry flags.
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_ADC_A_IY(int offset, byte initialValue, byte valueToAdd, byte expectedValue, bool initialCarryFlag, ConditionFlags expectedFlags)
+        public void Test_ADC_A_MIX(int offset, byte initialValue, byte valueToAdd, byte expectedValue, bool initialCarryFlag, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADC A, (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                ADC A, (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -45,7 +45,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Registers = new CPURegisters()
                 {
                     A = initialValue,
-                    IY = 0x2234,
+                    IX = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {

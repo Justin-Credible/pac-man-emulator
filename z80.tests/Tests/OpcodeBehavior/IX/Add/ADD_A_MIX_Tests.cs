@@ -4,14 +4,14 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class ADD_A_IY_Tests : BaseTest
+    public class ADD_A_MIX_Tests : BaseTest
     {
         [Fact]
-        public void Test_ADD_A_IY_ExampleFromManual()
+        public void Test_ADD_A_MIX_ExampleFromManual()
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADD A, (IY + 5h)
+                ADD A, (IX + 5h)
                 HALT
             ");
 
@@ -23,7 +23,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Registers = new CPURegisters()
                 {
                     A = 0x11,
-                    IY = 0x1000,
+                    IX = 0x1000,
                 },
             };
 
@@ -55,11 +55,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_ADD_A_IY(int offset, byte initialValue, byte valueToAdd, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_ADD_A_MIX(int offset, byte initialValue, byte valueToAdd, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                ADD A, (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                ADD A, (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
@@ -71,7 +71,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Registers = new CPURegisters()
                 {
                     A = initialValue,
-                    IY = 0x2234,
+                    IX = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {

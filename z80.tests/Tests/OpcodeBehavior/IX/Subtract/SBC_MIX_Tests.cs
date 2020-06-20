@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class SBC_IX_Tests : BaseTest
+    public class SBC_MIX_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetData()
         {
@@ -30,7 +30,7 @@ namespace JustinCredible.ZilogZ80.Tests
         // TODO: Test Parity/Overflow and AuxCarry flags.
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_SBC_IX(int offset, byte initialValue, byte valueToAdd, byte expectedValue, bool initialCarryFlag, ConditionFlags expectedFlags)
+        public void Test_SBC_MIX(int offset, byte initialValue, byte valueToAdd, byte expectedValue, bool initialCarryFlag, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h

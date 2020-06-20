@@ -44,12 +44,12 @@ namespace JustinCredible.ZilogZ80
 
             #region Add (Arithmetic)
 
-                public static Opcode ADD_A_IX = new Opcode(OpcodeBytes.ADD_A_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "ADD A, (IX+n)", cycles: 19, pseudocode: "A <- A + (IX+n)");
+                public static Opcode ADD_A_MIX = new Opcode(OpcodeBytes.ADD_A_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "ADD A, (IX+n)", cycles: 19, pseudocode: "A <- A + (IX+n)");
 
                 public static Opcode ADD_A_IXH = new Opcode(OpcodeBytes.ADD_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "ADD A, IXH", cycles: 8, pseudocode: "A <- A + IX.hi");
                 public static Opcode ADD_A_IXL = new Opcode(OpcodeBytes.ADD_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "ADD A, IXL", cycles: 8, pseudocode: "A <- A + IX.lo");
 
-                public static Opcode ADC_A_IX = new Opcode(OpcodeBytes.ADC_A_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "ADC A, (IX+n)", cycles: 19, pseudocode: "A <- A + (IX+n) + CY");
+                public static Opcode ADC_A_MIX = new Opcode(OpcodeBytes.ADC_A_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "ADC A, (IX+n)", cycles: 19, pseudocode: "A <- A + (IX+n) + CY");
 
                 public static Opcode ADC_A_IXH = new Opcode(OpcodeBytes.ADC_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "ADC A, IXH", cycles: 8, pseudocode: "A <- A + IX.hi + CY");
                 public static Opcode ADC_A_IXL = new Opcode(OpcodeBytes.ADC_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "ADC A, IXL", cycles: 8, pseudocode: "A <- A + IX.lo + CY");
@@ -60,12 +60,12 @@ namespace JustinCredible.ZilogZ80
 
         #region Subtract
 
-            public static Opcode SUB_IX = new Opcode(OpcodeBytes.SUB_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "SUB (IX+n)", cycles: 19, pseudocode: "A <- A - (IX+n)");
+            public static Opcode SUB_MIX = new Opcode(OpcodeBytes.SUB_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "SUB (IX+n)", cycles: 19, pseudocode: "A <- A - (IX+n)");
 
             public static Opcode SUB_IXH = new Opcode(OpcodeBytes.SUB_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "SUB IXH", cycles: 8, pseudocode: "A <- A - IX.hi");
             public static Opcode SUB_IXL = new Opcode(OpcodeBytes.SUB_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "SUB IXL", cycles: 8, pseudocode: "A <- A - IX.lo");
 
-            public static Opcode SBC_A_IX = new Opcode(OpcodeBytes.SBC_A_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "SBC A, (IX+n)", cycles: 19, pseudocode: "A <- A - (IX+n) - CY");
+            public static Opcode SBC_A_MIX = new Opcode(OpcodeBytes.SBC_A_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "SBC A, (IX+n)", cycles: 19, pseudocode: "A <- A - (IX+n) - CY");
 
             public static Opcode SBC_A_IXH = new Opcode(OpcodeBytes.SBC_A_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "SBC A, IXH", cycles: 8, pseudocode: "A <- A - IX.hi - CY");
             public static Opcode SBC_A_IXL = new Opcode(OpcodeBytes.SBC_A_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "SBC A, IXL", cycles: 8, pseudocode: "A <- A - IX.lo - CY");
@@ -85,7 +85,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Bitwise AND
 
-                public static Opcode AND_IX = new Opcode(OpcodeBytes.AND_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "AND (IX+x)", cycles: 19, pseudocode: "A <- A & (IX+x)");
+                public static Opcode AND_MIX = new Opcode(OpcodeBytes.AND_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "AND (IX+x)", cycles: 19, pseudocode: "A <- A & (IX+x)");
 
                 public static Opcode AND_IXH = new Opcode(OpcodeBytes.AND_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "AND IXH", cycles: 8, pseudocode: "A <- A & IX.hi");
                 public static Opcode AND_IXL = new Opcode(OpcodeBytes.AND_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "AND IXL", cycles: 8, pseudocode: "A <- A & IX.lo");
@@ -94,7 +94,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Bitwise OR
 
-                public static Opcode OR_IX = new Opcode(OpcodeBytes.OR_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "OR (IX+n)", cycles: 19, pseudocode: "A <- A & (IX+x)");
+                public static Opcode OR_MIX = new Opcode(OpcodeBytes.OR_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "OR (IX+n)", cycles: 19, pseudocode: "A <- A & (IX+x)");
 
                 public static Opcode OR_IXH = new Opcode(OpcodeBytes.OR_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "OR IXH", cycles: 8, pseudocode: "A <- A | IX.hi");
                 public static Opcode OR_IXL = new Opcode(OpcodeBytes.OR_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "OR IXL", cycles: 8, pseudocode: "A <- A | IX.lo");
@@ -103,7 +103,7 @@ namespace JustinCredible.ZilogZ80
 
             #region Bitwise XOR
 
-                public static Opcode XOR_IX = new Opcode(OpcodeBytes.XOR_IX, instructionSet: InstructionSet.IX, size: 3, instruction: "XOR (IX+n)", cycles: 19, pseudocode: "A <- A & (IX+x)");
+                public static Opcode XOR_MIX = new Opcode(OpcodeBytes.XOR_MIX, instructionSet: InstructionSet.IX, size: 3, instruction: "XOR (IX+n)", cycles: 19, pseudocode: "A <- A & (IX+x)");
 
                 public static Opcode XOR_IXH = new Opcode(OpcodeBytes.XOR_IXH, instructionSet: InstructionSet.IX, size: 2, instruction: "XOR IXH", cycles: 8, pseudocode: "A <- A ^ IX.hi");
                 public static Opcode XOR_IXL = new Opcode(OpcodeBytes.XOR_IXL, instructionSet: InstructionSet.IX, size: 2, instruction: "XOR IXL", cycles: 8, pseudocode: "A <- A ^ IX.lo");

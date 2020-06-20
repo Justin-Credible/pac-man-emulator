@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class AND_IY_Tests : BaseTest
+    public class OR_MIY_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetData()
         {
@@ -13,12 +13,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0b00010111, 0b11010101, 0b00010101, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = false } });
-                list.Add(new object[] { offset, 0b00010111, 0b11010111, 0b00010111, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = true } });
-                list.Add(new object[] { offset, 0b10010111, 0b11010111, 0b10010111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = false } });
-                list.Add(new object[] { offset, 0b10010111, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b01100100, 0b01001001, 0b01101101, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = false } });
+                list.Add(new object[] { offset, 0b01100100, 0b01001000, 0b01101100, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b10010111, 0b11010111, 0b11010111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = true } });
                 list.Add(new object[] { offset, 0b11111111, 0b11111111, 0b11111111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = true } });
-                list.Add(new object[] { offset, 0b00000000, 0b11111111, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b00000000, 0b11111111, 0b11111111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = true } });
                 list.Add(new object[] { offset, 0b00000000, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
             }
 
@@ -27,16 +26,16 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_AND_IY(int offset, byte initialValue, byte valueToAND, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_OR_MIY(int offset, byte initialValue, byte valueToOR, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                AND (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                OR (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x2234 + offset] = valueToAND;
+            memory[0x2234 + offset] = valueToOR;
 
             var initialState = new CPUConfig()
             {
@@ -55,9 +54,7 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be reset.
                     Subtract = true,
                     Carry = true,
-
-                    // Should be set.
-                    HalfCarry = false,
+                    HalfCarry = true,
                 },
             };
 
@@ -73,9 +70,7 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be reset.
             Assert.False(state.Flags.Carry);
             Assert.False(state.Flags.Subtract);
-
-            // Should be set.
-            Assert.True(state.Flags.HalfCarry);
+            Assert.False(state.Flags.HalfCarry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 19, state.Cycles);

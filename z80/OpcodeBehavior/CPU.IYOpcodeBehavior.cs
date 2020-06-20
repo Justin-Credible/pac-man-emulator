@@ -114,7 +114,7 @@ namespace JustinCredible.ZilogZ80
 
                     #region Add (Arithmetic)
 
-                        case OpcodeBytes.ADD_A_IY:
+                        case OpcodeBytes.ADD_A_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -130,7 +130,7 @@ namespace JustinCredible.ZilogZ80
                             Registers.A = Execute8BitAddition(Registers.A, Registers.IYL);
                             break;
 
-                        case OpcodeBytes.ADC_A_IY:
+                        case OpcodeBytes.ADC_A_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -151,7 +151,7 @@ namespace JustinCredible.ZilogZ80
 
                 #region Subtract
 
-                    case OpcodeBytes.SUB_IY:
+                    case OpcodeBytes.SUB_MIY:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IY + offset);
@@ -166,7 +166,7 @@ namespace JustinCredible.ZilogZ80
                         Registers.A = ExecuteSubtract(Registers.A, Registers.IYL);
                         break;
 
-                    case OpcodeBytes.SBC_A_IY:
+                    case OpcodeBytes.SBC_A_MIY:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IY + offset);
@@ -206,7 +206,7 @@ namespace JustinCredible.ZilogZ80
 
                     #region Bitwise AND
 
-                        case OpcodeBytes.AND_IY:
+                        case OpcodeBytes.AND_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -228,7 +228,7 @@ namespace JustinCredible.ZilogZ80
 
                     #region Bitwise OR
 
-                        case OpcodeBytes.OR_IY:
+                        case OpcodeBytes.OR_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);
@@ -250,7 +250,7 @@ namespace JustinCredible.ZilogZ80
 
                     #region Bitwise XOR
 
-                        case OpcodeBytes.XOR_IY:
+                        case OpcodeBytes.XOR_MIY:
                         {
                             var offset = (sbyte)Memory[Registers.PC + 2];
                             var value = ReadMemory(Registers.IY + offset);

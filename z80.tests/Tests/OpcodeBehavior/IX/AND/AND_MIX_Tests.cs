@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class AND_IX_Tests : BaseTest
+    public class AND_MIX_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetData()
         {
@@ -27,7 +27,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_AND_IX(int offset, byte initialValue, byte valueToAND, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_AND_MIX(int offset, byte initialValue, byte valueToAND, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h

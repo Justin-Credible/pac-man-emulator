@@ -4,7 +4,7 @@ using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
-    public class XOR_IX_Tests : BaseTest
+    public class AND_MIY_Tests : BaseTest
     {
         public static IEnumerable<object[]> GetData()
         {
@@ -13,11 +13,12 @@ namespace JustinCredible.ZilogZ80.Tests
 
             foreach (var offset in offsets)
             {
-                list.Add(new object[] { offset, 0b10001101, 0b10101110, 0b00100011, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = false } });
-                list.Add(new object[] { offset, 0b10001101, 0b10101111, 0b00100010, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = true } });
-                list.Add(new object[] { offset, 0b10001101, 0b00101111, 0b10100010, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = false } });
-                list.Add(new object[] { offset, 0b11111111, 0b11111111, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
-                list.Add(new object[] { offset, 0b00000000, 0b11111111, 0b11111111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b00010111, 0b11010101, 0b00010101, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = false } });
+                list.Add(new object[] { offset, 0b00010111, 0b11010111, 0b00010111, new ConditionFlags() { Sign = false, Zero = false, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b10010111, 0b11010111, 0b10010111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = false } });
+                list.Add(new object[] { offset, 0b10010111, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b11111111, 0b11111111, 0b11111111, new ConditionFlags() { Sign = true, Zero = false, ParityOverflow = true } });
+                list.Add(new object[] { offset, 0b00000000, 0b11111111, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
                 list.Add(new object[] { offset, 0b00000000, 0b00000000, 0b00000000, new ConditionFlags() { Sign = false, Zero = true, ParityOverflow = true } });
             }
 
@@ -26,23 +27,23 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void Test_XOR_IX(int offset, byte initialValue, byte valueToXOR, byte expectedValue, ConditionFlags expectedFlags)
+        public void Test_AND_MIY(int offset, byte initialValue, byte valueToAND, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                XOR (IX {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
+                AND (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
                 HALT
             ");
 
             var memory = new byte[16*1024];
-            memory[0x2234 + offset] = valueToXOR;
+            memory[0x2234 + offset] = valueToAND;
 
             var initialState = new CPUConfig()
             {
                 Registers = new CPURegisters()
                 {
                     A = initialValue,
-                    IX = 0x2234,
+                    IY = 0x2234,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -54,7 +55,9 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be reset.
                     Subtract = true,
                     Carry = true,
-                    HalfCarry = true,
+
+                    // Should be set.
+                    HalfCarry = false,
                 },
             };
 
@@ -70,7 +73,9 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be reset.
             Assert.False(state.Flags.Carry);
             Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.HalfCarry);
+
+            // Should be set.
+            Assert.True(state.Flags.HalfCarry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 19, state.Cycles);
