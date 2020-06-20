@@ -1690,10 +1690,7 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 65536;
 
-            // TODO: Set H flag.
-            // Call: SetFlagsFrom16BitAddition
-            SetFlags(carry: carryOccurred, result: (UInt16)result, subtract: false);
-            // SetFlagsFrom16BitAddition(value1, value2, true);
+            SetFlagsFrom16BitAddition(addend: value1, augend: value2, addCarryFlag: true, setAllFlags: true);
 
             return (UInt16)result;
         }
@@ -1707,7 +1704,9 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 result = result - 65536;
 
-            SetFlagsFrom16BitAddition(addend: value1, augend: value2, addCarryFlag: false);
+            // The non-"add with carry" 16-bit additions DO NOT set all six flags according to the Z80 CPU User
+            // Manual; they only set three flags (N/C/H) which is why we pass setAllFlags as false here.
+            SetFlagsFrom16BitAddition(addend: value1, augend: value2, addCarryFlag: false, setAllFlags: false);
 
             return (UInt16)result;
         }
