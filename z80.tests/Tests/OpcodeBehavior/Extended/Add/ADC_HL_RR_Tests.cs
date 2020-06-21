@@ -55,8 +55,10 @@ namespace JustinCredible.ZilogZ80.Tests
 
                 list.Add(new object[] { sourceRegister, 0x7FFF, 0x0001, 0x8001, true, new ConditionFlags() { Carry = false, HalfCarry = true, ParityOverflow = true, Zero = false, Sign = true } });
 
-                // TODO: This test passes, but is a mismatch with 8bitworkshop.com's Williams (Z80) emulator.
-                // Based on my understanding, this test should result in H/V/S being set, but according to the reference emulator only S is set...
+                // NOTE: The below test behavior is correct and I verified in ZEMU (http://www.z80.info/z80emu.htm#EMU_CPU_W32).
+                // However, in 8bitworkshop.com's Z80 emulator, only the S bit is set, when H/V/S should be set. I believe this is
+                // a bug in 8bitworkshop's Z80 emulator. Nothing this here because most of my testing thus var has been against 8BW.
+                // Here is a sample program to exercise this test case:
                 // org 00h
                 // LD A, 0xFF
                 // ADD A, 1 ; Ensure the carry bit is set
@@ -65,7 +67,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 // ADC HL, BC ; Notice when C=1 this sets the H/V/S bits, but when C=0 only S is set in the emulator
                 // HALT
                 list.Add(new object[] { sourceRegister, 0x7FFF, 0x7FFF, 0xFFFF, true, new ConditionFlags() { Carry = false, HalfCarry = true, ParityOverflow = true, Zero = false, Sign = true } });
-                // list.Add(new object[] { sourceRegister, 0x7FFF, 0x7FFF, 0xFFFF, true, new ConditionFlags() { Carry = false, HalfCarry = false, ParityOverflow = false, Zero = false, Sign = true } });
 
                 // -1768 + 2328 = 560
                 list.Add(new object[] { sourceRegister, 0xF918, 0x0918, 0x0231, true, new ConditionFlags() { Carry = true, HalfCarry = true, ParityOverflow = false, Zero = false, Sign = false } });

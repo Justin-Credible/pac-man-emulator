@@ -317,7 +317,7 @@ namespace JustinCredible.ZilogZ80
          * • Subtract (N) is reset.
          * • Carry (C) is set if carry from bit 7; otherwise, it is reset.
          */
-        private void SetFlagsFrom8BitAddition(byte addend, byte augend, bool addCarryFlag = false)
+        private void SetFlagsFrom8BitAddition(byte addend, byte augend, bool addCarryFlag = false, bool affectsCarryFlag = true)
         {
             var originalCarryFlagSet = Flags.Carry;
 
@@ -337,7 +337,8 @@ namespace JustinCredible.ZilogZ80
 
             // If the sum is over the maximum value for an 8-bit number (255)
             // then we know a carry out of the seventh bit occurred.
-            Flags.Carry = sum > 255;
+            if (affectsCarryFlag)
+                Flags.Carry = sum > 255;
 
             // If the third bit (highest bit of the lower nibble) of either is set
             // and sum of lower nibble is over the maximum value for a 4-bit

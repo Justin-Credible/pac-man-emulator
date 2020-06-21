@@ -1,135 +1,92 @@
+using System.Collections.Generic;
 using Xunit;
 
 namespace JustinCredible.ZilogZ80.Tests
 {
     public class INC_R_Tests : BaseTest
     {
-        [Theory]
-        [InlineData(Register.A)]
-        [InlineData(Register.B)]
-        [InlineData(Register.C)]
-        [InlineData(Register.D)]
-        [InlineData(Register.E)]
-        [InlineData(Register.H)]
-        [InlineData(Register.L)]
-        public void Test_INC_R_NoFlags(Register sourceReg)
+        public static IEnumerable<object[]> GetData()
         {
-            var rom = AssembleSource($@"
-                org 00h
-                INC {sourceReg}
-                HALT
-            ");
+            var registers = RegistersClassData.StandardRegisters.GetRange(0, 1);
+            var list = new List<object[]>();
 
-            var registers = new CPURegisters()
+            foreach (var register in registers)
             {
-                [sourceReg] = 0x42,
-            };
+                list.Add(new object[] { register, 0x00, 0x01, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+                list.Add(new object[] { register, 0x07, 0x08, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+                list.Add(new object[] { register, 0x0F, 0x10, new ConditionFlags() { HalfCarry = true, ParityOverflow = false, Zero = false, Sign = false } });
+                list.Add(new object[] { register, 0xFE, 0xFF, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = true } });
+                list.Add(new object[] { register, 0xFF, 0x00, new ConditionFlags() { HalfCarry = true, ParityOverflow = false, Zero = true, Sign = false } });
+                list.Add(new object[] { register, 0x7E, 0x7F, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+                list.Add(new object[] { register, 0x7F, 0x80, new ConditionFlags() { HalfCarry = true, ParityOverflow = true, Zero = false, Sign = true } });
+            }
 
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
+            return list;
+        }
 
-            var state = Execute(rom, initialState);
+        public static IEnumerable<object[]> GetDataForHL()
+        {
+            var list = new List<object[]>();
 
-            Assert.Equal(0x43, state.Registers[sourceReg]);
+            list.Add(new object[] { 0x00, 0x01, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+            list.Add(new object[] { 0x07, 0x08, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+            list.Add(new object[] { 0x0F, 0x10, new ConditionFlags() { HalfCarry = true, ParityOverflow = false, Zero = false, Sign = false } });
+            list.Add(new object[] { 0xFE, 0xFF, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = true } });
+            list.Add(new object[] { 0xFF, 0x00, new ConditionFlags() { HalfCarry = true, ParityOverflow = false, Zero = true, Sign = false } });
+            list.Add(new object[] { 0x7E, 0x7F, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = false } });
+            list.Add(new object[] { 0x7F, 0x80, new ConditionFlags() { HalfCarry = true, ParityOverflow = true, Zero = false, Sign = true } });
 
-            AssertFlagsFalse(state);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
+            return list;
         }
 
         [Theory]
-        [InlineData(Register.A)]
-        [InlineData(Register.B)]
-        [InlineData(Register.C)]
-        [InlineData(Register.D)]
-        [InlineData(Register.E)]
-        [InlineData(Register.H)]
-        [InlineData(Register.L)]
-        public void Test_INC_R_ParityFlag(Register sourceReg)
+        [MemberData(nameof(GetData))]
+        public void Test_INC_R(Register register, byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
-                INC {sourceReg}
+                INC {register}
                 HALT
             ");
 
-            var registers = new CPURegisters()
+            var registers = new CPURegisters();
+            registers[register] = initialValue;
+
+            var flags = new ConditionFlags()
             {
-                [sourceReg] = 0x43,
+                // Should be affected.
+                HalfCarry = !expectedFlags.HalfCarry,
+                ParityOverflow = !expectedFlags.ParityOverflow,
+                Zero = !expectedFlags.Zero,
+                Sign = !expectedFlags.Sign,
+
+                // Should be reset.
+                Subtract = true,
+
+                // Should be unaffected.
+                Carry = false,
             };
 
             var initialState = new CPUConfig()
             {
                 Registers = registers,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
+                Flags = flags,
             };
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x44, state.Registers[sourceReg]);
+            Assert.Equal(expectedValue, state.Registers[register]);
 
-            Assert.False(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            // Should be affected.
+            Assert.Equal(expectedFlags.HalfCarry, state.Flags.HalfCarry);
+            Assert.Equal(expectedFlags.Sign, state.Flags.Sign);
+            Assert.Equal(expectedFlags.ParityOverflow, state.Flags.ParityOverflow);
+            Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
+
+            // Should be reset.
             Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
 
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
-        }
-
-        [Theory]
-        [InlineData(Register.A)]
-        [InlineData(Register.B)]
-        [InlineData(Register.C)]
-        [InlineData(Register.D)]
-        [InlineData(Register.E)]
-        [InlineData(Register.H)]
-        [InlineData(Register.L)]
-        public void Test_INC_R_SignFlag(Register sourceReg)
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC {sourceReg}
-                HALT
-            ");
-
-            var registers = new CPURegisters()
-            {
-                [sourceReg] = 0x7F,
-            };
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
-
-            var state = Execute(rom, initialState);
-
-            Assert.Equal(0x80, state.Registers[sourceReg]);
-
-            Assert.True(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.False(state.Flags.ParityOverflow);
-            Assert.False(state.Flags.Subtract);
+            // Should be unaffected.
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
@@ -138,53 +95,8 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Theory]
-        [InlineData(Register.A)]
-        [InlineData(Register.B)]
-        [InlineData(Register.C)]
-        [InlineData(Register.D)]
-        [InlineData(Register.E)]
-        [InlineData(Register.H)]
-        [InlineData(Register.L)]
-        public void Test_INC_R_ZeroButNoCarryFlag(Register sourceReg)
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC {sourceReg}
-                HALT
-            ");
-
-            var registers = new CPURegisters()
-            {
-                [sourceReg] = 0xFF,
-            };
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
-
-            var state = Execute(rom, initialState);
-
-            Assert.Equal(0x00, state.Registers[sourceReg]);
-
-            Assert.False(state.Flags.Sign);
-            Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 4, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
-        }
-
-        [Fact]
-        public void Test_INC_MHL_NoFlags()
+        [MemberData(nameof(GetDataForHL))]
+        public void Test_INC_MHL(byte initialValue, byte expectedValue, ConditionFlags expectedFlags)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -192,157 +104,50 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
+            var memory = new byte[16*1024];
+            memory[0x2234] = initialValue;
+
             var registers = new CPURegisters()
             {
-                HL = 0x2477,
+                HL = 0x2234,
             };
 
-            var memory = new byte[16384];
-            memory[0x2477] = 0x42;
+            var flags = new ConditionFlags()
+            {
+                // Should be affected.
+                HalfCarry = !expectedFlags.HalfCarry,
+                ParityOverflow = !expectedFlags.ParityOverflow,
+                Zero = !expectedFlags.Zero,
+                Sign = !expectedFlags.Sign,
+
+                // Should be reset.
+                Subtract = true,
+
+                // Should be unaffected.
+                Carry = false,
+            };
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
                 MemorySize = memory.Length,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
+                Registers = registers,
+                Flags = flags,
             };
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0x43, state.Memory[0x2477]);
+            Assert.Equal(expectedValue, state.Memory[0x2234]);
 
-            AssertFlagsFalse(state);
+            // Should be affected.
+            Assert.Equal(expectedFlags.HalfCarry, state.Flags.HalfCarry);
+            Assert.Equal(expectedFlags.Sign, state.Flags.Sign);
+            Assert.Equal(expectedFlags.ParityOverflow, state.Flags.ParityOverflow);
+            Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
 
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 11, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
-        }
-
-        [Fact]
-        public void TestINR_MHL_ParityFlag()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC (HL)
-                HALT
-            ");
-
-            var registers = new CPURegisters()
-            {
-                HL = 0x2477,
-            };
-
-            var memory = new byte[16384];
-            memory[0x2477] = 0x43;
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
-
-            var state = Execute(rom, memory, initialState);
-
-            Assert.Equal(0x44, state.Memory[0x2477]);
-
-            Assert.False(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            // Should be reset.
             Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
 
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 11, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
-        }
-
-        [Fact]
-        public void TestINR_MHL_SignFlag()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC (HL)
-                HALT
-            ");
-
-            var registers = new CPURegisters()
-            {
-                HL = 0x2477,
-            };
-
-            var memory = new byte[16384];
-            memory[0x2477] = 0x7F;
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
-
-            var state = Execute(rom, memory, initialState);
-
-            Assert.Equal(0x80, state.Memory[0x2477]);
-
-            Assert.True(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.False(state.Flags.ParityOverflow);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 11, state.Cycles);
-            Assert.Equal(0x01, state.Registers.PC);
-        }
-
-        [Fact]
-        public void TestINR_MHL_ZeroButNoCarryFlag()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC (HL)
-                HALT
-            ");
-
-            var registers = new CPURegisters()
-            {
-                HL = 0x2477,
-            };
-
-            var memory = new byte[16384];
-            memory[0x2477] = 0xFF;
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
-
-            var state = Execute(rom, memory, initialState);
-
-            Assert.Equal(0x00, state.Memory[0x2477]);
-
-            Assert.False(state.Flags.Sign);
-            Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
-            Assert.False(state.Flags.Subtract);
+            // Should be unaffected.
             Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);

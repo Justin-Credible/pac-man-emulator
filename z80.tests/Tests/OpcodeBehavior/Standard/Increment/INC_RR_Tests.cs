@@ -8,6 +8,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(RegisterPair.BC)]
         [InlineData(RegisterPair.DE)]
         [InlineData(RegisterPair.HL)]
+        [InlineData(RegisterPair.SP)]
         public void Test_INC_RR(RegisterPair pair)
         {
             var rom = AssembleSource($@"
@@ -40,46 +41,6 @@ namespace JustinCredible.ZilogZ80.Tests
             var state = Execute(rom, initialState);
 
             Assert.Equal(0x3902, state.Registers[pair]);
-
-            // This opcode shouldn't affect flags.
-            AssertFlagsSame(initialState, state);
-
-            Assert.Equal(4, state.Iterations);
-            Assert.Equal(4 + (6*3), state.Cycles);
-            Assert.Equal(0x03, state.Registers.PC);
-        }
-
-        [Fact]
-        public void Test_INC_SP()
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC SP
-                INC SP
-                INC SP
-                HALT
-            ");
-
-            var initialState = new CPUConfig()
-            {
-                Registers = new CPURegisters()
-                {
-                    SP = 0x38FF
-                },
-                Flags = new ConditionFlags()
-                {
-                    Sign = true,
-                    Zero = true,
-                    HalfCarry = true,
-                    ParityOverflow = true,
-                    Subtract = true,
-                    Carry = true,
-                },
-            };
-
-            var state = Execute(rom, initialState);
-
-            Assert.Equal(0x3902, state.Registers.SP);
 
             // This opcode shouldn't affect flags.
             AssertFlagsSame(initialState, state);

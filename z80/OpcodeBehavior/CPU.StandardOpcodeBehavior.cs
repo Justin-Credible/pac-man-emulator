@@ -37,40 +37,40 @@ namespace JustinCredible.ZilogZ80
                     #region INC r - Increment Register or Memory
 
                         case OpcodeBytes.INC_B:
+                            SetFlagsFrom8BitAddition(addend: Registers.B, augend: 1, false, false);
                             Registers.B++;
-                            SetFlags(carry: false, result: Registers.B, subtract: false);
                             break;
                         case OpcodeBytes.INC_C:
+                            SetFlagsFrom8BitAddition(addend: Registers.C, augend: 1, false, false);
                             Registers.C++;
-                            SetFlags(carry: false, result: Registers.C, subtract: false);
                             break;
                         case OpcodeBytes.INC_D:
+                            SetFlagsFrom8BitAddition(addend: Registers.D, augend: 1, false, false);
                             Registers.D++;
-                            SetFlags(carry: false, result: Registers.D, subtract: false);
                             break;
                         case OpcodeBytes.INC_E:
+                            SetFlagsFrom8BitAddition(addend: Registers.E, augend: 1, false, false);
                             Registers.E++;
-                            SetFlags(carry: false, result: Registers.E, subtract: false);
                             break;
                         case OpcodeBytes.INC_H:
+                            SetFlagsFrom8BitAddition(addend: Registers.H, augend: 1, false, false);
                             Registers.H++;
-                            SetFlags(carry: false, result: Registers.H, subtract: false);
                             break;
                         case OpcodeBytes.INC_L:
+                            SetFlagsFrom8BitAddition(addend: Registers.L, augend: 1, false, false);
                             Registers.L++;
-                            SetFlags(carry: false, result: Registers.L, subtract: false);
                             break;
                         case OpcodeBytes.INC_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
+                            SetFlagsFrom8BitAddition(addend: value, augend: 1, false, false);
                             value++;
                             WriteMemory(Registers.HL, value);
-                            SetFlags(carry: false, result: ReadMemory(Registers.HL), subtract: false);
                             break;
                         }
                         case OpcodeBytes.INC_A:
+                            SetFlagsFrom8BitAddition(addend: Registers.A, augend: 1, false, false);
                             Registers.A++;
-                            SetFlags(carry: false, result: Registers.A, subtract: false);
                             break;
 
                     #endregion
