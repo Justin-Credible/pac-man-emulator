@@ -1673,7 +1673,7 @@ namespace JustinCredible.ZilogZ80
             if (carryOccurred)
                 sum = sum - 256;
 
-            SetFlagsFrom8BitAddition(addend, augend, addCarryFlag);
+            SetFlagsFrom8BitAddition(addend, augend, addCarryFlag, affectsCarryFlag: true);
 
             return (byte)sum;
         }
@@ -1714,15 +1714,14 @@ namespace JustinCredible.ZilogZ80
             if (borrowOccurred)
                 difference = 256 + difference;
 
-            // TODO: Set H flag
-            SetFlags(carry: borrowOccurred, result: (byte)difference, subtract: true);
+            SetFlagsFrom8BitSubtraction(minuend, subtrahend, subtractCarryFlag, affectsCarryFlag: true);
 
             return (byte)difference;
         }
 
         private UInt16 Execute16BitSubtraction(UInt16 minuend, UInt16 subtrahend, bool subtractCarryFlag = false)
         {
-            var borrowOccurred = Flags.Carry
+            var borrowOccurred = (subtractCarryFlag && Flags.Carry)
                 ? subtrahend >= minuend // Account for the extra minus one from the carry flag subtraction.
                 : subtrahend > minuend;
 
@@ -1734,8 +1733,7 @@ namespace JustinCredible.ZilogZ80
             if (borrowOccurred)
                 difference = 65536 + difference;
 
-            // TODO: Set H flag
-            SetFlags(carry: borrowOccurred, result: (byte)difference, subtract: true);
+            SetFlagsFrom16BitSubtraction(minuend, subtrahend, subtractCarryFlag);
 
             return (UInt16)difference;
         }

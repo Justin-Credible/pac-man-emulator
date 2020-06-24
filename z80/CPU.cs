@@ -323,7 +323,7 @@ namespace JustinCredible.ZilogZ80
 
             var sum = addend + augend + (addCarryFlag && originalCarryFlagSet ? 1 : 0);
 
-            // Check if the result is zero; only consider 16-bits for the case
+            // Check if the result is zero; only consider 8-bits for the case
             // of a carry out of bit 7 by masking off the bits. For example:
             // 128 + 128 = 256 => 1 0000 0000 & 0xFF => 0
             Flags.Zero = (sum & 0xFF) == 0;
@@ -351,7 +351,6 @@ namespace JustinCredible.ZilogZ80
             // complement. If the result is outside of the max/min values of
             // 127 and -128, then it is counted as an overflow. Note that we
             // cast the addends to signed bytes and then perform the addition.
-            // var signedSum = ((sbyte)addend) + ((sbyte)augend);
             var signedSum = ((sbyte)addend) + ((sbyte)augend) + (addCarryFlag && originalCarryFlagSet ? 1 : 0);
             Flags.ParityOverflow = signedSum > 127 || signedSum < -128;
         }
@@ -421,6 +420,119 @@ namespace JustinCredible.ZilogZ80
                 var signedSum = signedAddend + signedAugend + (addCarryFlag && originalCarryFlagSet ? 1 : 0);
                 Flags.ParityOverflow = signedSum > 32767 || signedSum < -32768;
             }
+        }
+
+        /**
+         * A helper method used to encapsulate the logic for the setting of the condition flags during
+         * an 8-bit subtraction operation. This includes the subtract with carry opcode variations. This
+         * method sets all six of the condition flags based on the following:
+         * 
+         * • Zero (Z) is set if the result is 0x00; otherwise it is reset.
+         * • Sign (S) is set if the result is negative (e.g. bit 7 is set); otherwise, it is reset.
+         * • Half Carry (H) is set if borrow from bit 4; otherwise, it is reset.
+         * • Overflow (P/V) is set if overflow (e.g. difference > 127 || difference < -128); otherwise, it is reset.
+         * • Subtract (N) is set.
+         * • Carry (C) is set if borrow; otherwise, it is reset.
+         */
+        private void SetFlagsFrom8BitSubtraction(byte minuend, byte subtrahend, bool subtractCarryFlag = false, bool affectsCarryFlag = true)
+        {
+            var originalCarryFlagSet = Flags.Carry;
+
+            var difference = minuend - subtrahend - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0);
+
+            // Check if the result is zero.
+            Flags.Zero = (difference & 0xFF) == 0;
+
+            // The highest order bit is used for 2's complement to indicate a
+            // negative number if it is set.
+            Flags.Sign = (difference & 0x80) == 0x80;
+
+            // Subtractions will always set this flag.
+            Flags.Subtract = true;
+
+            // If the subtrahend is greater than the minuend then we know a borrow occurred.
+            if (affectsCarryFlag)
+            {
+                var borrowOccurred = (subtractCarryFlag && originalCarryFlagSet)
+                    ? subtrahend >= minuend // Account for the extra minus one from the carry flag subtraction.
+                    : subtrahend > minuend;
+
+                Flags.Carry = borrowOccurred;
+            }
+
+            // A half borrow occurs when bit 4 is set via a borrow from the subtraction of the
+            // lower 4 bits. So here we mask off the lower four bits and subtract them and see
+            // if bit 4 is set or not.
+            // (lower 4 bits of minuend) - (lower 4 bits of subtrahend) - (another 1 if ADC and C flag is set)
+            Flags.HalfCarry = (((minuend & 0x0F) - (subtrahend & 0x0F) - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0))
+                                & 0x10) > 0 ? true : false;
+
+            // Overflow is calculated by performing signed subtraction using 2's
+            // complement. If the result is outside of the max/min values of
+            // 127 and -128, then it is counted as an overflow. Note that we
+            // cast the addends to signed bytes and then perform the subtraction.
+            var signedDifference = ((sbyte)minuend) - ((sbyte)subtrahend) - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0);
+            Flags.ParityOverflow = signedDifference > 127 || signedDifference < -128;
+        }
+
+        /**
+         * A helper method used to encapsulate the logic for the setting of the condition flags during
+         * an 16-bit subtraction operation. This includes the subtract with carry opcode variations. This
+         * method sets all six of the condition flags based on the following:
+         * 
+         * • Zero (Z) is set if the result is 0x00; otherwise it is reset.
+         * • Sign (S) is set if the result is negative (e.g. bit 15 is set); otherwise, it is reset.
+         * • Half Carry (H) is set if borrow from bit 12; otherwise, it is reset.
+         * • Overflow (P/V) is set if overflow (e.g. difference > 127 || difference < -128); otherwise, it is reset.
+         * • Subtract (N) is set.
+         * • Carry (C) is set if borrow; otherwise, it is reset.
+         */
+        private void SetFlagsFrom16BitSubtraction(UInt16 minuend, UInt16 subtrahend, bool subtractCarryFlag = false, bool affectsCarryFlag = true)
+        {
+            var originalCarryFlagSet = Flags.Carry;
+
+            var difference = minuend - subtrahend - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0);
+
+            // Check if the result is zero.
+            Flags.Zero = (difference & 0xFFFF) == 0;
+
+            // The highest order bit is used for 2's complement to indicate a
+            // negative number if it is set.
+            Flags.Sign = (difference & 0x8000) == 0x8000;
+
+            // Subtractions will always set this flag.
+            Flags.Subtract = true;
+
+            // If the subtrahend is greater than the minuend then we know a borrow occurred.
+            if (affectsCarryFlag)
+            {
+                var borrowOccurred = (subtractCarryFlag && originalCarryFlagSet)
+                    ? subtrahend >= minuend // Account for the extra minus one from the carry flag subtraction.
+                    : subtrahend > minuend;
+
+                Flags.Carry = borrowOccurred;
+            }
+
+            // A half borrow occurs when bit 12 is set via a borrow from the subtraction of the
+            // lower 12 bits. So here we mask off the lower twelve bits and subtract them and see
+            // if bit 12 is set or not.
+            // (lower 12 bits of minuend) - (lower 12 bits of subtrahend) - (another 1 if SBC and C flag is set)
+            Flags.HalfCarry = (((minuend & 0x0FFF) - (subtrahend & 0x0FFF) - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0))
+                                & 0x1000) > 0 ? true : false;
+
+            // Overflow is calculated by performing signed subtraction using 2's
+            // complement. If the result is outside of the max/min values of
+            // 127 and -128, then it is counted as an overflow. Note that we
+            // cast the addends to signed bytes and then perform the subtraction.
+
+            // C# doesn't have a 16-bit equivalent type to sbyte, so we can't just do
+            // a type cast, instead we have to convert manually; use two's complimement
+            // to convert the UInt16 values to signed integer values.
+            var signedMinuend = ((minuend & 0x8000) == 0x8000) ? (minuend - 65536) : minuend;
+            var signedSubtrahend = ((subtrahend & 0x8000) == 0x8000) ? (subtrahend - 65536) : subtrahend;
+
+            var signedDifference = signedMinuend - signedSubtrahend - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0);
+            Flags.ParityOverflow = signedDifference > 127 || signedDifference < -128;
         }
 
         private void SetFlags(byte? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)
