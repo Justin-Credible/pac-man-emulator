@@ -396,28 +396,28 @@ namespace JustinCredible.ZilogZ80
                     #region SUB r - Subtract register or memory from accumulator
 
                         case OpcodeBytes.SUB_B:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.B);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.B);
                             break;
                         case OpcodeBytes.SUB_C:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.C);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.C);
                             break;
                         case OpcodeBytes.SUB_D:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.D);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.D);
                             break;
                         case OpcodeBytes.SUB_E:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.E);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.E);
                             break;
                         case OpcodeBytes.SUB_H:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.H);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.H);
                             break;
                         case OpcodeBytes.SUB_L:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.L);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.L);
                             break;
                         case OpcodeBytes.SUB_MHL:
-                            Registers.A = ExecuteSubtract(Registers.A, ReadMemory(Registers.HL));
+                            Registers.A = Execute8BitSubtraction(Registers.A, ReadMemory(Registers.HL));
                             break;
                         case OpcodeBytes.SUB_A:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.A);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.A);
                             break;
 
                     #endregion
@@ -528,28 +528,28 @@ namespace JustinCredible.ZilogZ80
                     #region SBC A, r - Subtract register or memory from accumulator with borrow
 
                         case OpcodeBytes.SBC_A_B:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.B, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.B, true);
                             break;
                         case OpcodeBytes.SBC_A_C:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.C, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.C, true);
                             break;
                         case OpcodeBytes.SBC_A_D:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.D, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.D, true);
                             break;
                         case OpcodeBytes.SBC_A_E:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.E, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.E, true);
                             break;
                         case OpcodeBytes.SBC_A_H:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.H, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.H, true);
                             break;
                         case OpcodeBytes.SBC_A_L:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.L, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.L, true);
                             break;
                         case OpcodeBytes.SBC_A_MHL:
-                            Registers.A = ExecuteSubtract(Registers.A, ReadMemory(Registers.HL), true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, ReadMemory(Registers.HL), true);
                             break;
                         case OpcodeBytes.SBC_A_A:
-                            Registers.A = ExecuteSubtract(Registers.A, Registers.A, true);
+                            Registers.A = Execute8BitSubtraction(Registers.A, Registers.A, true);
                             break;
 
                     #endregion
@@ -594,28 +594,28 @@ namespace JustinCredible.ZilogZ80
                     #region CP r - Compare register or memory with accumulator
 
                         case OpcodeBytes.CP_B:
-                            ExecuteSubtract(Registers.A, Registers.B, false);
+                            Execute8BitSubtraction(Registers.A, Registers.B, false);
                             break;
                         case OpcodeBytes.CP_C:
-                            ExecuteSubtract(Registers.A, Registers.C, false);
+                            Execute8BitSubtraction(Registers.A, Registers.C, false);
                             break;
                         case OpcodeBytes.CP_D:
-                            ExecuteSubtract(Registers.A, Registers.D, false);
+                            Execute8BitSubtraction(Registers.A, Registers.D, false);
                             break;
                         case OpcodeBytes.CP_E:
-                            ExecuteSubtract(Registers.A, Registers.E, false);
+                            Execute8BitSubtraction(Registers.A, Registers.E, false);
                             break;
                         case OpcodeBytes.CP_H:
-                            ExecuteSubtract(Registers.A, Registers.H, false);
+                            Execute8BitSubtraction(Registers.A, Registers.H, false);
                             break;
                         case OpcodeBytes.CP_L:
-                            ExecuteSubtract(Registers.A, Registers.L, false);
+                            Execute8BitSubtraction(Registers.A, Registers.L, false);
                             break;
                         case OpcodeBytes.CP_MHL:
-                            ExecuteSubtract(Registers.A, ReadMemory(Registers.HL), false);
+                            Execute8BitSubtraction(Registers.A, ReadMemory(Registers.HL), false);
                             break;
                         case OpcodeBytes.CP_A:
-                            ExecuteSubtract(Registers.A, Registers.A, false);
+                            Execute8BitSubtraction(Registers.A, Registers.A, false);
                             break;
 
                     #endregion
@@ -872,13 +872,13 @@ namespace JustinCredible.ZilogZ80
                     // Subtract immediate from accumulator
                     // A <- A - data
                     case OpcodeBytes.SUB_N:
-                        Registers.A = ExecuteSubtract(Registers.A, ReadMemory(Registers.PC+1));
+                        Registers.A = Execute8BitSubtraction(Registers.A, ReadMemory(Registers.PC+1));
                         break;
 
                     // Subtract immediate from accumulator with borrow
                     // A <- A - data - CY
                     case OpcodeBytes.SBC_A_N:
-                        Registers.A = ExecuteSubtract(Registers.A, ReadMemory(Registers.PC+1), true);
+                        Registers.A = Execute8BitSubtraction(Registers.A, ReadMemory(Registers.PC+1), true);
                         break;
 
                     // Logical AND immediate with accumulator
@@ -905,7 +905,7 @@ namespace JustinCredible.ZilogZ80
                     // Compare immediate with accumulator
                     // A - data
                     case OpcodeBytes.CP_N:
-                        ExecuteSubtract(Registers.A, ReadMemory(Registers.PC+1), false);
+                        Execute8BitSubtraction(Registers.A, ReadMemory(Registers.PC+1), false);
                         break;
 
                 #endregion
@@ -1661,94 +1661,83 @@ namespace JustinCredible.ZilogZ80
             Registers.PC = returnAddress;
         }
 
-        private byte Execute8BitAddition(byte value1, byte value2, bool addCarryFlag = false)
+        private byte Execute8BitAddition(byte addend, byte augend, bool addCarryFlag = false)
         {
-            var result = value1 + value2;
+            var sum = addend + augend;
 
             if (addCarryFlag && Flags.Carry)
-                result += 1;
+                sum += 1;
 
-            var carryOccurred = result > 255;
+            var carryOccurred = sum > 255;
 
             if (carryOccurred)
-                result = result - 256;
+                sum = sum - 256;
 
-            SetFlagsFrom8BitAddition(value1, value2, addCarryFlag);
+            SetFlagsFrom8BitAddition(addend, augend, addCarryFlag);
 
-            return (byte)result;
+            return (byte)sum;
         }
 
-        private UInt16 Execute16BitAdditionWithCarryFlag(UInt16 value1, UInt16 value2)
+        private UInt16 Execute16BitAddition(UInt16 addend, UInt16 augend, bool addCarryFlag = false)
         {
-            var result = value1 + value2;
+            var sum = addend + augend;
 
-            if (Flags.Carry)
-                result += 1;
+            var carryOccurred = sum > 65535;
 
-            var carryOccurred = result > 65535;
-
-            if (carryOccurred)
-                result = result - 65536;
-
-            SetFlagsFrom16BitAddition(addend: value1, augend: value2, addCarryFlag: true, setAllFlags: true);
-
-            return (UInt16)result;
-        }
-
-        private UInt16 Execute16BitAddition(UInt16 value1, UInt16 value2)
-        {
-            var result = value1 + value2;
-
-            var carryOccurred = result > 65535;
+            if (addCarryFlag && Flags.Carry)
+                sum += 1;
 
             if (carryOccurred)
-                result = result - 65536;
+                sum = sum - 65536;
 
-            // The non-"add with carry" 16-bit additions DO NOT set all six flags according to the Z80 CPU User
-            // Manual; they only set three flags (N/C/H) which is why we pass setAllFlags as false here.
-            SetFlagsFrom16BitAddition(addend: value1, augend: value2, addCarryFlag: false, setAllFlags: false);
+            // This is odd, but for 16-bit additions the only time we set all six flags is we we're doing addition
+            // for the "add with carry" opcodes. Otherwise, we only set three flags (N/C/H). This is documented
+            // in the Z80 CPU user manual as well as here: http://clrhome.org/table/#add
+            var setAllFlags = addCarryFlag;
 
-            return (UInt16)result;
+            SetFlagsFrom16BitAddition(addend, augend, addCarryFlag, setAllFlags);
+
+            return (UInt16)sum;
         }
 
-        private byte ExecuteSubtract(byte value1, byte value2, bool subtractCarryFlag = false)
+        private byte Execute8BitSubtraction(byte minuend, byte subtrahend, bool subtractCarryFlag = false)
         {
             var borrowOccurred = (subtractCarryFlag && Flags.Carry)
-                ? value2 >= value1 // Account for the extra minus one from the carry flag subtraction.
-                : value2 > value1;
+                ? subtrahend >= minuend // Account for the extra minus one from the carry flag subtraction.
+                : subtrahend > minuend;
 
-            var result = value1 - value2;
+            var difference = minuend - subtrahend;
 
             if (subtractCarryFlag && Flags.Carry)
-                result -= 1;
+                difference -= 1;
 
             if (borrowOccurred)
-                result = 256 + result;
+                difference = 256 + difference;
 
             // TODO: Set H flag
-            SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
+            SetFlags(carry: borrowOccurred, result: (byte)difference, subtract: true);
 
-            return (byte)result;
+            return (byte)difference;
         }
 
-        private UInt16 ExecuteSubtract16(UInt16 value1, UInt16 value2, bool subtractCarryFlag = false)
+        private UInt16 Execute16BitSubtraction(UInt16 minuend, UInt16 subtrahend, bool subtractCarryFlag = false)
         {
             var borrowOccurred = Flags.Carry
-                ? value2 >= value1 // Account for the extra minus one from the carry flag subtraction.
-                : value2 > value1;
+                ? subtrahend >= minuend // Account for the extra minus one from the carry flag subtraction.
+                : subtrahend > minuend;
 
-            var result = value1 - value2;
+            var difference = minuend - subtrahend;
 
             if (subtractCarryFlag && Flags.Carry)
-                result -= 1;
+                difference -= 1;
 
             if (borrowOccurred)
-                result = 65536 + result;
+                difference = 65536 + difference;
 
             // TODO: Set H flag
-            SetFlags(carry: borrowOccurred, result: (byte)result, subtract: true);
+            SetFlags(carry: borrowOccurred, result: (byte)difference, subtract: true);
 
-            return (UInt16)result;
+            return (UInt16)difference;
         }
 
         #endregion

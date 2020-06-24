@@ -155,30 +155,30 @@ namespace JustinCredible.ZilogZ80
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.A = ExecuteSubtract(Registers.A, value);
+                        Registers.A = Execute8BitSubtraction(Registers.A, value);
                         break;
                     }
 
                     case OpcodeBytes.SUB_IXH:
-                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXH);
+                        Registers.A = Execute8BitSubtraction(Registers.A, Registers.IXH);
                         break;
                     case OpcodeBytes.SUB_IXL:
-                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXL);
+                        Registers.A = Execute8BitSubtraction(Registers.A, Registers.IXL);
                         break;
 
                     case OpcodeBytes.SBC_A_MIX:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        Registers.A = ExecuteSubtract(Registers.A, value, subtractCarryFlag: true);
+                        Registers.A = Execute8BitSubtraction(Registers.A, value, subtractCarryFlag: true);
                         break;
                     }
 
                     case OpcodeBytes.SBC_A_IXH:
-                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXH, subtractCarryFlag: true);
+                        Registers.A = Execute8BitSubtraction(Registers.A, Registers.IXH, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_A_IXL:
-                        Registers.A = ExecuteSubtract(Registers.A, Registers.IXL, subtractCarryFlag: true);
+                        Registers.A = Execute8BitSubtraction(Registers.A, Registers.IXL, subtractCarryFlag: true);
                         break;
 
                 #endregion
@@ -189,15 +189,15 @@ namespace JustinCredible.ZilogZ80
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
-                        ExecuteSubtract(Registers.A, value);
+                        Execute8BitSubtraction(Registers.A, value);
                         break;
                     }
 
                     case OpcodeBytes.CP_IXH:
-                        ExecuteSubtract(Registers.A, Registers.IXH);
+                        Execute8BitSubtraction(Registers.A, Registers.IXH);
                         break;
                     case OpcodeBytes.CP_IXL:
-                        ExecuteSubtract(Registers.A, Registers.IXL);
+                        Execute8BitSubtraction(Registers.A, Registers.IXL);
                         break;
 
                 #endregion

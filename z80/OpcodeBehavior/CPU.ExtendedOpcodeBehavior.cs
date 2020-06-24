@@ -449,16 +449,16 @@ namespace JustinCredible.ZilogZ80
                 #region ADC HL, rr - Add register or memory to HL with carry
 
                     case OpcodeBytes.ADC_HL_BC:
-                        Registers.HL = Execute16BitAdditionWithCarryFlag(Registers.HL, Registers.BC);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.BC, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_DE:
-                        Registers.HL = Execute16BitAdditionWithCarryFlag(Registers.HL, Registers.DE);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.DE, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_HL:
-                        Registers.HL = Execute16BitAdditionWithCarryFlag(Registers.HL, Registers.HL);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.HL, addCarryFlag: true);
                         break;
                     case OpcodeBytes.ADC_HL_SP:
-                        Registers.HL = Execute16BitAdditionWithCarryFlag(Registers.HL, Registers.SP);
+                        Registers.HL = Execute16BitAddition(Registers.HL, Registers.SP, addCarryFlag: true);
                         break;
 
                 #endregion
@@ -466,16 +466,16 @@ namespace JustinCredible.ZilogZ80
                 #region SBC HL, rr - Subtract register or memory from HL with borrow
 
                     case OpcodeBytes.SBC_HL_BC:
-                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.BC, subtractCarryFlag: true);
+                        Registers.HL = Execute16BitSubtraction(Registers.HL, Registers.BC, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_HL_DE:
-                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.DE, subtractCarryFlag: true);
+                        Registers.HL = Execute16BitSubtraction(Registers.HL, Registers.DE, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_HL_HL:
-                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.HL, subtractCarryFlag: true);
+                        Registers.HL = Execute16BitSubtraction(Registers.HL, Registers.HL, subtractCarryFlag: true);
                         break;
                     case OpcodeBytes.SBC_HL_SP:
-                        Registers.HL = ExecuteSubtract16(Registers.HL, Registers.SP, subtractCarryFlag: true);
+                        Registers.HL = Execute16BitSubtraction(Registers.HL, Registers.SP, subtractCarryFlag: true);
                         break;
 
                 #endregion
