@@ -340,24 +340,12 @@ namespace JustinCredible.ZilogZ80
             if (affectsCarryFlag)
                 Flags.Carry = sum > 255;
 
-            // If the third bit (highest bit of the lower nibble) of either is set
-            // and sum of lower nibble is over the maximum value for a 4-bit
-            // number (15) then we know a carry out of the third bit occurred.
-            Flags.HalfCarry =
-                (((addend & 0x08) == 0x08) || ((augend & 0x08) == 0x08))
-                &&
-                (((addend & 0x0F) + (augend & 0x0F)) > 15);
-
-            // In the case of Add With Carry, if the carry flag was set and added
-            // and we didn't detect a half carry yet, we need to also add the carry
-            // flag and then re-detect for a half carry.
-            if (addCarryFlag && originalCarryFlagSet & !Flags.HalfCarry)
-            {
-                Flags.HalfCarry =
-                    ((((addend + augend) & 0x08) == 0x08))
-                    &&
-                    ((((addend + augend) & 0x0F) + 1) > 15);
-            }
+            // A half carry occurs when bit 4 is set via a carry from the addition of the
+            // lower 4 bits. So here we mask off the lower four bits and add them and see
+            // if bit 4 is set or not.
+            // (lower 4 bits of addend) + (lower 4 bits of augend) + (another 1 if ADC and C flag is set)
+            Flags.HalfCarry = (((addend & 0x0F) + (augend & 0x0F) + (addCarryFlag && originalCarryFlagSet ? 1 : 0))
+                                & 0x10) > 0 ? true : false;
 
             // Overflow is calculated by performing signed addition using 2's
             // complement. If the result is outside of the max/min values of
@@ -410,25 +398,12 @@ namespace JustinCredible.ZilogZ80
             // then we know a carry out of the seventh bit occurred.
             Flags.Carry = sum > 65535;
 
-            // If the 11th bit (highest bit of the high order byte's lower nibble)
-            // of either is set and sum of lower nibble is over the maximum value
-            // for a 12-bit number (4095) then we know a carry out of the 11th bit
-            // occurred.
-            Flags.HalfCarry =
-                (((addend & 0x0800) == 0x0800) || ((augend & 0x0800) == 0x0800))
-                &&
-                (((addend & 0x0FFF) + (augend & 0x0FFF)) > 4095);
-
-            // In the case of Add With Carry, if the carry flag was set and added
-            // and we didn't detect a half carry yet, we need to also add the carry
-            // flag and then re-detect for a half carry.
-            if (addCarryFlag && originalCarryFlagSet & !Flags.HalfCarry)
-            {
-                Flags.HalfCarry =
-                    ((((addend + augend) & 0x0800) == 0x0800))
-                    &&
-                    ((((addend + augend) & 0x0FFF) + 1) > 4095);
-            }
+            // A half carry occurs when bit 12 is set via a carry from the addition of the
+            // lower 12 bits. So here we mask off the lower 12 bits and add them and see
+            // if bit 12 is set or not.
+            // (lower 12 bits of addend) + (lower 12 bits of augend) + (another 1 if ADC and C flag is set)
+            Flags.HalfCarry = (((addend & 0x0FFF) + (augend & 0x0FFF) + (addCarryFlag && originalCarryFlagSet ? 1 : 0))
+                                & 0x1000) > 0 ? true : false;
 
             if (setAllFlags)
             {

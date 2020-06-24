@@ -57,7 +57,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
                 // NOTE: The below test behavior is correct and I verified in ZEMU (http://www.z80.info/z80emu.htm#EMU_CPU_W32).
                 // However, in 8bitworkshop.com's Z80 emulator, only the S bit is set, when H/V/S should be set. I believe this is
-                // a bug in 8bitworkshop's Z80 emulator. Nothing this here because most of my testing thus var has been against 8BW.
+                // a bug in 8bitworkshop's Z80 emulator. Noting this here because most of my testing thus var has been against 8BW.
                 // Here is a sample program to exercise this test case:
                 // org 00h
                 // LD A, 0xFF
