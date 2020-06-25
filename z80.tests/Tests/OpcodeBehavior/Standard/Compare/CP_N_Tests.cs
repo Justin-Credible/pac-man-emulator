@@ -9,7 +9,7 @@ namespace JustinCredible.ZilogZ80.Tests
         {
             var rom = AssembleSource($@"
                 org 00h
-                CP 16h
+                CP 01h
                 HALT
             ");
 
@@ -17,7 +17,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    A = 0x42,
+                    A = 0x02,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -27,7 +27,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x42, state.Registers.A);
+            Assert.Equal(0x02, state.Registers.A);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -68,7 +68,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
@@ -79,11 +79,11 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_CP_N_ParityFlag()
+        public void Test_CP_N_OverflowFlag()
         {
             var rom = AssembleSource($@"
                 org 00h
-                CP 33h
+                CP 02h
                 HALT
             ");
 
@@ -91,7 +91,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 Registers = new CPURegisters()
                 {
-                    A = 0x44,
+                    A = 0x81,
                 },
                 Flags = new ConditionFlags()
                 {
@@ -101,11 +101,11 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x44, state.Registers.A);
+            Assert.Equal(0x81, state.Registers.A);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
@@ -180,7 +180,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
             Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 

@@ -20,8 +20,8 @@ namespace JustinCredible.ZilogZ80.Tests
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0x42;
-            registers[sourceReg] = 0x16;
+            registers.A = 0x02;
+            registers[sourceReg] = 0x01;
 
             var initialState = new CPUConfig()
             {
@@ -34,8 +34,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x42, state.Registers.A);
-            Assert.Equal(0x16, state.Registers[sourceReg]);
+            Assert.Equal(0x02, state.Registers.A);
+            Assert.Equal(0x01, state.Registers[sourceReg]);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
@@ -84,7 +84,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
@@ -130,7 +130,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
             Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -146,7 +146,7 @@ namespace JustinCredible.ZilogZ80.Tests
         [InlineData(Register.E)]
         [InlineData(Register.H)]
         [InlineData(Register.L)]
-        public void Test_CP_ParityFlag(Register sourceReg)
+        public void Test_CP_OverflowFlag(Register sourceReg)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -155,8 +155,8 @@ namespace JustinCredible.ZilogZ80.Tests
             ");
 
             var registers = new CPURegisters();
-            registers.A = 0x44;
-            registers[sourceReg] = 0x33;
+            registers.A = 0x81;
+            registers[sourceReg] = 0x02;
 
             var initialState = new CPUConfig()
             {
@@ -169,12 +169,12 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x44, state.Registers.A);
-            Assert.Equal(0x33, state.Registers[sourceReg]);
+            Assert.Equal(0x81, state.Registers.A);
+            Assert.Equal(0x02, state.Registers[sourceReg]);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
@@ -230,7 +230,7 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Fact]
-        public void Test_CP_A_ZeroAndParityFlag()
+        public void Test_CP_A_ZeroFlag()
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -257,7 +257,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
             Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -299,7 +299,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
@@ -343,7 +343,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
             Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -385,7 +385,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
+            Assert.True(state.Flags.HalfCarry);
             Assert.False(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.True(state.Flags.Carry);
