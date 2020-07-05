@@ -491,19 +491,7 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.NEG_7:
                     case OpcodeBytes.NEG_8:
                     {
-                        var originalValue = Registers.A;
-
-                        if (originalValue != 0x80)
-                            Registers.A = (byte)(0xFF & (~Registers.A + 1));
-
-                        SetFlags(
-                            result: Registers.A, // Handles sign & zero
-                            //auxCarry // TODO: if borrow from bit 4??
-                            // parity: originalValue == 0x80, // TODO
-                            subtract: true,
-                            carry: originalValue != 0x00
-                        );
-
+                        Registers.A = Execute8BitSubtraction(0, Registers.A, false);
                         break;
                     }
 
