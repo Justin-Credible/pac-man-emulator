@@ -59,55 +59,9 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x03, state.Registers.PC);
         }
 
-        // TODO: This should detect overflow and not parity
-        // TODO: Also detect Half-carry.
         [Theory]
         [MemberData(nameof(GetData))]
-        public void TestINR_MIY_ParityFlag(int offset)
-        {
-            var rom = AssembleSource($@"
-                org 00h
-                INC (IY {(offset < 0 ? '-' : '+')} {Math.Abs(offset)})
-                HALT
-            ");
-
-            var registers = new CPURegisters()
-            {
-                IY = 0x2477,
-            };
-
-            var memory = new byte[16384];
-            memory[0x2477 + offset] = 0x43;
-
-            var initialState = new CPUConfig()
-            {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
-                {
-                    Subtract = true,
-                },
-            };
-
-            var state = Execute(rom, memory, initialState);
-
-            Assert.Equal(0x44, state.Memory[0x2477 + offset]);
-
-            Assert.False(state.Flags.Sign);
-            Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
-            Assert.False(state.Flags.Subtract);
-            Assert.False(state.Flags.Carry);
-
-            Assert.Equal(2, state.Iterations);
-            Assert.Equal(4 + 23, state.Cycles);
-            Assert.Equal(0x03, state.Registers.PC);
-        }
-
-        [Theory]
-        [MemberData(nameof(GetData))]
-        public void TestINR_MIY_SignFlag(int offset)
+        public void Test_INC_MIY_SignAndOverflowFlag(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -139,8 +93,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.True(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.False(state.Flags.ParityOverflow);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -151,7 +105,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
         [Theory]
         [MemberData(nameof(GetData))]
-        public void TestINR_MIY_ZeroButNoCarryFlag(int offset)
+        public void Test_INC_MIY_ZeroAndHalfCarry(int offset)
         {
             var rom = AssembleSource($@"
                 org 00h
@@ -183,8 +137,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             Assert.False(state.Flags.Sign);
             Assert.True(state.Flags.Zero);
-            Assert.False(state.Flags.HalfCarry);
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 

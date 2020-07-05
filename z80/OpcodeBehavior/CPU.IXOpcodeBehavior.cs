@@ -26,39 +26,39 @@ namespace JustinCredible.ZilogZ80
                         break;
 
                     case OpcodeBytes.INC_IXH:
+                        SetFlagsFrom8BitAddition(addend: Registers.IXH, augend: 1, false, false);
                         Registers.IXH++;
-                        SetFlags(subtract: false, result: Registers.IX);
                         break;
                     case OpcodeBytes.DEC_IXH:
+                        SetFlagsFrom8BitSubtraction(minuend: Registers.IXH, subtrahend: 1, false, false);
                         Registers.IXH--;
-                        SetFlags(subtract: true, result: Registers.IX);
                         break;
 
                     case OpcodeBytes.INC_IXL:
+                        SetFlagsFrom8BitAddition(addend: Registers.IXL, augend: 1, false, false);
                         Registers.IXL++;
-                        SetFlags(subtract: false, result: Registers.IX);
                         break;
                     case OpcodeBytes.DEC_IXL:
+                        SetFlagsFrom8BitSubtraction(minuend: Registers.IXL, subtrahend: 1, false, false);
                         Registers.IXL--;
-                        SetFlags(subtract: true, result: Registers.IX);
                         break;
 
                     case OpcodeBytes.INC_MIX:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
+                        SetFlagsFrom8BitAddition(addend: value, augend: 1, false, false);
                         value++;
                         WriteMemory(Registers.IX + offset, value);
-                        SetFlags(carry: false, result: value, subtract: false);
                         break;
                     }
                     case OpcodeBytes.DEC_MIX:
                     {
                         var offset = (sbyte)Memory[Registers.PC + 2];
                         var value = ReadMemory(Registers.IX + offset);
+                        SetFlagsFrom8BitSubtraction(minuend: value, subtrahend: 1, false, false);
                         value--;
                         WriteMemory(Registers.IX + offset, value);
-                        SetFlags(carry: false, result: value, subtract: true);
                         break;
                     }
 

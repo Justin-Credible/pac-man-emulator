@@ -184,8 +184,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x02, state.Registers.PC);
         }
 
-        // TODO: Verify this against zemu and 8bitworkshop (patched).
-        [Theory(Skip="Fix this to test an overflow.")]
+        [Theory]
         [InlineData(RegisterPair.BC)]
         [InlineData(RegisterPair.DE)]
         [InlineData(RegisterPair.SP)]
@@ -198,8 +197,8 @@ namespace JustinCredible.ZilogZ80.Tests
             ");
 
             var registers = new CPURegisters();
-            registers.HL = 0x81;
-            registers[sourceReg] = 0x01;
+            registers.HL = 0x8004;
+            registers[sourceReg] = 0x0006;
 
             var flags = new ConditionFlags()
             {
@@ -215,13 +214,13 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, initialState);
 
-            Assert.Equal(0x7F, state.Registers.HL);
-            Assert.Equal(0x01, state.Registers[sourceReg]);
+            Assert.Equal(0x7FFD, state.Registers.HL);
+            Assert.Equal(0x0006, state.Registers[sourceReg]);
 
             Assert.False(state.Flags.Sign);
             Assert.False(state.Flags.Zero);
             Assert.True(state.Flags.HalfCarry);
-            Assert.False(state.Flags.ParityOverflow);
+            Assert.True(state.Flags.ParityOverflow);
             Assert.True(state.Flags.Subtract);
             Assert.False(state.Flags.Carry);
 
@@ -230,8 +229,7 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x02, state.Registers.PC);
         }
 
-        // TODO: I believe this is correct; verify this against zemu and 8bitworkshop (patched).
-        [Theory(Skip="I believe this is correct; verify this against zemu and 8bitworkshop (patched).")]
+        [Theory]
         [InlineData(RegisterPair.BC)]
         [InlineData(RegisterPair.DE)]
         [InlineData(RegisterPair.SP)]
@@ -276,9 +274,8 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x02, state.Registers.PC);
         }
 
-        // TODO: I believe this is correct; verify this against zemu and 8bitworkshop (patched).
-        [Fact(Skip="I believe this is correct; verify this against zemu and 8bitworkshop (patched).")]
-        public void Test_SBC_HL_HL_SignParityCarryFlags()
+        [Fact]
+        public void Test_SBC_HL_HL_SignCarryFlags()
         {
             var rom = AssembleSource($@"
                 org 00h

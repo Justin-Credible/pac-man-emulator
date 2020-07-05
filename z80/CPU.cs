@@ -522,7 +522,7 @@ namespace JustinCredible.ZilogZ80
 
             // Overflow is calculated by performing signed subtraction using 2's
             // complement. If the result is outside of the max/min values of
-            // 127 and -128, then it is counted as an overflow. Note that we
+            // 32767 and -32768, then it is counted as an overflow. Note that we
             // cast the addends to signed bytes and then perform the subtraction.
 
             // C# doesn't have a 16-bit equivalent type to sbyte, so we can't just do
@@ -532,7 +532,7 @@ namespace JustinCredible.ZilogZ80
             var signedSubtrahend = ((subtrahend & 0x8000) == 0x8000) ? (subtrahend - 65536) : subtrahend;
 
             var signedDifference = signedMinuend - signedSubtrahend - (subtractCarryFlag && originalCarryFlagSet ? 1 : 0);
-            Flags.ParityOverflow = signedDifference > 127 || signedDifference < -128;
+            Flags.ParityOverflow = signedDifference > 32767 || signedDifference < -32768;
         }
 
         private void SetFlags(byte? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)

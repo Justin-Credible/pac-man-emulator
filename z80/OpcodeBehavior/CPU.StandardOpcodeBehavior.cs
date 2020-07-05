@@ -78,40 +78,40 @@ namespace JustinCredible.ZilogZ80
                     #region DEC r - Decrement Register or Memory
 
                         case OpcodeBytes.DEC_B:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.B, subtrahend: 1, false, false);
                             Registers.B--;
-                            SetFlags(carry: false, result: Registers.B, subtract: true);
                             break;
                         case OpcodeBytes.DEC_C:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.C, subtrahend: 1, false, false);
                             Registers.C--;
-                            SetFlags(carry: false, result: Registers.C, subtract: true);
                             break;
                         case OpcodeBytes.DEC_D:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.D, subtrahend: 1, false, false);
                             Registers.D--;
-                            SetFlags(carry: false, result: Registers.D, subtract: true);
                             break;
                         case OpcodeBytes.DEC_E:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.E, subtrahend: 1, false, false);
                             Registers.E--;
-                            SetFlags(carry: false, result: Registers.E, subtract: true);
                             break;
                         case OpcodeBytes.DEC_H:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.H, subtrahend: 1, false, false);
                             Registers.H--;
-                            SetFlags(carry: false, result: Registers.H, subtract: true);
                             break;
                         case OpcodeBytes.DEC_L:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.L, subtrahend: 1, false, false);
                             Registers.L--;
-                            SetFlags(carry: false, result: Registers.L, subtract: true);
                             break;
                         case OpcodeBytes.DEC_MHL:
                         {
                             var value = ReadMemory(Registers.HL);
+                            SetFlagsFrom8BitSubtraction(minuend: value, subtrahend: 1, false, false);
                             value--;
                             WriteMemory(Registers.HL, value);
-                            SetFlags(carry: false, result: ReadMemory(Registers.HL), subtract: true);
                             break;
                         }
                         case OpcodeBytes.DEC_A:
+                            SetFlagsFrom8BitSubtraction(minuend: Registers.A, subtrahend: 1, false, false);
                             Registers.A--;
-                            SetFlags(carry: false, result: Registers.A, subtract: true);
                             break;
 
                     #endregion
