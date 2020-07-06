@@ -418,7 +418,9 @@ namespace JustinCredible.ZilogZ80
                         memValue = (byte)(((Registers.A & 0x0F) << 4) | (memValue & 0x0F)); // (HL).hi <- A.lo
                         Registers.A = (byte)((Registers.A & 0xF0) | tmp); //  A.lo <- tmp
                         WriteMemory(Registers.HL, memValue);
-                        SetFlags(Registers.A, halfCarry: false, subtract: false);
+                        SetSignZeroAndParityFlags(Registers.A);
+                        Flags.HalfCarry = false;
+                        Flags.Subtract = false;
                         break;
                     }
 
@@ -431,7 +433,9 @@ namespace JustinCredible.ZilogZ80
                         Registers.A = (byte)(((memValue & 0xF0) >> 4) | (Registers.A & 0xF0)); // A.lo <- (HL).hi
                         memValue = (byte)((tmp << 4) | (memValue & 0x0F)); // (HL).hi <- tmp
                         WriteMemory(Registers.HL, memValue);
-                        SetFlags(Registers.A, halfCarry: false, subtract: false);
+                        SetSignZeroAndParityFlags(Registers.A);
+                        Flags.HalfCarry = false;
+                        Flags.Subtract = false;
                         break;
                     }
 
@@ -509,9 +513,7 @@ namespace JustinCredible.ZilogZ80
          */
         private void SetFlagsFromDeviceReadOperation(byte result)
         {
-            Flags.Sign = (0x80 & result) == 0x80;
-            Flags.Zero = result == 0;
-            Flags.ParityOverflow = CalculateParityBit(result);
+            SetSignZeroAndParityFlags(result);
 
             // These two are always reset.
             Flags.Subtract = false;

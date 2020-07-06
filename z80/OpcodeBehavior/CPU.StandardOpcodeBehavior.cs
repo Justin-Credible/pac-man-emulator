@@ -1553,9 +1553,7 @@ namespace JustinCredible.ZilogZ80
             }
 
             // Update the condition flags.
-            Flags.Sign = (Registers.A & 0x80) == 0x80;
-            Flags.Zero = Registers.A == 0;
-            Flags.ParityOverflow = CalculateParityBit(Registers.A);
+            SetSignZeroAndParityFlags(Registers.A);
             Flags.Carry = newCarryValue;
             Flags.HalfCarry = newAuxCarryValue;
         }

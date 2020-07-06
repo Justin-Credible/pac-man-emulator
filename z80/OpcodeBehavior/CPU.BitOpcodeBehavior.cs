@@ -1011,11 +1011,7 @@ namespace JustinCredible.ZilogZ80
             Flags.HalfCarry = false;
 
             if (setAllFlags)
-            {
-                Flags.Zero = result == 0;
-                Flags.Sign = (result & 0b10000000) == 0b10000000;
-                Flags.ParityOverflow = CalculateParityBit((byte)result);
-            }
+                SetSignZeroAndParityFlags((byte)result);
 
             // The standard RLA/RRA/RLCA/RRCA opcodes don't set the Z/S/P flags
             // but the bit opcodes RR/RL/RLC/RRC do set those flags. In both cases

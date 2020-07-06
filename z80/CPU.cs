@@ -306,6 +306,22 @@ namespace JustinCredible.ZilogZ80
         #region Utilities
 
         /**
+         * A helper method used to encapsulate the logic for the setting of the Sign, Zero and
+         * Parity flags based on the given value. This method sets three of the condition flags
+         * based on the following, and leaves the other flags unmodified.
+         *
+         * • Zero (Z) is set if result is 0; otherwise, it is reset.
+         * • Sign (S) is set if result is negative; otherwise, it is reset.
+         * • Parity (P/V) is set if parity even; otherwise, it is reset.
+         */
+        private void SetSignZeroAndParityFlags(byte result)
+        {
+            Flags.Sign = (0x80 & result) == 0x80;
+            Flags.Zero = result == 0;
+            Flags.ParityOverflow = CalculateParityBit(result);
+        }
+
+        /**
          * A helper method used to encapsulate the logic for the setting of the condition flags during
          * an 8-bit logical operation (AND/OR/XOR). This method sets all six of the condition flags
          * based on the following:
@@ -326,11 +342,7 @@ namespace JustinCredible.ZilogZ80
             Flags.Subtract = false;
             Flags.Carry = false;
 
-            Flags.Sign = (0x80 & result) == 0x80;
-            Flags.Zero = result == 0;
-
-            // Logical operations calculate parity rather than overflow.
-            Flags.ParityOverflow = CalculateParityBit(result);
+            SetSignZeroAndParityFlags(result);
         }
 
         /**
