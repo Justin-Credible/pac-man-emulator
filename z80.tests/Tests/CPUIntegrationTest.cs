@@ -44,38 +44,38 @@ namespace JustinCredible.ZilogZ80.Tests
             var list = new List<object[]>();
 
             // TODO: Uncomment once each test is passing.
-                // list.Add(new object[] { testUndocumented, 0, "adc16", "<adc,sbc> hl,<bc,de,hl,sp>...." });
+            // list.Add(new object[] { testUndocumented, 0, "adc16", "<adc,sbc> hl,<bc,de,hl,sp>...." }); // OK
             // list.Add(new object[] { testUndocumented, 1, "add16", "add hl,<bc,de,hl,sp>" }); // OK
             // list.Add(new object[] { testUndocumented, 2, "add16x", "add ix,<bc,de,ix,sp>" }); // OK
             // list.Add(new object[] { testUndocumented, 3, "add16y", "add iy,<bc,de,iy,sp>" }); // OK
                 // list.Add(new object[] { testUndocumented, 4, "alu8i", "aluop a,nn" });
                 // list.Add(new object[] { testUndocumented, 5, "alu8r", "aluop a,<b,c,d,e,h,l,(hl),a>" });
-                // list.Add(new object[] { testUndocumented, 6, "alu8rx", "aluop a,<ixh,ixl,iyh,iyl>" });
-                // list.Add(new object[] { testUndocumented, 7, "alu8x", "aluop a,(<ix,iy>+1)" });
+            // list.Add(new object[] { testUndocumented, 6, "alu8rx", "aluop a,<ixh,ixl,iyh,iyl>" }); // OK
+            // list.Add(new object[] { testUndocumented, 7, "alu8x", "aluop a,(<ix,iy>+1)" }); // OK
                 // list.Add(new object[] { testUndocumented, 8, "bitx", "bit n,(<ix,iy>+1)" });
                 // list.Add(new object[] { testUndocumented, 9, "bitz80", "bit n,<b,c,d,e,h,l,(hl),a>" });
-                // list.Add(new object[] { testUndocumented, 10, "cpd1", "cpd<r>" });
-                // list.Add(new object[] { testUndocumented, 11, "cpi1", "cpi<r>" });
+            // list.Add(new object[] { testUndocumented, 10, "cpd1", "cpd<r>" }); // OK
+            // list.Add(new object[] { testUndocumented, 11, "cpi1", "cpi<r>" }); // OK
                 // list.Add(new object[] { testUndocumented, 12, "daa", "<daa,cpl,scf,ccf>" });
-                // list.Add(new object[] { testUndocumented, 13, "inca", "<inc,dec> a" });
-                // list.Add(new object[] { testUndocumented, 14, "incb", "<inc,dec> b" });
+            // list.Add(new object[] { testUndocumented, 13, "inca", "<inc,dec> a" }); // OK
+            // list.Add(new object[] { testUndocumented, 14, "incb", "<inc,dec> b" }); // OK
             // list.Add(new object[] { testUndocumented, 15, "incbc", "<inc,dec> bc" }); // OK
-                // list.Add(new object[] { testUndocumented, 16, "incc", "<inc,dec> c" });
-                // list.Add(new object[] { testUndocumented, 17, "incd", "<inc,dec> d" });
+            // list.Add(new object[] { testUndocumented, 16, "incc", "<inc,dec> c" }); // OK
+            // list.Add(new object[] { testUndocumented, 17, "incd", "<inc,dec> d" }); // OK
             // list.Add(new object[] { testUndocumented, 18, "incde", "<inc,dec> de" }); // OK
-                // list.Add(new object[] { testUndocumented, 19, "ince", "<inc,dec> e" });
-                // list.Add(new object[] { testUndocumented, 20, "inch", "<inc,dec> h" });
+            // list.Add(new object[] { testUndocumented, 19, "ince", "<inc,dec> e" }); // OK
+            // list.Add(new object[] { testUndocumented, 20, "inch", "<inc,dec> h" }); // OK
             // list.Add(new object[] { testUndocumented, 21, "inchl", "<inc,dec> hl" }); // OK
             // list.Add(new object[] { testUndocumented, 22, "incix", "<inc,dec> ix" }); // OK
             // list.Add(new object[] { testUndocumented, 23, "inciy", "<inc,dec> iy" }); // OK
                 // list.Add(new object[] { testUndocumented, 24, "incl", "<inc,dec> l" });
                 // list.Add(new object[] { testUndocumented, 25, "incm", "<inc,dec> (hl)" });
             // list.Add(new object[] { testUndocumented, 26, "incsp", "<inc,dec> sp" }); // OK
-            // list.Add(new object[] { testUndocumented, 27, "incx", "<inc,dec> (<ix,iy>+1)" });
+            // list.Add(new object[] { testUndocumented, 27, "incx", "<inc,dec> (<ix,iy>+1)" }); // OK
             // list.Add(new object[] { testUndocumented, 28, "incxh", "<inc,dec> ixh" }); // OK
-                // list.Add(new object[] { testUndocumented, 29, "incxl", "<inc,dec> ixl });
+            // list.Add(new object[] { testUndocumented, 29, "incxl", "<inc,dec> ixl" }); // OK
             // list.Add(new object[] { testUndocumented, 30, "incyh", "<inc,dec> iyh" }); // OK
-                // list.Add(new object[] { testUndocumented, 31, "incyl", "<inc,dec> iyl" });
+            // list.Add(new object[] { testUndocumented, 31, "incyl", "<inc,dec> iyl" }); // OK
             // list.Add(new object[] { testUndocumented, 32, "ld161", "ld <bc,de>,(nnnn)" }); // OK
             // list.Add(new object[] { testUndocumented, 33, "ld162", "ld hl,(nnnn)" }); // OK
             // list.Add(new object[] { testUndocumented, 34, "ld163", "ld sp,(nnnn)" }); // OK
@@ -100,7 +100,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 // list.Add(new object[] { testUndocumented, 53, "ldd2", "ldd<r> (2)" });
                 // list.Add(new object[] { testUndocumented, 54, "ldi1", "ldi<r> (1)" });
                 // list.Add(new object[] { testUndocumented, 55, "ldi2", "ldi<r> (2)" });
-                // list.Add(new object[] { testUndocumented, 56, "neg", "neg" });
+            // list.Add(new object[] { testUndocumented, 56, "neg", "neg" }); // OK
             // list.Add(new object[] { testUndocumented, 57, "rld", "<rrd,rld>" }); // OK
             // list.Add(new object[] { testUndocumented, 58, "rot8080", "<rlca,rrca,rla,rra>" }); // OK
             // list.Add(new object[] { testUndocumented, 59, "rotxy", "shf/rot (<ix,iy>+1)" }); // OK
