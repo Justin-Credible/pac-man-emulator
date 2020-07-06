@@ -31,7 +31,7 @@ namespace JustinCredible.ZilogZ80
             /* Device[C] <- (HL); HL--; B--; if B != 0, repeat(); */
             public static Opcode OTDR = new Opcode(OpcodeBytes.OTDR, instructionSet: InstructionSet.Extended, size: 2, instruction: "OTDR", cycles: 21, alternateCycles: 16, pseudocode: "Device[C] <- (HL); HL--; B--; if B != 0, repeat();");
 
-            // R <- Device[C]
+            // r <- Device[C]
             public static Opcode IN_A_MC = new Opcode(OpcodeBytes.IN_A_MC, instructionSet: InstructionSet.Extended, size: 2, instruction: "IN A, (C)", cycles: 12, pseudocode: "A <- Device[C]");
             public static Opcode IN_B_MC = new Opcode(OpcodeBytes.IN_B_MC, instructionSet: InstructionSet.Extended, size: 2, instruction: "IN B, (C)", cycles: 12, pseudocode: "B <- Device[C]");
             public static Opcode IN_C_MC = new Opcode(OpcodeBytes.IN_C_MC, instructionSet: InstructionSet.Extended, size: 2, instruction: "IN C, (C)", cycles: 12, pseudocode: "C <- Device[C]");

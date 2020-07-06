@@ -29,7 +29,7 @@ namespace JustinCredible.ZilogZ80
             /* Device[C] <- (HL); HL--; B--; if B != 0, repeat(); */
             public const byte OTDR = 0xBB;
 
-            // R <- Device[C]
+            // r <- Device[C]
             public const byte IN_A_MC = 0x78;
             public const byte IN_B_MC = 0x40;
             public const byte IN_C_MC = 0x48;

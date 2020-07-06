@@ -83,38 +83,38 @@ namespace JustinCredible.ZilogZ80
                         break;
                     }
 
-                    // R <- Device[C]
+                    // r <- Device[C]
                     case OpcodeBytes.IN_A_MC:
                         Registers.A = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.A, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.A);
                         break;
                     case OpcodeBytes.IN_B_MC:
                         Registers.B = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.B, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.B);
                         break;
                     case OpcodeBytes.IN_C_MC:
                         Registers.C = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.C, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.C);
                         break;
                     case OpcodeBytes.IN_D_MC:
                         Registers.D = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.D, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.D);
                         break;
                     case OpcodeBytes.IN_E_MC:
                         Registers.E = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.E, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.E);
                         break;
                     case OpcodeBytes.IN_H_MC:
                         Registers.H = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.H, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.H);
                         break;
                     case OpcodeBytes.IN_L_MC:
                         Registers.L = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(Registers.L, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(Registers.L);
                         break;
                     case OpcodeBytes.IN_MC:
                         var value = OnDeviceRead?.Invoke(Registers.C) ?? 0;
-                        SetFlags(value, subtract: false, halfCarry: false);
+                        SetFlagsFromDeviceReadOperation(value);
                         break;
 
                     // (HL) <- Device[C]; HL++; B--;
@@ -492,5 +492,32 @@ namespace JustinCredible.ZilogZ80
                     throw new NotImplementedException(String.Format("Attempted to execute unknown opcode 0x{0:X2} at memory address 0x{1:X4}", opcode.Code, Registers.PC));
             }
         }
+
+        #region Utilities
+
+        /**
+         * A helper method used to encapsulate the logic for the setting of the condition flags during
+         * an 8-bit device read operation. This method sets all six of the condition flags based on
+         * the following:
+         * 
+         * • Zero (Z) is set if result is 0; otherwise, it is reset.
+         * • Sign (S) is set if result is negative; otherwise, it is reset.
+         * • Half Carry (H) is reset.
+         * • Parity (P/V) is set if parity even; otherwise, it is reset.
+         * • Subract (N) is reset.
+         * • Carry (C) is not affected.
+         */
+        private void SetFlagsFromDeviceReadOperation(byte result)
+        {
+            Flags.Sign = (0x80 & result) == 0x80;
+            Flags.Zero = result == 0;
+            Flags.ParityOverflow = CalculateParityBit(result);
+
+            // These two are always reset.
+            Flags.Subtract = false;
+            Flags.HalfCarry = false;
+        }
+
+        #endregion
     }
 }
