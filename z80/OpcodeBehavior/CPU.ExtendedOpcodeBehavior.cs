@@ -202,17 +202,12 @@ namespace JustinCredible.ZilogZ80
                     {
                         var memValue = ReadMemory(Registers.HL);
 
-                        var borrowOccurred = memValue > Registers.A;
-
-                        var result = Registers.A - memValue;
-
-                        if (borrowOccurred)
-                            result = 256 + result;
-
-                        SetFlags(result: (byte)result, subtract: true);
+                        Execute8BitSubtraction(minuend: Registers.A, subtrahend: memValue, subtractCarryFlag: false, affectsCarryFlag: false);
 
                         Registers.HL--;
                         Registers.BC--;
+
+                        Flags.ParityOverflow = Registers.BC != 0;
 
                         if (opcode.Code == OpcodeBytes.CPDR)
                         {

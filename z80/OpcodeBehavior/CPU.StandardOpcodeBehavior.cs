@@ -1700,7 +1700,7 @@ namespace JustinCredible.ZilogZ80
             return (UInt16)sum;
         }
 
-        private byte Execute8BitSubtraction(byte minuend, byte subtrahend, bool subtractCarryFlag = false)
+        private byte Execute8BitSubtraction(byte minuend, byte subtrahend, bool subtractCarryFlag = false, bool affectsCarryFlag = true)
         {
             var borrowOccurred = (subtractCarryFlag && Flags.Carry)
                 ? subtrahend >= minuend // Account for the extra minus one from the carry flag subtraction.
@@ -1714,7 +1714,7 @@ namespace JustinCredible.ZilogZ80
             if (borrowOccurred)
                 difference = 256 + difference;
 
-            SetFlagsFrom8BitSubtraction(minuend, subtrahend, subtractCarryFlag, affectsCarryFlag: true);
+            SetFlagsFrom8BitSubtraction(minuend, subtrahend, subtractCarryFlag, affectsCarryFlag: affectsCarryFlag);
 
             return (byte)difference;
         }

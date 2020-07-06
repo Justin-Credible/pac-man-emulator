@@ -573,6 +573,7 @@ namespace JustinCredible.ZilogZ80
                 Flags.Subtract = subtract.Value;
         }
 
+        // TODO: Search for "set if parity even" in documentation and use in all occurences.
         private bool CalculateParityBit(byte value)
         {
             var setBits = 0;
