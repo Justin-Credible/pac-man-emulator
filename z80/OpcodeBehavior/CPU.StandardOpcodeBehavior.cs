@@ -426,35 +426,35 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.AND_B:
                             Registers.A = (byte)(Registers.A & Registers.B);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_C:
                             Registers.A = (byte)(Registers.A & Registers.C);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_D:
                             Registers.A = (byte)(Registers.A & Registers.D);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_E:
                             Registers.A = (byte)(Registers.A & Registers.E);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_H:
                             Registers.A = (byte)(Registers.A & Registers.H);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_L:
                             Registers.A = (byte)(Registers.A & Registers.L);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_MHL:
                             Registers.A = (byte)(Registers.A & ReadMemory(Registers.HL));
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
                         case OpcodeBytes.AND_A:
                             Registers.A = (byte)(Registers.A & Registers.A);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
 
                     #endregion
@@ -463,35 +463,35 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.OR_B:
                             Registers.A = (byte)(Registers.A | Registers.B);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_C:
                             Registers.A = (byte)(Registers.A | Registers.C);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_D:
                             Registers.A = (byte)(Registers.A | Registers.D);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_E:
                             Registers.A = (byte)(Registers.A | Registers.E);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_H:
                             Registers.A = (byte)(Registers.A | Registers.H);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_L:
                             Registers.A = (byte)(Registers.A | Registers.L);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_MHL:
                             Registers.A = (byte)(Registers.A | ReadMemory(Registers.HL));
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.OR_A:
                             Registers.A = (byte)(Registers.A | Registers.A);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
 
                     #endregion
@@ -558,35 +558,35 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.XOR_B:
                             Registers.A = (byte)(Registers.A ^ Registers.B);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_C:
                             Registers.A = (byte)(Registers.A ^ Registers.C);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_D:
                             Registers.A = (byte)(Registers.A ^ Registers.D);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_E:
                             Registers.A = (byte)(Registers.A ^ Registers.E);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_H:
                             Registers.A = (byte)(Registers.A ^ Registers.H);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_L:
                             Registers.A = (byte)(Registers.A ^ Registers.L);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_MHL:
                             Registers.A = (byte)(Registers.A ^ ReadMemory(Registers.HL));
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
                         case OpcodeBytes.XOR_A:
                             Registers.A = (byte)(Registers.A ^ Registers.A);
-                            SetFlags(carry: false, result: Registers.A);
+                            SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
 
                     #endregion
@@ -885,21 +885,21 @@ namespace JustinCredible.ZilogZ80
                     // A <- A & data
                     case OpcodeBytes.AND_N:
                         Registers.A = (byte)(Registers.A & ReadMemory(Registers.PC+1));
-                        SetFlags(carry: false, result: Registers.A);
+                        SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                         break;
 
                     // XOR immediate with accumulator
                     // A <- A ^ data
                     case OpcodeBytes.XOR_N:
                         Registers.A = (byte)(Registers.A ^ ReadMemory(Registers.PC+1));
-                        SetFlags(carry: false, result: Registers.A);
+                        SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                         break;
 
                     // Logical OR immediate with accumulator
                     // A <- A | data
                     case OpcodeBytes.OR_N:
                         Registers.A = (byte)(Registers.A | ReadMemory(Registers.PC+1));
-                        SetFlags(carry: false, result: Registers.A);
+                        SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                         break;
 
                     // Compare immediate with accumulator
