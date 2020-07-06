@@ -40,8 +40,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be reset.
                     Subtract = true,
                     HalfCarry = true,
-
-                    // Should be affected.
                     ParityOverflow = false,
                 },
                 MemorySize = memory.Length,
@@ -69,9 +67,7 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be reset
             Assert.False(state.Flags.Subtract);
             Assert.False(state.Flags.HalfCarry);
-
-            // Should be affected.
-            Assert.True(state.Flags.ParityOverflow);
+            Assert.False(state.Flags.ParityOverflow);
 
             Assert.Equal(4, state.Iterations);
             Assert.Equal(4 + (2 * 21) + 16, state.Cycles);

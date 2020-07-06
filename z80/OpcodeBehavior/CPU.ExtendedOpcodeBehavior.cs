@@ -267,12 +267,13 @@ namespace JustinCredible.ZilogZ80
                                 useAlternateCycleCount = true;
                         }
 
-                        SetFlags(null, subtract: false, halfCarry: false);
+                        Flags.HalfCarry = false;
+                        Flags.Subtract = false;
 
-                        if (opcode.Code == OpcodeBytes.LDDR)
+                        if (opcode.Code == OpcodeBytes.LDDR || opcode.Code == OpcodeBytes.LDIR)
                             Flags.ParityOverflow = false;
                         else
-                            Flags.ParityOverflow = Registers.BC - 1 != 0 ? true : false;
+                            Flags.ParityOverflow = Registers.BC != 0;
 
                         break;
                     }

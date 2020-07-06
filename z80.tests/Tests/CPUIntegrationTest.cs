@@ -96,18 +96,18 @@ namespace JustinCredible.ZilogZ80.Tests
             // list.Add(new object[] { testUndocumented, 49, "ld8rr", "ld <bcdehla>,<bcdehla>" }); // OK
                 // list.Add(new object[] { testUndocumented, 50, "ld8rrx", "ld <bcdexya>,<bcdexya>" }); // ERROR: Missing opcodebyte DD 40?
             // list.Add(new object[] { testUndocumented, 51, "lda", "ld a,(nnnn) / ld (nnnn),a" }); // OK
-                // list.Add(new object[] { testUndocumented, 52, "ldd1", "ldd<r> (1)" });
-                // list.Add(new object[] { testUndocumented, 53, "ldd2", "ldd<r> (2)" });
-                // list.Add(new object[] { testUndocumented, 54, "ldi1", "ldi<r> (1)" });
-                // list.Add(new object[] { testUndocumented, 55, "ldi2", "ldi<r> (2)" });
+            // list.Add(new object[] { testUndocumented, 52, "ldd1", "ldd<r> (1)" }); // OK
+            // list.Add(new object[] { testUndocumented, 53, "ldd2", "ldd<r> (2)" }); // OK
+            // list.Add(new object[] { testUndocumented, 54, "ldi1", "ldi<r> (1)" }); // OK
+            // list.Add(new object[] { testUndocumented, 55, "ldi2", "ldi<r> (2)" }); // OK
             // list.Add(new object[] { testUndocumented, 56, "neg", "neg" }); // OK
             // list.Add(new object[] { testUndocumented, 57, "rld", "<rrd,rld>" }); // OK
             // list.Add(new object[] { testUndocumented, 58, "rot8080", "<rlca,rrca,rla,rra>" }); // OK
             // list.Add(new object[] { testUndocumented, 59, "rotxy", "shf/rot (<ix,iy>+1)" }); // OK
-            // list.Add(new object[] { testUndocumented, 60, "rotz80", "shf/rot <b,c,d,e,h,l,(hl),a>" });
+            // list.Add(new object[] { testUndocumented, 60, "rotz80", "shf/rot <b,c,d,e,h,l,(hl),a>" }); // OK
             // list.Add(new object[] { testUndocumented, 61, "srz80", "<set,res> n,<bcdehl(hl)a>" }); // OK
             // list.Add(new object[] { testUndocumented, 62, "srzx", "<set,res> n,(<ix,iy>+1)" }); // OK
-            // list.Add(new object[] { testUndocumented, 63, "st8ix1", "ld (<ix,iy>+1),<b,c,d,e>" });
+            // list.Add(new object[] { testUndocumented, 63, "st8ix1", "ld (<ix,iy>+1),<b,c,d,e>" }); // OK
             // list.Add(new object[] { testUndocumented, 64, "st8ix2", "ld (<ix,iy>+1),<h,l>" }); // OK
             // list.Add(new object[] { testUndocumented, 65, "st8ix3", "ld (<ix,iy>+1),a" }); // OK
             // list.Add(new object[] { testUndocumented, 66, "stabd", "ld (<bc,de>),a" }); // OK
@@ -121,7 +121,7 @@ namespace JustinCredible.ZilogZ80.Tests
         // [MemberData(nameof(GetTestDataForAllDocumentedBehaviors))]
 
         // All tests, run together (includes undocumented opcodes and undocumented behaviors)
-        // [MemberData(nameof(GetTestDataForIndividualUndocumentedBehaviors))]
+        // [MemberData(nameof(GetTestDataForAllUndocumentedBehaviors))]
 
         // All tests, run individually (only documented opcodes and documented behaviors)
         // [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
