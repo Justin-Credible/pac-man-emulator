@@ -310,12 +310,12 @@ namespace JustinCredible.ZilogZ80
          * an 8-bit logical operation (AND/OR/XOR). This method sets all six of the condition flags
          * based on the following:
          * 
-         * • S is set if result is negative; otherwise, it is reset.
-         * • Z is set if result is 0; otherwise, it is reset.
-         * • H is set for AND operations; otherwise, it is reset.
-         * • P/V is set if parity even; otherwise, it is reset.
-         * • N is reset.
-         * • C is reset.
+         * • Zero (Z) is set if result is 0; otherwise, it is reset.
+         * • Sign (S) is set if result is negative; otherwise, it is reset.
+         * • Half Carry (H) is set for AND operations; otherwise, it is reset.
+         * • Parity (P/V) is set if parity even; otherwise, it is reset.
+         * • Subract (N) is reset.
+         * • Carry (C) is reset.
          */
         private void SetFlagsFrom8BitLogicalOperation(byte result, bool isAND)
         {

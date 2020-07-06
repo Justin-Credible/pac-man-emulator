@@ -1510,7 +1510,7 @@ namespace JustinCredible.ZilogZ80
         {
             // Decimal Adjust Accumulator
             // This occurs in two steps below. Step descriptions are taken directly
-            // from the Z80 Programmers Manual. See the manual for more details on
+            // from the Intel 8080 Programmers Manual. See the manual for more details on
             // the instruction and how it can be used.
 
             // Step 1:
@@ -1553,7 +1553,11 @@ namespace JustinCredible.ZilogZ80
             }
 
             // Update the condition flags.
-            SetFlags(carry: newCarryValue, result: Registers.A, halfCarry: newAuxCarryValue);
+            Flags.Sign = (Registers.A & 0x80) == 0x80;
+            Flags.Zero = Registers.A == 0;
+            Flags.ParityOverflow = CalculateParityBit(Registers.A);
+            Flags.Carry = newCarryValue;
+            Flags.HalfCarry = newAuxCarryValue;
         }
 
         private void ExecuteJump()
