@@ -266,7 +266,7 @@ namespace JustinCredible.ZilogZ80
 
         /**
          * Encapsulates the logic for executing opcodes.
-         * Out parameters indicate if the program counter should be executed and which cycle count to use.
+         * Out parameters indicate if the program counter should be incremented and which cycle count to use.
          */
         private void ExecuteOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)
         {
@@ -575,44 +575,6 @@ namespace JustinCredible.ZilogZ80
             Flags.ParityOverflow = signedDifference > 32767 || signedDifference < -32768;
         }
 
-        private void SetFlags(byte? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)
-        {
-            if (result != null)
-            {
-                Flags.Zero = result == 0;
-                Flags.Sign = (result & 0b10000000) == 0b10000000;
-                Flags.ParityOverflow = CalculateParityBit((byte)result);
-            }
-
-            SetFlags(carry: carry, halfCarry: halfCarry, subtract: subtract);
-        }
-
-        private void SetFlags(UInt16? result = null, bool? carry = null, bool? halfCarry = false, bool? subtract = null)
-        {
-            if (result != null)
-            {
-                Flags.Zero = result == 0;
-                Flags.Sign = (result & 0b1000000000000000) == 0b1000000000000000;
-                Flags.ParityOverflow = CalculateParityBit((UInt16)result);
-            }
-
-            SetFlags(carry: carry, halfCarry: halfCarry, subtract: subtract);
-        }
-
-        private void SetFlags(bool? carry = null, bool? halfCarry = false, bool? subtract = null)
-        {
-            if (carry != null)
-                Flags.Carry = carry.Value;
-
-            // TODO: This keeps the old 8080 behavior of always resetting the flag for all operations.
-            // I believe this is wrong for Z80, there are many cases where it remains unmodified.
-            Flags.HalfCarry = halfCarry == null ? false : halfCarry.Value;
-
-            // This flag isn't modified in all cases. If not provided, then don't modify.
-            if (subtract != null)
-                Flags.Subtract = subtract.Value;
-        }
-
         // TODO: Search for "set if parity even" in documentation and use in all occurences.
         private bool CalculateParityBit(byte value)
         {
@@ -630,22 +592,9 @@ namespace JustinCredible.ZilogZ80
             return setBits == 0 || setBits % 2 == 0;
         }
 
-        private bool CalculateParityBit(UInt16 value)
-        {
-            var setBits = 0;
-
-            for (var i = 0; i < 16; i++)
-            {
-                if ((value & 0x01) == 1)
-                    setBits++;
-
-                value = (byte)(value >> 1);
-            }
-
-            // Parity bit is set if number of bits is even.
-            return setBits == 0 || setBits % 2 == 0;
-        }
-
+        /**
+         * A helper method for reading an 8-bit value from the given memory address.
+         */
         private byte ReadMemory(int address)
         {
             var mirroringEnabled = Config.MirrorMemoryStart != 0 && Config.MirrorMemoryEnd != 0;
@@ -695,6 +644,9 @@ namespace JustinCredible.ZilogZ80
             return result.Value;
         }
 
+        /**
+         * A helper method for reading a 16-bit value from the given memory address.
+         */
         private UInt16 ReadMemory16(int address)
         {
             var lower = ReadMemory(address);
@@ -703,6 +655,9 @@ namespace JustinCredible.ZilogZ80
             return value;
         }
 
+        /**
+         * A helper method for writing an 8-bit value to the given memory address.
+         */
         private void WriteMemory(int address, byte value)
         {
             // Determine if we should allow the write to memory based on the address
@@ -748,6 +703,9 @@ namespace JustinCredible.ZilogZ80
             }
         }
 
+        /**
+         * A helper method for writing a 16-bit value to the given memory address.
+         */
         private void WriteMemory16(int address, UInt16 value)
         {
             var lower = (byte)(value & 0x00FF);
