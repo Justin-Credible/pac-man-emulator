@@ -169,32 +169,6 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.CPI:
                     /* A - (HL); HL++; BC--; if BC != 0 && !Z, repeat(); */
                     case OpcodeBytes.CPIR:
-                    {
-                        var memValue = ReadMemory(Registers.HL);
-
-                        var borrowOccurred = memValue > Registers.A;
-
-                        var result = Registers.A - memValue;
-
-                        if (borrowOccurred)
-                            result = 256 + result;
-
-                        SetFlags(result: (byte)result, subtract: true);
-
-                        Registers.HL++;
-                        Registers.BC--;
-
-                        if (opcode.Code == OpcodeBytes.CPIR)
-                        {
-                            if (Registers.BC != 0 && !Flags.Zero)
-                                incrementProgramCounter = false; // repeat operation
-                            else
-                                useAlternateCycleCount = true;
-                        }
-
-                        break;
-                    }
-
                     /* A - (HL); HL--; BC--; */
                     case OpcodeBytes.CPD:
                     /* A - (HL); HL--; BC--; if BC != 0 && !Z, repeat(); */
@@ -204,22 +178,43 @@ namespace JustinCredible.ZilogZ80
 
                         Execute8BitSubtraction(minuend: Registers.A, subtrahend: memValue, subtractCarryFlag: false, affectsCarryFlag: false);
 
-                        Registers.HL--;
+                        // CPI/CPIR increments HL while CPD/CPDR decrements HL.
+                        if (opcode.Code == OpcodeBytes.CPI || opcode.Code == OpcodeBytes.CPIR)
+                            Registers.HL++;
+                        else if (opcode.Code == OpcodeBytes.CPD || opcode.Code == OpcodeBytes.CPDR)
+                            Registers.HL--;
+                        else
+                            throw new Exception($"Sanity check failed: unhandled case for opcode: {opcode.Instruction}");
+
                         Registers.BC--;
 
+                        // Special handling of the P/V flag for these opcodes; see programmers manual.
                         Flags.ParityOverflow = Registers.BC != 0;
 
-                        if (opcode.Code == OpcodeBytes.CPDR)
+                        // The "repeat" opcode variants have the potential to repeat until a condition is met.
+                        if (opcode.Code == OpcodeBytes.CPIR || opcode.Code == OpcodeBytes.CPDR)
                         {
-                            if (Registers.BC != 0 && !Flags.Zero)
-                                incrementProgramCounter = false; // repeat operation
-                            else
+                            // If either BC goes to zero OR the comparison was zero then we can bail out.
+                            // Otherwise the instruction will continue to repeat until this condition is met.
+                            if (Registers.BC == 0 || Flags.Zero)
+                            {
+                                // We can stop repeating this operation.
+                                // When breaking out, we use the alternate cycle count.
+                                incrementProgramCounter = true;
                                 useAlternateCycleCount = true;
+                            }
+                            else
+                            {
+                                // We need to continue performing this operation until BC == 0 or Flags.Zero is set.
+                                // We achieve this by leaving the program counter set to the current vaule.
+                                // When repeating the operation we use the regular cycle count.
+                                incrementProgramCounter = false;
+                                useAlternateCycleCount = false;
+                            }
                         }
 
                         break;
                     }
-
 
                 #endregion
 

@@ -15,6 +15,7 @@ namespace JustinCredible.ZilogZ80.Tests
             list.Add(new object[] { 0xFF, new byte[] { 0x09, 0xAA, 0x02 }, 0x0003, 0x123A, 4 + (21*2) + 16, 4, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = false, Sign = true } });
             list.Add(new object[] { 0x09, new byte[] { 0x09, 0xAA, 0x02 }, 0x0003, 0x123A, 4 + (21*0) + 16, 2, new ConditionFlags() { HalfCarry = false, ParityOverflow = true, Zero = true, Sign = false } });
             list.Add(new object[] { 0x02, new byte[] { 0x09, 0xAA, 0x02 }, 0x0001, 0x123A, 4 + (21*0) + 16, 2, new ConditionFlags() { HalfCarry = true, ParityOverflow = false, Zero = false, Sign = true } });
+            list.Add(new object[] { 0x09, new byte[] { 0x09, 0xAA, 0x02 }, 0x0001, 0x123A, 4 + (21*0) + 16, 2, new ConditionFlags() { HalfCarry = false, ParityOverflow = false, Zero = true, Sign = false } });
 
             return list;
         }
