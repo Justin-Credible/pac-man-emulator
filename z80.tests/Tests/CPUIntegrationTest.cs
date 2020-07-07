@@ -114,9 +114,7 @@ namespace JustinCredible.ZilogZ80.Tests
             return list;
         }
 
-        // Comment the Theory(Skip) attribute and uncomment the Theory attribute to run integration tests.
-        // [Theory]
-        [Theory(Skip="Takes ~3 minutes to run all integration tests.")]
+        [Theory]
 
         // All tests, run together (only documented opcodes and documented behaviors)
         // [MemberData(nameof(GetTestDataForAllDocumentedBehaviors))]
