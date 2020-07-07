@@ -18,6 +18,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     Carry = false,
+                    Subtract = true,
+                    HalfCarry = true,
                 },
             };
 
@@ -49,6 +51,8 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     Carry = true,
+                    Subtract = true,
+                    HalfCarry = true,
                 },
             };
 

@@ -22,11 +22,15 @@ namespace JustinCredible.ZilogZ80
                 #region Carry bit instructions
 
                     case OpcodeBytes.CCF:
+                        Flags.HalfCarry = Flags.Carry;
                         Flags.Carry = !Flags.Carry;
+                        Flags.Subtract = false;
                         break;
 
                     case OpcodeBytes.SCF:
+                        Flags.HalfCarry = false;
                         Flags.Carry = true;
+                        Flags.Subtract = false;
                         break;
 
                 #endregion
@@ -118,6 +122,8 @@ namespace JustinCredible.ZilogZ80
                     /** Compliment Accumulator */
                     case OpcodeBytes.CPL:
                         Registers.A = (byte)~Registers.A;
+                        Flags.HalfCarry = true;
+                        Flags.Subtract = true;
                         break;
 
                     /** Decimal Adjust Accumulator */

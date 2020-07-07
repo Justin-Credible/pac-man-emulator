@@ -18,6 +18,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     Carry = false,
+                    Subtract = true,
                 },
             };
 
@@ -49,12 +50,18 @@ namespace JustinCredible.ZilogZ80.Tests
                 Flags = new ConditionFlags()
                 {
                     Carry = true,
+                    Subtract = true,
                 },
             };
 
             var state = Execute(rom, initialState);
 
-            AssertFlagsFalse(state);
+            Assert.False(state.Flags.Sign);
+            Assert.False(state.Flags.Zero);
+            Assert.True(state.Flags.HalfCarry);
+            Assert.False(state.Flags.ParityOverflow);
+            Assert.False(state.Flags.Subtract);
+            Assert.False(state.Flags.Carry);
 
             Assert.Equal(2, state.Iterations);
             Assert.Equal(4 + 4, state.Cycles);

@@ -24,19 +24,16 @@ namespace JustinCredible.ZilogZ80
 
         /**
          * H (half carry) is used mostly for BCD (binary coded decimal) math.
-         * TODO: I didn't implement this for the 8080 because it wasn't used by Space Invaders.
          */
         public bool HalfCarry;
 
         /**
          * P/V (Parity/Overflow) is set if the number of 1 bits in the result is even.
-         * TODO: Currently this only handles parity; needs to be changed to support overflow.
          */
         public bool ParityOverflow;
 
         /**
          * N (Add/Subtract) is set to 1 if the operation was a subtract, 0 if it was an addition, or unmodified if neither.
-         * TODO: Add to all unit tests?
          */
         public bool Subtract;
 

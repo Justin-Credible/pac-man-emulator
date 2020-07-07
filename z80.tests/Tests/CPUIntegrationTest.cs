@@ -115,7 +115,7 @@ namespace JustinCredible.ZilogZ80.Tests
             return list;
         }
 
-        [Theory]
+        // [Theory]
 
         // All tests, run together (only documented opcodes and documented behaviors)
         // [MemberData(nameof(GetTestDataForAllDocumentedBehaviors))]
@@ -124,7 +124,7 @@ namespace JustinCredible.ZilogZ80.Tests
         // [MemberData(nameof(GetTestDataForAllUndocumentedBehaviors))]
 
         // All tests, run individually (only documented opcodes and documented behaviors)
-        [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
+        // [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
 
         // All tests, run individually (only undocumented opcodes and undocumented behaviors)
         // [MemberData(nameof(GetTestDataForIndividualUndocumentedBehaviors))]
