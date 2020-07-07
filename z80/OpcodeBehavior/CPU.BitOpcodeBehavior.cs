@@ -1086,7 +1086,7 @@ namespace JustinCredible.ZilogZ80
             Flags.Zero = (value & mask) == mask ? false : true;
 
             Flags.Subtract = false;
-            Flags.HalfCarry = false;
+            Flags.HalfCarry = true;
         }
 
         public byte ExecuteResetBit(int index, byte value)

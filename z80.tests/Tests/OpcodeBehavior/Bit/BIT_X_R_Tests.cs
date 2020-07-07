@@ -53,9 +53,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be affected.
                     Zero = !expectedFlags.Zero,
 
+                    // Should be set.
+                    HalfCarry = false,
+
                     // Should be reset.
                     Subtract = true,
-                    HalfCarry = true,
 
                     // Should be unaffected.
                     Carry = true,
@@ -71,8 +73,10 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be affected.
             Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
 
+            // Should be set.
+            Assert.True(state.Flags.HalfCarry);
+
             // Should be reset.
-            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             // Should be unaffected
@@ -133,9 +137,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be affected.
                     Zero = !expectedFlags.Zero,
 
+                    // Should be set.
+                    HalfCarry = false,
+
                     // Should be reset.
                     Subtract = true,
-                    HalfCarry = true,
 
                     // Should be unaffected.
                     Carry = true,
@@ -151,8 +157,10 @@ namespace JustinCredible.ZilogZ80.Tests
             // Should be affected.
             Assert.Equal(expectedFlags.Zero, state.Flags.Zero);
 
+            // Should be set.
+            Assert.True(state.Flags.HalfCarry);
+
             // Should be reset.
-            Assert.False(state.Flags.HalfCarry);
             Assert.False(state.Flags.Subtract);
 
             // Should be unaffected
