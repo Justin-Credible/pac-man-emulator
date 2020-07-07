@@ -2,7 +2,6 @@ using System;
 
 namespace JustinCredible.ZilogZ80
 {
-    // TODO: Update mnemonics on opcode method calls.
     public partial class CPU
     {
         private void ExecuteStandardOpcode(Opcode opcode, out bool incrementProgramCounter, out bool useAlternateCycleCount)

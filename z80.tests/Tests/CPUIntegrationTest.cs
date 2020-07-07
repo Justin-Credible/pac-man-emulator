@@ -48,8 +48,8 @@ namespace JustinCredible.ZilogZ80.Tests
             // list.Add(new object[] { testUndocumented, 1, "add16", "add hl,<bc,de,hl,sp>" }); // OK
             // list.Add(new object[] { testUndocumented, 2, "add16x", "add ix,<bc,de,ix,sp>" }); // OK
             // list.Add(new object[] { testUndocumented, 3, "add16y", "add iy,<bc,de,iy,sp>" }); // OK
-                // list.Add(new object[] { testUndocumented, 4, "alu8i", "aluop a,nn" });
-                // list.Add(new object[] { testUndocumented, 5, "alu8r", "aluop a,<b,c,d,e,h,l,(hl),a>" });
+            // list.Add(new object[] { testUndocumented, 4, "alu8i", "aluop a,nn" }); // OK
+            // list.Add(new object[] { testUndocumented, 5, "alu8r", "aluop a,<b,c,d,e,h,l,(hl),a>" }); // OK
             // list.Add(new object[] { testUndocumented, 6, "alu8rx", "aluop a,<ixh,ixl,iyh,iyl>" }); // OK
             // list.Add(new object[] { testUndocumented, 7, "alu8x", "aluop a,(<ix,iy>+1)" }); // OK
                 // list.Add(new object[] { testUndocumented, 8, "bitx", "bit n,(<ix,iy>+1)" });
@@ -68,8 +68,8 @@ namespace JustinCredible.ZilogZ80.Tests
             // list.Add(new object[] { testUndocumented, 21, "inchl", "<inc,dec> hl" }); // OK
             // list.Add(new object[] { testUndocumented, 22, "incix", "<inc,dec> ix" }); // OK
             // list.Add(new object[] { testUndocumented, 23, "inciy", "<inc,dec> iy" }); // OK
-                // list.Add(new object[] { testUndocumented, 24, "incl", "<inc,dec> l" });
-                // list.Add(new object[] { testUndocumented, 25, "incm", "<inc,dec> (hl)" });
+            // list.Add(new object[] { testUndocumented, 24, "incl", "<inc,dec> l" }); // OK
+            // list.Add(new object[] { testUndocumented, 25, "incm", "<inc,dec> (hl)" }); // OK
             // list.Add(new object[] { testUndocumented, 26, "incsp", "<inc,dec> sp" }); // OK
             // list.Add(new object[] { testUndocumented, 27, "incx", "<inc,dec> (<ix,iy>+1)" }); // OK
             // list.Add(new object[] { testUndocumented, 28, "incxh", "<inc,dec> ixh" }); // OK
@@ -115,7 +115,7 @@ namespace JustinCredible.ZilogZ80.Tests
             return list;
         }
 
-        // [Theory]
+        [Theory]
 
         // All tests, run together (only documented opcodes and documented behaviors)
         // [MemberData(nameof(GetTestDataForAllDocumentedBehaviors))]
@@ -124,7 +124,7 @@ namespace JustinCredible.ZilogZ80.Tests
         // [MemberData(nameof(GetTestDataForAllUndocumentedBehaviors))]
 
         // All tests, run individually (only documented opcodes and documented behaviors)
-        // [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
+        [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
 
         // All tests, run individually (only undocumented opcodes and undocumented behaviors)
         // [MemberData(nameof(GetTestDataForIndividualUndocumentedBehaviors))]
