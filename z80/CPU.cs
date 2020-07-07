@@ -106,9 +106,20 @@ namespace JustinCredible.ZilogZ80
         public void PrintDebugSummary()
         {
             var opcodeByte = ReadMemory(Registers.PC);
-            var opcodeInstruction = Opcodes.GetOpcode(Registers.PC, Memory).Instruction;
+            Opcode opcode = null;
 
-            var opcode = String.Format("0x{0:X2} {1}", opcodeByte, opcodeInstruction);
+            try
+            {
+                opcode = Opcodes.GetOpcode(Registers.PC, Memory);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("GetOpcode error: " + ex.Message);
+            }
+
+            var instruction = opcode == null ? "???" : opcode.Instruction;
+
+            var opcodeFormatted = String.Format("0x{0:X2} {1}", opcodeByte, instruction);
             var pc = String.Format("0x{0:X4}", Registers.PC);
             var sp = String.Format("0x{0:X4}", Registers.SP);
             var regA = String.Format("0x{0:X2}", Registers.A);
@@ -122,7 +133,7 @@ namespace JustinCredible.ZilogZ80
             var valueAtDE = Registers.DE >= Memory.Length ? "N/A" : String.Format("0x{0:X2}", ReadMemory(Registers.DE));
             var valueAtHL = Registers.HL >= Memory.Length ? "N/A" : String.Format("0x{0:X2}", ReadMemory(Registers.HL));
 
-            Console.WriteLine($"Opcode: {opcode}");
+            Console.WriteLine($"Opcode: {opcodeFormatted}");
             Console.WriteLine();
             Console.WriteLine($"PC: {pc}\tSP: {sp}");
             Console.WriteLine();
