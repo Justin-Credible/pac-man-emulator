@@ -1514,53 +1514,37 @@ namespace JustinCredible.ZilogZ80
         private void Execute_DAA()
         {
             // Decimal Adjust Accumulator
-            // This occurs in two steps below. Step descriptions are taken directly
-            // from the Intel 8080 Programmers Manual. See the manual for more details on
-            // the instruction and how it can be used.
+            // Used to adjust the accumulator after an addition or subtraction operation
+            // to get the binary coded decimal (BCD) value. For example, consider:
+            //      LD A, 0x32
+            //      LD B, 0x12
+            //      ADD A
+            //      DAA
+            // Hex 32 (dec 50) added to hex 12 (dec 18) would be hex 44 (dec 68) for a
+            // normal addition. But for a BCD addition, we're looking at dec 32 + dec 12
+            // which is dec 44. After the DAA operation the A register will contain 0x44.
 
-            // Step 1:
-            // If the least significant four bits of the accumulator represents a number
-            // greater than 9, or if the Auxiliary Carry bit is equal to one, the accumulator
-            // is incremented by six. Otherwise, no incrementing occurs.
+            // NOTE: I originally re-used my implementation from the Intel 8080 CPU core
+            // which was implemented based on the 8080 Programmers Manual. While working
+            // on the Z80 core I found discrepencies between other emulators (both zemu
+            // and 8bitworkshop) as well as the Z80 CPU User Manual. I scrapped my version
+            // for one based on 8bitworkshop, which passes the ZEX integration tests.
+            // However, I don't think it is completely accurate; still still differs from
+            // zemu and I don't think it's 100% accurate with respect to the Z80 Manual.
 
-            // If a carry out of the least significant four bits occurs during Step (1),
-            // the Auxiliary Carry bit is set; otherwise it is reset.
+            var result = Registers.A;
 
-            var newAuxCarryValue = false;
+            if (Flags.HalfCarry || ((Registers.A & 0x0F) > 9))
+                result = (byte)(Flags.Subtract ? result - 0x06 : result + 0x06);
 
-            int lsb = Registers.A & 0x0F;
+            if (Flags.Carry || (Registers.A > 0x99))
+                result = (byte)(Flags.Subtract ? result - 0x60 : result + 0x60);
 
-            if (lsb > 9 || Flags.HalfCarry)
-            {
-                Registers.A += 6;
-                newAuxCarryValue = lsb >= 9;
-            }
+            SetSignZeroAndParityFlags(result);
+            Flags.HalfCarry = ((Registers.A & 0x10) ^ (result & 0x10)) > 0 ? true : false;
+            Flags.Carry = (Flags.Carry || (Registers.A > 0x99)) ? true : false;
 
-            // Step 2:
-            // If the most significant four bits of the accumulator now represent a number
-            // greater than 9, or if the normal carry bit is equal to one, the most significant
-            // four bits of the accumulator are incremented by six. Otherwise, no incrementing occurs.
-
-            // If a carry out of the most significant four bits occurs during Step (2). the normal
-            // Carry bit is set; otherwise, it is unaffected.
-
-            var newCarryValue = false;
-
-            int msb = (Registers.A & 0xF0) >> 4;
-
-            if (msb > 9 || Flags.Carry)
-            {
-                newCarryValue = msb >= 9;
-                msb += 6;
-
-                var newValue = ((msb << 4) & 0xF0) | (Registers.A & 0x0F);
-                Registers.A = (byte)newValue;
-            }
-
-            // Update the condition flags.
-            SetSignZeroAndParityFlags(Registers.A);
-            Flags.Carry = newCarryValue;
-            Flags.HalfCarry = newAuxCarryValue;
+            Registers.A = result;
         }
 
         private void ExecuteJump()

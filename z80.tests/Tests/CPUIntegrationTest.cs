@@ -56,7 +56,7 @@ namespace JustinCredible.ZilogZ80.Tests
             // list.Add(new object[] { testUndocumented, 9, "bitz80", "bit n,<b,c,d,e,h,l,(hl),a>" }); // OK
             // list.Add(new object[] { testUndocumented, 10, "cpd1", "cpd<r>" }); // OK
             // list.Add(new object[] { testUndocumented, 11, "cpi1", "cpi<r>" }); // OK
-                // list.Add(new object[] { testUndocumented, 12, "daa", "<daa,cpl,scf,ccf>" });
+            // list.Add(new object[] { testUndocumented, 12, "daa", "<daa,cpl,scf,ccf>" }); // OK
             // list.Add(new object[] { testUndocumented, 13, "inca", "<inc,dec> a" }); // OK
             // list.Add(new object[] { testUndocumented, 14, "incb", "<inc,dec> b" }); // OK
             // list.Add(new object[] { testUndocumented, 15, "incbc", "<inc,dec> bc" }); // OK
