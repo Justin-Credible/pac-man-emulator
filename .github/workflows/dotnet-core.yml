@@ -17,9 +17,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    - name: Install dependencies (z80)
+      run: dotnet restore z80
+    - name: Install dependencies (z80.tests)
+      run: dotnet restore z80.tests
+    - name: Build (z80)
+      run: dotnet build z80 --configuration Release --no-restore
+    - name: Test (z80.tests)
+      run: dotnet test z80.tests --configuration Release --no-restore --verbosity normal
