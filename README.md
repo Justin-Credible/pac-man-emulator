@@ -13,8 +13,8 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
   - [X] Copy assembler and disassembler projects
   - [X] Unit Test project
   - [X] Integration test runner
-- [ ] Z80 CPU
-  - [ ] Instructions
+- [X] Z80 CPU
+  - [X] Instructions
     - [X] Update Intel 8080 -> Z80 mnemonics
     - [X] Handle executing multi-byte opcodes
     - [X] Get all 600+ original unit tests working again
@@ -25,9 +25,9 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
     - [X] IX Bit Instructions (DDCB)
     - [X] IY Instructions (FB)
     - [X] IY Bit Instructions (FDCB)
-  - [ ] Handle Intel 8080 -> Z80 instruction differences
-  - [ ] Pass ZEX integration test
-  - [ ] Re-work flag setting for arithmetic vs logical operations
+  - [X] Handle Intel 8080 -> Z80 instruction differences
+  - [X] Pass ZEX integration test
+  - [X] Re-work flag setting for arithmetic vs logical operations
 - [ ] Pac-Man Hardware
   - [ ] Copy Space Invaders emulator project
   - [ ] CPU / Memory configuration

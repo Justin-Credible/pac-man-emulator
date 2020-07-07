@@ -586,7 +586,10 @@ namespace JustinCredible.ZilogZ80
             Flags.ParityOverflow = signedDifference > 32767 || signedDifference < -32768;
         }
 
-        // TODO: Search for "set if parity even" in documentation and use in all occurences.
+        /**
+         * A helper method for calculating the parity bit for the P/V flag; returns true (bit set)
+         * if the number of bites in the given value is even, otherwise false (bit reset).
+         */
         private bool CalculateParityBit(byte value)
         {
             var setBits = 0;

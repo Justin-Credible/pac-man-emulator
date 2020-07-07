@@ -93,7 +93,7 @@ namespace JustinCredible.ZilogZ80.Tests
             list.Add(new object[] { testUndocumented, 47, "ld8ix3", "ld a,(<ix,iy>+1)" });
             list.Add(new object[] { testUndocumented, 48, "ld8ixy", "ld <ixh,ixl,iyh,iyl>,nn" });
             list.Add(new object[] { testUndocumented, 49, "ld8rr", "ld <bcdehla>,<bcdehla>" });
-            // list.Add(new object[] { testUndocumented, 50, "ld8rrx", "ld <bcdexya>,<bcdexya>" }); // ERROR: Missing opcodebyte DD 40?
+            // list.Add(new object[] { testUndocumented, 50, "ld8rrx", "ld <bcdexya>,<bcdexya>" }); // TODO: ERROR: Missing opcodebyte DD 40? Investigate once interactive debugger is working.
             list.Add(new object[] { testUndocumented, 51, "lda", "ld a,(nnnn) / ld (nnnn),a" });
             list.Add(new object[] { testUndocumented, 52, "ldd1", "ldd<r> (1)" });
             list.Add(new object[] { testUndocumented, 53, "ldd2", "ldd<r> (2)" });
@@ -114,7 +114,9 @@ namespace JustinCredible.ZilogZ80.Tests
             return list;
         }
 
+        // Comment the Theory(Skip) attribute and uncomment the Theory attribute to run integration tests.
         // [Theory]
+        [Theory(Skip="Takes ~3 minutes to run all integration tests.")]
 
         // All tests, run together (only documented opcodes and documented behaviors)
         // [MemberData(nameof(GetTestDataForAllDocumentedBehaviors))]
@@ -123,14 +125,15 @@ namespace JustinCredible.ZilogZ80.Tests
         // [MemberData(nameof(GetTestDataForAllUndocumentedBehaviors))]
 
         // All tests, run individually (only documented opcodes and documented behaviors)
-        // [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
+        [MemberData(nameof(GetTestDataForIndividualDocumentedBehaviors))]
 
         // All tests, run individually (only undocumented opcodes and undocumented behaviors)
         // [MemberData(nameof(GetTestDataForIndividualUndocumentedBehaviors))]
 
         public void IntegrationTest(bool testUndocumented, int? testIndex, string testCaseSourceLabel, string testCaseDescription)
         {
-            // Console.WriteLine($"Starting test: {testIndex} {testCaseSourceLabel}: {testCaseDescription}");
+            if (System.Diagnostics.Debugger.IsAttached)
+                Console.WriteLine($"Starting test: {testIndex} {testCaseSourceLabel}: {testCaseDescription}");
 
             // Grab the ROM and its hash based on if we're testing the documented or undocumented behavior.
             var fileName = GetTestProgramFileName(testUndocumented);
@@ -258,7 +261,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var testOutput = testOutputBuilder.ToString();
 
-            // Console.WriteLine(Environment.NewLine + testOutput);
+            if (System.Diagnostics.Debugger.IsAttached)
+                Console.WriteLine(Environment.NewLine + testOutput);
 
             var foundSuccess = false;
             var foundError = false;
