@@ -45,7 +45,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     Zero = false,
                     Subtract = false,
                 },
-                MemorySize = memory.Length,
             };
 
             var cpu = new CPU(initialState);

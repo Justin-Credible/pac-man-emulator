@@ -126,9 +126,7 @@ namespace JustinCredible.ZilogZ80.Tests
             };
 
             var initialState = new CPUConfig()
-            {
-                MemorySize = memory.Length,
-                Registers = registers,
+            {                Registers = registers,
                 Flags = flags,
             };
 

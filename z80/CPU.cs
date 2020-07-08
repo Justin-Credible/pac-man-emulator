@@ -13,8 +13,8 @@ namespace JustinCredible.ZilogZ80
          */
         public bool Finished { get; private set; }
 
-        /** The addressable memory; can include RAM and ROM. See CPUConfig. */
-        public byte[] Memory { get; set; }
+        /** The addressable memory implementation; can include RAM, ROM, memory mapped devices, etc. */
+        public IMemory Memory { get; set; }
 
         /** The CPU registers (A B C D E H L I R IX IY PC SP) */
         public CPURegisters Registers { get; set; }
@@ -71,7 +71,7 @@ namespace JustinCredible.ZilogZ80
         public void Reset()
         {
             // Re-initialize the CPU based on configuration.
-            Memory = new byte[Config.MemorySize];
+            Memory = Config.Memory;
             Registers = Config.Registers ?? new CPURegisters();
             Flags = Config.Flags ?? new ConditionFlags();
             InterruptsEnabled = Config.InterruptsEnabled;
@@ -82,30 +82,13 @@ namespace JustinCredible.ZilogZ80
             Finished = false;
         }
 
-        public void LoadMemory(byte[] memory)
-        {
-            // Ensure the memory data is not larger than we can load.
-            if (memory.Length > Config.MemorySize)
-                throw new Exception($"Memory cannot exceed {Config.MemorySize} bytes.");
-
-            if (memory.Length != Config.MemorySize)
-            {
-                // If the memory given is less than the configured memory size, then
-                // ensure that the rest of the memory array is zeroed out.
-                Memory = new byte[Config.MemorySize];
-                Array.Copy(memory, Memory, memory.Length);
-            }
-            else
-                Memory = memory;
-        }
-
         #endregion
 
         #region Debugging
 
         public void PrintDebugSummary()
         {
-            var opcodeByte = ReadMemory(Registers.PC);
+            var opcodeByte = Memory.Read(Registers.PC);
             Opcode opcode = null;
 
             try
@@ -130,8 +113,8 @@ namespace JustinCredible.ZilogZ80
             var regH = String.Format("0x{0:X2}", Registers.H);
             var regL = String.Format("0x{0:X2}", Registers.L);
 
-            var valueAtDE = Registers.DE >= Memory.Length ? "N/A" : String.Format("0x{0:X2}", ReadMemory(Registers.DE));
-            var valueAtHL = Registers.HL >= Memory.Length ? "N/A" : String.Format("0x{0:X2}", ReadMemory(Registers.HL));
+            var valueAtDE = String.Format("0x{0:X2}", Memory.Read(Registers.DE));
+            var valueAtHL = String.Format("0x{0:X2}", Memory.Read(Registers.HL));
 
             Console.WriteLine($"Opcode: {opcodeFormatted}");
             Console.WriteLine();
@@ -242,7 +225,7 @@ namespace JustinCredible.ZilogZ80
 
             // Sanity check: unimplemented opcode?
             if (opcode == null)
-                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", Memory[Registers.PC], Registers.PC));
+                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", Memory.Read(Registers.PC), Registers.PC));
 
             // Indicates if we should increment the program counter after executing the instruction.
             // This is almost always the case, but there are a few cases where we don't want to.
@@ -604,128 +587,6 @@ namespace JustinCredible.ZilogZ80
 
             // Parity bit is set if number of bits is even.
             return setBits == 0 || setBits % 2 == 0;
-        }
-
-        /**
-         * A helper method for reading an 8-bit value from the given memory address.
-         */
-        private byte ReadMemory(int address)
-        {
-            var mirroringEnabled = Config.MirrorMemoryStart != 0 && Config.MirrorMemoryEnd != 0;
-            var error = false;
-
-            byte? result = null;
-
-            if (address < 0)
-            {
-                error = true;
-            }
-            else if (address < Config.MemorySize)
-            {
-                result = Memory[address];
-            }
-            else if (mirroringEnabled && address >= Config.MirrorMemoryStart && address <= Config.MirrorMemoryEnd)
-            {
-                var translated = address - (Config.MirrorMemoryEnd - Config.MirrorMemoryStart + 1);
-
-                if (translated < 0 || translated >= Config.MemorySize)
-                {
-                    error = true;
-                }
-                else
-                {
-                    result = Memory[translated];
-                }
-            }
-            else
-            {
-                error = true;
-            }
-
-            if (error)
-            {
-                var programCounterFormatted = String.Format("0x{0:X4}", Registers.PC);
-                var addressFormatted = String.Format("0x{0:X4}", address);
-                var startAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryStart);
-                var endAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryEnd);
-                var mirrorEndAddressFormatted = String.Format("0x{0:X4}", Config.MirrorMemoryEnd);
-                throw new Exception($"Illegal memory address ({addressFormatted}) specified for read memory operation at address {programCounterFormatted}; expected address to be between {startAddressFormatted} and {(mirroringEnabled ? mirrorEndAddressFormatted : endAddressFormatted)} inclusive.");
-            }
-
-            if (result == null)
-                throw new Exception("Failed sanity check; result should be set.");
-
-            return result.Value;
-        }
-
-        /**
-         * A helper method for reading a 16-bit value from the given memory address.
-         */
-        private UInt16 ReadMemory16(int address)
-        {
-            var lower = ReadMemory(address);
-            var upper = ReadMemory(address + 1) << 8;
-            var value = (UInt16)(upper | lower);
-            return value;
-        }
-
-        /**
-         * A helper method for writing an 8-bit value to the given memory address.
-         */
-        private void WriteMemory(int address, byte value)
-        {
-            // Determine if we should allow the write to memory based on the address
-            // if the configuration has specified a restricted writeable range.
-            var enforceWriteBoundsCheck = Config.WriteableMemoryStart != 0 && Config.WriteableMemoryEnd != 0;
-            var mirroringEnabled = Config.MirrorMemoryStart != 0 && Config.MirrorMemoryEnd != 0;
-            var allowWrite = true;
-            var error = false;
-
-            if (enforceWriteBoundsCheck)
-                allowWrite = address >= Config.WriteableMemoryStart && address <= Config.WriteableMemoryEnd;
-
-            if (allowWrite)
-            {
-                Memory[address] = value;
-            }
-            else if (mirroringEnabled && address >= Config.MirrorMemoryStart && address <= Config.MirrorMemoryEnd)
-            {
-                var translated = address - (Config.MirrorMemoryEnd - Config.MirrorMemoryStart + 1);
-
-                if (translated < 0 || translated >= Config.MemorySize)
-                {
-                    error = true;
-                }
-                else
-                {
-                    Memory[translated] = value;
-                }
-            }
-            else
-            {
-                error = true;
-            }
-
-            if (error)
-            {
-                var programCounterFormatted = String.Format("0x{0:X4}", Registers.PC);
-                var addressFormatted = String.Format("0x{0:X4}", address);
-                var startAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryStart);
-                var endAddressFormatted = String.Format("0x{0:X4}", Config.WriteableMemoryEnd);
-                var mirrorEndAddressFormatted = String.Format("0x{0:X4}", Config.MirrorMemoryEnd);
-                throw new Exception($"Illegal memory address ({addressFormatted}) specified for write memory operation at address {programCounterFormatted}; expected address to be between {startAddressFormatted} and {(mirroringEnabled ? mirrorEndAddressFormatted : endAddressFormatted)} inclusive.");
-            }
-        }
-
-        /**
-         * A helper method for writing a 16-bit value to the given memory address.
-         */
-        private void WriteMemory16(int address, UInt16 value)
-        {
-            var lower = (byte)(value & 0x00FF);
-            var upper = (byte)((value & 0xFF00) >> 8);
-            WriteMemory(address, lower);
-            WriteMemory(address + 1, upper);
         }
 
         #endregion

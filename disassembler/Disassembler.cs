@@ -30,7 +30,7 @@ namespace JustinCredible.Z80Disassembler
 
         public static string Disassemble(byte[] rom, UInt16 address, out int instructionSize, bool emitAddress = false, bool emitPseudocode = false)
         {
-            var opcode = Opcodes.GetOpcode(address, rom);
+            var opcode = Opcodes.GetOpcode(address, new SimpleMemory(rom));
 
             var disassembly = new StringBuilder();
 

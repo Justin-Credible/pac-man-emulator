@@ -40,9 +40,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = true,
                 },
@@ -79,9 +77,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = true,
                 },
@@ -123,9 +119,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = true,
                 },

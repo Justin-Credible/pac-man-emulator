@@ -7,20 +7,8 @@ namespace JustinCredible.ZilogZ80
      */
     public class CPUConfig
     {
-        /** Size, in bytes, of the memory space for the CPU. */
-        public int MemorySize { get; set; }
-
-        /** Starting memory location that should be writeable (leave both to 0 to allow all writes). */
-        public UInt16 WriteableMemoryStart { get; set; }
-
-        /** Ending memory location that should be writeable (leave both to 0 to allow all writes). */
-        public UInt16 WriteableMemoryEnd { get; set; }
-
-        /** Starting memory location that should be mirrored to the writeable memory (RAM mirror)  (leave bot to 0 to disable RAM mirror). */
-        public UInt16 MirrorMemoryStart { get; set; }
-
-        /** Ending memory location that should be mirrored to the writeable memory (RAM mirror) (leave bot to 0 to disable RAM mirror). */
-        public UInt16 MirrorMemoryEnd { get; set; }
+        /** The memory implementation to use. */
+        public IMemory Memory { get; set; }
 
         /** The CPU registers (A B C D E H L I R IX IY PC SP) */
         public CPURegisters Registers { get; set; } = new CPURegisters();

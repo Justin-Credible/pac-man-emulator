@@ -40,8 +40,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Ensure the previous program counter value was pushed onto the stack.
             Assert.Equal(0x3FFD, cpu.Registers.SP);
-            Assert.Equal(0x12, cpu.Memory[0x3FFE]);
-            Assert.Equal(0x34, cpu.Memory[0x3FFD]);
+            Assert.Equal(0x12, cpu.Memory.Read(0x3FFE));
+            Assert.Equal(0x34, cpu.Memory.Read(0x3FFD));
         }
 
         [Fact]
@@ -103,8 +103,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Ensure the previous program counter value was pushed onto the stack.
             Assert.Equal(0x3FFD, cpu.Registers.SP);
-            Assert.Equal(0x12, cpu.Memory[0x3FFE]);
-            Assert.Equal(0x34, cpu.Memory[0x3FFD]);
+            Assert.Equal(0x12, cpu.Memory.Read(0x3FFE));
+            Assert.Equal(0x34, cpu.Memory.Read(0x3FFD));
         }
 
         [Fact]
@@ -135,8 +135,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Ensure the previous program counter value was pushed onto the stack.
             Assert.Equal(0x3FFD, cpu.Registers.SP);
-            Assert.Equal(0x12, cpu.Memory[0x3FFE]);
-            Assert.Equal(0x34, cpu.Memory[0x3FFD]);
+            Assert.Equal(0x12, cpu.Memory.Read(0x3FFE));
+            Assert.Equal(0x34, cpu.Memory.Read(0x3FFD));
         }
 
         [Theory]
@@ -170,8 +170,8 @@ namespace JustinCredible.ZilogZ80.Tests
 
             // Ensure the previous program counter value was pushed onto the stack.
             Assert.Equal(0x3FFD, cpu.Registers.SP);
-            Assert.Equal(0x12, cpu.Memory[0x3FFE]);
-            Assert.Equal(0x34, cpu.Memory[0x3FFD]);
+            Assert.Equal(0x12, cpu.Memory.Read(0x3FFE));
+            Assert.Equal(0x34, cpu.Memory.Read(0x3FFD));
         }
     }
 }

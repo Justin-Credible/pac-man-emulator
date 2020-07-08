@@ -21,9 +21,6 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
                 Flags = new ConditionFlags()
                 {
                     // Should remain unmodified.
@@ -66,9 +63,6 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
                 Flags = new ConditionFlags()
                 {
                     // Should remain unmodified.
@@ -107,9 +101,6 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
                 Flags = new ConditionFlags()
                 {
                     // Should remain unmodified.

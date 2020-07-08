@@ -338,8 +338,6 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 Registers = registers,
-                MemorySize = memory.Length,
-
                 Flags = new ConditionFlags()
                 {
                     // Ensure this is flipped to zero because this was an addition.
@@ -382,9 +380,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-            };
+                Registers = registers,            };
 
             var state = Execute(rom, memory, initialState);
 
@@ -421,9 +417,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-            };
+                Registers = registers,            };
 
             var state = Execute(rom, memory, initialState);
 

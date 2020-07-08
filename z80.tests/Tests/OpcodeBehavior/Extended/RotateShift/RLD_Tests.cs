@@ -37,9 +37,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     Zero = true,
                     ParityOverflow = true,
                 },
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
             };
 
             var state = Execute(rom, memory, initialState);

@@ -42,7 +42,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     HalfCarry = true,
                     ParityOverflow = true,
                 },
-                MemorySize = memory.Length,
             };
 
             var cpu = new CPU(initialState);

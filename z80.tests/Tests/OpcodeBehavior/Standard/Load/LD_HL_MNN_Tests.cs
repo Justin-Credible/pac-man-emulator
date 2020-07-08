@@ -18,9 +18,7 @@ namespace JustinCredible.ZilogZ80.Tests
             memory[0x2478] = 0x66;
 
             var initialState = new CPUConfig()
-            {
-                MemorySize = memory.Length,
-            };
+            {            };
 
             var state = Execute(rom, memory, initialState);
 

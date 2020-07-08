@@ -44,7 +44,7 @@ namespace JustinCredible.ZilogZ80
                     // Device[C] <- (HL); HL++; B--; if B != 0, repeat(); 
                     case OpcodeBytes.OTIR:
                     {
-                        OnDeviceWrite?.Invoke(Registers.C, ReadMemory(Registers.HL));
+                        OnDeviceWrite?.Invoke(Registers.C, Memory.Read(Registers.HL));
                         Registers.HL++;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
@@ -66,7 +66,7 @@ namespace JustinCredible.ZilogZ80
                     // Device[C] <- (HL); HL--; B--; if B != 0, repeat(); 
                     case OpcodeBytes.OTDR:
                     {
-                        OnDeviceWrite?.Invoke(Registers.C, ReadMemory(Registers.HL));
+                        OnDeviceWrite?.Invoke(Registers.C, Memory.Read(Registers.HL));
                         Registers.HL--;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
@@ -122,7 +122,7 @@ namespace JustinCredible.ZilogZ80
                     // (HL) <- Device[C]; HL++; B--; if B != 0, repeat();
                     case OpcodeBytes.INIR:
                     {
-                        WriteMemory(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
+                        Memory.Write(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
                         Registers.HL++;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
@@ -144,7 +144,7 @@ namespace JustinCredible.ZilogZ80
                     // (HL) <- Device[C]; HL--; B--; if B != 0, repeat();
                     case OpcodeBytes.INDR:
                     {
-                        WriteMemory(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
+                        Memory.Write(Registers.HL, OnDeviceRead?.Invoke(Registers.C) ?? 0);
                         Registers.HL--;
                         Registers.B--;
                         Flags.Zero = Registers.B == 0;
@@ -174,7 +174,7 @@ namespace JustinCredible.ZilogZ80
                     /* A - (HL); HL--; BC--; if BC != 0 && !Z, repeat(); */
                     case OpcodeBytes.CPDR:
                     {
-                        var memValue = ReadMemory(Registers.HL);
+                        var memValue = Memory.Read(Registers.HL);
 
                         Execute8BitSubtraction(minuend: Registers.A, subtrahend: memValue, subtractCarryFlag: false, affectsCarryFlag: false);
 
@@ -245,7 +245,7 @@ namespace JustinCredible.ZilogZ80
                     /* (DE) <- (HL); HL--; DE--; BC--;  if BC !=0, repeat(); */
                     case OpcodeBytes.LDDR:
                     {
-                        WriteMemory(Registers.DE, ReadMemory(Registers.HL));
+                        Memory.Write(Registers.DE, Memory.Read(Registers.HL));
                         Registers.BC--;
 
                         if (opcode.Code == OpcodeBytes.LDI || opcode.Code == OpcodeBytes.LDIR)
@@ -281,64 +281,64 @@ namespace JustinCredible.ZilogZ80
                     /* (NN) <- BC */
                     case OpcodeBytes.LD_MNN_BC:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        WriteMemory16(address, Registers.BC);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Memory.Write16(address, Registers.BC);
                         break;
                     }
 
                     /* (NN) <- DE */
                     case OpcodeBytes.LD_MNN_DE:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        WriteMemory16(address, Registers.DE);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Memory.Write16(address, Registers.DE);
                         break;
                     }
 
                     /* (NN) <- HL */
                     case OpcodeBytes.LD_MNN_HL_2:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        WriteMemory16(address, Registers.HL);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Memory.Write16(address, Registers.HL);
                         break;
                     }
 
                     /* (NN) <- SP */
                     case OpcodeBytes.LD_MNN_SP:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        WriteMemory16(address, Registers.SP);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Memory.Write16(address, Registers.SP);
                         break;
                     }
 
                     /* BC <- (NN) */
                     case OpcodeBytes.LD_BC_MNN:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        Registers.BC = ReadMemory16(address);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Registers.BC = Memory.Read16(address);
                         break;
                     }
 
                     /* DE <- (NN) */
                     case OpcodeBytes.LD_DE_MNN:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        Registers.DE = ReadMemory16(address);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Registers.DE = Memory.Read16(address);
                         break;
                     }
 
                     /* HL <- (NN) */
                     case OpcodeBytes.LD_HL_MNN_2:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        Registers.HL = ReadMemory16(address);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Registers.HL = Memory.Read16(address);
                         break;
                     }
 
                     /* SP <- (NN) */
                     case OpcodeBytes.LD_SP_MNN:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        Registers.SP = ReadMemory16(address);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Registers.SP = Memory.Read16(address);
                         break;
                     }
 
@@ -412,12 +412,12 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RRD:
                     {
                         // tmp <- (HL).lo; (HL).lo <- (HL).hi; (HL).hi <- A.lo; A.lo <- tmp;
-                        var memValue = ReadMemory(Registers.HL); // (HL)
+                        var memValue = Memory.Read(Registers.HL); // (HL)
                         var tmp = memValue & 0x0F; // tmp <- (HL).lo
                         memValue = (byte)(((memValue & 0xF0) >> 4) | (memValue & 0xF0)); // (HL).lo <- (HL).hi
                         memValue = (byte)(((Registers.A & 0x0F) << 4) | (memValue & 0x0F)); // (HL).hi <- A.lo
                         Registers.A = (byte)((Registers.A & 0xF0) | tmp); //  A.lo <- tmp
-                        WriteMemory(Registers.HL, memValue);
+                        Memory.Write(Registers.HL, memValue);
                         SetSignZeroAndParityFlags(Registers.A);
                         Flags.HalfCarry = false;
                         Flags.Subtract = false;
@@ -427,12 +427,12 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RLD:
                     {
                         // tmp <- (HL).lo; (HL).lo <- A.lo; A.lo <- (HL).hi; (HL).hi <- tmp;
-                        var memValue = ReadMemory(Registers.HL); // (HL)
+                        var memValue = Memory.Read(Registers.HL); // (HL)
                         var tmp = memValue & 0x0F; // tmp <- (HL).lo
                         memValue = (byte)((Registers.A & 0x0F) | (memValue & 0xF0)); // (HL).lo <- A.lo
                         Registers.A = (byte)(((memValue & 0xF0) >> 4) | (Registers.A & 0xF0)); // A.lo <- (HL).hi
                         memValue = (byte)((tmp << 4) | (memValue & 0x0F)); // (HL).hi <- tmp
-                        WriteMemory(Registers.HL, memValue);
+                        Memory.Write(Registers.HL, memValue);
                         SetSignZeroAndParityFlags(Registers.A);
                         Flags.HalfCarry = false;
                         Flags.Subtract = false;

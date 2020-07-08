@@ -15,16 +15,12 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
-            var initialState = new CPUConfig()
-            {
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
-            };
+            var memory = new byte[20490];
 
+            var initialState = new CPUConfig();
             initialState.Registers[registerPair] = 0x6677;
 
-            var state = Execute(rom, initialState);
+            var state = Execute(rom, memory, initialState);
 
             Assert.Equal(0x77, state.Memory[0x2477]);
             Assert.Equal(0x66, state.Memory[0x2478]);
@@ -49,18 +45,17 @@ namespace JustinCredible.ZilogZ80.Tests
                 0x76        // HALT
             };
 
+            var memory = new byte[20490];
+
             var initialState = new CPUConfig()
             {
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
                 Registers = new CPURegisters()
                 {
                     HL = 0x6677,
                 },
             };
 
-            var state = Execute(rom, initialState);
+            var state = Execute(rom, memory, initialState);
 
             Assert.Equal(0x77, state.Memory[0x2477]);
             Assert.Equal(0x66, state.Memory[0x2478]);
@@ -81,18 +76,17 @@ namespace JustinCredible.ZilogZ80.Tests
                 HALT
             ");
 
+            var memory = new byte[20490];
+
             var initialState = new CPUConfig()
             {
-                MemorySize = 20490,
-                WriteableMemoryStart = 0x0000,
-                WriteableMemoryEnd = 0x500A,
                 Registers = new CPURegisters()
                 {
                     SP = 0x6677
                 },
             };
 
-            var state = Execute(rom, initialState);
+            var state = Execute(rom, memory, initialState);
 
             Assert.Equal(0x77, state.Memory[0x2477]);
             Assert.Equal(0x66, state.Memory[0x2478]);

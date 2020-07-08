@@ -35,9 +35,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.RLC_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteRotate(value, left: true);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.RLC_A:
@@ -68,9 +68,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.RRC_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteRotate(value, left: false);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.RRC_A:
@@ -101,9 +101,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.RL_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteRotate(value, left: true, rotateThroughCarry: true);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.RL_A:
@@ -134,9 +134,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.RR_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteRotate(value, left: false, rotateThroughCarry: true);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.RR_A:
@@ -170,9 +170,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.SLA_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteShiftArithmetic(value: value, left: true);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.SLA_A:
@@ -201,9 +201,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.SRA_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteShiftArithmetic(value: value, left: false);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.SRA_A:
@@ -234,9 +234,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.SLL_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteShiftLogical(value: value, left: true);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.SLL_A:
@@ -265,9 +265,9 @@ namespace JustinCredible.ZilogZ80
                             break;
                         case OpcodeBytes.SRL_MHL:
                         {
-                            var value = ReadMemory(Registers.HL);
+                            var value = Memory.Read(Registers.HL);
                             value = ExecuteShiftLogical(value: value, left: false);
-                            WriteMemory(Registers.HL, value);
+                            Memory.Write(Registers.HL, value);
                             break;
                         }
                         case OpcodeBytes.SRL_A:
@@ -298,7 +298,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(0, Registers.L);
                         break;
                     case OpcodeBytes.BIT_0_MHL:
-                        ExecuteTestBit(0, ReadMemory(Registers.HL));
+                        ExecuteTestBit(0, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_0_A:
                         ExecuteTestBit(0, Registers.A);
@@ -323,7 +323,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(1, Registers.L);
                         break;
                     case OpcodeBytes.BIT_1_MHL:
-                        ExecuteTestBit(1, ReadMemory(Registers.HL));
+                        ExecuteTestBit(1, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_1_A:
                         ExecuteTestBit(1, Registers.A);
@@ -348,7 +348,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(2, Registers.L);
                         break;
                     case OpcodeBytes.BIT_2_MHL:
-                        ExecuteTestBit(2, ReadMemory(Registers.HL));
+                        ExecuteTestBit(2, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_2_A:
                         ExecuteTestBit(2, Registers.A);
@@ -373,7 +373,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(3, Registers.L);
                         break;
                     case OpcodeBytes.BIT_3_MHL:
-                        ExecuteTestBit(3, ReadMemory(Registers.HL));
+                        ExecuteTestBit(3, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_3_A:
                         ExecuteTestBit(3, Registers.A);
@@ -398,7 +398,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(4, Registers.L);
                         break;
                     case OpcodeBytes.BIT_4_MHL:
-                        ExecuteTestBit(4, ReadMemory(Registers.HL));
+                        ExecuteTestBit(4, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_4_A:
                         ExecuteTestBit(4, Registers.A);
@@ -423,7 +423,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(5, Registers.L);
                         break;
                     case OpcodeBytes.BIT_5_MHL:
-                        ExecuteTestBit(5, ReadMemory(Registers.HL));
+                        ExecuteTestBit(5, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_5_A:
                         ExecuteTestBit(5, Registers.A);
@@ -448,7 +448,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(6, Registers.L);
                         break;
                     case OpcodeBytes.BIT_6_MHL:
-                        ExecuteTestBit(6, ReadMemory(Registers.HL));
+                        ExecuteTestBit(6, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_6_A:
                         ExecuteTestBit(6, Registers.A);
@@ -473,7 +473,7 @@ namespace JustinCredible.ZilogZ80
                         ExecuteTestBit(7, Registers.L);
                         break;
                     case OpcodeBytes.BIT_7_MHL:
-                        ExecuteTestBit(7, ReadMemory(Registers.HL));
+                        ExecuteTestBit(7, Memory.Read(Registers.HL));
                         break;
                     case OpcodeBytes.BIT_7_A:
                         ExecuteTestBit(7, Registers.A);
@@ -503,9 +503,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_0_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(0, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_0_A:
@@ -532,9 +532,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_1_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(1, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_1_A:
@@ -561,9 +561,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_2_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(2, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_2_A:
@@ -590,9 +590,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_3_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(3, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_3_A:
@@ -619,9 +619,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_4_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(4, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_4_A:
@@ -648,9 +648,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_5_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(5, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_5_A:
@@ -677,9 +677,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_6_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(6, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_6_A:
@@ -706,9 +706,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.RES_7_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteResetBit(7, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.RES_7_A:
@@ -739,9 +739,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_0_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(0, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_0_A:
@@ -768,9 +768,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_1_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(1, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_1_A:
@@ -797,9 +797,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_2_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(2, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_2_A:
@@ -826,9 +826,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_3_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(3, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_3_A:
@@ -855,9 +855,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_4_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(4, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_4_A:
@@ -884,9 +884,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_5_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(5, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_5_A:
@@ -913,9 +913,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_6_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(6, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_6_A:
@@ -942,9 +942,9 @@ namespace JustinCredible.ZilogZ80
                         break;
                     case OpcodeBytes.SET_7_MHL:
                     {
-                        var value = ReadMemory(Registers.HL);
+                        var value = Memory.Read(Registers.HL);
                         value = ExecuteSetBit(7, value);
-                        WriteMemory(Registers.HL, value);
+                        Memory.Write(Registers.HL, value);
                         break;
                     }
                     case OpcodeBytes.SET_7_A:

@@ -55,7 +55,7 @@ namespace JustinCredible.ZilogZ80
          * Used to fetch an opcode from memory at the given address of the program counter.
          * This handles both single and multi-byte opcodes.
          */
-        public static Opcode GetOpcode(UInt16 programCounter, byte[] memory)
+        public static Opcode GetOpcode(UInt16 programCounter, IMemory memory)
         {
             try
             {
@@ -64,13 +64,13 @@ namespace JustinCredible.ZilogZ80
             catch (Exception exception) {
                 // Wrap the exception with some helpful information: the opcode byte as well
                 // as the location of the program counter.
-                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", memory[programCounter], programCounter), exception);
+                throw new Exception(String.Format("Unable to fetch opcode structure for byte 0x{0:X2} at memory address 0x{1:X4}.", memory.Read(programCounter), programCounter), exception);
             }
         }
 
-        private static Opcode GetOpcodeInternal(UInt16 programCounter, byte[] memory)
+        private static Opcode GetOpcodeInternal(UInt16 programCounter, IMemory memory)
         {
-            var opcodeByte1 = memory[programCounter];
+            var opcodeByte1 = memory.Read(programCounter);
 
             // If this isn't a preamble byte, we can just bail early and lookup
             // one of the "standard" instructions.
@@ -82,24 +82,24 @@ namespace JustinCredible.ZilogZ80
             if (opcodeByte1 == OpcodeBytes.PREAMBLE_EXTENDED)
             {
                 // Extended Instructions
-                var opcodeByte2 = memory[programCounter + 1];
+                var opcodeByte2 = memory.Read(programCounter + 1);
                 return Extended[opcodeByte2];
             }
             else if (opcodeByte1 == OpcodeBytes.PREAMBLE_BIT)
             {
                 // Extended Instructions, Bit Operations
-                var opcodeByte2 = memory[programCounter + 1];
+                var opcodeByte2 = memory.Read(programCounter + 1);
                 return Bit[opcodeByte2];
             }
             else if (opcodeByte1 == OpcodeBytes.PREAMBLE_IX)
             {
-                var opcodeByte2 = memory[programCounter + 1];
+                var opcodeByte2 = memory.Read(programCounter + 1);
 
                 if (opcodeByte2 == OpcodeBytes.PREAMBLE_IX_BIT)
                 {
                     // Extended Instructions, IX Register Bit Operations
                     // Third byte is an address offset, and the fourth byte is the actual opcode.
-                    var opcodeByte4 = memory[programCounter + 3];
+                    var opcodeByte4 = memory.Read(programCounter + 3);
                     return IXBit[opcodeByte4];
                 }
                 else
@@ -110,13 +110,13 @@ namespace JustinCredible.ZilogZ80
             }
             else if (opcodeByte1 == OpcodeBytes.PREAMBLE_IY)
             {
-                var opcodeByte2 = memory[programCounter + 1];
+                var opcodeByte2 = memory.Read(programCounter + 1);
 
                 if (opcodeByte2 == OpcodeBytes.PREAMBLE_IY_BIT)
                 {
                     // Extended Instructions, IY Register Bit Operations
                     // Third byte is an address offset, and the fourth byte is the actual opcode.
-                    var opcodeByte4 = memory[programCounter + 3];
+                    var opcodeByte4 = memory.Read(programCounter + 3);
                     return IYBit[opcodeByte4];
                 }
                 else

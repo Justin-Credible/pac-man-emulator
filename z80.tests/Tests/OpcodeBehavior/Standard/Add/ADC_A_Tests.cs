@@ -388,9 +388,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 Registers = registers,
-                Flags = flags,
-                MemorySize = memory.Length,
-            };
+                Flags = flags,            };
 
             var state = Execute(rom, memory, initialState);
 
@@ -433,9 +431,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 Registers = registers,
-                Flags = flags,
-                MemorySize = memory.Length,
-            };
+                Flags = flags,            };
 
             var state = Execute(rom, memory, initialState);
 
@@ -478,9 +474,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var initialState = new CPUConfig()
             {
                 Registers = registers,
-                Flags = flags,
-                MemorySize = memory.Length,
-            };
+                Flags = flags,            };
 
             var state = Execute(rom, memory, initialState);
 

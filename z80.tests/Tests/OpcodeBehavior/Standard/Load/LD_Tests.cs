@@ -104,9 +104,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-            };
+                Registers = registers,            };
 
             var state = Execute(rom, memory, initialState);
 

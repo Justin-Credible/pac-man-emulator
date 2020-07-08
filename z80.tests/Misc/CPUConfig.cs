@@ -17,11 +17,7 @@ namespace JustinCredible.ZilogZ80.Tests
     {
         public CPUConfig()
         {
-            MemorySize = 16 * 1024;
-            WriteableMemoryStart = 0x2000;
-            WriteableMemoryEnd = 0x3FFF;
-            MirrorMemoryStart = 0x4000;
-            MirrorMemoryEnd = 0x5FFF;
+            Memory = new SimpleMemory(16*1024);
             EnableDiagnosticsMode = false;
         }
     }

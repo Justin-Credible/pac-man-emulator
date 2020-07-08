@@ -145,11 +145,6 @@ namespace JustinCredible.ZilogZ80.Tests
             if (actualHash != expectedHash)
                 throw new Exception($"Expected the Z80 Instruction Exerciser ({fileName}) program to have an MD5 hash of {expectedHash} but saw {actualHash}");
 
-            // The assembled version is expected to be loaded at 0x100. So here
-            // we prepend 256 empty bytes by copying into a new array.
-            var memory = new byte[0x100 + testProgramBinary.Length];
-            Array.Copy(testProgramBinary, 0, memory, 0x100, testProgramBinary.Length);
-
             var cpuConfig = new CPUConfig();
 
             // Ensure we're running the CPU in a special diagnostics mode.
@@ -157,19 +152,16 @@ namespace JustinCredible.ZilogZ80.Tests
             // program (e.g. JMP 0x00 exits and CALL 0x05 prints a message).
             cpuConfig.EnableDiagnosticsMode = true;
 
-            // Disable memory write protection.
-            cpuConfig.WriteableMemoryStart = 0;
-            cpuConfig.WriteableMemoryEnd = 0;
-
             // The ZEX program is assembled with it's first instruction at $100.
             cpuConfig.Registers.PC = 0x100;
 
             // Values as per: https://floooh.github.io/2016/07/12/z80-rust-ms1.html
-            cpuConfig.MemorySize = 64 * 1024;
+            var memory = new byte[64 * 1024];
             // cpuConfig.StackPointer = 0xF000;
 
-            // Initialize the CPU with the configuration we just built.
-            var cpu = new CPU(cpuConfig);
+            // The assembled version is expected to be loaded at 0x100. So here
+            // we prepend 256 empty bytes by copying into a new array.
+            Array.Copy(testProgramBinary, 0, memory, 0x100, testProgramBinary.Length);
 
             /**
              * Both zexall and zexdoc attempt to load the stack pointer with the value
@@ -221,8 +213,10 @@ namespace JustinCredible.ZilogZ80.Tests
                 memory[testsVectorListOffset + 3] = 0x00;
             }
 
-            // Load the CPU's memory with the test program.
-            cpu.LoadMemory(memory);
+            cpuConfig.Memory = new SimpleMemory(memory);
+
+            // Initialize the CPU with the configuration we just built.
+            var cpu = new CPU(cpuConfig);
 
             // var testsPassed = 0;
             // var testsFailed = 0;
@@ -305,7 +299,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             while (true)
             {
-                var c = (char)cpu.Memory[ptr];
+                var c = (char)cpu.Memory.Read(ptr);
 
                 // The ZEX program terminates strings with the dollar sign.
                 if (c == '$')

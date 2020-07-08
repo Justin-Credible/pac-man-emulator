@@ -40,7 +40,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be affected.
                     ParityOverflow = false,
                 },
-                MemorySize = memory.Length,
             };
 
             var cpu = new CPU(initialState);
@@ -105,7 +104,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should be affected.
                     ParityOverflow = true,
                 },
-                MemorySize = memory.Length,
             };
 
             var cpu = new CPU(initialState);

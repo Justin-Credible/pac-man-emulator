@@ -39,7 +39,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     ParityOverflow = true,
                 },
-                MemorySize = memory.Length,
             };
 
             var state = Execute(rom, memory, initialState);
@@ -92,7 +91,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     ParityOverflow = false,
                 },
-                MemorySize = memory.Length,
             };
 
             var state = Execute(rom, memory, initialState);

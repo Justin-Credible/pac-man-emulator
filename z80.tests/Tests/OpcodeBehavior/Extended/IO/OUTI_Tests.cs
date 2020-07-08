@@ -32,7 +32,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     ParityOverflow = true,
                     Carry = true,
                 },
-                MemorySize = memory.Length,
             };
 
             var cpu = new CPU(initialState);
@@ -100,7 +99,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     // Should get set.
                     Zero = false,
                 },
-                MemorySize = memory.Length,
             };
 
             var cpu = new CPU(initialState);

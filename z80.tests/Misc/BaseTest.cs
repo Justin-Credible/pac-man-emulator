@@ -49,6 +49,15 @@ namespace JustinCredible.ZilogZ80.Tests
                 throw new Exception("The zasm assembler is not available this platform.");
         }
 
+        #region Execute Overloads
+
+        // These are overloads for the Execute(CPU) method. They are very messy! These have all came about
+        // over time as the codebase has evolved from re-use for each emulator project the tests have had
+        // to support (CHIP-8 => Intel 8080 => Zilog 80). They exist primarily so that I don't have go and
+        // refactor hundreds of test cases. I concede this is probably confusing and messy... but it's not
+        // worth my time to fix; I'm here to learn how to write emulators, not spend time refactoring legacy
+        // unit test cases.
+
         protected CPUResults Execute(byte[] rom, byte[] memory, CPUConfig cpuConfig = null)
         {
             // Map the ROM into the memory space.
@@ -61,7 +70,17 @@ namespace JustinCredible.ZilogZ80.Tests
         {
             var cpu = new CPU(cpuConfig ?? new CPUConfig());
 
-            return Execute(memory, cpu);
+            var memoryImplementation = cpu.Memory as SimpleMemory;
+
+            // Map the ROM into the memory space.
+            if (memory.Length > memoryImplementation.Memory.Length)
+            {
+                memoryImplementation = new SimpleMemory(memory);
+            }
+            else
+                Array.Copy(memory, memoryImplementation.Memory, memory.Length);
+
+            return Execute(memoryImplementation.Memory, cpu);
         }
 
         protected CPUResults Execute(byte[] rom, byte[] memory, CPU cpu)
@@ -74,8 +93,22 @@ namespace JustinCredible.ZilogZ80.Tests
 
         protected CPUResults Execute(byte[] memory, CPU cpu)
         {
-            cpu.LoadMemory(memory);
+            var memoryImplementation = new SimpleMemory(memory);
+            cpu.Memory = memoryImplementation;
 
+            return Execute(cpu);
+        }
+
+        #endregion
+
+        /**
+         * Used to start a unit test run with the given CPU instance. The instance is expected to
+         * have a memory implementation loaded with a ROM and registers (program counter etc) set
+         * to appropriate values. After the execution completes, a results object will be returned
+         * which contains the state of the CPU that can be used for assertions.
+         */
+        protected CPUResults Execute(CPU cpu)
+        {
             // Record the number of iterations (instructions), CPU cycles, and the address of the
             // program counter after each instruction is executed. This allows tests to assert each
             // of these values in addition to the CPU state.
@@ -103,7 +136,7 @@ namespace JustinCredible.ZilogZ80.Tests
                 Iterations = iterations,
                 Cycles = cycles,
                 ProgramCounterAddresses = pcAddresses,
-                Memory = cpu.Memory,
+                Memory = (cpu.Memory as SimpleMemory).Memory,
                 Registers = cpu.Registers,
                 Flags = cpu.Flags,
                 ProgramCounter = cpu.Registers.PC,

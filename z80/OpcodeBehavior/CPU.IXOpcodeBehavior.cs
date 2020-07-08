@@ -45,20 +45,20 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.INC_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        var value = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        var value = Memory.Read(Registers.IX + offset);
                         SetFlagsFrom8BitAddition(addend: value, augend: 1, false, false);
                         value++;
-                        WriteMemory(Registers.IX + offset, value);
+                        Memory.Write(Registers.IX + offset, value);
                         break;
                     }
                     case OpcodeBytes.DEC_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        var value = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        var value = Memory.Read(Registers.IX + offset);
                         SetFlagsFrom8BitSubtraction(minuend: value, subtrahend: 1, false, false);
                         value--;
-                        WriteMemory(Registers.IX + offset, value);
+                        Memory.Write(Registers.IX + offset, value);
                         break;
                     }
 
@@ -67,14 +67,14 @@ namespace JustinCredible.ZilogZ80
                 #region Stack Operations
 
                     case OpcodeBytes.POP_IX:
-                        Registers.IXH = ReadMemory(Registers.SP + 1);
-                        Registers.IXL = ReadMemory(Registers.SP);
+                        Registers.IXH = Memory.Read(Registers.SP + 1);
+                        Registers.IXL = Memory.Read(Registers.SP);
                         Registers.SP = (UInt16)(Registers.SP + 2);
                         break;
 
                     case OpcodeBytes.PUSH_IX:
-                        WriteMemory(Registers.SP - 1, Registers.IXH);
-                        WriteMemory(Registers.SP - 2, Registers.IXL);
+                        Memory.Write(Registers.SP - 1, Registers.IXH);
+                        Memory.Write(Registers.SP - 2, Registers.IXL);
                         Registers.SP = (UInt16)(Registers.SP - 2);
                         break;
 
@@ -84,10 +84,10 @@ namespace JustinCredible.ZilogZ80
                     {
                         var oldIXL = Registers.IXL;
                         var oldIXH = Registers.IXH;
-                        Registers.IXL = ReadMemory(Registers.SP);
-                        WriteMemory(Registers.SP, oldIXL);
-                        Registers.IXH = ReadMemory(Registers.SP+1);
-                        WriteMemory(Registers.SP+1, oldIXH);
+                        Registers.IXL = Memory.Read(Registers.SP);
+                        Memory.Write(Registers.SP, oldIXL);
+                        Registers.IXH = Memory.Read(Registers.SP+1);
+                        Memory.Write(Registers.SP+1, oldIXH);
                         break;
                     }
 
@@ -116,8 +116,8 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.ADD_A_MIX:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IX + offset);
                             Registers.A = Execute8BitAddition(Registers.A, value);
                             break;
                         }
@@ -132,8 +132,8 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.ADC_A_MIX:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IX + offset);
                             Registers.A = Execute8BitAddition(Registers.A, value, addCarryFlag: true);
                             break;
                         }
@@ -153,8 +153,8 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.SUB_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        var value = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        var value = Memory.Read(Registers.IX + offset);
                         Registers.A = Execute8BitSubtraction(Registers.A, value);
                         break;
                     }
@@ -168,8 +168,8 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.SBC_A_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        var value = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        var value = Memory.Read(Registers.IX + offset);
                         Registers.A = Execute8BitSubtraction(Registers.A, value, subtractCarryFlag: true);
                         break;
                     }
@@ -187,8 +187,8 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.CP_IX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        var value = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        var value = Memory.Read(Registers.IX + offset);
                         Execute8BitSubtraction(Registers.A, value);
                         break;
                     }
@@ -208,8 +208,8 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.AND_MIX:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IX + offset);
                             Registers.A = (byte)(Registers.A & value);
                             SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: true);
                             break;
@@ -230,8 +230,8 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.OR_MIX:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IX + offset);
                             Registers.A = (byte)(Registers.A | value);
                             SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
@@ -252,8 +252,8 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.XOR_MIX:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IX + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IX + offset);
                             Registers.A = (byte)(Registers.A ^ value);
                             SetFlagsFrom8BitLogicalOperation(Registers.A, isAND: false);
                             break;
@@ -280,115 +280,115 @@ namespace JustinCredible.ZilogZ80
 
                     case OpcodeBytes.LD_IX_NN:
                     {
-                        var value = ReadMemory16(Registers.PC + 2);
+                        var value = Memory.Read16(Registers.PC + 2);
                         Registers.IX = value;
                         break;
                     }
 
                     case OpcodeBytes.LD_MNN_IX:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        WriteMemory16(address, Registers.IX);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Memory.Write16(address, Registers.IX);
                         break;
                     }
                     case OpcodeBytes.LD_IX_MNN:
                     {
-                        var address = ReadMemory16(Registers.PC + 2);
-                        Registers.IX = ReadMemory16(address);
+                        var address = Memory.Read16(Registers.PC + 2);
+                        Registers.IX = Memory.Read16(address);
                         break;
                     }
 
                     case OpcodeBytes.LD_MIX_N:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        var value = Memory[Registers.PC + 3];
-                        WriteMemory(Registers.IX + offset, value);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        var value = Memory.Read(Registers.PC + 3);
+                        Memory.Write(Registers.IX + offset, value);
                         break;
                     }
 
                     case OpcodeBytes.LD_MIX_B:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.B);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.B);
                         break;
                     }
                     case OpcodeBytes.LD_MIX_C:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.C);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.C);
                         break;
                     }
                     case OpcodeBytes.LD_MIX_D:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.D);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.D);
                         break;
                     }
                     case OpcodeBytes.LD_MIX_E:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.E);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.E);
                         break;
                     }
                     case OpcodeBytes.LD_MIX_H:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.H);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.H);
                         break;
                     }
                     case OpcodeBytes.LD_MIX_L:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.L);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.L);
                         break;
                     }
                     case OpcodeBytes.LD_MIX_A:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        WriteMemory(Registers.IX + offset, Registers.A);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Memory.Write(Registers.IX + offset, Registers.A);
                         break;
                     }
 
                     case OpcodeBytes.LD_B_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.B = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.B = Memory.Read(Registers.IX + offset);
                         break;
                     }
                     case OpcodeBytes.LD_C_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.C = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.C = Memory.Read(Registers.IX + offset);
                         break;
                     }
                     case OpcodeBytes.LD_D_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.D = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.D = Memory.Read(Registers.IX + offset);
                         break;
                     }
                     case OpcodeBytes.LD_E_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.E = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.E = Memory.Read(Registers.IX + offset);
                         break;
                     }
                     case OpcodeBytes.LD_H_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.H = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.H = Memory.Read(Registers.IX + offset);
                         break;
                     }
                     case OpcodeBytes.LD_L_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.L = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.L = Memory.Read(Registers.IX + offset);
                         break;
                     }
                     case OpcodeBytes.LD_A_MIX:
                     {
-                        var offset = (sbyte)Memory[Registers.PC + 2];
-                        Registers.A = ReadMemory(Registers.IX + offset);
+                        var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                        Registers.A = Memory.Read(Registers.IX + offset);
                         break;
                     }
 
@@ -470,10 +470,10 @@ namespace JustinCredible.ZilogZ80
                         break;
 
                     case OpcodeBytes.LD_IXH_N:
-                        Registers.IXH = Memory[Registers.PC + 2];
+                        Registers.IXH = Memory.Read(Registers.PC + 2);
                         break;
                     case OpcodeBytes.LD_IXL_N:
-                        Registers.IXL = Memory[Registers.PC + 2];
+                        Registers.IXL = Memory.Read(Registers.PC + 2);
                         break;
 
                 #endregion

@@ -168,7 +168,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0b10110010, memory[0x2234 + offset]);
+            Assert.Equal(0b10110010, state.Memory[0x2234 + offset]);
 
             // Should be affected.
             Assert.True(state.Flags.Carry);
@@ -225,7 +225,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(0b01110010, memory[0x2234 + offset]);
+            Assert.Equal(0b01110010, state.Memory[0x2234 + offset]);
 
             // Should be affected.
             Assert.False(state.Flags.Carry);

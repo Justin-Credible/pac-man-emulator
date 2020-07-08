@@ -25,7 +25,6 @@ namespace JustinCredible.ZilogZ80.Tests
                     L = 0x77,
                     SP = 0x2222,
                 },
-                MemorySize = memory.Length,
             };
 
             var state = Execute(rom, memory, initialState);

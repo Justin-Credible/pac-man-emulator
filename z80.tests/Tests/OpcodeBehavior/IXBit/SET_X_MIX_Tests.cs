@@ -177,7 +177,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var state = Execute(rom, memory, initialState);
 
-            Assert.Equal(expectedValue, memory[0x2234 + offset]);
+            Assert.Equal(expectedValue, state.Memory[0x2234 + offset]);
 
             // Should be unaffected.
             AssertFlagsSame(initialState, state);

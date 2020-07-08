@@ -17,58 +17,58 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.RLC_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: true);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: true);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: true);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: true);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: true);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: true);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteRotate(value, left: true);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.RLC_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteRotate(value, left: true);
                             break;
                         }
@@ -79,58 +79,58 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.RRC_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: false);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: false);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: false);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: false);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: false);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: false);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteRotate(value, left: false);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.RRC_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteRotate(value, left: false);
                             break;
                         }
@@ -141,58 +141,58 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.RL_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RL_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RL_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RL_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RL_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RL_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RL_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteRotate(value, left: true, rotateThroughCarry: true);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.RL_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteRotate(value, left: true, rotateThroughCarry: true);
                             break;
                         }
@@ -203,58 +203,58 @@ namespace JustinCredible.ZilogZ80
 
                         case OpcodeBytes.RR_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RR_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RR_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RR_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RR_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RR_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
                         case OpcodeBytes.RR_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteRotate(value, left: false, rotateThroughCarry: true);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.RR_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteRotate(value, left: false, rotateThroughCarry: true);
                             break;
                         }
@@ -268,58 +268,58 @@ namespace JustinCredible.ZilogZ80
                     #region SLA (IY+n), r - Shift left (arithmetic)
                         case OpcodeBytes.SLA_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteShiftArithmetic(value: value, left: true);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.SLA_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteShiftArithmetic(value: value, left: true);
                             break;
                         }
@@ -328,58 +328,58 @@ namespace JustinCredible.ZilogZ80
                     #region SRA (IY+n), r - Shift right (arithmetic)
                         case OpcodeBytes.SRA_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteShiftArithmetic(value: value, left: false);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.SRA_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteShiftArithmetic(value: value, left: false);
                             break;
                         }
@@ -390,58 +390,58 @@ namespace JustinCredible.ZilogZ80
                     #region SLL (IY+n), r - Shift left ?? (undocumented)
                         case OpcodeBytes.SLL_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteShiftLogical(value: value, left: true);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.SLL_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteShiftLogical(value: value, left: true);
                             break;
                         }
@@ -450,58 +450,58 @@ namespace JustinCredible.ZilogZ80
                     #region SRL (IY+n), r - Shift right logical
                         case OpcodeBytes.SRL_MIY_B:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.B = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY_C:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.C = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY_D:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.D = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY_E:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.E = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY_H:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.H = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY_L:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.L = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteShiftLogical(value: value, left: false);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
                         case OpcodeBytes.SRL_MIY_A:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             Registers.A = ExecuteShiftLogical(value: value, left: false);
                             break;
                         }
@@ -520,8 +520,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_0_MIY:
                     case OpcodeBytes.BIT_0_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(0, value);
                             break;
                         }
@@ -535,8 +535,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_1_MIY:
                     case OpcodeBytes.BIT_1_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(1, value);
                             break;
                         }
@@ -550,8 +550,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_2_MIY:
                     case OpcodeBytes.BIT_2_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(2, value);
                             break;
                         }
@@ -565,8 +565,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_3_MIY:
                     case OpcodeBytes.BIT_3_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(3, value);
                             break;
                         }
@@ -580,8 +580,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_4_MIY:
                     case OpcodeBytes.BIT_4_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(4, value);
                             break;
                         }
@@ -595,8 +595,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_5_MIY:
                     case OpcodeBytes.BIT_5_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(5, value);
                             break;
                         }
@@ -610,8 +610,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_6_MIY:
                     case OpcodeBytes.BIT_6_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(6, value);
                             break;
                         }
@@ -625,8 +625,8 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.BIT_7_MIY:
                     case OpcodeBytes.BIT_7_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             ExecuteTestBit(7, value);
                             break;
                         }
@@ -644,10 +644,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_0_MIY:
                     case OpcodeBytes.RES_0_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(0, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -660,10 +660,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_1_MIY:
                     case OpcodeBytes.RES_1_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(1, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -676,10 +676,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_2_MIY:
                     case OpcodeBytes.RES_2_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(2, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -692,10 +692,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_3_MIY:
                     case OpcodeBytes.RES_3_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(3, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -708,10 +708,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_4_MIY:
                     case OpcodeBytes.RES_4_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(4, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -724,10 +724,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_5_MIY:
                     case OpcodeBytes.RES_5_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(5, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -740,10 +740,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_6_MIY:
                     case OpcodeBytes.RES_6_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(6, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -756,10 +756,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.RES_7_MIY:
                     case OpcodeBytes.RES_7_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteResetBit(7, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -776,10 +776,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_0_MIY:
                     case OpcodeBytes.SET_0_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(0, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -792,10 +792,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_1_MIY:
                     case OpcodeBytes.SET_1_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(1, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -808,10 +808,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_2_MIY:
                     case OpcodeBytes.SET_2_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(2, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -824,10 +824,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_3_MIY:
                     case OpcodeBytes.SET_3_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(3, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -840,10 +840,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_4_MIY:
                     case OpcodeBytes.SET_4_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(4, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -856,10 +856,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_5_MIY:
                     case OpcodeBytes.SET_5_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(5, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -872,10 +872,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_6_MIY:
                     case OpcodeBytes.SET_6_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(6, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 
@@ -888,10 +888,10 @@ namespace JustinCredible.ZilogZ80
                     case OpcodeBytes.SET_7_MIY:
                     case OpcodeBytes.SET_7_MIY_8:
                         {
-                            var offset = (sbyte)Memory[Registers.PC + 2];
-                            var value = ReadMemory(Registers.IY + offset);
+                            var offset = (sbyte)Memory.Read(Registers.PC + 2);
+                            var value = Memory.Read(Registers.IY + offset);
                             value = ExecuteSetBit(7, value);
-                            WriteMemory(Registers.IY + offset, value);
+                            Memory.Write(Registers.IY + offset, value);
                             break;
                         }
 

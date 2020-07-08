@@ -40,9 +40,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = false,
                 },
@@ -84,9 +82,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = false,
                 },
@@ -128,9 +124,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = false,
                 },
@@ -172,9 +166,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = false,
                 },
@@ -216,9 +208,7 @@ namespace JustinCredible.ZilogZ80.Tests
 
             var initialState = new CPUConfig()
             {
-                Registers = registers,
-                MemorySize = memory.Length,
-                Flags = new ConditionFlags()
+                Registers = registers,                Flags = new ConditionFlags()
                 {
                     Subtract = false,
                 },

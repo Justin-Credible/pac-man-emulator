@@ -32,7 +32,6 @@ namespace JustinCredible.ZilogZ80.Tests
                 {
                     SP = 0x2720
                 },
-                MemorySize = memory.Length,
             };
 
             var state = Execute(rom, memory, initialState);
@@ -80,9 +79,7 @@ namespace JustinCredible.ZilogZ80.Tests
             memory[0x271D] = 0xFF;
 
             var initialState = new CPUConfig()
-            {
-                MemorySize = memory.Length,
-            };
+            {            };
 
             var state = Execute(rom, memory, initialState);
 
