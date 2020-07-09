@@ -84,7 +84,7 @@ namespace JustinCredible.PacEmu
                 if (!Directory.Exists(romPathArg.Value))
                     throw new Exception($"Could not locate a directory at path {romPathArg.Value}");
 
-                var rom = ReadRomFiles(romPathArg.Value);
+                var romData = ROMLoader.LoadFromDisk(romPathArg.Value);
                 // var sfx = sfxOption.HasValue() ? GetSoundEffects(sfxOption.Value()) : null;
 
                 Thread.CurrentThread.Name = "GUI Loop";
@@ -208,7 +208,7 @@ namespace JustinCredible.PacEmu
 
                 // Start the emulation; this occurs in a seperate thread and
                 // therefore this call is non-blocking.
-                _game.Start(rom, state);
+                _game.Start(romData, state);
 
                 // Starts the event loop for the user interface; this occurs on
                 // the same thread and is a blocking call. Once this method returns
@@ -227,37 +227,6 @@ namespace JustinCredible.PacEmu
         #endregion
 
         #region CLI Helpers
-
-        private static byte[] ReadRomFiles(string directoryPath)
-        {
-            var hPath = Path.Join(directoryPath, "invaders.h");
-            var gPath = Path.Join(directoryPath, "invaders.g");
-            var fPath = Path.Join(directoryPath, "invaders.f");
-            var ePath = Path.Join(directoryPath, "invaders.e");
-
-            if (!File.Exists(hPath))
-                throw new Exception($"Could not locate {hPath}");
-
-            if (!File.Exists(gPath))
-                throw new Exception($"Could not locate {gPath}");
-
-            if (!File.Exists(fPath))
-                throw new Exception($"Could not locate {fPath}");
-
-            if (!File.Exists(ePath))
-                throw new Exception($"Could not locate {ePath}");
-
-            // TODO: Checksums?
-
-            var bytes = new List<byte>();
-
-            bytes.AddRange(File.ReadAllBytes(hPath));
-            bytes.AddRange(File.ReadAllBytes(gPath));
-            bytes.AddRange(File.ReadAllBytes(fPath));
-            bytes.AddRange(File.ReadAllBytes(ePath));
-
-            return bytes.ToArray();
-        }
 
         private static Dictionary<UInt16, String> ParseAnnotationsFile(string path)
         {
