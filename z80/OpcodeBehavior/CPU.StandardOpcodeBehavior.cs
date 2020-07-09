@@ -12,7 +12,7 @@ namespace JustinCredible.ZilogZ80
             switch (opcode.Code)
             {
                 case OpcodeBytes.HALT:
-                    Finished = true;
+                    Halted = true;
                     incrementProgramCounter = false;
                     break;
 
@@ -1565,7 +1565,7 @@ namespace JustinCredible.ZilogZ80
             if (Config.EnableDiagnosticsMode && address == 0x00)
             {
                 // This is a CALL 0x00 which returns control to CP/M.
-                this.Finished = true;
+                this.Halted = true;
                 return;
             }
 

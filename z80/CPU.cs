@@ -7,11 +7,8 @@ namespace JustinCredible.ZilogZ80
      */
     public partial class CPU
     {
-        /**
-         * Indicates the ROM has finished executing via a HALT opcode.
-         * Step should not be called again without first calling Reset.
-         */
-        public bool Finished { get; private set; }
+        /** Indicates the ROM has finished executing via a HALT opcode. */
+        public bool Halted { get; private set; }
 
         /** The addressable memory implementation; can include RAM, ROM, memory mapped devices, etc. */
         public IMemory Memory { get; set; }
@@ -77,9 +74,7 @@ namespace JustinCredible.ZilogZ80
             InterruptsEnabled = Config.InterruptsEnabled;
             InterruptsEnabledPreviousValue = Config.InterruptsEnabledPreviousValue;
             InterruptMode = Config.InterruptMode;
-
-            // Reset the flag that indicates that the ROM has finished executing.
-            Finished = false;
+            Halted = false;
         }
 
         #endregion
@@ -172,6 +167,8 @@ namespace JustinCredible.ZilogZ80
             if (!InterruptsEnabled)
                 return 0;
 
+            Halted = false;
+
             switch (InterruptMode)
             {
                 case InterruptMode.Zero:
@@ -236,9 +233,7 @@ namespace JustinCredible.ZilogZ80
         /** Executes the next instruction and returns the number of cycles it took to execute. */
         public int Step()
         {
-            // Sanity check.
-            if (Finished)
-                throw new Exception("Program has finished execution; Reset() must be invoked before invoking Step() again.");
+            Halted = false;
 
             // Fetch the next opcode to be executed, as indicated by the program counter.
             var opcode = Opcodes.GetOpcode(Registers.PC, Memory);

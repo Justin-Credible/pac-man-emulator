@@ -247,7 +247,7 @@ namespace JustinCredible.ZilogZ80.Tests
             {
                 cpu.Step();
 
-                if (cpu.Finished)
+                if (cpu.Halted)
                     break;
             }
 
@@ -265,7 +265,7 @@ namespace JustinCredible.ZilogZ80.Tests
             if (testOutput.Contains("  ERROR"))
                 foundError = true;
 
-            Assert.True(cpu.Finished);
+            Assert.True(cpu.Halted);
             Assert.True(foundSuccess, $"Should have found a success; ZEX console output was: '{testOutput.ToString()}'");
             Assert.False(foundError, $"Should not have found any errors; ZEX console output was: '{testOutput.ToString()}'");
         }

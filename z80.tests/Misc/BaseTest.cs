@@ -116,7 +116,7 @@ namespace JustinCredible.ZilogZ80.Tests
             var cycles = 0;
             var pcAddresses = new List<UInt16>();
 
-            while (!cpu.Finished)
+            while (!cpu.Halted)
             {
                 // Ensure we don't have a run away program.
                 if (iterations > 100)

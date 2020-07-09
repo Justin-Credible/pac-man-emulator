@@ -21,7 +21,8 @@
                 // "--load-state",
                 // "ufo_soon3.state",
                 // "--break",
-                // "0x0000",
+                // "0x2346", // Enabling interrupts right before first CPU HALT
+                // "0x3FFA", // First NMI jump after CPU HALT
             ],
             "cwd": "${workspaceFolder}/emulator",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

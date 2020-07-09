@@ -64,6 +64,15 @@ namespace JustinCredible.PacEmu
         // The configuration of the Zilog Z80 CPU specifically for the Pac-Man hardware.
         private static readonly CPUConfig _cpuConfig = new CPUConfig()
         {
+            Registers = new CPURegisters()
+            {
+                PC = 0x0000,
+
+                // TODO: Hardcoded to the top of the RAM.
+                // Is this different for each game that runs on the Pac-Man hardware?
+                SP = 0x4FEF,
+            },
+
             // Interrupts are initially disabled, and will be enabled by the program ROM when ready.
             InterruptsEnabled = false,
 
@@ -195,28 +204,19 @@ namespace JustinCredible.PacEmu
                 // Video RAM, RAM, and sprites.
                 _memory[address] = value;
             }
-            else if (address >= 0x5000)
+            else if (address == 0x5000)
             {
                 // Interrupt enable (bit 0: 0 = disabled, 1 = enabled)
-
-                // TODO: May need to remove/relax this sanity check.
-                if (value != 0x00 && value != 0x01)
-                    throw new Exception(String.Format("Unexpected value when writing to memory address location 0x5000 (interrupt enable) with value: {0:X2}. Expected either 0x00 (disabled) or 0x01 (enabled).", value));
-
-                _cpu.InterruptsEnabled = value == 0x01;
+                _cpu.InterruptsEnabled = (value & 0x01) == 0x01;
             }
-            else if (address >= 0x5001)
+            else if (address == 0x5001)
             {
                 // Sound enable (bit 0: 0 = disabled, 1 = enabled)
 
-                // TODO: May need to remove/relax this sanity check.
-                if (value != 0x00 && value != 0x01)
-                    throw new Exception(String.Format("Unexpected value when writing to memory address location 0x5000 (sound enable) with value: {0:X2}. Expected either 0x00 (disabled) or 0x01 (enabled).", value));
-
                 // TODO: Implement.
-                // soundEnabled = value == 0x01;
+                // soundEnabled = (value & 0x01) == 0x01;;
             }
-            else if (address >= 0x5002)
+            else if (address == 0x5002)
             {
                 // ??? Aux board enable?
 
