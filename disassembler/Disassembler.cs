@@ -7,7 +7,7 @@ namespace JustinCredible.Z80Disassembler
     public static class Disassembler
     {
 
-        public static string Disassemble(byte[] rom, bool emitAddresses = false, bool emitPseudocode = false)
+        public static string Disassemble(IMemory rom, bool emitAddresses = false, bool emitPseudocode = false)
         {
             var disassembly = new StringBuilder();
 
@@ -21,16 +21,23 @@ namespace JustinCredible.Z80Disassembler
 
                 address += (UInt16)instructionSize;
 
-                if (address >= rom.Length)
+                try
+                {
+                    var value = rom.Read(address);
+                }
+                catch
+                {
+                    // If we couldn't read any more then we probably reached the end.
                     break;
+                }
             }
 
             return disassembly.ToString();
         }
 
-        public static string Disassemble(byte[] rom, UInt16 address, out int instructionSize, bool emitAddress = false, bool emitPseudocode = false)
+        public static string Disassemble(IMemory rom, UInt16 address, out int instructionSize, bool emitAddress = false, bool emitPseudocode = false)
         {
-            var opcode = Opcodes.GetOpcode(address, new SimpleMemory(rom));
+            var opcode = Opcodes.GetOpcode(address, rom);
 
             var disassembly = new StringBuilder();
 
@@ -43,14 +50,14 @@ namespace JustinCredible.Z80Disassembler
 
             if (opcode.Size == 2)
             {
-                var next = rom[address + 1];
+                var next = rom.Read(address + 1);
                 var dataFormatted = String.Format("0x{0:X2}", next);
                 disassembly.Replace("D8", dataFormatted);
             }
             else if (opcode.Size == 3)
             {
-                var upper = rom[address + 2] << 8;
-                var lower = rom[address + 1];
+                var upper = rom.Read(address + 2) << 8;
+                var lower = rom.Read(address + 1);
                 var dataOrAddress = (UInt16)(upper | lower);
 
                 var dataOrAddressFormatted = String.Format("0x{0:X4}", dataOrAddress);

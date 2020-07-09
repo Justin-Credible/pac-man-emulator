@@ -67,7 +67,7 @@ namespace JustinCredible.Z80Disassembler
                 else if (Directory.Exists(romPathArg.Value))
                 {
                     // TODO: Update for Pac-Man ROM file names.
-                    Console.WriteLine("$Reading Space Invaders ROM files from directory: {romPathArg.Value}");
+                    Console.WriteLine("$Reading Pac-Man ROM files from directory: {romPathArg.Value}");
                     Console.WriteLine($"• invaders.e");
                     Console.WriteLine($"• invaders.f");
                     Console.WriteLine($"• invaders.g");
@@ -80,7 +80,8 @@ namespace JustinCredible.Z80Disassembler
 
                 Console.WriteLine("Disassembling ROM...");
 
-                var disassembly = Disassembler.Disassemble(rom, includeAddressOption.HasValue(), includePseudocodeOption.HasValue());
+                var wrappedRom = new SimpleMemory(rom);
+                var disassembly = Disassembler.Disassemble(wrappedRom, includeAddressOption.HasValue(), includePseudocodeOption.HasValue());
 
                 Console.WriteLine("Disassembly complete!");
 

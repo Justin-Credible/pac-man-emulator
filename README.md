@@ -31,9 +31,9 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
   - [X] Pass ZEX integration test
   - [X] Re-work flag setting for arithmetic vs logical operations
 - [ ] Pac-Man Hardware
-  - [ ] Copy Space Invaders emulator project
-  - [ ] CPU / Memory configuration
-  - [ ] Interrupts?
+  - [X] Copy Space Invaders emulator project
+  - [X] CPU / Memory configuration
+  - [X] Interrupts?
   - [ ] Video
   - [ ] Audio
   - [ ] Other hardware?
