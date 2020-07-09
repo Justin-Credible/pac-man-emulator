@@ -6,9 +6,10 @@ namespace JustinCredible.PacEmu
      */
     public class ROMFile
     {
-        public string FileName;
-        public string AlternateFileName;
-        public string CRC32;
-        public string Description;
+        public string FileName { get; set; }
+        public string AlternateFileName { get; set; }
+        public int Size { get; set; }
+        public string CRC32 { get; set; }
+        public string Description { get; set; }
     }
 }

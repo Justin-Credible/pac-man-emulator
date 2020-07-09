@@ -104,7 +104,7 @@ namespace JustinCredible.PacEmu
          *
          * 5000 - 50FF                 Memory mapped registers
          */
-        private byte[] _memory = new byte[1024 * 20];
+        private byte[] _memory = null;
 
         public byte Read(int address)
         {
@@ -438,18 +438,37 @@ namespace JustinCredible.PacEmu
             _cpu.OnDeviceRead += CPU_OnDeviceRead;
             _cpu.OnDeviceWrite += CPU_OnDeviceWrite;
 
-            // Map the code ROM into the lower 16K of the memory space.
+            // Fetch the ROM data; we trust the contents were validated with a CRC32 check elsewhere, but
+            // since the CRC check can be bypassed, we at least need to ensure the file sizes are correct
+            // since this classes' implementation of IMemory is expecting certain addreses.
 
             var codeRom1 = romData.Data[ROMs.PAC_MAN_CODE_1.FileName];
             var codeRom2 = romData.Data[ROMs.PAC_MAN_CODE_2.FileName];
             var codeRom3 = romData.Data[ROMs.PAC_MAN_CODE_3.FileName];
             var codeRom4 = romData.Data[ROMs.PAC_MAN_CODE_4.FileName];
 
-            _memory = new byte[codeRom1.Length + codeRom2.Length + codeRom3.Length + codeRom4.Length];
-            Buffer.BlockCopy(codeRom1, 0, _memory, 0, codeRom1.Length);
-            Buffer.BlockCopy(codeRom2, 0, _memory, codeRom1.Length, codeRom2.Length);
-            Buffer.BlockCopy(codeRom3, 0, _memory, codeRom2.Length, codeRom3.Length);
-            Buffer.BlockCopy(codeRom4, 0, _memory, codeRom4.Length, codeRom4.Length);
+            if (codeRom1.Length != 4096 || codeRom2.Length != 4096 || codeRom3.Length != 4096 || codeRom4.Length != 4096)
+                throw new Exception("All code ROMs must be exactly 4KB in size.");
+
+            // Define our addressable memory space, which includes the game code ROMS and RAM.
+
+            var addressableMemorySize =
+                codeRom1.Length     // Code ROM 1
+                + codeRom2.Length   // Code ROM 2
+                + codeRom3.Length   // Code ROM 3
+                + codeRom4.Length   // Code ROM 4
+                + 1024              // Video RAM (tile information)
+                + 1024              // Video RAM (tile palettes)
+                + 2032              // RAM
+                + 16;               // Sprite numbers
+
+            _memory = new byte[addressableMemorySize];
+
+            // Map the code ROM into the lower 16K of the memory space.
+            Array.Copy(codeRom1, 0, _memory, 0, codeRom1.Length);
+            Array.Copy(codeRom2, 0, _memory, codeRom1.Length, codeRom2.Length);
+            Array.Copy(codeRom3, 0, _memory, codeRom1.Length + codeRom2.Length, codeRom3.Length);
+            Array.Copy(codeRom4, 0, _memory, codeRom1.Length + codeRom2.Length + codeRom3.Length, codeRom4.Length);
 
             // This class implements the IMemory interface, which the CPU needs to determine how to read and
             // write data. We set the reference to this class instance (whose implementation uses _memory).

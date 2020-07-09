@@ -88,7 +88,6 @@ namespace JustinCredible.ZilogZ80
 
         public void PrintDebugSummary()
         {
-            var opcodeByte = Memory.Read(Registers.PC);
             Opcode opcode = null;
 
             try
@@ -102,7 +101,7 @@ namespace JustinCredible.ZilogZ80
 
             var instruction = opcode == null ? "???" : opcode.Instruction;
 
-            var opcodeFormatted = String.Format("0x{0:X2} {1}", opcodeByte, instruction);
+            var opcodeFormatted = String.Format("0x{0:X2} {1}", opcode?.Code, instruction);
             var pc = String.Format("0x{0:X4}", Registers.PC);
             var sp = String.Format("0x{0:X4}", Registers.SP);
             var regA = String.Format("0x{0:X2}", Registers.A);
@@ -112,19 +111,40 @@ namespace JustinCredible.ZilogZ80
             var regE = String.Format("0x{0:X2}", Registers.E);
             var regH = String.Format("0x{0:X2}", Registers.H);
             var regL = String.Format("0x{0:X2}", Registers.L);
+            var regDE = String.Format("0x{0:X4}", Registers.DE);
+            var regHL = String.Format("0x{0:X4}", Registers.HL);
+            var regIX = String.Format("0x{0:X2}", Registers.IX);
+            var regIY = String.Format("0x{0:X2}", Registers.IY);
 
-            var valueAtDE = String.Format("0x{0:X2}", Memory.Read(Registers.DE));
-            var valueAtHL = String.Format("0x{0:X2}", Memory.Read(Registers.HL));
+            byte valueAtDE = 0x00;
+            byte valueAtHL = 0x00;
+
+            try
+            {
+                valueAtDE = Memory.Read(Registers.DE);
+            }
+            catch {}
+
+            try
+            {
+                valueAtHL = Memory.Read(Registers.HL);
+            }
+            catch {}
+
+            var formattedValueAtDE = String.Format("0x{0:X2}", valueAtDE);
+            var formattedValueAtHL = String.Format("0x{0:X2}", valueAtHL);
 
             Console.WriteLine($"Opcode: {opcodeFormatted}");
             Console.WriteLine();
-            Console.WriteLine($"PC: {pc}\tSP: {sp}");
+            Console.WriteLine($"PC: {pc}\tSP: {sp}\tIX: {regIX}\tIY: {regIY}");
             Console.WriteLine();
             Console.WriteLine($"A: {regA}\t\tB: {regB}\t\tC: {regC}");
             Console.WriteLine($"D: {regD}\t\tE: {regE}\t\tH: {regH}\t\tL: {regL}");
-            Console.WriteLine($"(DE): {valueAtHL}\t\t\t(HL): {valueAtHL}");
+            Console.WriteLine($"HL: {regHL}\t(HL): {formattedValueAtHL}");
+            Console.WriteLine($"DE: {regDE}\t(DE): {formattedValueAtDE}");
             Console.WriteLine();
-            Console.WriteLine($"Sign: {Flags.Sign}\tZero: {Flags.Zero}\tSign: {Flags.Sign}\tParity: {Flags.ParityOverflow}\tCarry: {Flags.Carry}\tHalf Carry: {Flags.HalfCarry}");
+            Console.WriteLine($"Sign: {Flags.Sign}\tZero: {Flags.Zero}\tParity/Overflow: {Flags.ParityOverflow}");
+            Console.WriteLine($"Subtract: {Flags.Subtract}\tCarry: {Flags.Carry}\tHalf Carry: {Flags.HalfCarry}");
         }
 
         #endregion
