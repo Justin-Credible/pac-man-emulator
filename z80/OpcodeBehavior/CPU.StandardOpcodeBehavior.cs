@@ -13,7 +13,6 @@ namespace JustinCredible.ZilogZ80
             {
                 case OpcodeBytes.HALT:
                     Halted = true;
-                    incrementProgramCounter = false;
                     break;
 
                 case OpcodeBytes.NOP:

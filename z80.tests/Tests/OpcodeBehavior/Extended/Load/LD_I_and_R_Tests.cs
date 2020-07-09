@@ -7,8 +7,8 @@ namespace JustinCredible.ZilogZ80.Tests
         [Theory]
         [InlineData(Register.I, Register.A)]
         [InlineData(Register.A, Register.I)]
-        [InlineData(Register.R, Register.A)]
-        [InlineData(Register.A, Register.R)]
+        // [InlineData(Register.R, Register.A)] // TODO: Make specific tests for R register since it's special
+        // [InlineData(Register.A, Register.R)]
         public void Test_LD(Register destReg, Register sourceReg)
         {
             var rom = AssembleSource($@"

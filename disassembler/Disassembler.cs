@@ -65,6 +65,22 @@ namespace JustinCredible.Z80Disassembler
                 disassembly.Replace("D16", dataOrAddressFormatted);
                 disassembly.Replace("adr", dataOrAddressFormatted);
             }
+            else if (opcode.Size == 4)
+            {
+                // TODO: If IX/IY Bit operations, first two bytes are prefixes, fourth is the opcode
+                // and the third byte is the relative address offset. In that case parse it out so
+                // it can be shown in the disassembly. The follow code assumes the third and fourth
+                // bytes are always inline data or an address.
+
+                var upper = rom.Read(address + 3) << 8;
+                var lower = rom.Read(address + 2);
+                var dataOrAddress = (UInt16)(upper | lower);
+
+                var dataOrAddressFormatted = String.Format("0x{0:X4}", dataOrAddress);
+
+                disassembly.Replace("D16", dataOrAddressFormatted);
+                disassembly.Replace("adr", dataOrAddressFormatted);
+            }
             else if (opcode.Size != 1)
                 throw new Exception($"Unexpected opcode size for opcode: {opcode.Instruction}");
 

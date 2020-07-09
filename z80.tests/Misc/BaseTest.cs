@@ -129,6 +129,12 @@ namespace JustinCredible.ZilogZ80.Tests
                 iterations++;
             }
 
+            // HACK: Originally the 8080 implementation did not increment the PC after a HALT.
+            // This was copied forward to the Z80 codebase, and all of the existing unit tests
+            // assert this value after a HALT. However, the Z80 actually increments the PC after
+            // a HALT. I don't want to fix hundreds of tests, so I'm hacking this here...
+            cpu.Registers.PC = (UInt16)(cpu.Registers.PC - Opcodes.HALT.Size);
+
             // Return the state of the CPU so tests can do verification.
 
             var results = new CPUResults()

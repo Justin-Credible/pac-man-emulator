@@ -153,6 +153,9 @@ namespace JustinCredible.ZilogZ80
             InterruptsEnabledPreviousValue = InterruptsEnabled;
             InterruptsEnabled = false;
 
+            IncrementMemoryRefreshRegister();
+            Halted = false;
+
             ExecuteCall(0x0066, Registers.PC);
 
             // TODO: Guessing here for cycle count.
@@ -164,9 +167,7 @@ namespace JustinCredible.ZilogZ80
         {
             // TODO: How to support daisy-chained peripheral interrupt scheme?
 
-            if (!InterruptsEnabled)
-                return 0;
-
+            IncrementMemoryRefreshRegister();
             Halted = false;
 
             switch (InterruptMode)
@@ -217,9 +218,12 @@ namespace JustinCredible.ZilogZ80
 
                 case InterruptMode.Two:
                 {
-                    // The MSB bits are from the interrupt vector while the LSB are from the data bus.
+                    // The MSB bits are from the interrupt vector register while the LSB are from the data bus.
+                    // They combine to make an address that is a pointer to a vector table, whose value is the
+                    // actual address we should jump to.
                     var address = (Registers.I << 8) | dataBusValue;
-                    ExecuteCall((UInt16)address, Registers.PC);
+                    var jumpAddress = Memory.Read16(address);
+                    ExecuteCall((UInt16)jumpAddress, Registers.PC);
 
                     // TODO: Guessing here for cycle count.
                     return Opcodes.CALL.Cycles;
@@ -233,7 +237,14 @@ namespace JustinCredible.ZilogZ80
         /** Executes the next instruction and returns the number of cycles it took to execute. */
         public int Step()
         {
-            Halted = false;
+            // If halted, the CPU continues to execute NOPs until an interrupt is fired. By returning
+            // the cycle count for a NOP here, we ensure that the calling code can still determine
+            // when interrupts need to be fired. This isn't specific to the Z80 hardware, but is
+            // something we do in this emulator implementation to simulate interrupt scheduling.
+            if (Halted)
+                return Opcodes.NOP.Cycles;
+
+            IncrementMemoryRefreshRegister();
 
             // Fetch the next opcode to be executed, as indicated by the program counter.
             var opcode = Opcodes.GetOpcode(Registers.PC, Memory);
@@ -313,6 +324,19 @@ namespace JustinCredible.ZilogZ80
         #endregion
 
         #region Utilities
+
+        /**
+         * A helper for encapsulating the logic of incrementing the Memory Refresh Register (R).
+         * The manual states that the most significat bit remains as programmed, while the other
+         * lower seven bits are incremented.
+         */
+        private void IncrementMemoryRefreshRegister()
+        {
+            // The highest bit of R is not changed during the increment. So here we mask off
+            // the higest bit to preserve it and combine that with the incremeneted value of
+            // the other 7 bits.
+            Registers.R = (byte)((Registers.R & 0x80) | (((Registers.R & 0x7f) + 1) & 0x7f));
+        }
 
         /**
          * A helper method used to encapsulate the logic for the setting of the Sign, Zero and

@@ -44,29 +44,6 @@ namespace JustinCredible.ZilogZ80.Tests
             Assert.Equal(0x34, cpu.Memory.Read(0x3FFD));
         }
 
-        [Fact]
-        public void TestStepMaskableInterrupt_DoesNothingWhenInterruptsDisabled()
-        {
-            var initialState = new CPUConfig()
-            {
-                InterruptsEnabled = false,
-                Registers = new CPURegisters()
-                {
-                    PC = 0x1234,
-                    SP = 0x3FFF,
-                },
-            };
-
-            var cpu = new CPU(initialState);
-
-            var cycles = cpu.StepMaskableInterrupt(0x00);
-
-            Assert.Equal(0, cycles);
-            Assert.False(cpu.InterruptsEnabled);
-            Assert.Equal(0x1234, cpu.Registers.PC);
-            Assert.Equal(0x3FFF, cpu.Registers.SP);
-        }
-
         [Theory]
         [InlineData(OpcodeBytes.RST_00, 0x0000)]
         [InlineData(OpcodeBytes.RST_08, 0x0008)]
@@ -140,10 +117,13 @@ namespace JustinCredible.ZilogZ80.Tests
         }
 
         [Theory]
-        [InlineData(0x22, 0x25, 0x2225)]
-        [InlineData(0x05, 0xF3, 0x05F3)]
+        [InlineData(0x22, 0x25, 0x6677)]
+        [InlineData(0x05, 0xF3, 0x7575)]
         public void TestStepMaskableInterrupt_Mode2(byte interruptVector, byte dataBusValue, UInt16 expectedProgramCounter)
         {
+            var rawMemory = new byte[16*1024];
+            var memory = new SimpleMemory(rawMemory);
+
             var initialState = new CPUConfig()
             {
                 InterruptsEnabled = true,
@@ -154,7 +134,11 @@ namespace JustinCredible.ZilogZ80.Tests
                     SP = 0x3FFF,
                     I = interruptVector,
                 },
+                Memory = memory,
             };
+
+            var addressIntoVectorTable = (interruptVector << 8) | dataBusValue;
+            memory.Write16(addressIntoVectorTable, expectedProgramCounter);
 
             var cpu = new CPU(initialState);
 

@@ -33,7 +33,7 @@ namespace JustinCredible.ZilogZ80
         public byte I { get; set; }
 
         /** DRAM refresh counter */
-        public byte R { get; set; } // TODO; should increment like the PC does?
+        public byte R { get; set; }
 
         /** Index/Base Register */
         public UInt16 IX { get; set; }
