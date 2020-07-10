@@ -82,6 +82,8 @@ namespace JustinCredible.PacEmu
         // Zilog Z80
         private CPU _cpu;
 
+        private VideoHardware _video;
+
         // The game's video hardware runs at 60hz. It generates an interrupts @ 60hz (VBLANK).To simulate
         // this, we'll calculate the number of cycles we're expecting between each of these interrupts.
         // While this is not entirely accurate, it is close enough for the game to run as expected.
@@ -483,6 +485,8 @@ namespace JustinCredible.PacEmu
             };
 
             // TODO: Initialize emulated video and sound hardware here?
+            _video = new VideoHardware(romData);
+            _video.Initialize();
 
             if (state != null)
                 LoadState(state);

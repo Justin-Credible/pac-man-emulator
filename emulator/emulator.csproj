@@ -15,4 +15,11 @@
     <ProjectReference Include="..\disassembler\disassembler.csproj" />
   </ItemGroup>
 
+  <!-- Allows the unit test project to have access to the properties declared internal. -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+    <_Parameter1>emulator.tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>

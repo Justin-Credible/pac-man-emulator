@@ -35,6 +35,13 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
   - [X] CPU / Memory configuration
   - [X] Interrupts?
   - [ ] Video
+    - [X] Parse Color ROM
+    - [ ] Parse Palettes
+    - [ ] Parse Tiles
+    - [ ] Render Tiles
+    - [ ] Parse Sprites
+    - [ ] Render Sprites
+    - [ ] Render entire screen
   - [ ] Audio
   - [ ] Other hardware?
 - [ ] Cleanup
