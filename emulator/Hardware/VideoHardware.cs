@@ -15,6 +15,7 @@ namespace JustinCredible.PacEmu
         private byte[] _spriteROM = null;
 
         internal Color[] _colors = null;
+        internal Color[][] _palettes = null;
 
         public VideoHardware(ROMData romData)
         {
@@ -90,7 +91,40 @@ namespace JustinCredible.PacEmu
             if (_paletteROM == null)
                 throw new ArgumentException("Palette ROM is required.");
 
-            // TODO: Pre-build palette colors from palette ROM.
+            // Built palette table so we can lookup each color. Information from
+            // Chris Lomont's Pac-Man Emulation Guide v0.1, page 6, figure 3.
+
+            // Each palette is 4 bytes and consists of 4 colors.
+            _palettes = new Color[_paletteROM.Length / 4][];
+
+            var paletteIndex = 0;
+
+            // Step over each palette entry, which is four bytes...
+            for (var i = 0; i < _paletteROM.Length; i += 4)
+            {
+                // Each byte is an index into the color ROM values.
+                var color0Number = _paletteROM[i];
+                var color1Number = _paletteROM[i + 1];
+                var color2Number = _paletteROM[i + 2];
+                var color3Number = _paletteROM[i + 3];
+
+                // Grab each of the colors for this palette.
+                var color0 = _colors[color0Number];
+                var color1 = _colors[color1Number];
+                var color2 = _colors[color2Number];
+                var color3 = _colors[color3Number];
+
+                // Create an entry in the palette table.
+                _palettes[paletteIndex] = new Color[4]
+                {
+                    color0,
+                    color1,
+                    color2,
+                    color3,
+                };
+
+                paletteIndex++;
+            }
         }
 
         public void InitializeTiles()
