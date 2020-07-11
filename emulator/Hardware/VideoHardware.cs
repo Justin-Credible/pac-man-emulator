@@ -17,6 +17,8 @@ namespace JustinCredible.PacEmu
         internal Color[] _colors = null;
         internal Color[][] _palettes = null;
 
+        private TileRenderer _tileRenderer = null;
+
         public VideoHardware(ROMData romData)
         {
             _colorROM = romData.Data[ROMs.PAC_MAN_COLOR.FileName];
@@ -132,7 +134,8 @@ namespace JustinCredible.PacEmu
             if (_tileROM == null)
                 throw new ArgumentException("Tile ROM is required.");
 
-            // TODO: ???
+            _tileRenderer = new TileRenderer(_tileROM, _palettes);
+            _tileRenderer.PreRenderAllTiles();
         }
 
         public void InitializeSprites()
