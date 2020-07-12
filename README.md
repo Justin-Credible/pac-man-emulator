@@ -39,7 +39,7 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
     - [X] Parse Palettes
     - [X] Parse Tiles
     - [X] Render Tiles
-    - [ ] Parse Sprites
+    - [X] Parse Sprites
     - [ ] Render Sprites
     - [ ] Render entire screen
   - [ ] Audio
