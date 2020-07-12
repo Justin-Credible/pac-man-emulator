@@ -96,7 +96,7 @@ namespace JustinCredible.PacEmu
                 // cabinet is rotated to the left (-90 degrees) for a 3:4 display.
                 var gui = new GUI();
                 gui.OnTick += GUI_OnTick;
-                gui.Initialize("Pac-Man Arcade Hardware Emulator", PacManPCB.RESOLUTION_HEIGHT, PacManPCB.RESOLUTION_WIDTH, 2, 2);
+                gui.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_HEIGHT, VideoHardware.RESOLUTION_WIDTH, 2, 2);
 
                 // Initialize sound effects if the sfx option was passed.
                 // if (sfx != null)

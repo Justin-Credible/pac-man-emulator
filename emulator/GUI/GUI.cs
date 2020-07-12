@@ -210,7 +210,7 @@ namespace JustinCredible.PacEmu
                     var bits = new System.Collections.BitArray(tickEventArgs.FrameBuffer);
 
                     var x = 0;
-                    var y = PacManPCB.RESOLUTION_WIDTH - 1;
+                    var y = VideoHardware.RESOLUTION_WIDTH - 1;
 
                     for (var i = 0; i < bits.Length; i++)
                     {
@@ -234,11 +234,11 @@ namespace JustinCredible.PacEmu
 
                         if (y == -1)
                         {
-                            y = PacManPCB.RESOLUTION_WIDTH - 1;
+                            y = VideoHardware.RESOLUTION_WIDTH - 1;
                             x++;
                         }
 
-                        if (x == PacManPCB.RESOLUTION_HEIGHT)
+                        if (x == VideoHardware.RESOLUTION_HEIGHT)
                             break;
                     }
 

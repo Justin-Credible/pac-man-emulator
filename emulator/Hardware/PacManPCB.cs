@@ -13,7 +13,7 @@ namespace JustinCredible.PacEmu
 {
     /**
      * An implementation of the Pac-Man game hardware for emulation; this includes the
-     * Zilog Z80 CPU instance, TODO hardware, interrupts, debugger, and hardware loop.
+     * Zilog Z80 CPU instance, video & sound hardware, interrupts, debugger, and hardware loop.
      */
     public class PacManPCB : IMemory
     {
@@ -21,20 +21,6 @@ namespace JustinCredible.PacEmu
 
         // The Zilog Z80 for the Pac-Man hardware is clocked at 3.072MHz.
         private const int CPU_MHZ = 3072000;
-
-        // While the resolution is indeed 288x224, note that the monitor for this
-        // game is portrait, not landscape. It is rotated -90 degrees (counterclockwise)
-        // in the cabinet and therefore the resolution viewable to the user will be 224x256.
-        // The framebuffer will need to be rotated before it is displayed to the end user.
-        public const int RESOLUTION_WIDTH = 288;
-        public const int RESOLUTION_HEIGHT = 224;
-
-        // TODO
-        // The frame buffer is 256 x 224, which is 57,344 pixels. Since the display is only
-        // black and white, we only need one bit per pixel. Therefore we need 57,344 / 8
-        // => 7,168 bytes or 7 KB for the frame buffer. This is pulled from the video RAM
-        // portion which is at $2400-$3fff.
-        // private const int FRAME_BUFFER_SIZE = 1024 * 7;
 
         #endregion
 
@@ -481,7 +467,7 @@ namespace JustinCredible.PacEmu
                 ShouldRender = false,
 
                 // TODO: This is a placeholder for now; the FrameBuffer will need to be a bitmap or similar.
-                FrameBuffer = new byte[RESOLUTION_WIDTH * RESOLUTION_HEIGHT],
+                FrameBuffer = new byte[0],
             };
 
             // TODO: Initialize emulated video and sound hardware here?
