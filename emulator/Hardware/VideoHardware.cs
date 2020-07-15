@@ -161,24 +161,137 @@ namespace JustinCredible.PacEmu
         {
             var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT);
 
-            // Render background; this includes the playfield (maze, dots, power pelletes),
-            // top bar (scores), and bottom bar (lives and level counter).
-            RenderTiles(memory, image);
+            // Each region below handles rendering a different portion of the screen. Order
+            // is important here as it determines which pixels overwrite other pixels (sprite
+            // ordering etc).
+            // The playfield tiles are lowest priority; essentially the background.
+            // The sprites are next
+            // Then the top and bottom tiles for the scoreboard and lives.
 
-            // TODO: Render sprites.
-            // RenderSprites(memory, image);
+            var originX = 0;
+            var originY = 0;
 
-            return image;
-        }
+            #region Render the playfield background tiles
 
-        public void RenderTiles(IMemory memory, Image<Rgba32> image)
-        {
+            // The playfield uses addresses 040 through 3BF, increasing from top to bottom,
+            // right to left, starting at the top right corner of the playfield.
+
+            originX = 29 * 8; // Column 30 (29 zero-indexed)
+            originY = 2 * 8; // Row 3 (2 zero-indexed)
+
+            var playfieldRow = 1;
+
+            for (var i = 0x040; i <= 0x3BF; i++)
+            {
+                var tileAddress = 0x4000 + i;
+                var paletteAddress = 0x4400 + i;
+
+                var tileIndex = memory.Read(tileAddress);
+                var paletteIndex = memory.Read(paletteAddress);
+
+                var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
+
+                for (var y = 0; y < 8; y++)
+                {
+                    for (var x = 0; x < 8; x++)
+                    {
+                        image[originX + x, originY + y] = tile[x, y];
+                    }
+                }
+
+                if (playfieldRow == 32)
+                {
+                    // Next column (to the left) and back to the top.
+                    originX -= 8;
+                    originY = 2 * 8; // Row 3 (2 zero-indexed)
+                    playfieldRow = 1;
+                }
+                else
+                {
+                    // Next row.
+                    originY += 8;
+                    playfieldRow++;
+                }
+            }
+
+            #endregion
+
+            #region Render the sprites
+
+            // There are 8 sprites (0-7). The lower number sprites will be drawn over the top
+            // of the higher numbered onces. Addresses 5060 - 506F contain the sprite X/Y coordinates
+            // (one byte per coordinate) while 4FF0 - 4FFF contain the sprite index, flip X/Y flags,
+            // and palette index (one byte for the # and flip flags and one for the palette).
+
+            // We'll loop over the addresses backwards, so we draw sprite 7 first, and 0 last.
+            var spriteCoordinateAddress = 0x506F;
+            var spriteDataAddress = 0x4FFF;
+
+            for (var i = 0; i < 8; i++)
+            {
+                var spriteOriginY = memory.Read(spriteCoordinateAddress);
+                spriteCoordinateAddress--;
+
+                var spriteOriginX = memory.Read(spriteCoordinateAddress);
+                spriteCoordinateAddress--;
+
+                var paletteIndex = memory.Read(spriteDataAddress);
+                spriteDataAddress--;
+
+                var flags = memory.Read(spriteDataAddress);
+                spriteDataAddress--;
+
+                // The lower two bites are the flip flags, and the upper 6 bits are the index.
+                var flipX = (flags & 0x02) == 0x02;
+                var flipY = (flags & 0x01) == 0x01;
+                var spriteIndex = (flags & 0xFC) >> 2;
+
+                var sprite = _spriteRenderer.RenderSprite(spriteIndex, paletteIndex, flipX, flipY);
+
+                // Adjust coordinates. The coordinates are (x, y) from the lower left corner of the CRT
+                // when in portrait mode. However, since the screen is rotated counter-clockwise (-90 deg)
+                // in the cabinet, combined with the fact that we're rendering on a vertical canvas already
+                // means we'll need to convert the coordinates. Additionally, we need to account for the
+                // fact that the Y axis of the sprites is offset by 16 (the background tiles can be drawn
+                // out another 2 tiles, which is 16 pixels).
+
+                // Example, the lowest and furthest right sprite that can be displayed fully is (31, 16).
+                // (31, 16) (x, y) from lower left, 0 deg rotation and coordinates (0, 0) at lower left
+                // => (256 - 16, 288 - 31) => (240, 257) for 90 deg rotation and coordinates (0, 0) at top left
+
+                var convertedX = RESOLUTION_WIDTH - 16 - spriteOriginY;
+                var convertedY = RESOLUTION_HEIGHT - spriteOriginX;
+
+                // Copy the rendered sprite over into the full image.
+                for (var y = 0; y < 16; y++)
+                {
+                    for (var x = 0; x < 16; x++)
+                    {
+                        var pixel = sprite[x, y];
+                        var isTransparent = pixel.A == 255;
+
+                        if (isTransparent)
+                            continue;
+
+                        // TODO: I'm currently skipping and sprites that don't fully fit on the screen.
+                        // The correct behavior here is to actually wrap the sprite around to the other
+                        // side of the screen. Skipping for now since I'm not sure it's actually used.
+                        if (convertedX + x >= image.Width || convertedY + y >= image.Height)
+                            continue;
+
+                        image[convertedX + x, convertedY + y] = sprite[x, y];
+                    }
+                }
+            }
+
+            #endregion
+
             #region Render top strip of tiles (scores).
 
             // First row uses addresses 3DF through 3C0, decreasing from left to right.
 
-            var originX = 0;  // Column 0
-            var originY = 0;  // Row 0
+            originX = 0;  // Column 0
+            originY = 0;  // Row 0
 
             for (var i = 0x3DF; i >= 0x3C0; i--)
             {
@@ -227,51 +340,6 @@ namespace JustinCredible.PacEmu
 
                 // Next column.
                 originX += 8;
-            }
-
-            #endregion
-
-            #region Render the playfield background tiles
-
-            // The playfield uses addresses 040 through 3BF, increasing from top to bottom,
-            // right to left, starting at the top right corner of the playfield.
-
-            originX = 29 * 8; // Column 30 (29 zero-indexed)
-            originY = 2 * 8; // Row 3 (2 zero-indexed)
-
-            var playfieldRow = 1;
-
-            for (var i = 0x040; i <= 0x3BF; i++)
-            {
-                var tileAddress = 0x4000 + i;
-                var paletteAddress = 0x4400 + i;
-
-                var tileIndex = memory.Read(tileAddress);
-                var paletteIndex = memory.Read(paletteAddress);
-
-                var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
-
-                for (var y = 0; y < 8; y++)
-                {
-                    for (var x = 0; x < 8; x++)
-                    {
-                        image[originX + x, originY + y] = tile[x, y];
-                    }
-                }
-
-                if (playfieldRow == 32)
-                {
-                    // Next column (to the left) and back to the top.
-                    originX -= 8;
-                    originY = 2 * 8; // Row 3 (2 zero-indexed)
-                    playfieldRow = 1;
-                }
-                else
-                {
-                    // Next row.
-                    originY += 8;
-                    playfieldRow++;
-                }
             }
 
             #endregion
@@ -333,6 +401,8 @@ namespace JustinCredible.PacEmu
             }
 
             #endregion
+
+            return image;
         }
     }
 }
