@@ -1,6 +1,7 @@
 
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using Color = System.Drawing.Color;
 
 namespace JustinCredible.PacEmu
@@ -17,12 +18,18 @@ namespace JustinCredible.PacEmu
         // The sprite cache is a two dimensional array, where the first dimension is the index
         // of the color palette and the second dimension is the index of the sprite.
         private Image<Rgba32>[][] _spriteCache;
+        private Image<Rgba32>[][] _spriteCacheFlipX;
+        private Image<Rgba32>[][] _spriteCacheFlipY;
+        private Image<Rgba32>[][] _spriteCacheFlipBoth;
 
         public SpriteRenderer(byte[] spriteROM, Color[][] palettes)
         {
             _spriteROM = spriteROM;
             _palettes = palettes;
             _spriteCache = new Image<Rgba32>[palettes.Length][];
+            _spriteCacheFlipX = new Image<Rgba32>[palettes.Length][];
+            _spriteCacheFlipY = new Image<Rgba32>[palettes.Length][];
+            _spriteCacheFlipBoth = new Image<Rgba32>[palettes.Length][];
         }
 
         /**
@@ -39,11 +46,17 @@ namespace JustinCredible.PacEmu
             for (int paletteIndex = 0; paletteIndex < _palettes.Length; paletteIndex++)
             {
                 _spriteCache[paletteIndex] = new Image<Rgba32>[spriteCount];
+                _spriteCacheFlipX[paletteIndex] = new Image<Rgba32>[spriteCount];
+                _spriteCacheFlipY[paletteIndex] = new Image<Rgba32>[spriteCount];
+                _spriteCacheFlipBoth[paletteIndex] = new Image<Rgba32>[spriteCount];
 
-                // ... render each sprite in said color and then cache it.
+                // ... render each sprite in each palette and orientation and then cache it.
                 for (int spriteIndex = 0; spriteIndex < spriteCount; spriteIndex++)
                 {
-                    _spriteCache[paletteIndex][spriteIndex] = RenderSprite(spriteIndex, paletteIndex);
+                    _spriteCache[paletteIndex][spriteIndex] = RenderSprite(spriteIndex, paletteIndex, false, false);
+                    _spriteCacheFlipX[paletteIndex][spriteIndex] = RenderSprite(spriteIndex, paletteIndex, flipX: true, flipY: false);
+                    _spriteCacheFlipY[paletteIndex][spriteIndex] = RenderSprite(spriteIndex, paletteIndex, flipX: false, flipY: true);
+                    _spriteCacheFlipBoth[paletteIndex][spriteIndex] = RenderSprite(spriteIndex, paletteIndex, flipX: true, flipY: true);
                 }
             }
         }
@@ -51,9 +64,18 @@ namespace JustinCredible.PacEmu
         /**
          * Renders the given sprite with the given color palette.
          */
-        public Image<Rgba32> RenderSprite(int spriteIndex, int paletteIndex)
+        public Image<Rgba32> RenderSprite(int spriteIndex, int paletteIndex, bool flipX = false, bool flipY = false)
         {
-            var sprite = _spriteCache?[paletteIndex]?[spriteIndex];
+            Image<Rgba32> sprite = null;
+
+            if (flipX && flipY)
+                sprite = _spriteCacheFlipBoth?[paletteIndex]?[spriteIndex];
+            else if (flipX)
+                sprite = _spriteCacheFlipX?[paletteIndex]?[spriteIndex];
+            else if (flipY)
+                sprite = _spriteCacheFlipY?[paletteIndex]?[spriteIndex];
+            else
+                sprite = _spriteCache?[paletteIndex]?[spriteIndex];
 
             if (sprite != null)
                 return sprite;
@@ -150,6 +172,12 @@ namespace JustinCredible.PacEmu
                     }
                 }
             }
+
+            if (flipX)
+                sprite.Mutate(x => x.Flip(FlipMode.Horizontal));
+
+            if (flipY)
+                sprite.Mutate(x => x.Flip(FlipMode.Vertical));
 
             return sprite;
         }
