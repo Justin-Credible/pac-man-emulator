@@ -63,7 +63,8 @@ namespace JustinCredible.PacEmu
             // See: Chris Lomont's Pac-Man Emulation Guide v0.1, page 6-7.
 
             // Each sprite is 16x16 pixels.
-            sprite = new Image<Rgba32>(16, 16);
+            // Note that we mark all the background pixels as transparent here.
+            sprite = new Image<Rgba32>(16, 16, new Rgba32() { A = 255 });
 
             // Each 8x4 strip of pixels is a "group" defined by 8 bytes.
             // Each strip goes into one of the follow location "slots"
@@ -87,7 +88,6 @@ namespace JustinCredible.PacEmu
             var originY = 0;
 
             // Loop over the 64 bytes of data that will make up the pixels for the 8x8 sprite.
-            // for (var i = spriteByteEndIndex - 1; i >= spriteByteStartIndex; i--)
             foreach (var groupIndex in groupIndexOrder)
             {
                 // Each sprite is 64 bytes long; calculate the start and stop index into the sprite
@@ -131,11 +131,11 @@ namespace JustinCredible.PacEmu
 
                     // Place each pixel in the sprite using the correct color.
                     // Note that the bottom of the column is pixel #1 and the top is pixel #4.
-                    // TODO: Palette index 0 is transparent for sprites?
-                    sprite[originX, originY + 0] = new Rgba32() { R = pixel4Color.R, G = pixel4Color.G, B = pixel4Color.B };
-                    sprite[originX, originY + 1] = new Rgba32() { R = pixel3Color.R, G = pixel3Color.G, B = pixel3Color.B };
-                    sprite[originX, originY + 2] = new Rgba32() { R = pixel2Color.R, G = pixel2Color.G, B = pixel2Color.B };
-                    sprite[originX, originY + 3] = new Rgba32() { R = pixel1Color.R, G = pixel1Color.G, B = pixel1Color.B };
+                    // Pixels using color index 0 of the palette are treated as transparent.
+                    sprite[originX, originY + 0] = new Rgba32() { R = pixel4Color.R, G = pixel4Color.G, B = pixel4Color.B, A = (byte)(pixel4ColorIndex == 0 ? 255 : 0) };
+                    sprite[originX, originY + 1] = new Rgba32() { R = pixel3Color.R, G = pixel3Color.G, B = pixel3Color.B, A = (byte)(pixel3ColorIndex == 0 ? 255 : 0) };
+                    sprite[originX, originY + 2] = new Rgba32() { R = pixel2Color.R, G = pixel2Color.G, B = pixel2Color.B, A = (byte)(pixel2ColorIndex == 0 ? 255 : 0) };
+                    sprite[originX, originY + 3] = new Rgba32() { R = pixel1Color.R, G = pixel1Color.G, B = pixel1Color.B, A = (byte)(pixel1ColorIndex == 0 ? 255 : 0) };
 
                     if (originX == 15)
                     {

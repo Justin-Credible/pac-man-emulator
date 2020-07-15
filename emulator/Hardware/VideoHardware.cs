@@ -27,6 +27,7 @@ namespace JustinCredible.PacEmu
         internal Color[][] _palettes = null;
 
         private TileRenderer _tileRenderer = null;
+        private SpriteRenderer _spriteRenderer = null;
 
         public VideoHardware(ROMData romData)
         {
@@ -152,7 +153,8 @@ namespace JustinCredible.PacEmu
             if (_spriteROM == null)
                 throw new ArgumentException("Sprite ROM is required.");
 
-            // TODO: ???
+            _spriteRenderer = new SpriteRenderer(_spriteROM, _palettes);
+            _spriteRenderer.PreRenderAllSprites();
         }
 
         public Image<Rgba32> Render(IMemory memory)
