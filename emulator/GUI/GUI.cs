@@ -196,50 +196,14 @@ namespace JustinCredible.PacEmu
                 // the SDL_RenderPresent method is relatively expensive.
                 if (tickEventArgs.ShouldRender && tickEventArgs.FrameBuffer != null)
                 {
-                    // Render screen from the updated the frame buffer.
-                    // NOTE: The electron beam scans from left to right, starting in the upper left corner
-                    // of the CRT when it is in 4:3 (landscape), which is how the framebuffer is stored.
-                    // However, since the CRT in the cabinet is rotated left (-90 degrees) to show the game
-                    // in 3:4 (portrait) we need to perform the rotation of points below by starting in the
-                    // bottom left corner of the window and drawing upwards, ending on the top right.
-
-                    // Clear the screen.
-                    SDL.SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 0);
-                    SDL.SDL_RenderClear(_renderer);
-
-                    var bits = new System.Collections.BitArray(tickEventArgs.FrameBuffer);
-
-                    var x = 0;
-                    var y = VideoHardware.RESOLUTION_WIDTH - 1;
-
-                    for (var i = 0; i < bits.Length; i++)
+                    for (var y = 0; y < VideoHardware.RESOLUTION_WIDTH; y ++)
                     {
-                        if (bits[i])
+                        for (var x = 0; x < VideoHardware.RESOLUTION_HEIGHT; x++)
                         {
-                            // The CRT is black/white and the framebuffer is 1-bit per pixel.
-                            // A transparent overlay added "colors" to areas of the CRT. These
-                            // are the approximate y locations of each area/color of the overlay:
-
-                            if (y >= 182 && y <= 223)
-                                SDL.SDL_SetRenderDrawColor(_renderer, 0, 255, 0, 255); // Green - player and shields
-                            else if (y >= 33 && y <= 55)
-                                SDL.SDL_SetRenderDrawColor(_renderer, 255, 0, 0, 255); // Red - UFO
-                            else
-                                SDL.SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255); // White - Everything else
-
+                            var pixel = tickEventArgs.FrameBuffer[x, y];
+                            SDL.SDL_SetRenderDrawColor(_renderer, pixel.R, pixel.G, pixel.B, 255);
                             SDL.SDL_RenderDrawPoint(_renderer, x, y);
                         }
-
-                        y--;
-
-                        if (y == -1)
-                        {
-                            y = VideoHardware.RESOLUTION_WIDTH - 1;
-                            x++;
-                        }
-
-                        if (x == VideoHardware.RESOLUTION_HEIGHT)
-                            break;
                     }
 
                     SDL.SDL_RenderPresent(_renderer);

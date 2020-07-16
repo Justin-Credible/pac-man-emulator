@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using SDL2;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace JustinCredible.PacEmu
 {
@@ -28,7 +29,7 @@ namespace JustinCredible.PacEmu
         public bool ShouldBreak { get; set; } = false;
 
         // In
-        public byte[] FrameBuffer { get; set; }
+        public Image<Rgba32> FrameBuffer { get; set; }
         public bool ShouldRender { get; set; }
         public bool ShouldPlaySounds { get; set; }
         // public List<SoundEffect> SoundEffects { get; set; } = new List<SoundEffect>();

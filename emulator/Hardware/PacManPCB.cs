@@ -465,9 +465,7 @@ namespace JustinCredible.PacEmu
             _renderEventArgs = new RenderEventArgs()
             {
                 ShouldRender = false,
-
-                // TODO: This is a placeholder for now; the FrameBuffer will need to be a bitmap or similar.
-                FrameBuffer = new byte[0],
+                FrameBuffer = null,
             };
 
             // TODO: Initialize emulated video and sound hardware here?
@@ -636,10 +634,9 @@ namespace JustinCredible.PacEmu
                 // CRT electron beam reached the end (V-Blank).
                 if (OnRender != null)
                 {
-                    // TODO: Delegate to emulated video rendering hardware here to generate a bitmap...
-                    // OR pass along the already rendered bitmap? Is this the correct point at which to
-                    // generate the entire bitmap/framebuffer??
-                    // Array.Copy(_cpu.Memory, 0x2400, _renderEventArgs.FrameBuffer, 0, FRAME_BUFFER_SIZE);
+                    var image = _video.Render(this);
+                    _renderEventArgs.FrameBuffer = image;
+
                     OnRender(_renderEventArgs);
                 }
             }

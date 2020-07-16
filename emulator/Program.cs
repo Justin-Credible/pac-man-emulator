@@ -5,6 +5,8 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.Extensions.CommandLineUtils;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace JustinCredible.PacEmu
 {
@@ -23,7 +25,7 @@ namespace JustinCredible.PacEmu
         // framebuffer to be rendered and sounds effects to be played with matching
         // flags indicating if a frame/sfx should be rendered/played or not on the
         // next GUI event loop tick (to avoid rendering the same frame multiple times).
-        private static byte[] _frameBuffer;
+        private static Image<Rgba32> _frameBuffer;
         private static bool _renderFrameNextTick = false;
         // private static List<SoundEffect> _soundEffects = new List<SoundEffect>();
         private static bool _playSoundNextTick = false;
