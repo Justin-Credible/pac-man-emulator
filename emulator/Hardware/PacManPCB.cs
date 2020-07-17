@@ -103,6 +103,13 @@ namespace JustinCredible.PacEmu
          */
         private byte[] _memory = null;
 
+        /**
+         * Each pair of bytes is an (x, y) coordinate for each of the 8 hardware sprites.
+         * These can be written to via the addresses 0x5060 - 0x506F and is used by the
+         * video hardware to position the sprites on the screen.
+         */
+        private byte[] _spriteCoordinates = new byte[16];
+
         public byte Read(int address)
         {
             if (address >= 0x0000 && address <= 0x4FFF)
@@ -114,7 +121,7 @@ namespace JustinCredible.PacEmu
             {
                 // IN0 (joystick and coin slot) (each byte returns same value)
                 // TODO: Pass joystick/button state here.
-                return 0x00;
+                return 0x10; // Hardcoding rack advance as disabled for now.
             }
             else if (address == 0x5003)
             {
@@ -151,13 +158,13 @@ namespace JustinCredible.PacEmu
             {
                 // IN1 (joystick and start buttons) (each byte returns same value)
                 // TODO: Pass joystick/button state here.
-                return 0x00;
+                return 0x10; // Hard code board test to OFF for now.
             }
             else if (address >= 0x5080 && address <= 0x50BF)
             {
                 // Dip Switch Settings (each byte returns same value)
                 // TODO: Pass dip switch values here.
-                return 0x00;
+                return 0b11001001;
             }
             else if (address < 0x00)
             {
@@ -292,9 +299,9 @@ namespace JustinCredible.PacEmu
             }
             else if (address >= 0x5060 && address <= 0x506F)
             {
-                // Sprite x, y coordinates
-                // TODO: Implement.
-                return; // no-op
+                // Sprite x, y coordinates.
+                // Convert the address to fit in the byte array that holds the 16 coordinate values.
+                _spriteCoordinates[address - 0x5060] = value;
             }
             else if (address >= 0x50C0 && address <= 0x50FF)
             {
@@ -304,9 +311,9 @@ namespace JustinCredible.PacEmu
             }
             else
             {
-                // TODO: I may need to remove and/or relax this restriction. Adding an exception for now
-                // so I can troubleshoot while getting things running.
-                throw new Exception(String.Format("Unexpected write to memory address: 0x{0:X4} with value: 0x{1:X2}", address, value));
+                // Writing to any other locations will do nothing.
+                // NOTE: A bunch of these writes occur during bootup / self-test.
+                // Console.WriteLine(String.Format("Unexpected write to memory address: 0x{0:X4} with value: 0x{1:X2}", address, value));
             }
         }
 
@@ -464,7 +471,6 @@ namespace JustinCredible.PacEmu
 
             _renderEventArgs = new RenderEventArgs()
             {
-                ShouldRender = false,
                 FrameBuffer = null,
             };
 
@@ -634,8 +640,21 @@ namespace JustinCredible.PacEmu
                 // CRT electron beam reached the end (V-Blank).
                 if (OnRender != null)
                 {
-                    var image = _video.Render(this);
-                    _renderEventArgs.FrameBuffer = image;
+                    // Render the screen.
+                    var image = _video.Render(this, _spriteCoordinates);
+
+                    // Convert the image into a bitmap.
+
+                    byte[] bitmap = null;
+
+                    using (var steam = new MemoryStream())
+                    {
+                        image.Save(steam, new SixLabors.ImageSharp.Formats.Bmp.BmpEncoder());
+                        bitmap = steam.ToArray();
+                    }
+
+                    _renderEventArgs.FrameBuffer = bitmap;
+
 
                     OnRender(_renderEventArgs);
                 }
@@ -845,9 +864,11 @@ namespace JustinCredible.PacEmu
                     HalfCarry = _cpu.Flags.HalfCarry,
                     Shadow = _cpu.Flags.Shadow,
                 },
+                Halted = _cpu.Halted,
                 InterruptsEnabled = _cpu.InterruptsEnabled,
                 InterruptMode = _cpu.InterruptMode,
                 Memory = _memory,
+                SpriteCoordinates = _spriteCoordinates,
                 TotalCycles = _totalCycles,
                 TotalSteps = _totalSteps,
                 CyclesSinceLastInterrupt = _cyclesSinceLastInterrupt,
@@ -862,9 +883,11 @@ namespace JustinCredible.PacEmu
         {
             _cpu.Registers = state.Registers;
             _cpu.Flags = state.Flags;
+            _cpu.Halted = state.Halted;
             _cpu.InterruptsEnabled = state.InterruptsEnabled;
             _cpu.InterruptMode = state.InterruptMode;
             _memory = state.Memory;
+            _spriteCoordinates = state.SpriteCoordinates;
             _totalCycles = state.TotalCycles;
             _totalSteps = state.TotalSteps;
             _cyclesSinceLastInterrupt = state.CyclesSinceLastInterrupt;

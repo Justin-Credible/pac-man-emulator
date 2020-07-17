@@ -4051,7 +4051,7 @@ namespace SDL2
 		/* IntPtr refers to an SDL_Surface* */
 		/* THIS IS AN RWops FUNCTION! */
 		[DllImport(nativeLibName, EntryPoint = "SDL_LoadBMP_RW", CallingConvention = CallingConvention.Cdecl)]
-		private static extern IntPtr INTERNAL_SDL_LoadBMP_RW(
+		public static extern IntPtr INTERNAL_SDL_LoadBMP_RW(
 			IntPtr src,
 			int freesrc
 		);

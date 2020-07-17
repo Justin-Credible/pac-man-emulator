@@ -47,6 +47,11 @@ namespace JustinCredible.ZilogZ80
          */
         public byte Shadow;
 
+        // Need parameterless constructor for JSON deserialization.
+        public ConditionFlags()
+        {
+        }
+
         public ConditionFlags(byte? registerValue = null)
         {
             if (registerValue.HasValue)

@@ -6,7 +6,6 @@ namespace JustinCredible.PacEmu
 {
     public class RenderEventArgs : EventArgs
     {
-        public Image<Rgba32> FrameBuffer { get; set; }
-        public bool ShouldRender { get; set; }
+        public byte[] FrameBuffer { get; set; } // Bitmap
     }
 }

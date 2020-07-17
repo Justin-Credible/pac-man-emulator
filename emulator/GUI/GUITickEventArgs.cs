@@ -29,7 +29,7 @@ namespace JustinCredible.PacEmu
         public bool ShouldBreak { get; set; } = false;
 
         // In
-        public Image<Rgba32> FrameBuffer { get; set; }
+        public byte[] FrameBuffer { get; set; } // Bitmap
         public bool ShouldRender { get; set; }
         public bool ShouldPlaySounds { get; set; }
         // public List<SoundEffect> SoundEffects { get; set; } = new List<SoundEffect>();

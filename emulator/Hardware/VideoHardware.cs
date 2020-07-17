@@ -157,7 +157,7 @@ namespace JustinCredible.PacEmu
             _spriteRenderer.PreRenderAllSprites();
         }
 
-        public Image<Rgba32> Render(IMemory memory)
+        public Image<Rgba32> Render(IMemory memory, byte[] spriteCoordinates)
         {
             var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT);
 
@@ -219,21 +219,22 @@ namespace JustinCredible.PacEmu
             #region Render the sprites
 
             // There are 8 sprites (0-7). The lower number sprites will be drawn over the top
-            // of the higher numbered onces. Addresses 5060 - 506F contain the sprite X/Y coordinates
+            // of the higher numbered onces. The sprite X/Y coordinates were written to addresses
+            // 5060 - 506F and are available here to the video hardware as spriteCoordinates[]
             // (one byte per coordinate) while 4FF0 - 4FFF contain the sprite index, flip X/Y flags,
             // and palette index (one byte for the # and flip flags and one for the palette).
 
             // We'll loop over the addresses backwards, so we draw sprite 7 first, and 0 last.
-            var spriteCoordinateAddress = 0x506F;
+            var spriteCoordinatesIndex = 15;
             var spriteDataAddress = 0x4FFF;
 
             for (var i = 0; i < 8; i++)
             {
-                var spriteOriginY = memory.Read(spriteCoordinateAddress);
-                spriteCoordinateAddress--;
+                var spriteOriginY = spriteCoordinates[spriteCoordinatesIndex];
+                spriteCoordinatesIndex--;
 
-                var spriteOriginX = memory.Read(spriteCoordinateAddress);
-                spriteCoordinateAddress--;
+                var spriteOriginX = spriteCoordinates[spriteCoordinatesIndex];
+                spriteCoordinatesIndex--;
 
                 var paletteIndex = memory.Read(spriteDataAddress);
                 spriteDataAddress--;
@@ -246,21 +247,15 @@ namespace JustinCredible.PacEmu
                 var flipY = (flags & 0x01) == 0x01;
                 var spriteIndex = (flags & 0xFC) >> 2;
 
+                // Console.WriteLine($"Rendering sprite #{i} with sprite index {spriteIndex} at ({spriteOriginX}, {spriteOriginY}) with palette #{paletteIndex} and flipX: {flipX} / flipY: {flipY}");
+
                 var sprite = _spriteRenderer.RenderSprite(spriteIndex, paletteIndex, flipX, flipY);
 
-                // Adjust coordinates. The coordinates are (x, y) from the lower left corner of the CRT
-                // when in portrait mode. However, since the screen is rotated counter-clockwise (-90 deg)
-                // in the cabinet, combined with the fact that we're rendering on a vertical canvas already
-                // means we'll need to convert the coordinates. Additionally, we need to account for the
-                // fact that the Y axis of the sprites is offset by 16 (the background tiles can be drawn
-                // out another 2 tiles, which is 16 pixels).
-
-                // Example, the lowest and furthest right sprite that can be displayed fully is (31, 16).
-                // (31, 16) (x, y) from lower left, 0 deg rotation and coordinates (0, 0) at lower left
-                // => (256 - 16, 288 - 31) => (240, 257) for 90 deg rotation and coordinates (0, 0) at top left
-
-                var convertedX = RESOLUTION_WIDTH - 16 - spriteOriginY;
-                var convertedY = RESOLUTION_HEIGHT - spriteOriginX;
+                // Adjust coordinates. The coordinates are (x, y) from the lower right corner of the screen.
+                // Additionally, we need to account for the  fact that the Y axis of the sprites is offset
+                // by 16 (the background tiles can be drawn out another 2 tiles, which is 16 pixels).
+                var convertedX = RESOLUTION_WIDTH - spriteOriginX;
+                var convertedY = RESOLUTION_HEIGHT - 16 - spriteOriginY;
 
                 // Copy the rendered sprite over into the full image.
                 for (var y = 0; y < 16; y++)
@@ -276,13 +271,19 @@ namespace JustinCredible.PacEmu
                         // TODO: I'm currently skipping and sprites that don't fully fit on the screen.
                         // The correct behavior here is to actually wrap the sprite around to the other
                         // side of the screen. Skipping for now since I'm not sure it's actually used.
-                        if (convertedX + x >= image.Width || convertedY + y >= image.Height)
+                        if (convertedX + x >= image.Width
+                            || convertedY + y >= image.Height
+                            || convertedX + x < 0
+                            || convertedY + y < 0
+                        )
                             continue;
 
                         image[convertedX + x, convertedY + y] = sprite[x, y];
                     }
                 }
             }
+
+            // TODO: Render black pixels to overlap sprite "hidden" areas?
 
             #endregion
 

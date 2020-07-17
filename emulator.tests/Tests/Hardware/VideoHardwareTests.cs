@@ -205,7 +205,8 @@ namespace JustinCredible.PacEmu.Tests
 
             // Act: Render the image based on the tiles and palettes in memory.
 
-            var image = video.Render(memory);
+            var spriteCoordinates = new byte[16];
+            var image = video.Render(memory, spriteCoordinates);
 
             // Assert: the rendered image should be the same as the reference image.
 
@@ -255,7 +256,8 @@ namespace JustinCredible.PacEmu.Tests
 
             // Act: Render the image based on the tiles and palettes in memory.
 
-            var image = video.Render(memory);
+            var spriteCoordinates = new byte[16];
+            var image = video.Render(memory, spriteCoordinates);
 
             // Assert: the rendered image should be the same as the reference image.
 
@@ -301,7 +303,8 @@ namespace JustinCredible.PacEmu.Tests
 
             // Act: Render the image based on the tiles and palettes in memory.
 
-            var image = video.Render(memory);
+            var spriteCoordinates = new byte[16];
+            var image = video.Render(memory, spriteCoordinates);
 
             // Assert: the rendered image should be the same as the reference image.
 

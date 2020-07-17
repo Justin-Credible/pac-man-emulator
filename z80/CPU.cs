@@ -8,7 +8,7 @@ namespace JustinCredible.ZilogZ80
     public partial class CPU
     {
         /** Indicates the ROM has finished executing via a HALT opcode. */
-        public bool Halted { get; private set; }
+        public bool Halted { get; set; }
 
         /** The addressable memory implementation; can include RAM, ROM, memory mapped devices, etc. */
         public IMemory Memory { get; set; }

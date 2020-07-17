@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using SDL2;
 
 namespace JustinCredible.PacEmu
@@ -37,6 +37,15 @@ namespace JustinCredible.PacEmu
         // more than needed. During each tick we can send key presses as well as
         // receive a framebuffer and play sound effects.
         private int _targetTicksHz = 60;
+
+        // Used to determine the location and size of the texture to render.
+        private SDL.SDL_Rect _renderLocation = new SDL.SDL_Rect()
+        {
+            x = 0,
+            y = 0,
+            w = VideoHardware.RESOLUTION_WIDTH,
+            h = VideoHardware.RESOLUTION_HEIGHT,
+        };
 
         // A map of sound effects enums to the in-memory sound buffers.
         // private Dictionary<SoundEffect, IntPtr> soundEffects = null;
@@ -82,7 +91,12 @@ namespace JustinCredible.PacEmu
             if (_renderer == IntPtr.Zero)
                 throw new Exception(String.Format("Unable to create a renderer. SDL Error: {0}", SDL.SDL_GetError()));
 
+            // We can scale the image up or down based on the scaling factor.
             SDL.SDL_RenderSetScale(_renderer, scaleX, scaleY);
+
+            // By setting the logical size we ensure that the image will scale to fit the window while
+            // still maintaining the original aspect ratio.
+            SDL.SDL_RenderSetLogicalSize(_renderer, width, height);
 
             _targetTicksHz = targetTicskHz;
         }
@@ -141,6 +155,9 @@ namespace JustinCredible.PacEmu
             // the update loop to targetTicskHz if needed.
             var stopwatch = new Stopwatch();
 
+            // For calculating how long the actual rendering of pixels take.
+            // var renderStopwatch = new Stopwatch();
+
             // Structure used to pass data to and from the OnTick handlers. We initialize it once
             // outside of the loop to avoid eating a ton of memory putting GC into a tailspin.
             var tickEventArgs = new GUITickEventArgs();
@@ -196,17 +213,38 @@ namespace JustinCredible.PacEmu
                 // the SDL_RenderPresent method is relatively expensive.
                 if (tickEventArgs.ShouldRender && tickEventArgs.FrameBuffer != null)
                 {
-                    for (var y = 0; y < VideoHardware.RESOLUTION_WIDTH; y ++)
-                    {
-                        for (var x = 0; x < VideoHardware.RESOLUTION_HEIGHT; x++)
-                        {
-                            var pixel = tickEventArgs.FrameBuffer[x, y];
-                            SDL.SDL_SetRenderDrawColor(_renderer, pixel.R, pixel.G, pixel.B, 255);
-                            SDL.SDL_RenderDrawPoint(_renderer, x, y);
-                        }
-                    }
+                    // renderStopwatch.Restart();
+                    // Console.WriteLine("Starting Render!");
 
+                    // Clear the background with black so that if the game is letterboxed or pillarboxed
+                    // the background color of the unused space will be black.
+                    SDL.SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+                    SDL.SDL_RenderClear(_renderer);
+
+                    // In order to pass the managed memory bitmap to the unmanaged SDL methods, we need to
+                    // manually allocate memory for the byte array. This effectively "pins" it so it won't
+                    // be garbage collected. We need to be sure to release this memory after we render.
+                    var frameBuffer = GCHandle.Alloc(tickEventArgs.FrameBuffer, GCHandleType.Pinned);
+                    var frameBufferPointer = frameBuffer.AddrOfPinnedObject();
+
+                    // Now that we have an unmanaged pointer to the bitmap, we can use the SDL methods to
+                    // get an abstract stream interface which will allow us to load the bitmap as a texture.
+                    var frameBufferStreamPointer = SDL.SDL_RWFromMem(frameBufferPointer, tickEventArgs.FrameBuffer.Length);
+                    var sdlBitmap = SDL.INTERNAL_SDL_LoadBMP_RW(frameBufferStreamPointer, 1);
+                    var sdlTexture = SDL.SDL_CreateTextureFromSurface(_renderer, sdlBitmap);
+
+                    // Now that we've loaded the framebuffer's bitmap as a texture, we can now render it to
+                    // the SDL canvas at the given location.
+                    SDL.SDL_RenderCopy(_renderer, sdlTexture, ref _renderLocation, ref _renderLocation);
+
+                    // Ensure we release our unmanaged memory.
+                    frameBuffer.Free();
+
+                    // Now that we're done rendering, we can present this new frame.
                     SDL.SDL_RenderPresent(_renderer);
+
+                    // renderStopwatch.Stop();
+                    // Console.WriteLine("Render completed in: " + renderStopwatch.ElapsedMilliseconds + " ms");
                 }
 
                 // Handle playing sound effects.
