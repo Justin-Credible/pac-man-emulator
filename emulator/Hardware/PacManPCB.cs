@@ -29,7 +29,7 @@ namespace JustinCredible.PacEmu
         // Fired when a frame is ready to be rendered.
         public delegate void RenderEvent(RenderEventArgs e);
         public event RenderEvent OnRender;
-        private RenderEventArgs _renderEventArgs;
+        private RenderEventArgs _renderEventArgs = new RenderEventArgs();
 
         // Fired when a sound effect should be played.
         // public delegate void SoundEvent(SoundEventArgs e);
@@ -217,7 +217,7 @@ namespace JustinCredible.PacEmu
 
                 // TODO: May need to remove/relax this sanity check.
                 if (value != 0x00 && value != 0x01)
-                    throw new Exception(String.Format("Unexpected value when writing to memory address location 0x5000 (aux board enable) with value: {0:X2}. Expected either 0x00 (disabled) or 0x01 (enabled).", value));
+                    throw new Exception(String.Format("Unexpected value when writing to memory address location 0x5002 (aux board enable) with value: {0:X2}. Expected either 0x00 (disabled) or 0x01 (enabled).", value));
 
                 // TODO: Implement?
                 // ??? = value == 0x01;
@@ -306,7 +306,9 @@ namespace JustinCredible.PacEmu
             else if (address >= 0x50C0 && address <= 0x50FF)
             {
                 // Watchdog reset (each byte has the same function)
-                // TODO: Implement.
+                // This would write values that the watchdog would look for to determine if the game
+                // code had locked up or not. Since I'm not implementing the watchdog hardware I don't
+                // need to implement this.
                 return; // no-op
             }
             else
@@ -421,15 +423,10 @@ namespace JustinCredible.PacEmu
             if (romData == null || romData.Data == null || romData.Data.Count == 0)
                 throw new Exception("romData is required.");
 
-            // Save off the ROM data for use by the video and sound hardware. Only the code ROMs are mapped
-            // into the CPU's address space; the other ROMs are accessed directly by other hardware.
-            // TODO: Pass relevant data into the video/sound hardware instead of saving a reference?
-            // _romData = romData;
-
             _cyclesSinceLastInterrupt = 0;
 
+            // Initialize the CPU and subscribe to device events.
             _cpu = new CPU(_cpuConfig);
-
             _cpu.OnDeviceRead += CPU_OnDeviceRead;
             _cpu.OnDeviceWrite += CPU_OnDeviceWrite;
 
@@ -469,14 +466,13 @@ namespace JustinCredible.PacEmu
             // write data. We set the reference to this class instance (whose implementation uses _memory).
             _cpu.Memory = this;
 
-            _renderEventArgs = new RenderEventArgs()
-            {
-                FrameBuffer = null,
-            };
+            // Initialize video hardware.
 
-            // TODO: Initialize emulated video and sound hardware here?
             _video = new VideoHardware(romData);
             _video.Initialize();
+
+            // Initialize audio hardware.
+            // TODO
 
             if (state != null)
                 LoadState(state);
@@ -631,7 +627,6 @@ namespace JustinCredible.PacEmu
                 // If we're going to run an interrupt handler, ensure interrupts are disabled.
                 // This ensures we don't interrupt the interrupt handler. The program ROM will
                 // re-enable the interrupts manually.
-                // TODO: Is this comment and behavior still accurate for the Z80?
                 _cpu.InterruptsEnabled = false;
 
                 // Execute the handler for the interrupt.
@@ -653,9 +648,8 @@ namespace JustinCredible.PacEmu
                         bitmap = steam.ToArray();
                     }
 
+                    // Delegate to the render event, passing the framebuffer to be rendered.
                     _renderEventArgs.FrameBuffer = bitmap;
-
-
                     OnRender(_renderEventArgs);
                 }
             }

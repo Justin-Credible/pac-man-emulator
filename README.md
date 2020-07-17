@@ -34,16 +34,19 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
   - [X] Copy Space Invaders emulator project
   - [X] CPU / Memory configuration
   - [X] Interrupts?
-  - [ ] Video
+  - [X] Video
     - [X] Parse Color ROM
     - [X] Parse Palettes
     - [X] Parse Tiles
     - [X] Render Tiles
     - [X] Parse Sprites
-    - [ ] Render Sprites
-    - [ ] Render entire screen
+    - [X] Render Sprites
+    - [X] Render entire screen
   - [ ] Audio
-  - [ ] Other hardware?
+  - [ ] Controllers / Input
+  - [ ] DIP Switches
 - [ ] Cleanup
+  - [ ] Rendering bugs
+  - [ ] Save/Load state bugs
   - [ ] Resolve all `TODO: ...` comments
   - [ ] Proper readme
