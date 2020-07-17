@@ -1,10 +1,10 @@
 using Color = System.Drawing.Color;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Bmp;
 using SixLabors.ImageSharp.PixelFormats;
-using Xunit;
 using System;
 using System.IO;
-using SixLabors.ImageSharp.Formats.Bmp;
+using Xunit;
 
 namespace JustinCredible.PacEmu.Tests
 {
@@ -268,6 +268,52 @@ namespace JustinCredible.PacEmu.Tests
             }
 
             var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/render-sprites-on-playfield.bmp");
+
+            Assert.Equal(expectedBytes, actualBytes);
+        }
+
+        [Theory]
+        [InlineData("boot-screen.vram", "render-boot-screen.bmp")]
+        [InlineData("attract-screen.vram", "render-attract-screen.bmp")]
+        [InlineData("maze-1.vram", "render-maze-1.bmp")]
+        public void TestRenderScreen(string vramFile, string expectedBitmapFile)
+        {
+            var romData = new ROMData();
+            romData.Data[ROMs.PAC_MAN_COLOR.FileName] = VideoHardwareTestData.COLOR_ROM;
+            romData.Data[ROMs.PAC_MAN_PALETTE.FileName] = VideoHardwareTestData.PALETTE_ROM;
+            romData.Data[ROMs.PAC_MAN_TILE.FileName] = VideoHardwareTestData.TILE_ROM;
+            romData.Data[ROMs.PAC_MAN_SPRITE.FileName] = VideoHardwareTestData.SPRITE_ROM;
+
+            var video = new VideoHardware(romData);
+            video.InitializeColors();
+            video.InitializePalettes();
+            video.InitializeTiles();
+            video.InitializeSprites();
+
+            // Arrange: Load a VRAM dump which contains tiles positions and palettes for each tile.
+
+            var rawMemory = new byte[0xFFFF];
+
+            var vram = File.ReadAllBytes($"../../../TestData/{vramFile}");
+            Array.Copy(vram, 0, rawMemory, 0x4000, 0x0800);
+
+            var memory = new SimpleMemory(rawMemory);
+
+            // Act: Render the image based on the tiles and palettes in memory.
+
+            var image = video.Render(memory);
+
+            // Assert: the rendered image should be the same as the reference image.
+
+            byte[] actualBytes = null;
+
+            using (var steam = new MemoryStream())
+            {
+                image.Save(steam, new BmpEncoder());
+                actualBytes = steam.ToArray();
+            }
+
+            var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/{expectedBitmapFile}");
 
             Assert.Equal(expectedBytes, actualBytes);
         }

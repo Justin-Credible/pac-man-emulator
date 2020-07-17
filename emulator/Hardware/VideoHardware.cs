@@ -187,7 +187,7 @@ namespace JustinCredible.PacEmu
                 var paletteAddress = 0x4400 + i;
 
                 var tileIndex = memory.Read(tileAddress);
-                var paletteIndex = memory.Read(paletteAddress);
+                var paletteIndex = memory.Read(paletteAddress) & 0x7F; // MSB isn't used?
 
                 var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
 
@@ -299,7 +299,7 @@ namespace JustinCredible.PacEmu
                 var paletteAddress = 0x4400 + i;
 
                 var tileIndex = memory.Read(tileAddress);
-                var paletteIndex = memory.Read(paletteAddress);
+                var paletteIndex = memory.Read(paletteAddress) & 0x7F; // MSB isn't used?
 
                 var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
 
@@ -326,7 +326,7 @@ namespace JustinCredible.PacEmu
                 var paletteAddress = 0x4400 + i;
 
                 var tileIndex = memory.Read(tileAddress);
-                var paletteIndex = memory.Read(paletteAddress);
+                var paletteIndex = memory.Read(paletteAddress) & 0x7F; // MSB isn't used?
 
                 var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
 
@@ -357,7 +357,7 @@ namespace JustinCredible.PacEmu
                 var paletteAddress = 0x4400 + i;
 
                 var tileIndex = memory.Read(tileAddress);
-                var paletteIndex = memory.Read(paletteAddress);
+                var paletteIndex = memory.Read(paletteAddress) & 0x7F; // MSB isn't used?
 
                 var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
 
@@ -384,7 +384,7 @@ namespace JustinCredible.PacEmu
                 var paletteAddress = 0x4400 + i;
 
                 var tileIndex = memory.Read(tileAddress);
-                var paletteIndex = memory.Read(paletteAddress);
+                var paletteIndex = memory.Read(paletteAddress) & 0x7F; // MSB isn't used?
 
                 var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
 
