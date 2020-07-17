@@ -229,15 +229,18 @@ namespace JustinCredible.PacEmu
 
                     // Now that we have an unmanaged pointer to the bitmap, we can use the SDL methods to
                     // get an abstract stream interface which will allow us to load the bitmap as a texture.
-                    var frameBufferStreamPointer = SDL.SDL_RWFromMem(frameBufferPointer, tickEventArgs.FrameBuffer.Length);
-                    var sdlBitmap = SDL.INTERNAL_SDL_LoadBMP_RW(frameBufferStreamPointer, 1);
-                    var sdlTexture = SDL.SDL_CreateTextureFromSurface(_renderer, sdlBitmap);
+                    var rwops = SDL.SDL_RWFromConstMem(frameBufferPointer, tickEventArgs.FrameBuffer.Length);
+                    var surface = SDL.INTERNAL_SDL_LoadBMP_RW(rwops, 0);
+                    var texture = SDL.SDL_CreateTextureFromSurface(_renderer, surface);
 
                     // Now that we've loaded the framebuffer's bitmap as a texture, we can now render it to
                     // the SDL canvas at the given location.
-                    SDL.SDL_RenderCopy(_renderer, sdlTexture, ref _renderLocation, ref _renderLocation);
+                    SDL.SDL_RenderCopy(_renderer, texture, ref _renderLocation, ref _renderLocation);
 
                     // Ensure we release our unmanaged memory.
+                    SDL.SDL_DestroyTexture(texture);
+                    SDL.SDL_FreeSurface(surface);
+                    SDL.SDL_FreeRW(rwops);
                     frameBuffer.Free();
 
                     // Now that we're done rendering, we can present this new frame.
