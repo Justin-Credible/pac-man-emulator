@@ -1,0 +1,36 @@
+{
+    // Allows for configuration of the game's settings by adjusting the hardware DIP switches.
+
+    // The number of coins/credits required to start a game.
+    // 0 = Free Play
+    // 1 = 1 Coin, 1 Game
+    // 2 = 1 Coin, 2 Games
+    // 3 = 2 Coins, 1 Game
+    "CoinsPerGame": 1,
+
+    // The number of lives received per game.
+    // 0 = One
+    // 1 = Two
+    // 2 = Three
+    // 4 = Five
+    "LivesPerGame": 2,
+
+    // The number of points needed to receive an extra life.
+    // 0 = 10,000
+    // 1 = 15,000
+    // 2 = 20,000
+    // 3 = (no extra lives)
+    "BonusScorePerExtraLife": 0,
+
+    // 0 = Hard
+    // 1 = Normal
+    "Difficulty": 1,
+
+    // 0 = Alternate
+    // 1 = Normal
+    "GhostNames": 1,
+
+    // 0 = Cocktail Table
+    // 1 = Upright
+    "CabinetMode": 1
+}

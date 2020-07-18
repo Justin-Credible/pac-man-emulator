@@ -8,5 +8,8 @@
         "**/obj": true
     },
     "csharp.referencesCodeLens.enabled": false,
-    "dotnet-test-explorer.testProjectPath": "**/*.tests.csproj"
+    "dotnet-test-explorer.testProjectPath": "**/*.tests.csproj",
+    "files.associations": {
+        "*.json": "jsonc",
+    }
 }

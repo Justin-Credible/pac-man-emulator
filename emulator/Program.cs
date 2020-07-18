@@ -67,9 +67,7 @@ namespace JustinCredible.PacEmu
 
             var romPathArg = command.Argument("[ROM path]", "The path to a directory containing the Pac-Man ROM set to load.");
 
-            // var sfxOption = command.Option("-sfx|--sound-effects", "The path to a directory containing the WAV sound effects to be used.", CommandOptionType.SingleValue);
-            // var shipsOption = command.Option("-ss|--starting-ships", "Specify the number of ships the player starts with; 3 (default), 4, 5, or 6.", CommandOptionType.SingleValue);
-            // var extraShipOption = command.Option("-es|--extra-ship", "Specify the number points needed to get an extra ship; 1000 (default) or 1500.", CommandOptionType.SingleValue);
+            var dipSwitchesOption = command.Option("-dw|--dip-switches", "The path to a JSON file containing DIP switch settings; defaults to dip-switches.json in CWD.", CommandOptionType.SingleValue);
             var loadStateOption = command.Option("-l|--load-state", "Loads an emulator save state from the given path.", CommandOptionType.SingleValue);
             var debugOption = command.Option("-d|--debug", "Run in debug mode; enables internal statistics and logs useful when debugging.", CommandOptionType.NoValue);
             var breakOption = command.Option("-b|--break", "Used with debug, will break at the given address and allow single stepping opcode execution (e.g. --break 0x0248)", CommandOptionType.MultipleValue);
@@ -84,9 +82,11 @@ namespace JustinCredible.PacEmu
                 if (!Directory.Exists(romPathArg.Value))
                     throw new Exception($"Could not locate a directory at path {romPathArg.Value}");
 
+                // Load and validate all of the ROM files needed.
                 var romData = ROMLoader.LoadFromDisk(romPathArg.Value);
-                // var sfx = sfxOption.HasValue() ? GetSoundEffects(sfxOption.Value()) : null;
 
+                // Name the current thread so we can distinguish between the emulator's
+                // CPU thread when using a debugger.
                 Thread.CurrentThread.Name = "GUI Loop";
 
                 // Initialize the user interface (window) and wire an event handler
@@ -96,10 +96,6 @@ namespace JustinCredible.PacEmu
                 gui.OnTick += GUI_OnTick;
                 gui.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
 
-                // Initialize sound effects if the sfx option was passed.
-                // if (sfx != null)
-                //     gui.InitializeAudio(sfx);
-
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
                 // handlers to receive the framebuffer/sfx to be rendered/played.
                 _game = new PacManPCB();
@@ -108,41 +104,42 @@ namespace JustinCredible.PacEmu
 
                 #region Set Game Options
 
-                // if (shipsOption.HasValue())
-                // {
-                //     switch (shipsOption.Value())
-                //     {
-                //         case "6":
-                //             _game.StartingShips = StartingShipsSetting.Six;
-                //             break;
-                //         case "5":
-                //             _game.StartingShips = StartingShipsSetting.Five;
-                //             break;
-                //         case "4":
-                //             _game.StartingShips = StartingShipsSetting.Four;
-                //             break;
-                //         case "3":
-                //             _game.StartingShips = StartingShipsSetting.Three;
-                //             break;
-                //         default:
-                //             throw new ArgumentException("Invaild value specified via --starting-ships command line option.");
-                //     }
-                // }
+                // Use the default values for the hardware DIP switches.
+                var dipSwitches = new DIPSwitches();
 
-                // if (extraShipOption.HasValue())
-                // {
-                //     switch (extraShipOption.Value())
-                //     {
-                //         case "1000":
-                //             _game.ExtraShipAt = ExtraShipAtSetting.Points1000;
-                //             break;
-                //         case "1500":
-                //             _game.ExtraShipAt = ExtraShipAtSetting.Points1500;
-                //             break;
-                //         default:
-                //             throw new ArgumentException("Invaild value specified via --extra-ship command line option.");
-                //     }
-                // }
+                // Look in the current working directory for a settings file.
+                var dipSwitchesPath = "dip-switches.json";
+
+                // If the user specified a path for the settings file, use it instead.
+                if (dipSwitchesOption.HasValue())
+                    dipSwitchesPath = dipSwitchesOption.Value();
+
+                if (File.Exists(dipSwitchesPath))
+                {
+                    // We found a settings file! Parse and load it.
+                    var json = File.ReadAllText(dipSwitchesPath);
+
+                    var serializerOptions = new JsonSerializerOptions()
+                    {
+                        ReadCommentHandling = JsonCommentHandling.Skip,
+                    };
+
+                    try
+                    {
+                        dipSwitches = JsonSerializer.Deserialize<DIPSwitches>(json, serializerOptions);
+                    }
+                    catch (Exception parseException)
+                    {
+                        throw new Exception($"Error parsing DIP switch settings JSON file at: {dipSwitchesPath}", parseException);
+                    }
+                }
+                else
+                {
+                    // If the file doesn't exist and the user specified the path, fail fast.
+                    // There must have been a typo or something. In any case the user should fix it.
+                    if (dipSwitchesOption.HasValue())
+                        throw new ArgumentException($"Unable to locate a DIP switch settings JSON file at: {dipSwitchesPath}");
+                }
 
                 #endregion
 
