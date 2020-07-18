@@ -32,6 +32,8 @@ namespace JustinCredible.PacEmu
 
         private Image<Rgba32> _frameBuffer = null;
 
+        private Rgba32 _blackPixel = new Rgba32() { R = 0, G = 0, B = 0, A = 255 };
+
         public VideoHardware(ROMData romData)
         {
             _colorROM = romData.Data[ROMs.PAC_MAN_COLOR.FileName];
@@ -183,9 +185,10 @@ namespace JustinCredible.PacEmu
             // by the game code by setting the sprite's coordinates and flipX/flipY values in memory.
             RenderSprites(memory, spriteCoordinates, _frameBuffer);
 
-            // TODO: Sprites shouldn't be allowed to draw over the top/bottom bars; mask those off
-            // before composing the images. Also, mask off the areas of the screen that are not
-            // normally visible (e.g. for offscreen sprites and maze exits).
+            // Mask off the areas of the screen that are not normally visible (e.g. for offscreen sprites
+            // and the left/right maze exits). Otherwise we'll have the "no-clip" effect because we don't
+            // clear the framebuffer on each loop.
+            MaskOffScreenAreas(_frameBuffer);
 
             return _frameBuffer;
         }
@@ -421,6 +424,27 @@ namespace JustinCredible.PacEmu
 
                         image[convertedX + x, convertedY + y] = sprite[x, y];
                     }
+                }
+            }
+        }
+
+        private void MaskOffScreenAreas(Image<Rgba32> image)
+        {
+            // Left vertical strip.
+            for (var x = 0; x < 16; x++)
+            {
+                for (var y = 0; y < RESOLUTION_HEIGHT; y++)
+                {
+                    image[x, y] = _blackPixel;
+                }
+            }
+
+            // Right vertical strip.
+            for (var x = RESOLUTION_WIDTH - 16; x < RESOLUTION_WIDTH; x++)
+            {
+                for (var y = 0; y < RESOLUTION_HEIGHT; y++)
+                {
+                    image[x, y] = _blackPixel;
                 }
             }
         }
