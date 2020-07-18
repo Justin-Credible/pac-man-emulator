@@ -17,14 +17,14 @@ namespace JustinCredible.PacEmu
      */
     public class PacManPCB : IMemory
     {
-        #region Constants
+        // The thread on which we'll run the hardware emulation loop.
+        private Thread _thread;
 
-        // The Zilog Z80 for the Pac-Man hardware is clocked at 3.072MHz.
-        private const int CPU_MHZ = 3072000;
+        // Indicates if a stop was requested via the Stop() method. Used to break out of the hardware
+        // loop in the thread and stop execution.
+        private bool _cancelled = false;
 
-        #endregion
-
-        #region Events
+        #region Events/Delegates
 
         // Fired when a frame is ready to be rendered.
         public delegate void RenderEvent(RenderEventArgs e);
@@ -38,57 +38,15 @@ namespace JustinCredible.PacEmu
 
         #endregion
 
-        #region Hardware
+        #region Hardware: Components
 
-        // The thread on which we'll run the hardware emulation loop.
-        private Thread _thread;
+        // The Zilog Z80 for the Pac-Man hardware is clocked at 3.072MHz.
+        private const int CPU_MHZ = 3072000;
 
-        // Indicates if a stop was requested via the Stop() method. Used to break out of the hardware
-        // loop in the thread and stop execution.
-        private bool _cancelled = false;
-
-        // The configuration of the Zilog Z80 CPU specifically for the Pac-Man hardware.
-        private static readonly CPUConfig _cpuConfig = new CPUConfig()
-        {
-            Registers = new CPURegisters()
-            {
-                PC = 0x0000,
-
-                // TODO: Hardcoded to the top of the RAM.
-                // Is this different for each game that runs on the Pac-Man hardware?
-                SP = 0x4FEF,
-            },
-
-            // Interrupts are initially disabled, and will be enabled by the program ROM when ready.
-            InterruptsEnabled = false,
-
-            EnableDiagnosticsMode = false,
-        };
-
-        // Zilog Z80
-        private CPU _cpu;
-
+        private CPU _cpu; // Zilog Z80
         private VideoHardware _video;
-
-        // The game's video hardware runs at 60hz. It generates an interrupts @ 60hz (VBLANK).To simulate
-        // this, we'll calculate the number of cycles we're expecting between each of these interrupts.
-        // While this is not entirely accurate, it is close enough for the game to run as expected.
-        private double _cyclesPerInterrupt = Math.Floor(Convert.ToDouble(CPU_MHZ / 60));
-        private int _cyclesSinceLastInterrupt = 0;
-
-        // To keep the emulated CPU from running too fast, we use a stopwatch and count cycles.
-        private Stopwatch _cpuStopWatch = new Stopwatch();
-        private int _cycleCount = 0;
-
-        // Holds the last data written by the CPU to ports 0, which is used by the VBLANK interrupt.
-        // Interrupt mode 2 uses this as the lower 8 bits with the I register as the upper 8 bits
-        // to build a jump vector. Pac-Man's game code sets this to control where the code jumps to
-        // after a VBLANK interrupt. See CPU::StepMaskableInterrupt() for more details.
-        private byte _port0WriteLastData = 0x00;
-
-        #endregion
-
-        #region Memory Implementation
+        public DIPSwitches DIPSwitchState { get; set; } = new DIPSwitches();
+        public Buttons ButtonState { get; set; } = new Buttons();
 
         /**
          * The first 20KB of address space is ROM & RAM:
@@ -116,6 +74,240 @@ namespace JustinCredible.PacEmu
          * the screen will not be flipped.
          */
         private bool _flipScreen = false;
+
+        #endregion
+
+        #region Hardware: Interrupts
+
+        // The game's video hardware runs at 60hz. It generates an interrupts @ 60hz (VBLANK).To simulate
+        // this, we'll calculate the number of cycles we're expecting between each of these interrupts.
+        // While this is not entirely accurate, it is close enough for the game to run as expected.
+        private double _cyclesPerInterrupt = Math.Floor(Convert.ToDouble(CPU_MHZ / 60));
+        private int _cyclesSinceLastInterrupt = 0;
+
+        // To keep the emulated CPU from running too fast, we use a stopwatch and count cycles.
+        private Stopwatch _cpuStopWatch = new Stopwatch();
+        private int _cycleCount = 0;
+
+        // Holds the last data written by the CPU to ports 0, which is used by the VBLANK interrupt.
+        // Interrupt mode 2 uses this as the lower 8 bits with the I register as the upper 8 bits
+        // to build a jump vector. Pac-Man's game code sets this to control where the code jumps to
+        // after a VBLANK interrupt. See CPU::StepMaskableInterrupt() for more details.
+        private byte _port0WriteLastData = 0x00;
+
+        #endregion
+
+        #region Debugging Features
+
+        private static readonly int MAX_ADDRESS_HISTORY = 100;
+        private static readonly int MAX_REWIND_HISTORY = 20;
+
+        private int _totalCycles = 0;
+        private int _totalSteps = 0;
+
+        /**
+         * Enables debugging statistics and features.
+         */
+        public bool Debug { get; set; } = false;
+
+        /**
+         * When Debug=true, stores the last MAX_ADDRESS_HISTORY values of the program counter.
+         */
+        private List<UInt16> _addressHistory = new List<UInt16>();
+
+        /**
+         * When Debug=true, the program will break at these addresses and allow the user to perform
+         * interactive debugging via the console.
+         */
+        public List<UInt16> BreakAtAddresses { get; set; }
+
+        /**
+         * When Debug=true, allows for single reverse-stepping in the interactive debugging console.
+         */
+        public bool RewindEnabled { get; set; } = false;
+
+        /**
+         * When Debug=true and RewindEnabled=true, stores sufficient state of the CPU and emulator
+         * to allow for stepping backwards to each state of the system.
+         */
+        private List<EmulatorState> _executionHistory = new List<EmulatorState>();
+
+        /**
+         * Indicates if we're stingle stepping through opcodes/instructions using the interactive
+         * debugger when Debug=true.
+         */
+        private bool _singleStepping = false;
+
+        /**
+         * For use by the interactive debugger when Debug=true. If true, indicates that the disassembly
+         * should be annotated with the values in the Annotations dictionary. If false, the diassembler
+         * will annotate each line with a pseudocode comment instead.
+         */
+        private bool _showAnnotatedDisassembly = false;
+
+        /**
+         * The annotations to be used when Debug=true and _showAnnotatedDisassembly=true. It is a map
+         * of memory addresses to string annotation values.
+         */
+        public Dictionary<UInt16, String> Annotations { get; set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /**
+         * Used to start execution of the CPU with the given ROM and optional emulator state.
+         * The emulator's hardware loop will run on a spereate thread, and therefore, this method
+         * is non-blocking.
+         */
+        public void Start(ROMData romData, EmulatorState state = null)
+        {
+            if (_thread != null)
+                throw new Exception("Emulator cannot be started because it was already running.");
+
+            if (romData == null || romData.Data == null || romData.Data.Count == 0)
+                throw new Exception("romData is required.");
+
+            // The initial configuration of the CPU.
+            var cpuConfig = new CPUConfig()
+            {
+                Registers = new CPURegisters()
+                {
+                    PC = 0x0000,
+
+                    // Hardcode the stackpointer to the top of the RAM.
+                    // TODO: Is this different for each game that runs on the Pac-Man hardware?
+                    SP = 0x4FEF,
+                },
+
+                // Interrupts are initially disabled, and will be enabled by the program ROM when ready.
+                InterruptsEnabled = false,
+
+                // Diagnostics is only for unit tests.
+                EnableDiagnosticsMode = false,
+            };
+
+            // Initialize the CPU and subscribe to device events.
+            _cpu = new CPU(cpuConfig);
+            _cpu.OnDeviceRead += CPU_OnDeviceRead;
+            _cpu.OnDeviceWrite += CPU_OnDeviceWrite;
+            _cyclesSinceLastInterrupt = 0;
+
+            // Fetch the ROM data; we trust the contents were validated with a CRC32 check elsewhere, but
+            // since the CRC check can be bypassed, we at least need to ensure the file sizes are correct
+            // since this classes' implementation of IMemory is expecting certain addreses.
+
+            var codeRom1 = romData.Data[ROMs.PAC_MAN_CODE_1.FileName];
+            var codeRom2 = romData.Data[ROMs.PAC_MAN_CODE_2.FileName];
+            var codeRom3 = romData.Data[ROMs.PAC_MAN_CODE_3.FileName];
+            var codeRom4 = romData.Data[ROMs.PAC_MAN_CODE_4.FileName];
+
+            if (codeRom1.Length != 4096 || codeRom2.Length != 4096 || codeRom3.Length != 4096 || codeRom4.Length != 4096)
+                throw new Exception("All code ROMs must be exactly 4KB in size.");
+
+            // Define our addressable memory space, which includes the game code ROMS and RAM.
+
+            var addressableMemorySize =
+                codeRom1.Length     // Code ROM 1
+                + codeRom2.Length   // Code ROM 2
+                + codeRom3.Length   // Code ROM 3
+                + codeRom4.Length   // Code ROM 4
+                + 1024              // Video RAM (tile information)
+                + 1024              // Video RAM (tile palettes)
+                + 2032              // RAM
+                + 16;               // Sprite numbers
+
+            _memory = new byte[addressableMemorySize];
+
+            // Map the code ROM into the lower 16K of the memory space.
+            Array.Copy(codeRom1, 0, _memory, 0, codeRom1.Length);
+            Array.Copy(codeRom2, 0, _memory, codeRom1.Length, codeRom2.Length);
+            Array.Copy(codeRom3, 0, _memory, codeRom1.Length + codeRom2.Length, codeRom3.Length);
+            Array.Copy(codeRom4, 0, _memory, codeRom1.Length + codeRom2.Length + codeRom3.Length, codeRom4.Length);
+
+            // This class implements the IMemory interface, which the CPU needs to determine how to read and
+            // write data. We set the reference to this class instance (whose implementation uses _memory).
+            _cpu.Memory = this;
+
+            // Initialize video hardware.
+
+            _video = new VideoHardware(romData);
+            _video.Initialize();
+
+            // Initialize audio hardware.
+            // TODO
+
+            if (state != null)
+                LoadState(state);
+
+            _cancelled = false;
+            _thread = new Thread(new ThreadStart(HardwareLoop));
+            _thread.Name = "Emulator: Hardware Loop";
+            _thread.Start();
+        }
+
+        /**
+         * Used to stop execution of the CPU and halt the thread.
+         */
+        public void Stop()
+        {
+            if (_thread == null)
+                throw new Exception("Emulator cannot be stopped because it wasn't running.");
+
+            _cancelled = true;
+        }
+
+        /**
+         * Used to stop CPU execution and enable single stepping through opcodes via the interactive
+         * debugger (only when Debug = true).
+         */
+        public void Break()
+        {
+            if (Debug)
+                _singleStepping = true;
+        }
+
+        #endregion
+
+        #region CPU Event Handlers
+
+        /**
+         * Used to handle the CPU's IN instruction; read value from given device ID.
+         */
+        private byte CPU_OnDeviceRead(int deviceID)
+        {
+            // I don't believe the Pac-Man game code reads from any external devices.
+            switch (deviceID)
+            {
+                default:
+                    Console.WriteLine($"WARNING: An IN/Read for port {deviceID} is not implemented.");
+                    return 0x00;
+            }
+        }
+
+        /**
+         * Used to handle the CPU's OUT instruction; write value to given device ID.
+         */
+        private void CPU_OnDeviceWrite(int deviceID, byte data)
+        {
+            switch (deviceID)
+            {
+                // The Pac-Man game code writes data to port zero, which is used as the lower 8 bits of an
+                // address when using interrupt mode 2 (IM2). We save this value so we can use it when triggering
+                // the VBLANK interrupt.
+                case 0x00:
+                    _port0WriteLastData = data;
+                    break;
+
+                default:
+                    Console.WriteLine($"WARNING: An OUT/Write for port {deviceID} (value: {data}) is not implemented.");
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Memory Read/Write Implementation (IMemory)
 
         public byte Read(int address)
         {
@@ -329,205 +521,6 @@ namespace JustinCredible.PacEmu
             var upper = (byte)((value & 0xFF00) >> 8);
             Write(address, lower);
             Write(address + 1, upper);
-        }
-
-        #endregion
-
-        #region Input: Buttons/Switches/etc
-
-        public DIPSwitches DIPSwitchState { get; set; }
-        public Buttons ButtonState { get; set; } = new Buttons();
-
-        #endregion
-
-        #region Debugging Features
-
-        private static readonly int MAX_ADDRESS_HISTORY = 100;
-        private static readonly int MAX_REWIND_HISTORY = 20;
-
-        private int _totalCycles = 0;
-        private int _totalSteps = 0;
-
-        /**
-         * Enables debugging statistics and features.
-         */
-        public bool Debug { get; set; } = false;
-
-        /**
-         * When Debug=true, stores the last MAX_ADDRESS_HISTORY values of the program counter.
-         */
-        private List<UInt16> _addressHistory = new List<UInt16>();
-
-        /**
-         * When Debug=true, the program will break at these addresses and allow the user to perform
-         * interactive debugging via the console.
-         */
-        public List<UInt16> BreakAtAddresses { get; set; }
-
-        /**
-         * When Debug=true, allows for single reverse-stepping in the interactive debugging console.
-         */
-        public bool RewindEnabled { get; set; } = false;
-
-        /**
-         * When Debug=true and RewindEnabled=true, stores sufficient state of the CPU and emulator
-         * to allow for stepping backwards to each state of the system.
-         */
-        private List<EmulatorState> _executionHistory = new List<EmulatorState>();
-
-        /**
-         * Indicates if we're stingle stepping through opcodes/instructions using the interactive
-         * debugger when Debug=true.
-         */
-        private bool _singleStepping = false;
-
-        /**
-         * For use by the interactive debugger when Debug=true. If true, indicates that the disassembly
-         * should be annotated with the values in the Annotations dictionary. If false, the diassembler
-         * will annotate each line with a pseudocode comment instead.
-         */
-        private bool _showAnnotatedDisassembly = false;
-
-        /**
-         * The annotations to be used when Debug=true and _showAnnotatedDisassembly=true. It is a map
-         * of memory addresses to string annotation values.
-         */
-        public Dictionary<UInt16, String> Annotations { get; set; }
-
-        #endregion
-
-        #region Public Methods
-
-        /**
-         * Used to start execution of the CPU with the given ROM and optional emulator state.
-         * The emulator's hardware loop will run on a spereate thread, and therefore, this method
-         * is non-blocking.
-         */
-        public void Start(ROMData romData, EmulatorState state = null)
-        {
-            if (_thread != null)
-                throw new Exception("Emulator cannot be started because it was already running.");
-
-            if (romData == null || romData.Data == null || romData.Data.Count == 0)
-                throw new Exception("romData is required.");
-
-            _cyclesSinceLastInterrupt = 0;
-
-            // Initialize the CPU and subscribe to device events.
-            _cpu = new CPU(_cpuConfig);
-            _cpu.OnDeviceRead += CPU_OnDeviceRead;
-            _cpu.OnDeviceWrite += CPU_OnDeviceWrite;
-
-            // Fetch the ROM data; we trust the contents were validated with a CRC32 check elsewhere, but
-            // since the CRC check can be bypassed, we at least need to ensure the file sizes are correct
-            // since this classes' implementation of IMemory is expecting certain addreses.
-
-            var codeRom1 = romData.Data[ROMs.PAC_MAN_CODE_1.FileName];
-            var codeRom2 = romData.Data[ROMs.PAC_MAN_CODE_2.FileName];
-            var codeRom3 = romData.Data[ROMs.PAC_MAN_CODE_3.FileName];
-            var codeRom4 = romData.Data[ROMs.PAC_MAN_CODE_4.FileName];
-
-            if (codeRom1.Length != 4096 || codeRom2.Length != 4096 || codeRom3.Length != 4096 || codeRom4.Length != 4096)
-                throw new Exception("All code ROMs must be exactly 4KB in size.");
-
-            // Define our addressable memory space, which includes the game code ROMS and RAM.
-
-            var addressableMemorySize =
-                codeRom1.Length     // Code ROM 1
-                + codeRom2.Length   // Code ROM 2
-                + codeRom3.Length   // Code ROM 3
-                + codeRom4.Length   // Code ROM 4
-                + 1024              // Video RAM (tile information)
-                + 1024              // Video RAM (tile palettes)
-                + 2032              // RAM
-                + 16;               // Sprite numbers
-
-            _memory = new byte[addressableMemorySize];
-
-            // Map the code ROM into the lower 16K of the memory space.
-            Array.Copy(codeRom1, 0, _memory, 0, codeRom1.Length);
-            Array.Copy(codeRom2, 0, _memory, codeRom1.Length, codeRom2.Length);
-            Array.Copy(codeRom3, 0, _memory, codeRom1.Length + codeRom2.Length, codeRom3.Length);
-            Array.Copy(codeRom4, 0, _memory, codeRom1.Length + codeRom2.Length + codeRom3.Length, codeRom4.Length);
-
-            // This class implements the IMemory interface, which the CPU needs to determine how to read and
-            // write data. We set the reference to this class instance (whose implementation uses _memory).
-            _cpu.Memory = this;
-
-            // Initialize video hardware.
-
-            _video = new VideoHardware(romData);
-            _video.Initialize();
-
-            // Initialize audio hardware.
-            // TODO
-
-            if (state != null)
-                LoadState(state);
-
-            _cancelled = false;
-            _thread = new Thread(new ThreadStart(HardwareLoop));
-            _thread.Name = "Emulator: Hardware Loop";
-            _thread.Start();
-        }
-
-        /**
-         * Used to stop execution of the CPU and halt the thread.
-         */
-        public void Stop()
-        {
-            if (_thread == null)
-                throw new Exception("Emulator cannot be stopped because it wasn't running.");
-
-            _cancelled = true;
-        }
-
-        /**
-         * Used to stop CPU execution and enable single stepping through opcodes via the interactive
-         * debugger (only when Debug = true).
-         */
-        public void Break()
-        {
-            if (Debug)
-                _singleStepping = true;
-        }
-
-        #endregion
-
-        #region CPU Event Handlers
-
-        /**
-         * Used to handle the CPU's IN instruction; read value from given device ID.
-         */
-        private byte CPU_OnDeviceRead(int deviceID)
-        {
-            // I don't believe the Pac-Man game code reads from any external devices.
-            switch (deviceID)
-            {
-                default:
-                    Console.WriteLine($"WARNING: An IN/Read for port {deviceID} is not implemented.");
-                    return 0x00;
-            }
-        }
-
-        /**
-         * Used to handle the CPU's OUT instruction; write value to given device ID.
-         */
-        private void CPU_OnDeviceWrite(int deviceID, byte data)
-        {
-            switch (deviceID)
-            {
-                // The Pac-Man game code writes data to port zero, which is used as the lower 8 bits of an
-                // address when using interrupt mode 2 (IM2). We save this value so we can use it when triggering
-                // the VBLANK interrupt.
-                case 0x00:
-                    _port0WriteLastData = data;
-                    break;
-
-                default:
-                    Console.WriteLine($"WARNING: An OUT/Write for port {deviceID} (value: {data}) is not implemented.");
-                    break;
-            }
         }
 
         #endregion
