@@ -5,6 +5,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.IO;
 using Xunit;
+using SixLabors.ImageSharp.Processing;
 
 namespace JustinCredible.PacEmu.Tests
 {
@@ -181,104 +182,14 @@ namespace JustinCredible.PacEmu.Tests
             }
         }
 
-        [Fact]
-        public void TestRenderTiles()
-        {
-            var romData = new ROMData();
-            romData.Data[ROMs.PAC_MAN_COLOR.FileName] = VideoHardwareTestData.COLOR_ROM;
-            romData.Data[ROMs.PAC_MAN_PALETTE.FileName] = VideoHardwareTestData.PALETTE_ROM;
-            romData.Data[ROMs.PAC_MAN_TILE.FileName] = VideoHardwareTestData.TILE_ROM;
-            romData.Data[ROMs.PAC_MAN_SPRITE.FileName] = VideoHardwareTestData.SPRITE_ROM;
-
-            var video = new VideoHardware(romData);
-            video.InitializeColors();
-            video.InitializePalettes();
-            video.InitializeTiles();
-            video.InitializeSprites();
-
-            // Arrange: Setup the tiles and specify the palettes for each.
-
-            var rawMemory = new byte[0xFFFF];
-            var memory = new SimpleMemory(rawMemory);
-
-            VideoHardwareTestData.SetupBackgroundTiles(memory);
-
-            // Act: Render the image based on the tiles and palettes in memory.
-
-            var spriteCoordinates = new byte[16];
-            var image = video.Render(memory, spriteCoordinates);
-
-            // Assert: the rendered image should be the same as the reference image.
-
-            byte[] actualBytes = null;
-
-            using (var steam = new MemoryStream())
-            {
-                image.Save(steam, new BmpEncoder());
-                actualBytes = steam.ToArray();
-            }
-
-            var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/render-playfield-tiles.bmp");
-
-            Assert.Equal(expectedBytes, actualBytes);
-        }
-
-        [Fact]
-        public void TestRenderSpriteOverBackgroundTiles()
-        {
-            var romData = new ROMData();
-            romData.Data[ROMs.PAC_MAN_COLOR.FileName] = VideoHardwareTestData.COLOR_ROM;
-            romData.Data[ROMs.PAC_MAN_PALETTE.FileName] = VideoHardwareTestData.PALETTE_ROM;
-            romData.Data[ROMs.PAC_MAN_TILE.FileName] = VideoHardwareTestData.TILE_ROM;
-            romData.Data[ROMs.PAC_MAN_SPRITE.FileName] = VideoHardwareTestData.SPRITE_ROM;
-
-            var video = new VideoHardware(romData);
-            video.InitializeColors();
-            video.InitializePalettes();
-            video.InitializeTiles();
-            video.InitializeSprites();
-
-            // Arrange: Setup the tiles and specify the palettes for each.
-
-            var rawMemory = new byte[0xFFFF];
-            var memory = new SimpleMemory(rawMemory);
-
-            VideoHardwareTestData.SetupBackgroundTiles(memory);
-
-            memory.Write(0x5060, 31); // x
-            memory.Write(0x5061, 16); // y
-
-            // Pac-Man facing left sprite (46), no flip X/Y (0x00).
-            var flags = (byte)((46 << 2) | (0x00));
-
-            memory.Write(0x4FF0, flags);
-            memory.Write(0x4FF1, 9); // Palette.
-
-            // Act: Render the image based on the tiles and palettes in memory.
-
-            var spriteCoordinates = new byte[16];
-            var image = video.Render(memory, spriteCoordinates);
-
-            // Assert: the rendered image should be the same as the reference image.
-
-            byte[] actualBytes = null;
-
-            using (var steam = new MemoryStream())
-            {
-                image.Save(steam, new BmpEncoder());
-                actualBytes = steam.ToArray();
-            }
-
-            var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/render-sprites-on-playfield.bmp");
-
-            Assert.Equal(expectedBytes, actualBytes);
-        }
-
         [Theory]
-        [InlineData("boot-screen.vram", "render-boot-screen.bmp")]
-        [InlineData("attract-screen.vram", "render-attract-screen.bmp")]
-        [InlineData("maze-1.vram", "render-maze-1.bmp")]
-        public void TestRenderScreen(string vramFile, string expectedBitmapFile)
+        [InlineData("boot-screen.vram", "render-boot-screen.bmp", false)]
+        [InlineData("attract-screen.vram", "render-attract-screen.bmp", false)]
+        [InlineData("maze-1.vram", "render-maze-1.bmp", false)]
+        [InlineData("boot-screen.vram", "render-boot-screen-flipped.bmp", true)]
+        [InlineData("attract-screen.vram", "render-attract-screen-flipped.bmp", true)]
+        [InlineData("maze-1.vram", "render-maze-1-flipped.bmp", true)]
+        public void TestRenderScreen(string vramFile, string expectedBitmapFile, bool flipScreen)
         {
             var romData = new ROMData();
             romData.Data[ROMs.PAC_MAN_COLOR.FileName] = VideoHardwareTestData.COLOR_ROM;
@@ -304,7 +215,7 @@ namespace JustinCredible.PacEmu.Tests
             // Act: Render the image based on the tiles and palettes in memory.
 
             var spriteCoordinates = new byte[16];
-            var image = video.Render(memory, spriteCoordinates);
+            var image = video.Render(memory, spriteCoordinates, flipScreen);
 
             // Assert: the rendered image should be the same as the reference image.
 
@@ -317,6 +228,122 @@ namespace JustinCredible.PacEmu.Tests
             }
 
             var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/{expectedBitmapFile}");
+
+            Assert.Equal(expectedBytes, actualBytes);
+        }
+
+        [Fact]
+        public void TestRenderScreenWithSprite()
+        {
+            var romData = new ROMData();
+            romData.Data[ROMs.PAC_MAN_COLOR.FileName] = VideoHardwareTestData.COLOR_ROM;
+            romData.Data[ROMs.PAC_MAN_PALETTE.FileName] = VideoHardwareTestData.PALETTE_ROM;
+            romData.Data[ROMs.PAC_MAN_TILE.FileName] = VideoHardwareTestData.TILE_ROM;
+            romData.Data[ROMs.PAC_MAN_SPRITE.FileName] = VideoHardwareTestData.SPRITE_ROM;
+
+            var video = new VideoHardware(romData);
+            video.InitializeColors();
+            video.InitializePalettes();
+            video.InitializeTiles();
+            video.InitializeSprites();
+
+            // Arrange: Load a VRAM dump which contains tiles positions and palettes for each tile.
+
+            var rawMemory = new byte[0xFFFF];
+
+            var vram = File.ReadAllBytes($"../../../TestData/maze-1.vram");
+            Array.Copy(vram, 0, rawMemory, 0x4000, 0x0800);
+
+            var memory = new SimpleMemory(rawMemory);
+
+            // Arrange: Setup the sprites to show.
+
+            // Pac-Man facing left sprite (46), no flip X/Y (0x00).
+            var flags = (byte)((46 << 2) | (0x00));
+
+            memory.Write(0x4FF0, flags);
+            memory.Write(0x4FF1, 9); // Palette.
+
+            // Act: Render the image based on the tiles and palettes in memory.
+
+            var spriteCoordinates = new byte[16]
+            {
+                50, // x
+                20, // y
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            };
+
+            var image = video.Render(memory, spriteCoordinates, false);
+
+            // Assert: the rendered image should be the same as the reference image.
+
+            byte[] actualBytes = null;
+
+            using (var steam = new MemoryStream())
+            {
+                image.Save(steam, new BmpEncoder());
+                actualBytes = steam.ToArray();
+            }
+
+            var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/render-maze-1-with-sprites.bmp");
+
+            Assert.Equal(expectedBytes, actualBytes);
+        }
+
+        [Fact]
+        public void TestRenderScreenWithSpriteFlipped()
+        {
+            var romData = new ROMData();
+            romData.Data[ROMs.PAC_MAN_COLOR.FileName] = VideoHardwareTestData.COLOR_ROM;
+            romData.Data[ROMs.PAC_MAN_PALETTE.FileName] = VideoHardwareTestData.PALETTE_ROM;
+            romData.Data[ROMs.PAC_MAN_TILE.FileName] = VideoHardwareTestData.TILE_ROM;
+            romData.Data[ROMs.PAC_MAN_SPRITE.FileName] = VideoHardwareTestData.SPRITE_ROM;
+
+            var video = new VideoHardware(romData);
+            video.InitializeColors();
+            video.InitializePalettes();
+            video.InitializeTiles();
+            video.InitializeSprites();
+
+            // Arrange: Load a VRAM dump which contains tiles positions and palettes for each tile.
+
+            var rawMemory = new byte[0xFFFF];
+
+            var vram = File.ReadAllBytes($"../../../TestData/maze-1.vram");
+            Array.Copy(vram, 0, rawMemory, 0x4000, 0x0800);
+
+            var memory = new SimpleMemory(rawMemory);
+
+            // Arrange: Setup the sprites to show.
+
+            // Pac-Man facing left sprite (46), flip X/Y (0x02).
+            var flags = (byte)((46 << 2) | (0x02));
+
+            memory.Write(0x4FF0, flags);
+            memory.Write(0x4FF1, 9); // Palette.
+
+            // Act: Render the image based on the tiles and palettes in memory.
+
+            var spriteCoordinates = new byte[16]
+            {
+                220, // x
+                252, // y
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            };
+
+            var image = video.Render(memory, spriteCoordinates, true);
+
+            // Assert: the rendered image should be the same as the reference image.
+
+            byte[] actualBytes = null;
+
+            using (var steam = new MemoryStream())
+            {
+                image.Save(steam, new BmpEncoder());
+                actualBytes = steam.ToArray();
+            }
+
+            var expectedBytes = File.ReadAllBytes($"../../../ReferenceData/render-maze-1-with-sprites-flipped.bmp");
 
             Assert.Equal(expectedBytes, actualBytes);
         }

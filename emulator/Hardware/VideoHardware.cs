@@ -3,6 +3,7 @@ using System;
 using Color = System.Drawing.Color;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using JustinCredible.ZilogZ80;
 
 namespace JustinCredible.PacEmu
@@ -157,17 +158,42 @@ namespace JustinCredible.PacEmu
             _spriteRenderer.PreRenderAllSprites();
         }
 
-        // TODO: Sprites are flipped by game code, but tiles need to be flipped manually in 2 player cocktail mode?
-        public Image<Rgba32> Render(IMemory memory, byte[] spriteCoordinates)
+        /**
+         * Used to render a single frame for display on the screen. This includes rendering the tiles
+         * and sprites and also handles screen rotation if needed.
+         */
+        public Image<Rgba32> Render(IMemory memory, byte[] spriteCoordinates, bool flipScreen)
         {
-            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT);
+            // Render the tile layer; this is the background maze/dots/etc, attract screen,
+            // intermission cartoons, and letters/numbers.
+            var tiles = RenderTiles(memory);
 
-            // Each region below handles rendering a different portion of the screen. Order
-            // is important here as it determines which pixels overwrite other pixels (sprite
-            // ordering etc).
-            // The playfield tiles are lowest priority; essentially the background.
-            // The sprites are next
-            // Then the top and bottom tiles for the scoreboard and lives.
+            // Rotate 180 degrees if the caller indicates the screen should be flipped. This occurs
+            // when the cabinet is configured for cocktail table mode and it is the second player's
+            // turn to play.
+            if (flipScreen)
+                tiles.Mutate(x => x.Rotate(RotateMode.Rotate180));
+
+            // Render the sprites; there are 8 hardware sprites for Pac-Man/Ghosts/Fruit/etc.
+            // Note that we don't perform 180 degrees rotation here since this is already handled
+            // by the game code by setting the sprite's coordinates and flipX/flipY values in memory.
+            var sprites = RenderSprites(memory, spriteCoordinates);
+
+            // Compose the tiles and sprite layers into one.
+            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { R = 0, G = 0, B = 0, A = 255 });
+            image.Mutate(x => x.DrawImage(tiles, opacity: 1));
+            image.Mutate(x => x.DrawImage(sprites, opacity: 1));
+
+            // TODO: Sprites shouldn't be allowed to draw over the top/bottom bars; mask those off
+            // before composing the images. Also, mask off the areas of the screen that are not
+            // normally visible (e.g. for offscreen sprites and maze exits).
+
+            return image;
+        }
+
+        private Image<Rgba32> RenderTiles(IMemory memory)
+        {
+            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { R = 0, G = 0, B = 0, A = 255 });
 
             var originX = 0;
             var originY = 0;
@@ -214,77 +240,6 @@ namespace JustinCredible.PacEmu
                     playfieldRow++;
                 }
             }
-
-            #endregion
-
-            #region Render the sprites
-
-            // There are 8 sprites (0-7). The lower number sprites will be drawn over the top
-            // of the higher numbered onces. The sprite X/Y coordinates were written to addresses
-            // 5060 - 506F and are available here to the video hardware as spriteCoordinates[]
-            // (one byte per coordinate) while 4FF0 - 4FFF contain the sprite index, flip X/Y flags,
-            // and palette index (one byte for the # and flip flags and one for the palette).
-
-            // We'll loop over the addresses backwards, so we draw sprite 7 first, and 0 last.
-            var spriteCoordinatesIndex = 15;
-            var spriteDataAddress = 0x4FFF;
-
-            for (var i = 0; i < 8; i++)
-            {
-                var spriteOriginY = spriteCoordinates[spriteCoordinatesIndex];
-                spriteCoordinatesIndex--;
-
-                var spriteOriginX = spriteCoordinates[spriteCoordinatesIndex];
-                spriteCoordinatesIndex--;
-
-                var paletteIndex = memory.Read(spriteDataAddress);
-                spriteDataAddress--;
-
-                var flags = memory.Read(spriteDataAddress);
-                spriteDataAddress--;
-
-                // The lower two bites are the flip flags, and the upper 6 bits are the index.
-                var flipX = (flags & 0x02) == 0x02;
-                var flipY = (flags & 0x01) == 0x01;
-                var spriteIndex = (flags & 0xFC) >> 2;
-
-                // Console.WriteLine($"Rendering sprite #{i} with sprite index {spriteIndex} at ({spriteOriginX}, {spriteOriginY}) with palette #{paletteIndex} and flipX: {flipX} / flipY: {flipY}");
-
-                var sprite = _spriteRenderer.RenderSprite(spriteIndex, paletteIndex, flipX, flipY);
-
-                // Adjust coordinates. The coordinates are (x, y) from the lower right corner of the screen.
-                // Additionally, we need to account for the  fact that the Y axis of the sprites is offset
-                // by 16 (the background tiles can be drawn out another 2 tiles, which is 16 pixels).
-                var convertedX = RESOLUTION_WIDTH - spriteOriginX;
-                var convertedY = RESOLUTION_HEIGHT - 16 - spriteOriginY;
-
-                // Copy the rendered sprite over into the full image.
-                for (var y = 0; y < 16; y++)
-                {
-                    for (var x = 0; x < 16; x++)
-                    {
-                        var pixel = sprite[x, y];
-                        var isTransparent = pixel.A == 255;
-
-                        if (isTransparent)
-                            continue;
-
-                        // TODO: I'm currently skipping and sprites that don't fully fit on the screen.
-                        // The correct behavior here is to actually wrap the sprite around to the other
-                        // side of the screen. Skipping for now since I'm not sure it's actually used.
-                        if (convertedX + x >= image.Width
-                            || convertedY + y >= image.Height
-                            || convertedX + x < 0
-                            || convertedY + y < 0
-                        )
-                            continue;
-
-                        image[convertedX + x, convertedY + y] = sprite[x, y];
-                    }
-                }
-            }
-
-            // TODO: Render black pixels to overlap sprite "hidden" areas?
 
             #endregion
 
@@ -403,6 +358,82 @@ namespace JustinCredible.PacEmu
             }
 
             #endregion
+
+            return image;
+        }
+
+        private Image<Rgba32> RenderSprites(IMemory memory, byte[] spriteCoordinates)
+        {
+            // Note that we mark all the background pixels as transparent here because this layer
+            // will be overlayed onto the background/tile layer.
+            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { A = 0 });
+
+            // There are 8 sprites (0-7). The lower number sprites will be drawn over the top
+            // of the higher numbered onces. The sprite X/Y coordinates were written to addresses
+            // 5060 - 506F and are available here to the video hardware as spriteCoordinates[]
+            // (one byte per coordinate) while 4FF0 - 4FFF contain the sprite index, flip X/Y flags,
+            // and palette index (one byte for the # and flip flags and one for the palette).
+
+            // We'll loop over the addresses backwards, so we draw sprite 7 first, and 0 last.
+            var spriteCoordinatesIndex = 15;
+            var spriteDataAddress = 0x4FFF;
+
+            for (var i = 0; i < 8; i++)
+            {
+                var spriteOriginY = spriteCoordinates[spriteCoordinatesIndex];
+                spriteCoordinatesIndex--;
+
+                var spriteOriginX = spriteCoordinates[spriteCoordinatesIndex];
+                spriteCoordinatesIndex--;
+
+                var paletteIndex = memory.Read(spriteDataAddress);
+                spriteDataAddress--;
+
+                var flags = memory.Read(spriteDataAddress);
+                spriteDataAddress--;
+
+                // The lower two bites are the flip flags, and the upper 6 bits are the index.
+                var flipX = (flags & 0x02) == 0x02;
+                var flipY = (flags & 0x01) == 0x01;
+                var spriteIndex = (flags & 0xFC) >> 2;
+
+                // Console.WriteLine($"Rendering sprite #{i} with sprite index {spriteIndex} at ({spriteOriginX}, {spriteOriginY}) with palette #{paletteIndex} and flipX: {flipX} / flipY: {flipY}");
+
+                var sprite = _spriteRenderer.RenderSprite(spriteIndex, paletteIndex, flipX, flipY);
+
+                // Adjust coordinates. The coordinates are (x, y) from the lower right corner of the screen.
+                // Additionally, we need to account for the  fact that the Y axis of the sprites is offset
+                // by 16 (the background tiles can be drawn out another 2 tiles, which is 16 pixels).
+                var convertedX = RESOLUTION_WIDTH - spriteOriginX;
+                var convertedY = RESOLUTION_HEIGHT - 16 - spriteOriginY;
+
+                // Copy the rendered sprite over into the full image.
+                for (var y = 0; y < 16; y++)
+                {
+                    for (var x = 0; x < 16; x++)
+                    {
+                        var pixel = sprite[x, y];
+                        var isTransparent = pixel.A == 0;
+
+                        if (isTransparent)
+                            continue;
+
+                        // TODO: I'm currently skipping and sprites that don't fully fit on the screen.
+                        // The correct behavior here is to actually wrap the sprite around to the other
+                        // side of the screen. Skipping for now since I'm not sure it's actually used.
+                        if (convertedX + x >= image.Width
+                            || convertedY + y >= image.Height
+                            || convertedX + x < 0
+                            || convertedY + y < 0
+                        )
+                            continue;
+
+                        image[convertedX + x, convertedY + y] = sprite[x, y];
+                    }
+                }
+            }
+
+            // TODO: Render black pixels to overlap sprite "hidden" areas?
 
             return image;
         }

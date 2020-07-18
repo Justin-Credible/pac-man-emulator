@@ -111,7 +111,7 @@ namespace JustinCredible.PacEmu.Tests
             var spriteOriginY = 0;
 
             // The image we'll be rendering all the sprites to.
-            var image = new Image<Rgba32>(width, height, Rgba32.ParseHex("FF00FF"));
+            var image = new Image<Rgba32>(width, height, new Rgba32() { R = 255, G = 0, B = 255, A = 255 });
 
             // Render each of the 64 sprites.
             for (var spriteIndex = 0; spriteIndex < 64; spriteIndex++)
@@ -125,7 +125,7 @@ namespace JustinCredible.PacEmu.Tests
                     for (var x = 0; x < 16; x++)
                     {
                         var pixel = sprite[x, y];
-                        var isTransparent = pixel.A == 255;
+                        var isTransparent = pixel.A == 0;
 
                         if (!isTransparent)
                             image[spriteOriginX + x, spriteOriginY + y] = sprite[x, y];
@@ -186,7 +186,7 @@ namespace JustinCredible.PacEmu.Tests
             var spriteOriginY = 0;
 
             // The image we'll be rendering all the sprites to.
-            var image = new Image<Rgba32>(width, height, Rgba32.ParseHex("003366"));
+            var image = new Image<Rgba32>(width, height, new Rgba32() { R = 0, G = 51, B = 102, A = 255});
 
             // Alternate between not flipping, flipping only X and only Y, and both.
 
@@ -224,7 +224,7 @@ namespace JustinCredible.PacEmu.Tests
                     for (var x = 0; x < 16; x++)
                     {
                         var pixel = sprite[x, y];
-                        var isTransparent = pixel.A == 255;
+                        var isTransparent = pixel.A == 0;
 
                         if (!isTransparent)
                             image[spriteOriginX + x, spriteOriginY + y] = sprite[x, y];
@@ -246,7 +246,7 @@ namespace JustinCredible.PacEmu.Tests
 
             // Assert: the rendered image should be the same as the reference image.
 
-             byte[] actualBytes = null;
+            byte[] actualBytes = null;
 
             using (var steam = new MemoryStream())
             {

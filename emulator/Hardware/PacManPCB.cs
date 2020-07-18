@@ -617,7 +617,7 @@ namespace JustinCredible.PacEmu
                 if (OnRender != null)
                 {
                     // Render the screen.
-                    var image = _video.Render(this, _spriteCoordinates);
+                    var image = _video.Render(this, _spriteCoordinates, _flipScreen);
 
                     // Convert the image into a bitmap.
 
