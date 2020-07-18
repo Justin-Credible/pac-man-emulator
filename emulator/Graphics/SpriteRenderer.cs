@@ -153,11 +153,11 @@ namespace JustinCredible.PacEmu
 
                     // Place each pixel in the sprite using the correct color.
                     // Note that the bottom of the column is pixel #1 and the top is pixel #4.
-                    // Pixels using color index 0 of the palette are treated as transparent.
-                    sprite[originX, originY + 0] = new Rgba32() { R = pixel4Color.R, G = pixel4Color.G, B = pixel4Color.B, A = (byte)(pixel4ColorIndex == 0 ? 0 : 255) };
-                    sprite[originX, originY + 1] = new Rgba32() { R = pixel3Color.R, G = pixel3Color.G, B = pixel3Color.B, A = (byte)(pixel3ColorIndex == 0 ? 0 : 255) };
-                    sprite[originX, originY + 2] = new Rgba32() { R = pixel2Color.R, G = pixel2Color.G, B = pixel2Color.B, A = (byte)(pixel2ColorIndex == 0 ? 0 : 255) };
-                    sprite[originX, originY + 3] = new Rgba32() { R = pixel1Color.R, G = pixel1Color.G, B = pixel1Color.B, A = (byte)(pixel1ColorIndex == 0 ? 0 : 255) };
+                    // Pixels using palette 0 OR using color index 0 of any palette are treated as transparent.
+                    sprite[originX, originY + 0] = new Rgba32() { R = pixel4Color.R, G = pixel4Color.G, B = pixel4Color.B, A = (byte)(paletteIndex == 0 || pixel4ColorIndex == 0 ? 0 : 255) };
+                    sprite[originX, originY + 1] = new Rgba32() { R = pixel3Color.R, G = pixel3Color.G, B = pixel3Color.B, A = (byte)(paletteIndex == 0 || pixel3ColorIndex == 0 ? 0 : 255) };
+                    sprite[originX, originY + 2] = new Rgba32() { R = pixel2Color.R, G = pixel2Color.G, B = pixel2Color.B, A = (byte)(paletteIndex == 0 || pixel2ColorIndex == 0 ? 0 : 255) };
+                    sprite[originX, originY + 3] = new Rgba32() { R = pixel1Color.R, G = pixel1Color.G, B = pixel1Color.B, A = (byte)(paletteIndex == 0 || pixel1ColorIndex == 0 ? 0 : 255) };
 
                     if (originX == 15)
                     {
