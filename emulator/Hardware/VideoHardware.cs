@@ -30,12 +30,16 @@ namespace JustinCredible.PacEmu
         private TileRenderer _tileRenderer = null;
         private SpriteRenderer _spriteRenderer = null;
 
+        private Image<Rgba32> _frameBuffer = null;
+
         public VideoHardware(ROMData romData)
         {
             _colorROM = romData.Data[ROMs.PAC_MAN_COLOR.FileName];
             _paletteROM = romData.Data[ROMs.PAC_MAN_PALETTE.FileName];
             _tileROM = romData.Data[ROMs.PAC_MAN_TILE.FileName];
             _spriteROM = romData.Data[ROMs.PAC_MAN_SPRITE.FileName];
+
+            _frameBuffer = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { R = 0, G = 0, B = 0, A = 255 });
         }
 
         public void Initialize()
@@ -166,35 +170,28 @@ namespace JustinCredible.PacEmu
         {
             // Render the tile layer; this is the background maze/dots/etc, attract screen,
             // intermission cartoons, and letters/numbers.
-            var tiles = RenderTiles(memory);
+            RenderTiles(memory, _frameBuffer);
 
             // Rotate 180 degrees if the caller indicates the screen should be flipped. This occurs
             // when the cabinet is configured for cocktail table mode and it is the second player's
             // turn to play.
             if (flipScreen)
-                tiles.Mutate(x => x.Rotate(RotateMode.Rotate180));
+                _frameBuffer.Mutate(x => x.Rotate(RotateMode.Rotate180));
 
             // Render the sprites; there are 8 hardware sprites for Pac-Man/Ghosts/Fruit/etc.
             // Note that we don't perform 180 degrees rotation here since this is already handled
             // by the game code by setting the sprite's coordinates and flipX/flipY values in memory.
-            var sprites = RenderSprites(memory, spriteCoordinates);
-
-            // Compose the tiles and sprite layers into one.
-            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { R = 0, G = 0, B = 0, A = 255 });
-            image.Mutate(x => x.DrawImage(tiles, opacity: 1));
-            image.Mutate(x => x.DrawImage(sprites, opacity: 1));
+            RenderSprites(memory, spriteCoordinates, _frameBuffer);
 
             // TODO: Sprites shouldn't be allowed to draw over the top/bottom bars; mask those off
             // before composing the images. Also, mask off the areas of the screen that are not
             // normally visible (e.g. for offscreen sprites and maze exits).
 
-            return image;
+            return _frameBuffer;
         }
 
-        private Image<Rgba32> RenderTiles(IMemory memory)
+        private void RenderTiles(IMemory memory, Image<Rgba32> image)
         {
-            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { R = 0, G = 0, B = 0, A = 255 });
-
             var originX = 0;
             var originY = 0;
 
@@ -358,16 +355,10 @@ namespace JustinCredible.PacEmu
             }
 
             #endregion
-
-            return image;
         }
 
-        private Image<Rgba32> RenderSprites(IMemory memory, byte[] spriteCoordinates)
+        private void RenderSprites(IMemory memory, byte[] spriteCoordinates, Image<Rgba32> image)
         {
-            // Note that we mark all the background pixels as transparent here because this layer
-            // will be overlayed onto the background/tile layer.
-            var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { A = 0 });
-
             // There are 8 sprites (0-7). The lower number sprites will be drawn over the top
             // of the higher numbered onces. The sprite X/Y coordinates were written to addresses
             // 5060 - 506F and are available here to the video hardware as spriteCoordinates[]
@@ -432,10 +423,6 @@ namespace JustinCredible.PacEmu
                     }
                 }
             }
-
-            // TODO: Render black pixels to overlap sprite "hidden" areas?
-
-            return image;
         }
     }
 }
