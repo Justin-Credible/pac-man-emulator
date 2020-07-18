@@ -141,6 +141,8 @@ namespace JustinCredible.PacEmu
                         throw new ArgumentException($"Unable to locate a DIP switch settings JSON file at: {dipSwitchesPath}");
                 }
 
+                _game.DIPSwitches = dipSwitches;
+
                 #endregion
 
                 #region Load State

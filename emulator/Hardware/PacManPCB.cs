@@ -65,6 +65,8 @@ namespace JustinCredible.PacEmu
             EnableDiagnosticsMode = false,
         };
 
+        public DIPSwitches DIPSwitches { get; set; }
+
         // Zilog Z80
         private CPU _cpu;
 
@@ -110,6 +112,13 @@ namespace JustinCredible.PacEmu
          */
         private byte[] _spriteCoordinates = new byte[16];
 
+        /**
+         * Keeps track of if the screen should be flipped or not. This is used if the game is
+         * configured for cocktail mode when it is the second player's turn. In upright mode
+         * the screen will not be flipped.
+         */
+        private bool _flipScreen = false;
+
         public byte Read(int address)
         {
             if (address >= 0x0000 && address <= 0x4FFF)
@@ -126,8 +135,7 @@ namespace JustinCredible.PacEmu
             else if (address == 0x5003)
             {
                 // Flip screen (bit 0: 0 = normal, 1 = flipped)
-                // TODO: If supporting the cocktail mode screen flip dip switch.
-                return 0x00;
+                return (byte)(_flipScreen == true ? 1 : 0);
             }
             else if (address == 0x5004)
             {
@@ -158,13 +166,13 @@ namespace JustinCredible.PacEmu
             {
                 // IN1 (joystick and start buttons) (each byte returns same value)
                 // TODO: Pass joystick/button state here.
+                // TODO: Pass CabinetMode switch here.
                 return 0x10; // Hard code board test to OFF for now.
             }
             else if (address >= 0x5080 && address <= 0x50BF)
             {
-                // Dip Switch Settings (each byte returns same value)
-                // TODO: Pass dip switch values here.
-                return 0b11001001;
+                // Dip Switch Settings (each byte returns same value).
+                return DIPSwitches.GetByte();
             }
             else if (address < 0x00)
             {
@@ -225,8 +233,7 @@ namespace JustinCredible.PacEmu
             else if (address == 0x5003)
             {
                 // Flip screen (bit 0: 0 = normal, 1 = flipped)
-                // TODO: If supporting the cocktail mode screen flip dip switch.
-                return; // no-op
+                _flipScreen = value == 1 ? true : false;
             }
             else if (address == 0x5004)
             {
