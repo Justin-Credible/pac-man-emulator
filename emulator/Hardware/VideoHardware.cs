@@ -157,6 +157,7 @@ namespace JustinCredible.PacEmu
             _spriteRenderer.PreRenderAllSprites();
         }
 
+        // TODO: Sprites are flipped by game code, but tiles need to be flipped manually in 2 player cocktail mode?
         public Image<Rgba32> Render(IMemory memory, byte[] spriteCoordinates)
         {
             var image = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT);

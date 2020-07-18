@@ -43,8 +43,8 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
     - [X] Render Sprites
     - [X] Render entire screen
   - [ ] Audio
-  - [ ] Controllers / Input
-  - [ ] DIP Switches
+  - [X] Controllers / Input
+  - [X] DIP Switches
 - [ ] Cleanup
   - [ ] Rendering bugs
   - [ ] Save/Load state bugs

@@ -105,7 +105,7 @@ namespace JustinCredible.PacEmu
                 #region Set Game Options
 
                 // Use the default values for the hardware DIP switches.
-                var dipSwitches = new DIPSwitches();
+                var dipSwitchState = new DIPSwitches();
 
                 // Look in the current working directory for a settings file.
                 var dipSwitchesPath = "dip-switches.json";
@@ -126,7 +126,7 @@ namespace JustinCredible.PacEmu
 
                     try
                     {
-                        dipSwitches = JsonSerializer.Deserialize<DIPSwitches>(json, serializerOptions);
+                        dipSwitchState = JsonSerializer.Deserialize<DIPSwitches>(json, serializerOptions);
                     }
                     catch (Exception parseException)
                     {
@@ -141,7 +141,7 @@ namespace JustinCredible.PacEmu
                         throw new ArgumentException($"Unable to locate a DIP switch settings JSON file at: {dipSwitchesPath}");
                 }
 
-                _game.DIPSwitches = dipSwitches;
+                _game.DIPSwitchState = dipSwitchState;
 
                 #endregion
 
@@ -291,17 +291,8 @@ namespace JustinCredible.PacEmu
          */
         private static void GUI_OnTick(GUITickEventArgs eventArgs)
         {
-            _game.ButtonP1Left = eventArgs.ButtonP1Left;
-            _game.ButtonP1Right = eventArgs.ButtonP1Right;
-            _game.ButtonP1Up = eventArgs.ButtonP1Up;
-            _game.ButtonP1Down = eventArgs.ButtonP1Down;
-            _game.ButtonP2Left = eventArgs.ButtonP2Left;
-            _game.ButtonP2Right = eventArgs.ButtonP2Right;
-            _game.ButtonP2Up = eventArgs.ButtonP2Up;
-            _game.ButtonP2Down = eventArgs.ButtonP2Down;
-            _game.ButtonStart1P = eventArgs.ButtonStart1P;
-            _game.ButtonStart2P = eventArgs.ButtonStart2P;
-            _game.ButtonCredit = eventArgs.ButtonCredit;
+            // Receive user input.
+            _game.ButtonState.SetState(eventArgs.ButtonState);
 
             // If the PAUSE key was pressed (e.g. CTRL/CMD+BREAK), invoke the
             // interactive debugger.

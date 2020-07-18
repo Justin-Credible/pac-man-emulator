@@ -65,8 +65,6 @@ namespace JustinCredible.PacEmu
             EnableDiagnosticsMode = false,
         };
 
-        public DIPSwitches DIPSwitches { get; set; }
-
         // Zilog Z80
         private CPU _cpu;
 
@@ -128,9 +126,8 @@ namespace JustinCredible.PacEmu
             }
             else if (address >= 0x5000 && address <= 0x503F)
             {
-                // IN0 (joystick and coin slot) (each byte returns same value)
-                // TODO: Pass joystick/button state here.
-                return 0x10; // Hardcoding rack advance as disabled for now.
+                // IN0 (player 1 joystick, credit switches, and rack advance button) (each byte returns same value).
+                return ButtonState.GetPortIN0();
             }
             else if (address == 0x5003)
             {
@@ -164,15 +161,15 @@ namespace JustinCredible.PacEmu
             }
             else if (address >= 0x5040 && address <= 0x507F)
             {
-                // IN1 (joystick and start buttons) (each byte returns same value)
-                // TODO: Pass joystick/button state here.
-                // TODO: Pass CabinetMode switch here.
-                return 0x10; // Hard code board test to OFF for now.
+                // IN1 (player 2 joystick, start buttons, board test and cabinet mode switches) (each byte returns same value).
+                // Note that bit 7 is the cabinet mode setting which comes from a DIP switch.
+                var cabinetMode = (byte)((DIPSwitchState.CabinetMode == CabinetMode.Upright ? 1 : 0) << 7);
+                return (byte)(ButtonState.GetPortIN1() | cabinetMode);
             }
             else if (address >= 0x5080 && address <= 0x50BF)
             {
                 // Dip Switch Settings (each byte returns same value).
-                return DIPSwitches.GetByte();
+                return DIPSwitchState.GetByte();
             }
             else if (address < 0x00)
             {
@@ -336,26 +333,10 @@ namespace JustinCredible.PacEmu
 
         #endregion
 
-        #region Dip Switches
+        #region Input: Buttons/Switches/etc
 
-        // public StartingShipsSetting StartingShips { get; set; } = StartingShipsSetting.Three;
-        // public ExtraShipAtSetting ExtraShipAt { get; set; } = ExtraShipAtSetting.Points1000;
-
-        #endregion
-
-        #region Button State
-
-        public bool ButtonP1Left { get; set; } = false;
-        public bool ButtonP1Right { get; set; } = false;
-        public bool ButtonP1Up { get; set; } = false;
-        public bool ButtonP1Down { get; set; } = false;
-        public bool ButtonP2Left { get; set; } = false;
-        public bool ButtonP2Right { get; set; } = false;
-        public bool ButtonP2Up { get; set; } = false;
-        public bool ButtonP2Down { get; set; } = false;
-        public bool ButtonStart1P { get; set; } = false;
-        public bool ButtonStart2P { get; set; } = false;
-        public bool ButtonCredit { get; set; } = false;
+        public DIPSwitches DIPSwitchState { get; set; }
+        public Buttons ButtonState { get; set; } = new Buttons();
 
         #endregion
 

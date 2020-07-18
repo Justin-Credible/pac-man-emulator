@@ -50,6 +50,12 @@ namespace JustinCredible.PacEmu
         // A map of sound effects enums to the in-memory sound buffers.
         // private Dictionary<SoundEffect, IntPtr> soundEffects = null;
 
+        // Indicates if the toggle switch for the board's test mode is switched on or not.
+        private bool _boardTestSwitchActive = false;
+
+        // A flag that allows us to make a keypress behave as a toggle switch.
+        private bool _allowChangeBoardTestSwitch = true;
+
         #endregion
 
         #region Events
@@ -199,6 +205,9 @@ namespace JustinCredible.PacEmu
                     }
                 }
 
+                // Update the state of the board test toggle switch.
+                tickEventArgs.ButtonState.ServiceBoardTest = _boardTestSwitchActive;
+
                 // Update the event arguments that will be sent with the event handler.
 
                 tickEventArgs.ShouldRender = false;
@@ -342,39 +351,79 @@ namespace JustinCredible.PacEmu
         {
             switch (keycode)
             {
+                // Player 1
                 case SDL.SDL_Keycode.SDLK_LEFT:
-                    tickEventArgs.ButtonP1Left = isDown;
+                    tickEventArgs.ButtonState.P1Left = isDown;
                     break;
                 case SDL.SDL_Keycode.SDLK_RIGHT:
-                    tickEventArgs.ButtonP1Right = isDown;
+                    tickEventArgs.ButtonState.P1Right = isDown;
                     break;
                 case SDL.SDL_Keycode.SDLK_UP:
-                    tickEventArgs.ButtonP1Up = isDown;
+                    tickEventArgs.ButtonState.P1Up = isDown;
                     break;
                 case SDL.SDL_Keycode.SDLK_DOWN:
-                    tickEventArgs.ButtonP1Down= isDown;
-                    break;
-                case SDL.SDL_Keycode.SDLK_a:
-                    tickEventArgs.ButtonP2Left = isDown;
-                    break;
-                case SDL.SDL_Keycode.SDLK_d:
-                    tickEventArgs.ButtonP2Right = isDown;
-                    break;
-                case SDL.SDL_Keycode.SDLK_w:
-                    tickEventArgs.ButtonP2Up = isDown;
-                    break;
-                case SDL.SDL_Keycode.SDLK_s:
-                    tickEventArgs.ButtonP2Down = isDown;
+                    tickEventArgs.ButtonState.P1Down= isDown;
                     break;
                 case SDL.SDL_Keycode.SDLK_1:
-                    tickEventArgs.ButtonStart1P = isDown;
+                    tickEventArgs.ButtonState.P1Start = isDown;
+                    break;
+
+                // Player 2
+                case SDL.SDL_Keycode.SDLK_a:
+                    tickEventArgs.ButtonState.P2Left = isDown;
+                    break;
+                case SDL.SDL_Keycode.SDLK_d:
+                    tickEventArgs.ButtonState.P2Right = isDown;
+                    break;
+                case SDL.SDL_Keycode.SDLK_w:
+                    tickEventArgs.ButtonState.P2Up = isDown;
+                    break;
+                case SDL.SDL_Keycode.SDLK_s:
+                    tickEventArgs.ButtonState.P2Down = isDown;
                     break;
                 case SDL.SDL_Keycode.SDLK_2:
-                    tickEventArgs.ButtonStart2P = isDown;
+                    tickEventArgs.ButtonState.P2Start = isDown;
                     break;
+
+                // Coins
                 case SDL.SDL_Keycode.SDLK_5:
-                    tickEventArgs.ButtonCredit = isDown;
+                    tickEventArgs.ButtonState.CoinChute1 = isDown;
                     break;
+                case SDL.SDL_Keycode.SDLK_6:
+                    tickEventArgs.ButtonState.CoinChute2 = isDown;
+                    break;
+
+                // Servicing
+                case SDL.SDL_Keycode.SDLK_3:
+                    tickEventArgs.ButtonState.ServiceCredit = isDown;
+                    break;
+                case SDL.SDL_Keycode.SDLK_7:
+                    tickEventArgs.ButtonState.ServiceRackAdvance = isDown;
+                    break;
+                case SDL.SDL_Keycode.SDLK_8:
+                {
+                    // The board test switch is generally a toggle switch because it must remain closed
+                    // for the game program to remain in the test mode. Here we have some extra logic
+                    // to make it so you don't have to hold down the button to stay in test mode. This
+                    // makes it work like a toggle switch.
+
+                    // If the key is pressed and we are allowing it to change, then flip its state.
+                    if (isDown && _allowChangeBoardTestSwitch)
+                    {
+                        _boardTestSwitchActive = !_boardTestSwitchActive;
+
+                        // Once we've flipped the state, don't allow changing it again until the key
+                        // is released and pressed again.
+                        _allowChangeBoardTestSwitch = false;
+                    }
+
+                    // Once the key is released, allow the pressing of the key to toggle the flag again
+                    // next time the key is pressed.
+                    if (!isDown)
+                        _allowChangeBoardTestSwitch = true;
+
+                    break;
+                }
             }
         }
 

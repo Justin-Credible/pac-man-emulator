@@ -1,6 +1,9 @@
 
 namespace JustinCredible.PacEmu
 {
+    /**
+     * Holds the state of the PCB's DIP switches.
+     */
     public class DIPSwitches
     {
         public CoinsPerGame CoinsPerGame { get; set; } = CoinsPerGame.OneCoinOneGame;
@@ -8,9 +11,15 @@ namespace JustinCredible.PacEmu
         public BonusScorePerExtraLife BonusScorePerExtraLife { get; set; } = BonusScorePerExtraLife.TenThousand;
         public Difficulty Difficulty { get; set; } = Difficulty.Normal;
         public GhostNames GhostNames { get; set; } = GhostNames.Normal;
+
+        // Technically, this isn't a DIP switch on the real hardware; cocktail mode is actually
+        // enabled by grounding edge connector pin R. I put it here to make it easier to change
+        // by making it a setting.
         public CabinetMode CabinetMode { get; set; } = CabinetMode.Upright;
 
-        // TODO: Unit tests.
+        /**
+         * Returns these values as a single byte in the format the hardware is expecting.
+         */
         public byte GetByte()
         {
             var coinsPerGame = (byte)CoinsPerGame; // Bits 0-1
