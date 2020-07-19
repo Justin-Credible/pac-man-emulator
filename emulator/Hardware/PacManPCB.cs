@@ -24,6 +24,9 @@ namespace JustinCredible.PacEmu
         // loop in the thread and stop execution.
         private bool _cancelled = false;
 
+        // Indicates if writes should be allowed to the ROM addres space.
+        public bool AllowWritableROM { get; set; } = false;
+
         #region Events/Delegates
 
         // Fired when a frame is ready to be rendered.
@@ -386,10 +389,10 @@ namespace JustinCredible.PacEmu
         {
             if (address >= 0x0000 && address <= 0x3FFF)
             {
-                // Prevent writes to ROM address space.
-                // TODO: I may need to remove and/or relax this restriction (a no-op perhaps?). Adding
-                // an exception for now so I can troubleshoot while getting things running.
-                throw new Exception(String.Format("Unexpected write to ROM region (0x0000 - 0x3FFF): {0:X4}", address));
+                if (AllowWritableROM)
+                    _memory[address] = value;
+                else
+                    throw new Exception(String.Format("Unexpected write to ROM region (0x0000 - 0x3FFF): {0:X4}", address));
             }
             else if (address >= 0x4000 && address <= 0x4FFF)
             {

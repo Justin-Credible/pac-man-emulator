@@ -50,7 +50,7 @@ namespace JustinCredible.PacEmu
                     if (enforceValidChecksum)
                         throw new Exception(message);
                     else
-                        Console.WriteLine("[WARNING] {message}");
+                        Console.WriteLine($"[WARNING] {message}");
                 }
 
                 // Add the binary ROM data to the set indexed by file name.

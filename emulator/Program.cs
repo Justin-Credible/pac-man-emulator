@@ -69,6 +69,8 @@ namespace JustinCredible.PacEmu
 
             var dipSwitchesOption = command.Option("-dw|--dip-switches", "The path to a JSON file containing DIP switch settings; defaults to dip-switches.json in CWD.", CommandOptionType.SingleValue);
             var loadStateOption = command.Option("-l|--load-state", "Loads an emulator save state from the given path.", CommandOptionType.SingleValue);
+            var skipChecksumsOption = command.Option("-sc|--skip-checksums", "Allow running a ROM with invalid checksums.", CommandOptionType.NoValue);
+            var writableRomOption = command.Option("-wr|--writable-rom", "Allow memory writes to the ROM address space.", CommandOptionType.NoValue);
             var debugOption = command.Option("-d|--debug", "Run in debug mode; enables internal statistics and logs useful when debugging.", CommandOptionType.NoValue);
             var breakOption = command.Option("-b|--break", "Used with debug, will break at the given address and allow single stepping opcode execution (e.g. --break 0x0248)", CommandOptionType.MultipleValue);
             var rewindOption = command.Option("-r|--rewind", "Used with debug, allows for single stepping in reverse to rewind opcode execution.", CommandOptionType.NoValue);
@@ -83,7 +85,8 @@ namespace JustinCredible.PacEmu
                     throw new Exception($"Could not locate a directory at path {romPathArg.Value}");
 
                 // Load and validate all of the ROM files needed.
-                var romData = ROMLoader.LoadFromDisk(romPathArg.Value);
+                var enforceValidChecksums = !skipChecksumsOption.HasValue();
+                var romData = ROMLoader.LoadFromDisk(romPathArg.Value, enforceValidChecksums);
 
                 // Name the current thread so we can distinguish between the emulator's
                 // CPU thread when using a debugger.
@@ -99,6 +102,7 @@ namespace JustinCredible.PacEmu
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
                 // handlers to receive the framebuffer/sfx to be rendered/played.
                 _game = new PacManPCB();
+                _game.AllowWritableROM = writableRomOption.HasValue();
                 _game.OnRender += PacManPCB_OnRender;
                 // _game.OnSound += PacManPCB_OnSound;
 
