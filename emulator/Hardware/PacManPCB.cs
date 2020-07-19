@@ -27,6 +27,9 @@ namespace JustinCredible.PacEmu
         // Indicates if writes should be allowed to the ROM addres space.
         public bool AllowWritableROM { get; set; } = false;
 
+        // The ROM set the PCB should be configured for.
+        public ROMSet ROMSet { get; set; } = ROMSet.PacMan;
+
         #region Events/Delegates
 
         // Fired when a frame is ready to be rendered.
@@ -63,6 +66,16 @@ namespace JustinCredible.PacEmu
          * 5000 - 50FF                 Memory mapped registers
          */
         private byte[] _memory = null;
+
+        /**
+         * Ms. Pac-Man is simply a Pac-Man PCB which an auxiliary daughterboard attached via
+         * a ribbon cable to the original Z80 CPU slot. It is dormant until a 1 is written to
+         * the 0x5002 address, at which point it becomes enabled. The daughterboard handles
+         * intercepting reads/writes to certain addresses so it can patch areas of the original
+         * Pac-Man ROM with jumps to the extra Ms. Pac-Man ROMs on the daughterboard.
+         */
+        private bool _auxBoardEnabled = false;
+        private MsPacManAuxBoard _auxBoard = null;
 
         /**
          * Each pair of bytes is an (x, y) coordinate for each of the 8 hardware sprites.
@@ -171,6 +184,9 @@ namespace JustinCredible.PacEmu
             if (romData == null || romData.Data == null || romData.Data.Count == 0)
                 throw new Exception("romData is required.");
 
+            if (ROMSet != ROMSet.PacMan && ROMSet != ROMSet.MsPacMan)
+                throw new ArgumentException($"Unexpected ROM set: {ROMSet}");
+
             // The initial configuration of the CPU.
             var cpuConfig = new CPUConfig()
             {
@@ -228,13 +244,21 @@ namespace JustinCredible.PacEmu
             Array.Copy(codeRom3, 0, _memory, codeRom1.Length + codeRom2.Length, codeRom3.Length);
             Array.Copy(codeRom4, 0, _memory, codeRom1.Length + codeRom2.Length + codeRom3.Length, codeRom4.Length);
 
+            // Load and decrypt the Ms. Pac-Man daughterboard ROMs and apply patches to the base Pac-Man ROMs.
+            // The patches will be applied to a seperate memory instance because we still need the original,
+            // unmodified Pac-Man code ROMs present to boot and pass the self-test. See PacManPCB::Read().
+            if (ROMSet == ROMSet.MsPacMan)
+            {
+                _auxBoard = new MsPacManAuxBoard();
+                _auxBoard.LoadAuxROMs(romData);
+            }
+
             // This class implements the IMemory interface, which the CPU needs to determine how to read and
             // write data. We set the reference to this class instance (whose implementation uses _memory).
             _cpu.Memory = this;
 
             // Initialize video hardware.
-
-            _video = new VideoHardware(romData);
+            _video = new VideoHardware(romData, ROMSet);
             _video.Initialize();
 
             // Initialize audio hardware.
@@ -314,6 +338,28 @@ namespace JustinCredible.PacEmu
 
         public byte Read(int address)
         {
+            // Special behavior for when the Ms. Pac-Man daughterboard is enabled.
+            if (_auxBoardEnabled)
+            {
+                if (address <= 0x4000)
+                {
+                    // For all original ROM areas, read our patched version.
+                    return _auxBoard.AuxROMs[address];
+                }
+                else if (address >= 0x8000 && address < 0x8800)
+                {
+                    // Aux ROM U5
+                    return _auxBoard.AuxROMs[address - 0x8000 + 0x6000];
+                }
+                else if (address >= 0x8800 && address < 0xA000)
+                {
+                    // Aux ROM U6
+                    return _auxBoard.AuxROMs[(address & 0xFFF) + 0x5000];
+                }
+
+                // else fall through to original memory read behaviors.
+            }
+
             if (address >= 0x0000 && address <= 0x4FFF)
             {
                 // Includes ROM, Video RAM, RAM, and sprites.
@@ -413,14 +459,18 @@ namespace JustinCredible.PacEmu
             }
             else if (address == 0x5002)
             {
-                // ??? Aux board enable?
+                // When the Ms. Pac-Man auxiliary board is connected on Pac-Man hardware in the Z80 slot,
+                // writing a 1 to this address will enable the additional functionality provided by the
+                // board, which is special behavior when reading memory locations.
 
-                // TODO: May need to remove/relax this sanity check.
-                if (value != 0x00 && value != 0x01)
-                    throw new Exception(String.Format("Unexpected value when writing to memory address location 0x5002 (aux board enable) with value: {0:X2}. Expected either 0x00 (disabled) or 0x01 (enabled).", value));
+                if (ROMSet == ROMSet.MsPacMan)
+                {
+                    if (value != 0x00 && value != 0x01)
+                        throw new Exception(String.Format("Unexpected value when writing to memory address location 0x5002 (aux board enable) with value: {0:X2}. Expected either 0x00 (disabled) or 0x01 (enabled).", value));
 
-                // TODO: Implement?
-                // ??? = value == 0x01;
+                    if ((value & 0x01) == 0x01)
+                        _auxBoardEnabled = true;
+                }
             }
             else if (address == 0x5003)
             {

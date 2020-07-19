@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace JustinCredible.PacEmu
@@ -8,12 +9,20 @@ namespace JustinCredible.PacEmu
      */
     public class ROMLoader
     {
-        // TODO: Use an enum to identify which ROM set to load for other games.
-        public static ROMData LoadFromDisk(string directoryPath, bool enforceValidChecksum = true)
+        public static ROMData LoadFromDisk(ROMSet romset, string directoryPath, bool enforceValidChecksum = true)
         {
             var romData = new ROMData();
 
-            foreach (var romFile in ROMs.PAC_MAN)
+            List<ROMFile> romFiles = null;
+
+            if (romset == ROMSet.PacMan)
+                romFiles = ROMs.PAC_MAN;
+            else if (romset == ROMSet.MsPacMan)
+                romFiles = ROMs.MS_PAC_MAN;
+            else
+                throw new ArgumentException($"Unexpected romset: {romset}");
+
+            foreach (var romFile in romFiles)
             {
                 var path = Path.Join(directoryPath, romFile.FileName);
                 var alternatePath = Path.Join(directoryPath, romFile.AlternateFileName);

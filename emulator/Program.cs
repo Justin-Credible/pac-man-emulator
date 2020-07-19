@@ -67,6 +67,7 @@ namespace JustinCredible.PacEmu
 
             var romPathArg = command.Argument("[ROM path]", "The path to a directory containing the Pac-Man ROM set to load.");
 
+            var romsetOption = command.Option("-rs|--rom-set", "The name of an alternative ROM set and/or PCB configuration to use; pacman or mspacman; defaults to pacman", CommandOptionType.SingleValue);
             var dipSwitchesOption = command.Option("-dw|--dip-switches", "The path to a JSON file containing DIP switch settings; defaults to dip-switches.json in CWD.", CommandOptionType.SingleValue);
             var loadStateOption = command.Option("-l|--load-state", "Loads an emulator save state from the given path.", CommandOptionType.SingleValue);
             var skipChecksumsOption = command.Option("-sc|--skip-checksums", "Allow running a ROM with invalid checksums.", CommandOptionType.NoValue);
@@ -84,9 +85,23 @@ namespace JustinCredible.PacEmu
                 if (!Directory.Exists(romPathArg.Value))
                     throw new Exception($"Could not locate a directory at path {romPathArg.Value}");
 
+                // Determine which ROM set we need to load.
+
+                var romset = ROMSet.PacMan;
+
+                if (romsetOption.HasValue())
+                {
+                    if (romsetOption.Value() == "pacman")
+                        romset = ROMSet.PacMan;
+                    else if (romsetOption.Value() == "mspacman")
+                        romset = ROMSet.MsPacMan;
+                    else
+                        throw new ArgumentException($"Unexpected ROM set: {romsetOption.Value()}");
+                }
+
                 // Load and validate all of the ROM files needed.
                 var enforceValidChecksums = !skipChecksumsOption.HasValue();
-                var romData = ROMLoader.LoadFromDisk(romPathArg.Value, enforceValidChecksums);
+                var romData = ROMLoader.LoadFromDisk(romset, romPathArg.Value, enforceValidChecksums);
 
                 // Name the current thread so we can distinguish between the emulator's
                 // CPU thread when using a debugger.
@@ -102,6 +117,7 @@ namespace JustinCredible.PacEmu
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
                 // handlers to receive the framebuffer/sfx to be rendered/played.
                 _game = new PacManPCB();
+                _game.ROMSet = romset;
                 _game.AllowWritableROM = writableRomOption.HasValue();
                 _game.OnRender += PacManPCB_OnRender;
                 // _game.OnSound += PacManPCB_OnSound;

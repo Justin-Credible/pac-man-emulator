@@ -18,6 +18,8 @@ namespace JustinCredible.PacEmu
         internal const int RESOLUTION_WIDTH = 256;
         internal const int RESOLUTION_HEIGHT = 288;
 
+        private ROMSet _romset = ROMSet.PacMan;
+
         private byte[] _colorROM = null;
         private byte[] _paletteROM = null;
         private byte[] _tileROM = null;
@@ -27,19 +29,24 @@ namespace JustinCredible.PacEmu
         internal Color[] _colors = null;
         internal Color[][] _palettes = null;
 
+        private Image<Rgba32> _frameBuffer = null;
+
         private TileRenderer _tileRenderer = null;
         private SpriteRenderer _spriteRenderer = null;
 
-        private Image<Rgba32> _frameBuffer = null;
-
         private Rgba32 _blackPixel = new Rgba32() { R = 0, G = 0, B = 0, A = 255 };
 
-        public VideoHardware(ROMData romData)
+        public VideoHardware(ROMData romData, ROMSet romset = ROMSet.PacMan)
         {
+            if (romset != ROMSet.PacMan && romset != ROMSet.MsPacMan)
+                throw new ArgumentException($"Unexpected ROM set: {romset}");
+
+            _romset = romset;
+
             _colorROM = romData.Data[ROMs.PAC_MAN_COLOR.FileName];
             _paletteROM = romData.Data[ROMs.PAC_MAN_PALETTE.FileName];
-            _tileROM = romData.Data[ROMs.PAC_MAN_TILE.FileName];
-            _spriteROM = romData.Data[ROMs.PAC_MAN_SPRITE.FileName];
+            _tileROM = romData.Data[romset == ROMSet.MsPacMan ? ROMs.MS_PAC_MAN_TILE.FileName : ROMs.PAC_MAN_TILE.FileName];
+            _spriteROM = romData.Data[romset == ROMSet.MsPacMan ? ROMs.MS_PAC_MAN_SPRITE.FileName : ROMs.PAC_MAN_SPRITE.FileName];
 
             _frameBuffer = new Image<Rgba32>(RESOLUTION_WIDTH, RESOLUTION_HEIGHT, new Rgba32() { R = 0, G = 0, B = 0, A = 255 });
         }
@@ -215,6 +222,10 @@ namespace JustinCredible.PacEmu
 
                 var tileIndex = memory.Read(tileAddress);
                 var paletteIndex = memory.Read(paletteAddress) & 0x7F; // MSB isn't used?
+
+                // HACK: Ms. Pac-Man uses palette 93?! There are only 64 palettes.
+                if (paletteIndex == 93 && _romset == ROMSet.MsPacMan)
+                    paletteIndex = 63;
 
                 var tile = _tileRenderer.RenderTile(tileIndex, paletteIndex);
 
