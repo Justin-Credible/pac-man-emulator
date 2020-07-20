@@ -25,3 +25,11 @@ jobs:
       run: dotnet build z80 --configuration Release --no-restore
     - name: Test (z80.tests)
       run: dotnet test z80.tests --configuration Release --no-restore --verbosity normal
+    - name: Install dependencies (emulator)
+      run: dotnet restore emulator
+    - name: Install dependencies (emulator.tests)
+      run: dotnet restore emulator.tests
+    - name: Build (emulator)
+      run: dotnet build emulator --configuration Release --no-restore
+    - name: Test (emulator.tests)
+      run: dotnet test emulator.tests --configuration Release --no-restore --verbosity normal
