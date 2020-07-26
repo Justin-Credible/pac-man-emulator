@@ -1,4 +1,3 @@
-using System;
 using JustinCredible.ZilogZ80;
 
 namespace JustinCredible.PacEmu
@@ -15,6 +14,8 @@ namespace JustinCredible.PacEmu
         public int TotalCycles { get; set; }
         public int TotalSteps { get; set; }
         public int CyclesSinceLastInterrupt { get; set; }
+        public int CyclesSinceLastAudioTick { get; set; }
+        public AudioHardwareState AudioHardwareState { get; set; }
 
         public int? LastCyclesExecuted { get; set; }
     }

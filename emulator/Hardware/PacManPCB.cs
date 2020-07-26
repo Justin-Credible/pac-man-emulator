@@ -51,6 +51,7 @@ namespace JustinCredible.PacEmu
 
         private CPU _cpu; // Zilog Z80
         private VideoHardware _video;
+        private AudioHardware _audio;
         public DIPSwitches DIPSwitchState { get; set; } = new DIPSwitches();
         public Buttons ButtonState { get; set; } = new Buttons();
 
@@ -78,6 +79,11 @@ namespace JustinCredible.PacEmu
         private MsPacManAuxBoard _auxBoard = null;
 
         /**
+         * Used to enable or disable all voices on the audio hardware.
+         */
+        private bool _soundEnabled = false;
+
+        /**
          * Each pair of bytes is an (x, y) coordinate for each of the 8 hardware sprites.
          * These can be written to via the addresses 0x5060 - 0x506F and is used by the
          * video hardware to position the sprites on the screen.
@@ -100,6 +106,11 @@ namespace JustinCredible.PacEmu
         // While this is not entirely accurate, it is close enough for the game to run as expected.
         private double _cyclesPerInterrupt = Math.Floor(Convert.ToDouble(CPU_MHZ / 60));
         private int _cyclesSinceLastInterrupt = 0;
+
+        // The game's audio hardware runs at a CPU clock / 32.
+        // e.g. 3.072 MHz / 32 = 96 kHz
+        private double _cyclesPerAudioTick = Math.Floor(Convert.ToDouble(CPU_MHZ / 32));
+        private int _cyclesSinceLastAudioTick = 0;
 
         // To keep the emulated CPU from running too fast, we use a stopwatch and count cycles.
         private Stopwatch _cpuStopWatch = new Stopwatch();
@@ -262,7 +273,7 @@ namespace JustinCredible.PacEmu
             _video.Initialize();
 
             // Initialize audio hardware.
-            // TODO
+            _audio = new AudioHardware(romData, ROMSet);
 
             if (state != null)
                 LoadState(state);
@@ -453,9 +464,7 @@ namespace JustinCredible.PacEmu
             else if (address == 0x5001)
             {
                 // Sound enable (bit 0: 0 = disabled, 1 = enabled)
-
-                // TODO: Implement.
-                // soundEnabled = (value & 0x01) == 0x01;;
+                _soundEnabled = (value & 0x01) == 0x01;;
             }
             else if (address == 0x5002)
             {
@@ -502,49 +511,147 @@ namespace JustinCredible.PacEmu
                 // Coin counter (trigger by changing bit 0 from 0 to 1)
                 return; // no-op
             }
-            else if (address >= 0x5040 && address <= 0x5045)
+
+            else if (address >= 0x5040 && address <= 0x5044)
             {
                 // Sound voice 1
                 // 5040-5044 – accumulator (low nibbles, used by H/W only)
+                if (value != 0)
+                    throw new Exception("Not expecting game code to adjust voice 1 accumulator values to be set by game code.");
+            }
+            else if (address == 0x5045)
+            {
+                // Sound voice 1
                 // 5045 – waveform (low nibble)
-                // TODO: Implement.
-                return; // no-op
+                _audio.Voice1Waveform = value;
+                return;
             }
-            else if (address >= 0x5046 && address <= 0x504A)
+
+            else if (address >= 0x5046 && address <= 0x5049)
             {
-                // Sound voice 2, laid out like voice 1, missing low accumulator nibble
-                // TODO: Implement.
-                return; // no-op
+                // Sound voice 2
+                // 5046-5049 – accumulator (low nibbles, used by H/W only)
+                if (value != 0)
+                    throw new Exception("Not expecting game code to adjust voice 2 accumulator values to be set by game code.");
             }
-            else if (address >= 0x504B && address <= 0x504F)
+            else if (address == 0x504A)
             {
-                // Sound voice 3, laid out like voice 1, missing low accumulator nibble
-                // TODO: Implement.
-                return; // no-op
+                // Sound voice 1
+                // 504A – waveform (low nibble)
+                _audio.Voice2Waveform = value;
+                return;
             }
-            else if (address >= 0x5050 && address <= 0x5054)
+
+            else if (address >= 0x504B && address <= 0x504E)
             {
-                // Voice 1 frequency (low nibbles)
-                // TODO: Implement.
-                return; // no-op
+                // Sound voice 3
+                // 504B-504E – accumulator (low nibbles, used by H/W only)
+                if (value != 0)
+                    throw new Exception("Not expecting game code to adjust voice 3 accumulator values to be set by game code.");
+            }
+            else if (address == 0x504F)
+            {
+                // Sound voice 3
+                // 504F – waveform (low nibble)
+                _audio.Voice3Waveform = value;
+                return;
+            }
+
+            else if (address == 0x5050)
+            {
+                // Voice 1 frequency (low nibble) byte 0
+                _audio.Voice1Frequency[0] = value;
+                return;
+            }
+            else if (address == 0x5051)
+            {
+                // Voice 1 frequency (low nibble) byte 1
+                _audio.Voice1Frequency[1] = value;
+                return;
+            }
+            else if (address == 0x5052)
+            {
+                // Voice 1 frequency (low nibble) byte 2
+                _audio.Voice1Frequency[2] = value;
+                return;
+            }
+            else if (address == 0x5053)
+            {
+                // Voice 1 frequency (low nibble) byte 3
+                _audio.Voice1Frequency[3] = value;
+                return;
+            }
+            else if (address == 0x5054)
+            {
+                // Voice 1 frequency (low nibble) byte 4
+                _audio.Voice1Frequency[4] = value;
+                return;
             }
             else if (address == 0x5055)
             {
                 // Voice 1 volume (low nibble)
-                // TODO: Implement.
-                return; // no-op
+                _audio.Voice1Volume = value;
+                return;
             }
-            else if (address >= 0x5056 && address <= 0x505A)
+            else if (address == 0x5056)
             {
-                // Voice 2 frequency and volume, laid out like voice 1
-                // TODO: Implement.
-                return; // no-op
+                // Voice 2 frequency (low nibble) byte 0
+                _audio.Voice2Frequency[0] = value;
+                return;
             }
-            else if (address >= 0x505B && address <= 0x505F)
+            else if (address == 0x5057)
             {
-                // Voice 3 frequency and volume, laid out like voice 1
-                // TODO: Implement.
-                return; // no-op
+                // Voice 2 frequency (low nibble) byte 1
+                _audio.Voice2Frequency[1] = value;
+                return;
+            }
+            else if (address == 0x5058)
+            {
+                // Voice 2 frequency (low nibble) byte 2
+                _audio.Voice2Frequency[2] = value;
+                return;
+            }
+            else if (address == 0x5059)
+            {
+                // Voice 2 frequency (low nibble) byte 3
+                _audio.Voice2Frequency[3] = value;
+                return;
+            }
+            else if (address == 0x505A)
+            {
+                // Voice 2 volume (low nibble)
+                _audio.Voice2Volume = value;
+                return;
+            }
+            else if (address == 0x505B)
+            {
+                // Voice 3 frequency (low nibble) byte 0
+                _audio.Voice3Frequency[0] = value;
+                return;
+            }
+            else if (address == 0x505C)
+            {
+                // Voice 3 frequency (low nibble) byte 1
+                _audio.Voice3Frequency[1] = value;
+                return;
+            }
+            else if (address == 0x505D)
+            {
+                // Voice 3 frequency (low nibble) byte 2
+                _audio.Voice3Frequency[2] = value;
+                return;
+            }
+            else if (address == 0x505E)
+            {
+                // Voice 3 frequency (low nibble) byte 3
+                _audio.Voice3Frequency[3] = value;
+                return;
+            }
+            else if (address == 0x505F)
+            {
+                // Voice 3 volume (low nibble)
+                _audio.Voice3Volume = value;
+                return;
             }
             else if (address >= 0x5060 && address <= 0x506F)
             {
@@ -623,6 +730,9 @@ namespace JustinCredible.PacEmu
                         _cpuStopWatch.Restart();
                     }
 
+                    // See if it's time to update the audio hardware or not.
+                    HandleAudioUpdate(cycles);
+
                     // See if it's time to fire a CPU interrupt or not.
                     HandleInterrupts(cycles);
                 }
@@ -641,8 +751,38 @@ namespace JustinCredible.PacEmu
         }
 
         /**
+         * Pac-Man's audio hardware runs at the CPU clock / 32, which is 96 kHz. We can use the number
+         * of CPU cycles elapsed to roughly estimate when the audio hardware needs to be updated. This
+         * will handle generating audio samples for playback.
+         */
+        private void HandleAudioUpdate(int cyclesElapsed)
+        {
+            // Keep track of the number of cycles since the audio tick occurred.
+            _cyclesSinceLastAudioTick += cyclesElapsed;
+
+            // Determine if it's time to tick the audio hardware.
+            if (_cyclesSinceLastAudioTick < _cyclesPerAudioTick)
+                return;
+
+            if (_soundEnabled)
+            {
+                var samples = _audio.Tick();
+
+                // Delegate to the audio sample event, passing the audio samples to be played.
+                // TODO: this.
+                // _audioSampleEventArgs.Samples = samples;
+                // OnAudioSample(_audioSampleEventArgs);
+
+                // Console.WriteLine("Audio Samples: {0:X2} {1:X2} {2:X2}", samples[0], samples[1], samples[2]);
+            }
+
+            // Reset the count so we can count up again.
+            _cyclesSinceLastAudioTick = 0;
+        }
+
+        /**
          * Pac-Man sends a single maskable interrupt, which is driven by the video hardware.
-         * We can use the number of CPU cycles elapsed to roughtly estimate when this interrupt
+         * We can use the number of CPU cycles elapsed to roughly estimate when this interrupt
          * should fire which is roughtly 60hz (also known as vblank; when the electron beam reaches
          * end of the screen).
          */
@@ -900,6 +1040,8 @@ namespace JustinCredible.PacEmu
                 TotalCycles = _totalCycles,
                 TotalSteps = _totalSteps,
                 CyclesSinceLastInterrupt = _cyclesSinceLastInterrupt,
+                CyclesSinceLastAudioTick = _cyclesSinceLastAudioTick,
+                AudioHardwareState = _audio.SaveState(),
             };
         }
 
@@ -919,6 +1061,8 @@ namespace JustinCredible.PacEmu
             _totalCycles = state.TotalCycles;
             _totalSteps = state.TotalSteps;
             _cyclesSinceLastInterrupt = state.CyclesSinceLastInterrupt;
+            _cyclesSinceLastAudioTick = state.CyclesSinceLastAudioTick;
+            _audio.LoadState(state.AudioHardwareState);
         }
 
         #endregion
