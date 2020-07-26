@@ -1,11 +1,12 @@
 using System;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace JustinCredible.PacEmu
 {
     public class RenderEventArgs : EventArgs
     {
-        public byte[] FrameBuffer { get; set; } // Bitmap
+        /**
+         * The frame to be renderd to the screen in the Bitmap file format.
+         */
+        public byte[] FrameBuffer { get; set; }
     }
 }

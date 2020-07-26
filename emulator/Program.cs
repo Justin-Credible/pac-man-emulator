@@ -20,13 +20,16 @@ namespace JustinCredible.PacEmu
         private static PacManPCB _game;
 
         // Used to pass data from the emulator thread's loop to the GUI loop: the
-        // framebuffer to be rendered and sounds effects to be played with matching
-        // flags indicating if a frame/sfx should be rendered/played or not on the
-        // next GUI event loop tick (to avoid rendering the same frame multiple times).
-        private static byte[] _frameBuffer; // Bitmap
+        // framebuffer to be rendered and audio samples to be played with matching
+        // flags indicating if a frame/sample should be rendered/played or not on the
+        // next GUI event loop tick (to avoid rendering/playing the same frame/sample
+        // multiple times).
+
+        private static byte[] _frameBuffer; // Bitmap File Format
         private static bool _renderFrameNextTick = false;
-        // private static List<SoundEffect> _soundEffects = new List<SoundEffect>();
-        private static bool _playSoundNextTick = false;
+
+        private static byte[] _audioSamples; // Array of samples; one for each voice.
+        private static bool _playAudioSamplesNextTick = false;
 
         #region CLI / Entrypoint
 
@@ -120,7 +123,7 @@ namespace JustinCredible.PacEmu
                 _game.ROMSet = romset;
                 _game.AllowWritableROM = writableRomOption.HasValue();
                 _game.OnRender += PacManPCB_OnRender;
-                // _game.OnSound += PacManPCB_OnSound;
+                _game.OnAudioSample += PacManPCB_OnAudioSample;
 
                 #region Set Game Options
 
@@ -297,13 +300,14 @@ namespace JustinCredible.PacEmu
         }
 
         /**
-         * Fired when the emulator needs to play a sound.
+         * Fired when the emulator has audio samples to be played.
+         * Should occur at approximately 96 kHz.
          */
-        // private static void PacManPCB_OnSound(SoundEventArgs eventArgs)
-        // {
-        //     _soundEffects.Add(eventArgs.SoundEffect);
-        //     _playSoundNextTick = true;
-        // }
+        private static void PacManPCB_OnAudioSample(AudioSampleEventArgs eventArgs)
+        {
+            _audioSamples = eventArgs.Samples;
+            _playAudioSamplesNextTick = true;
+        }
 
         /**
          * Fired when the GUI event loop "ticks". This provides an opportunity
@@ -326,12 +330,11 @@ namespace JustinCredible.PacEmu
                 _renderFrameNextTick = false;
             }
 
-            if (_playSoundNextTick)
+            if (_playAudioSamplesNextTick)
             {
-                // eventArgs.ShouldPlaySounds = true;
-                // eventArgs.SoundEffects.AddRange(_soundEffects);
-                // _soundEffects.Clear();
-                _playSoundNextTick = false;
+                eventArgs.AudioSamples = _audioSamples;
+                eventArgs.ShouldPlayAudioSamples = true;
+                _playAudioSamplesNextTick = false;
             }
         }
 

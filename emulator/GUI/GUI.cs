@@ -14,16 +14,14 @@ namespace JustinCredible.PacEmu
     {
         #region Constants
 
-        // We'll use three channels for audio, with dedicated channels
-        // for the enemy movement and UFO, which are the most common
-        // SFX that play simultaneously.
-        private const int AUDIO_CHANNEL_COMMON = 0;
-        private const int AUDIO_CHANNEL_INVADER_MOVEMENT = 1;
-        private const int AUDIO_CHANNEL_UFO = 2;
+        // We'll use three channels for audio, one for each of the hardware's voices.
+        private const int AUDIO_CHANNEL_1 = 0;
+        private const int AUDIO_CHANNEL_2 = 1;
+        private const int AUDIO_CHANNEL_3 = 2;
 
         // Constants for use with SDL_mixer.
-        private const int AUDIO_INFINITE_LOOP = -1;
-        private const int AUDIO_NO_LOOP = 0;
+        // private const int AUDIO_INFINITE_LOOP = -1;
+        // private const int AUDIO_NO_LOOP = 0;
 
         #endregion
 
@@ -211,8 +209,7 @@ namespace JustinCredible.PacEmu
                 // Update the event arguments that will be sent with the event handler.
 
                 tickEventArgs.ShouldRender = false;
-                tickEventArgs.ShouldPlaySounds = false;
-                // tickEventArgs.SoundEffects.Clear();
+                tickEventArgs.ShouldPlayAudioSamples = false;
 
                 // Delegate out to the event handler so work can be done.
                 if (OnTick != null)
@@ -257,6 +254,13 @@ namespace JustinCredible.PacEmu
 
                     // renderStopwatch.Stop();
                     // Console.WriteLine("Render completed in: " + renderStopwatch.ElapsedMilliseconds + " ms");
+                }
+
+                if (tickEventArgs.ShouldPlayAudioSamples
+                    && tickEventArgs.AudioSamples != null)
+                {
+                    // TODO: this.
+                    // Console.WriteLine("Audio Samples: {0:X2} {1:X2} {2:X2}", tickEventArgs.AudioSamples[0], tickEventArgs.AudioSamples[1], tickEventArgs.AudioSamples[2]);
                 }
 
                 // Handle playing sound effects.

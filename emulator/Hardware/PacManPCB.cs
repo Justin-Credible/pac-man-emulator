@@ -37,10 +37,10 @@ namespace JustinCredible.PacEmu
         public event RenderEvent OnRender;
         private RenderEventArgs _renderEventArgs = new RenderEventArgs();
 
-        // Fired when a sound effect should be played.
-        // public delegate void SoundEvent(SoundEventArgs e);
-        // public event SoundEvent OnSound;
-        // private SoundEventArgs _soundEventArgs;
+        // Fired when an audio sample should be played.
+        public delegate void AudioSampleEvent(AudioSampleEventArgs e);
+        public event AudioSampleEvent OnAudioSample;
+        private AudioSampleEventArgs _audioSampleEventArgs = new AudioSampleEventArgs();
 
         #endregion
 
@@ -769,11 +769,8 @@ namespace JustinCredible.PacEmu
                 var samples = _audio.Tick();
 
                 // Delegate to the audio sample event, passing the audio samples to be played.
-                // TODO: this.
-                // _audioSampleEventArgs.Samples = samples;
-                // OnAudioSample(_audioSampleEventArgs);
-
-                // Console.WriteLine("Audio Samples: {0:X2} {1:X2} {2:X2}", samples[0], samples[1], samples[2]);
+                _audioSampleEventArgs.Samples = samples;
+                OnAudioSample(_audioSampleEventArgs);
             }
 
             // Reset the count so we can count up again.

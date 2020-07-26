@@ -17,10 +17,13 @@ namespace JustinCredible.PacEmu
         public bool ShouldBreak { get; set; } = false;
 
         // In
+
         public byte[] FrameBuffer { get; set; } // Bitmap
         public bool ShouldRender { get; set; }
-        public bool ShouldPlaySounds { get; set; }
-        // public List<SoundEffect> SoundEffects { get; set; } = new List<SoundEffect>();
+
+        public bool ShouldPlayAudioSamples { get; set; }
+        public byte[] AudioSamples { get; set; }
+
         public bool ShouldQuit { get; set; }
     }
 }
