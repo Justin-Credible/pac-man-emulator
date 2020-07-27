@@ -7,10 +7,10 @@ namespace JustinCredible.PacEmu
 {
     /**
      * The "platform" code which handles creating of the GUI window to show graphics,
-     * play sounds, and receive keyboard input. Implemented with the SDL2 and SDL2_mixer
-     * libraries.
+     * play audio samples, and receive keyboard input. Implemented with the SDL2 library
+     * via the SDL# wrapper.
      */
-    class GUI : IDisposable
+    class Platform : IDisposable
     {
         #region Instance Variables
 
@@ -21,7 +21,7 @@ namespace JustinCredible.PacEmu
 
         // Used to throttle the GUI event loop so we don't fire the OnTick event
         // more than needed. During each tick we can send key presses as well as
-        // receive a framebuffer and play sound effects.
+        // receive a framebuffer.
         private int _targetTicksHz = 60;
 
         // Used to determine the location and size of the texture to render.
@@ -32,9 +32,6 @@ namespace JustinCredible.PacEmu
             w = VideoHardware.RESOLUTION_WIDTH,
             h = VideoHardware.RESOLUTION_HEIGHT,
         };
-
-        // A map of sound effects enums to the in-memory sound buffers.
-        // private Dictionary<SoundEffect, IntPtr> soundEffects = null;
 
         // Indicates if the toggle switch for the board's test mode is switched on or not.
         private bool _boardTestSwitchActive = false;
@@ -115,7 +112,7 @@ namespace JustinCredible.PacEmu
         /**
          * Used to start the GUI event loop using the SDL window to poll for events. When an event is
          * received, the keyboard state is read and the OnTick event is fired. After the event completes
-         * a frame and/or audio can be rendered/played based on the values set in the OnTick event args.
+         * a frame can be rendered based on the values set in the OnTick event args.
          * 
          * This is a BLOCKING call; the event loop will continue to be polled until (1) the user uses
          * the platform specific key combination or GUI action to close the window or (2) the OnTick
@@ -246,7 +243,7 @@ namespace JustinCredible.PacEmu
             // Merge all three voices into one.
             var sampleFull = samples[0] + samples[1] + samples[2];
 
-            // Clamp the value to the min/max of a 8-bit signed value.
+            // Clamp the value to the min/max of a 8-bit signed value to avoid distortion.
             if (sampleFull > 127)
                 sampleFull = 127;
             else if (sampleFull < -128)

@@ -16,7 +16,8 @@ namespace JustinCredible.PacEmu
     {
         private static CommandLineApplication _app;
 
-        private static GUI _gui;
+        // Used to interact with the device we're running on (e.g. graphics, audio, input).
+        private static Platform _platform;
 
         // The arcade printed circuit board for Pac-Man... the emulator!
         private static PacManPCB _game;
@@ -105,17 +106,18 @@ namespace JustinCredible.PacEmu
 
                 // Name the current thread so we can distinguish between the emulator's
                 // CPU thread when using a debugger.
-                Thread.CurrentThread.Name = "GUI Loop";
+                Thread.CurrentThread.Name = "Platform (SDL)";
 
-                // Initialize the user interface (window) and wire an event handler
-                // that will handle receiving user input as well as sending the
-                // framebuffer to be rendered.
-                _gui = new GUI();
-                _gui.OnTick += GUI_OnTick;
-                _gui.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
+                // Initialize the platform wrapper which allows us to interact with
+                // the platform's graphics, audio, and input devices. Wire an event
+                // handler that will handle receiving user input as well as sending
+                // the framebuffer to be rendered.
+                _platform = new Platform();
+                _platform.OnTick += Platform_OnTick;
+                _platform.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
 
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
-                // handlers to receive the framebuffer/sfx to be rendered/played.
+                // handlers to receive the framebuffer/samples to be rendered/played.
                 _game = new PacManPCB();
                 _game.ROMSet = romset;
                 _game.AllowWritableROM = writableRomOption.HasValue();
@@ -231,10 +233,10 @@ namespace JustinCredible.PacEmu
                 // the same thread and is a blocking call. Once this method returns
                 // we know that the user closed the window or quit the program via
                 // the OS (e.g. ALT+F4 / CMD+Q).
-                _gui.StartLoop();
+                _platform.StartLoop();
 
-                // Ensure the GUI resources are cleaned up and stop the emulation.
-                _gui.Dispose();
+                // Ensure the platform resources are cleaned up and stop the emulation.
+                _platform.Dispose();
                 _game.Stop();
 
                 return 0;
@@ -284,7 +286,7 @@ namespace JustinCredible.PacEmu
 
         #endregion
 
-        #region Glue Methods - Connects the emulator and SDL/renderer threads
+        #region Glue Methods - Connects the emulator and platform threads
 
         /**
          * Fired when the emulator has a full frame to be rendered.
@@ -302,14 +304,14 @@ namespace JustinCredible.PacEmu
          */
         private static void PacManPCB_OnAudioSample(AudioSampleEventArgs eventArgs)
         {
-            _gui.QueueAudioSamples(eventArgs.Samples);
+            _platform.QueueAudioSamples(eventArgs.Samples);
         }
 
         /**
          * Fired when the GUI event loop "ticks". This provides an opportunity
          * to receive user input as well as send the framebuffer to be rendered.
          */
-        private static void GUI_OnTick(GUITickEventArgs eventArgs)
+        private static void Platform_OnTick(GUITickEventArgs eventArgs)
         {
             // Receive user input.
             _game.ButtonState.SetState(eventArgs.ButtonState);

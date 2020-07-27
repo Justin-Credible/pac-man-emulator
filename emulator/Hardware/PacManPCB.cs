@@ -282,7 +282,7 @@ namespace JustinCredible.PacEmu
 
             _cancelled = false;
             _thread = new Thread(new ThreadStart(HardwareLoop));
-            _thread.Name = "Emulator: Hardware Loop";
+            _thread.Name = "Pac-Man Hardware";
             _thread.Start();
         }
 
