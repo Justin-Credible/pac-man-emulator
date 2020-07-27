@@ -30,7 +30,7 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
   - [X] Handle Intel 8080 -> Z80 instruction differences
   - [X] Pass ZEX integration test
   - [X] Re-work flag setting for arithmetic vs logical operations
-- [ ] Pac-Man Hardware
+- [X] Pac-Man Hardware
   - [X] Copy Space Invaders emulator project
   - [X] CPU / Memory configuration
   - [X] Interrupts?
@@ -42,11 +42,11 @@ This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https
     - [X] Parse Sprites
     - [X] Render Sprites
     - [X] Render entire screen
-  - [ ] Audio
+  - [X] Audio
   - [X] Controllers / Input
   - [X] DIP Switches
-- [ ] Cleanup
-  - [ ] Rendering bugs
-  - [ ] Save/Load state bugs
+- [X] Cleanup
+  - [X] Rendering bugs
+  - [X] Save/Load state bugs
   - [ ] Resolve all `TODO: ...` comments
   - [ ] Proper readme

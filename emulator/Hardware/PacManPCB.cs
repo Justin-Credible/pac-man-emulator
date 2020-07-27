@@ -114,6 +114,15 @@ namespace JustinCredible.PacEmu
         private double _cyclesPerAudioTick = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000));
         private int _cyclesSinceLastAudioTick = 0;
 
+        // Due to the way the CPU is throttled (by sleeping if it's going faster than ~60 FPS) the audio
+        // buffers are stalled during this throttling period, which resluts in distortion. Here I attempt
+        // to adjust for a lower sample rate. Also need to change the value in Platform::Initialize().
+        // private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)); // ~96000
+        private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)) * 2; // ~44100
+        // private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)) * 4; // ~22050
+        // private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)) * 8; // ~11025
+        private int _cyclesSinceLastAudioSamplePlayback = 0;
+
         // To keep the emulated CPU from running too fast, we use a stopwatch and count cycles.
         private Stopwatch _cpuStopWatch = new Stopwatch();
         private int _cycleCount = 0;
@@ -761,6 +770,7 @@ namespace JustinCredible.PacEmu
         {
             // Keep track of the number of cycles since the audio tick occurred.
             _cyclesSinceLastAudioTick += cyclesElapsed;
+            _cyclesSinceLastAudioSamplePlayback += cyclesElapsed;
 
             // Determine if it's time to tick the audio hardware.
             if (_cyclesSinceLastAudioTick < _cyclesPerAudioTick)
@@ -771,8 +781,19 @@ namespace JustinCredible.PacEmu
                 var samples = _audio.Tick();
 
                 // Delegate to the audio sample event, passing the audio samples to be played.
-                _audioSampleEventArgs.Samples = samples;
-                OnAudioSample(_audioSampleEventArgs);
+
+                // Uncomment to sample every tick.
+                // _audioSampleEventArgs.Samples = samples;
+                // OnAudioSample(_audioSampleEventArgs);
+
+                // Sample only when a certain number of cycles have elapsed.
+                if (_cyclesSinceLastAudioSamplePlayback >= _cyclesPerAudioSamplePlayback)
+                {
+                    _audioSampleEventArgs.Samples = samples;
+                    OnAudioSample(_audioSampleEventArgs);
+
+                    _cyclesSinceLastAudioSamplePlayback = 0;
+                }
             }
 
             // Reset the count so we can count up again.
