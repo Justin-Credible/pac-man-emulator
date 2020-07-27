@@ -21,9 +21,6 @@ namespace JustinCredible.PacEmu
         public byte[] FrameBuffer { get; set; } // Bitmap
         public bool ShouldRender { get; set; }
 
-        public bool ShouldPlayAudioSamples { get; set; }
-        public byte[] AudioSamples { get; set; }
-
         public bool ShouldQuit { get; set; }
     }
 }

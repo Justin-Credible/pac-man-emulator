@@ -4,7 +4,7 @@ using System;
 namespace JustinCredible.PacEmu
 {
     /**
-     * An implementation of the Pac-Man game audio hardware (Waveform Sound Generator)
+     * An implementation of the Pac-Man game audio hardware: Namco Waveform Sound Generator 3 (WSG3)
      * for emulation.
      */
     public class AudioHardware
@@ -42,27 +42,32 @@ namespace JustinCredible.PacEmu
             Array.Copy(rom2, 0, _soundROMs, 256, 256);
         }
 
+        /**
+         * To be called for each clock cycle of the chip. For Pac-Man this should be at 96 kHz.
+         * This handles updating the internal registers and creating the audio samples for each
+         * of the three voices. It returns three bytes, each a 8-bit, signed audio sample.
+         */
         public byte[] Tick()
         {
             // First, lets convert the frequency bytes into the 20-bit or 16-bit values from the array
             // of bytes that the game code sets; each byte only uses the lower nibble, so we need to
             // extract those and combine them to get the full value for each.
 
-            var v1Freq = (Voice1Frequency[0] << 0)
-                | (Voice1Frequency[1] << 4)
-                | (Voice1Frequency[2] << 8)
-                | (Voice1Frequency[3] << 12)
-                | (Voice1Frequency[4] << 16);
+            var v1Freq = ((Voice1Frequency[0] & 0x0F) << 0)
+                | ((Voice1Frequency[1] & 0x0F) << 4)
+                | ((Voice1Frequency[2] & 0x0F) << 8)
+                | ((Voice1Frequency[3] & 0x0F) << 12)
+                | ((Voice1Frequency[4] & 0x0F) << 16);
 
-            var v2Freq = (Voice2Frequency[0] << 0)
-                | (Voice2Frequency[1] << 4)
-                | (Voice2Frequency[2] << 8)
-                | (Voice2Frequency[3] << 12);
+            var v2Freq = ((Voice2Frequency[0] & 0x0F) << 0)
+                | ((Voice2Frequency[1] & 0x0F) << 4)
+                | ((Voice2Frequency[2] & 0x0F) << 8)
+                | ((Voice2Frequency[3] & 0x0F) << 12);
 
-            var v3Freq = (Voice3Frequency[0] << 0)
-                | (Voice3Frequency[1] << 4)
-                | (Voice3Frequency[2] << 8)
-                | (Voice3Frequency[3] << 12);
+            var v3Freq = ((Voice3Frequency[0] & 0x0F) << 0)
+                | ((Voice3Frequency[1] & 0x0F) << 4)
+                | ((Voice3Frequency[2] & 0x0F) << 8)
+                | ((Voice3Frequency[3] & 0x0F) << 12);
 
             // At each clock and for each voice the hardware performs the following steps:
 
@@ -75,19 +80,19 @@ namespace JustinCredible.PacEmu
             // 2. Use the waveform 0-7 to lookup a 32-byte sample in the Sound ROM.
 
             var v1Sample = new byte[32];
-            Array.Copy(_soundROMs, (0x0F & Voice1Waveform) * 32, v1Sample, 0, 32);
+            Array.Copy(_soundROMs, (0x07 & Voice1Waveform) * 32, v1Sample, 0, 32);
 
             var v2Sample = new byte[32];
-            Array.Copy(_soundROMs, (0x0F & Voice2Waveform) * 32, v2Sample, 0, 32);
+            Array.Copy(_soundROMs, (0x07 & Voice2Waveform) * 32, v2Sample, 0, 32);
 
             var v3Sample = new byte[32];
-            Array.Copy(_soundROMs, (0x0F & Voice3Waveform) * 32, v3Sample, 0, 32);
+            Array.Copy(_soundROMs, (0x07 & Voice3Waveform) * 32, v3Sample, 0, 32);
 
             // 3. Take the top 5 bits of the accumulator to look up a nibble 0-31 in that sample.
 
-            var v1SampleNibble = v1Sample[(Voice1Accumulator & 0xF8000) >> 16];
-            var v2SampleNibble = v1Sample[(Voice1Accumulator & 0xF800) >> 12];
-            var v3SampleNibble = v1Sample[(Voice1Accumulator & 0xF800) >> 12];
+            var v1SampleNibble = v1Sample[(Voice1Accumulator & 0xF8000) >> 15];
+            var v2SampleNibble = v2Sample[(Voice2Accumulator & 0xF800) >> 11];
+            var v3SampleNibble = v3Sample[(Voice3Accumulator & 0xF800) >> 11];
 
             // 4. Multiply that nibble by the volume nibble 0-15.
 

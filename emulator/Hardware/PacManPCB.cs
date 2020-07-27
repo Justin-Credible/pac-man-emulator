@@ -109,7 +109,9 @@ namespace JustinCredible.PacEmu
 
         // The game's audio hardware runs at a CPU clock / 32.
         // e.g. 3.072 MHz / 32 = 96 kHz
-        private double _cyclesPerAudioTick = Math.Floor(Convert.ToDouble(CPU_MHZ / 32));
+        // In to simulate the the audio hardware's clock ticking at 96 kHz a second, we calculate
+        // the number of CPU cycles that will ellapse per audio cycle tick (3.072 MHz / 96 kHz = 32).
+        private double _cyclesPerAudioTick = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000));
         private int _cyclesSinceLastAudioTick = 0;
 
         // To keep the emulated CPU from running too fast, we use a stopwatch and count cycles.

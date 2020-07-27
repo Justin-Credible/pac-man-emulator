@@ -12,24 +12,12 @@ namespace JustinCredible.PacEmu
      */
     class GUI : IDisposable
     {
-        #region Constants
-
-        // We'll use three channels for audio, one for each of the hardware's voices.
-        private const int AUDIO_CHANNEL_1 = 0;
-        private const int AUDIO_CHANNEL_2 = 1;
-        private const int AUDIO_CHANNEL_3 = 2;
-
-        // Constants for use with SDL_mixer.
-        // private const int AUDIO_INFINITE_LOOP = -1;
-        // private const int AUDIO_NO_LOOP = 0;
-
-        #endregion
-
         #region Instance Variables
 
         // References to SDL resources.
         private IntPtr _window = IntPtr.Zero;
         private IntPtr _renderer = IntPtr.Zero;
+        private uint _audioDevice = 0;
 
         // Used to throttle the GUI event loop so we don't fire the OnTick event
         // more than needed. During each tick we can send key presses as well as
@@ -61,7 +49,7 @@ namespace JustinCredible.PacEmu
         // Fired when the SDL event loop "ticks" which is ~60hz. This allows us to send out
         // the keys that were pressed, as well as optionally receive a framebuffer to be
         // rendered in the window or sound effects to be played.
-        public delegate void TickEvent(GUITickEventArgs e);
+        public delegate void TickEvent(GUITickEventArgs eventArgs);
         public event TickEvent OnTick;
 
         #endregion
@@ -103,45 +91,26 @@ namespace JustinCredible.PacEmu
             SDL.SDL_RenderSetLogicalSize(_renderer, width, height);
 
             _targetTicksHz = targetTicskHz;
+
+            // Setup our audio format.
+            SDL.SDL_AudioSpec audioSpec = new SDL.SDL_AudioSpec();
+            audioSpec.freq = 96000; // sampling rate
+            // audioSpec.freq = 44100; // sampling rate
+            audioSpec.format = SDL.AUDIO_S8; // sample format: 8-bit, signed
+            audioSpec.channels = 1; // number of channels
+            audioSpec.samples = 4096; // buffer size
+
+            SDL.SDL_AudioSpec audioSpecObtained;
+
+            // Open the default audio device.
+            _audioDevice = SDL.SDL_OpenAudioDevice(null, 0, ref audioSpec, out audioSpecObtained, 0);
+
+            if (_audioDevice == 0)
+                throw new Exception(String.Format("Unable to open the audio device. SDL Error: {0}", SDL.SDL_GetError()));
+
+            // Unpause the audio device and so that it will play once samples are queued up.
+            SDL.SDL_PauseAudioDevice(_audioDevice, 0);
         }
-
-        /**
-         * Used to initialize audio using SDL and SDL_mixer. This handles loading the sound effect WAV
-         * files from disk and initializing the audio channels.
-         */
-        // public void InitializeAudio(Dictionary<SoundEffect, String> soundEffectsFiles = null)
-        // {
-        //     var audioRate = 22050; // 22.05KHz
-        //     var audioFormat = SDL.AUDIO_S16SYS; // Unsigned 16-bit samples in the system's byte order
-        //     var audioChannels = 1; // Mono
-        //     var audioBuffers = 4096; // 4KB
-
-        //     var openAudioResult = SDL_mixer.Mix_OpenAudio(audioRate, audioFormat, audioChannels, audioBuffers);
-
-        //     if (openAudioResult != 0)
-        //         throw new Exception(String.Format("Failure while opening SDL audio mixer. SDL Error: {0}", SDL.SDL_GetError()));
-
-        //     // We'll use 3 channels; see AUDIO_CHANNEL constants.
-        //     var allocateChannelsResult = SDL_mixer.Mix_AllocateChannels(3);
-
-        //     if (allocateChannelsResult == 0)
-        //         throw new Exception(String.Format("Failure while allocating SDL audio mixer channels. SDL Error: {0}", SDL.SDL_GetError()));
-
-        //     soundEffects = new Dictionary<SoundEffect, IntPtr>();
-
-        //     foreach (var entry in soundEffectsFiles)
-        //     {
-        //         var sfx = entry.Key;
-        //         var filePath = entry.Value;
-
-        //         var pointer = SDL_mixer.Mix_LoadWAV(filePath);
-
-        //         if (pointer == null)
-        //             throw new Exception(String.Format("Error loading sound {0}. SDL Error: {1}", sfx, SDL.SDL_GetError()));
-
-        //         soundEffects.Add(sfx, pointer);
-        //     }
-        // }
 
         /**
          * Used to start the GUI event loop using the SDL window to poll for events. When an event is
@@ -207,9 +176,7 @@ namespace JustinCredible.PacEmu
                 tickEventArgs.ButtonState.ServiceBoardTest = _boardTestSwitchActive;
 
                 // Update the event arguments that will be sent with the event handler.
-
                 tickEventArgs.ShouldRender = false;
-                tickEventArgs.ShouldPlayAudioSamples = false;
 
                 // Delegate out to the event handler so work can be done.
                 if (OnTick != null)
@@ -256,60 +223,6 @@ namespace JustinCredible.PacEmu
                     // Console.WriteLine("Render completed in: " + renderStopwatch.ElapsedMilliseconds + " ms");
                 }
 
-                if (tickEventArgs.ShouldPlayAudioSamples
-                    && tickEventArgs.AudioSamples != null)
-                {
-                    // TODO: this.
-                    // Console.WriteLine("Audio Samples: {0:X2} {1:X2} {2:X2}", tickEventArgs.AudioSamples[0], tickEventArgs.AudioSamples[1], tickEventArgs.AudioSamples[2]);
-                }
-
-                // Handle playing sound effects.
-                // if (soundEffects != null
-                //     && tickEventArgs.ShouldPlaySounds
-                //     && tickEventArgs.SoundEffects != null)
-                // {
-                //     foreach (var sfx in tickEventArgs.SoundEffects)
-                //     {
-                //         var pointer = soundEffects[sfx];
-
-                //         // Result of Mix_PlayChannel, which indicates the channel the sound is playing on.
-                //         // -1 indicates an error.
-                //         var playChannelResult = -1;
-
-                //         switch (sfx)
-                //         {
-                //             // The UFO sound effect loops until the UFO disappears or is destroyed.
-                //             case SoundEffect.UFO_Start:
-                //                 playChannelResult = SDL_mixer.Mix_PlayChannel(AUDIO_CHANNEL_UFO, pointer, AUDIO_INFINITE_LOOP);
-                //                 break;
-
-                //             case SoundEffect.UFO_Stop:
-                //             {
-                //                 SDL_mixer.Mix_Pause(AUDIO_CHANNEL_UFO);
-
-                //                 // Mix_Pause doesn't return a channel or error code. Ensure we don't leave as -1.
-                //                 playChannelResult = AUDIO_CHANNEL_UFO;
-
-                //                 break;
-                //             }
-
-                //             case SoundEffect.InvaderMove1:
-                //             case SoundEffect.InvaderMove2:
-                //             case SoundEffect.InvaderMove3:
-                //             case SoundEffect.InvaderMove4:
-                //                 playChannelResult = SDL_mixer.Mix_PlayChannel(AUDIO_CHANNEL_INVADER_MOVEMENT, pointer, AUDIO_NO_LOOP);
-                //                 break;
-
-                //             default:
-                //                 playChannelResult = SDL_mixer.Mix_PlayChannel(AUDIO_CHANNEL_COMMON, pointer, AUDIO_NO_LOOP);
-                //                 break;
-                //         }
-
-                //         if (playChannelResult == -1)
-                //             Console.WriteLine("Error playing sound effect {0}. SDL Error: {1}", sfx, SDL.SDL_GetError());
-                //     }
-                // }
-
                 // See if we need to delay to keep locked to ~ targetTicskHz.
 
                 if (stopwatch.Elapsed.TotalMilliseconds < (1000 / _targetTicksHz))
@@ -325,6 +238,36 @@ namespace JustinCredible.PacEmu
         }
 
         /**
+         * Used to queue the given audio samples for playback. The parameter is expected
+         * to be three 8-bit, signed values, one for each voice.
+         */
+        public void QueueAudioSamples(byte[] samples)
+        {
+            // Merge all three voices into one.
+            var sampleFull = samples[0] + samples[1] + samples[2];
+
+            // Clamp the value to the min/max of a 8-bit signed value.
+            if (sampleFull > 127)
+                sampleFull = 127;
+            else if (sampleFull < -128)
+                sampleFull = -128;
+
+            var sample = (sbyte)sampleFull;
+
+            // Now that we have the combined sample, we need to allocate it as a pinned object
+            // on the heap so that we can pass it through to the unmanaged SDL2 code.
+            var samplePinned = GCHandle.Alloc(sample, GCHandleType.Pinned);
+            var pointer = samplePinned.AddrOfPinnedObject();
+
+            // Pass the value to SDL to be queued up for playback.
+            uint sample_size = sizeof(sbyte) * 1;
+            SDL.SDL_QueueAudio(_audioDevice, pointer, sample_size);
+
+            // Unpin this so the GC can clean it up.
+            samplePinned.Free();
+        }
+
+        /**
          * Used to cleanup after the SDL resources.
          */
         public void Dispose()
@@ -335,16 +278,7 @@ namespace JustinCredible.PacEmu
             if (_window != IntPtr.Zero)
                 SDL.SDL_DestroyWindow(_window);
 
-            // if (soundEffects != null)
-            // {
-            //     foreach (var entry in soundEffects)
-            //     {
-            //         var pointer = entry.Value;
-            //         SDL_mixer.Mix_FreeChunk(pointer);
-            //     }
-
-            //     SDL_mixer.Mix_CloseAudio();
-            // }
+            SDL.SDL_CloseAudioDevice(_audioDevice);
         }
 
         #endregion

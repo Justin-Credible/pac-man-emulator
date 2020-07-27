@@ -16,20 +16,17 @@ namespace JustinCredible.PacEmu
     {
         private static CommandLineApplication _app;
 
+        private static GUI _gui;
+
         // The arcade printed circuit board for Pac-Man... the emulator!
         private static PacManPCB _game;
 
         // Used to pass data from the emulator thread's loop to the GUI loop: the
-        // framebuffer to be rendered and audio samples to be played with matching
-        // flags indicating if a frame/sample should be rendered/played or not on the
-        // next GUI event loop tick (to avoid rendering/playing the same frame/sample
-        // multiple times).
-
+        // framebuffer to be rendered with flag indicating if a frame should be rendered
+        // or not on the next GUI event loop tick (to avoid rendering/playing the same
+        // frame multiple times).
         private static byte[] _frameBuffer; // Bitmap File Format
         private static bool _renderFrameNextTick = false;
-
-        private static byte[] _audioSamples; // Array of samples; one for each voice.
-        private static bool _playAudioSamplesNextTick = false;
 
         #region CLI / Entrypoint
 
@@ -113,9 +110,9 @@ namespace JustinCredible.PacEmu
                 // Initialize the user interface (window) and wire an event handler
                 // that will handle receiving user input as well as sending the
                 // framebuffer to be rendered.
-                var gui = new GUI();
-                gui.OnTick += GUI_OnTick;
-                gui.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
+                _gui = new GUI();
+                _gui.OnTick += GUI_OnTick;
+                _gui.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
 
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
                 // handlers to receive the framebuffer/sfx to be rendered/played.
@@ -234,10 +231,10 @@ namespace JustinCredible.PacEmu
                 // the same thread and is a blocking call. Once this method returns
                 // we know that the user closed the window or quit the program via
                 // the OS (e.g. ALT+F4 / CMD+Q).
-                gui.StartLoop();
+                _gui.StartLoop();
 
                 // Ensure the GUI resources are cleaned up and stop the emulation.
-                gui.Dispose();
+                _gui.Dispose();
                 _game.Stop();
 
                 return 0;
@@ -305,8 +302,7 @@ namespace JustinCredible.PacEmu
          */
         private static void PacManPCB_OnAudioSample(AudioSampleEventArgs eventArgs)
         {
-            _audioSamples = eventArgs.Samples;
-            _playAudioSamplesNextTick = true;
+            _gui.QueueAudioSamples(eventArgs.Samples);
         }
 
         /**
@@ -328,13 +324,6 @@ namespace JustinCredible.PacEmu
                 eventArgs.FrameBuffer = _frameBuffer;
                 eventArgs.ShouldRender = true;
                 _renderFrameNextTick = false;
-            }
-
-            if (_playAudioSamplesNextTick)
-            {
-                eventArgs.AudioSamples = _audioSamples;
-                eventArgs.ShouldPlayAudioSamples = true;
-                _playAudioSamplesNextTick = false;
             }
         }
 
