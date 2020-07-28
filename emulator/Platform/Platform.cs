@@ -91,8 +91,8 @@ namespace JustinCredible.PacEmu
 
             // Setup our audio format.
             SDL.SDL_AudioSpec audioSpec = new SDL.SDL_AudioSpec();
-            // audioSpec.freq = 96000; // sampling rate
-            audioSpec.freq = 44100; // sampling rate
+            audioSpec.freq = 96000; // sampling rate
+            // audioSpec.freq = 44100; // sampling rate
             // audioSpec.freq = 22050; // sampling rate
             // audioSpec.freq = 11025; // sampling rate
             audioSpec.format = SDL.AUDIO_S8; // sample format: 8-bit, signed

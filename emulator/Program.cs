@@ -306,11 +306,12 @@ namespace JustinCredible.PacEmu
 
         /**
          * Fired when the emulator has audio samples to be played.
-         * Should occur at approximately 96 kHz.
+         * Should occur at approximately 60hz.
          */
         private static void PacManPCB_OnAudioSample(AudioSampleEventArgs eventArgs)
         {
-            _platform.QueueAudioSamples(eventArgs.Samples);
+            foreach (var sample in eventArgs.Samples)
+                _platform.QueueAudioSamples(sample);
         }
 
         /**

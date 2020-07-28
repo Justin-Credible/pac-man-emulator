@@ -49,6 +49,9 @@ namespace JustinCredible.PacEmu
         // The Zilog Z80 for the Pac-Man hardware is clocked at 3.072MHz.
         private const int CPU_MHZ = 3072000;
 
+        // The Namcom Waveform Sound Generator (WSG3) runs at CPU_MHZ/32 = 96 kHz.
+        private const int WSG3_MHZ = CPU_MHZ / 32;
+
         private CPU _cpu; // Zilog Z80
         private VideoHardware _video;
         private AudioHardware _audio;
@@ -104,24 +107,15 @@ namespace JustinCredible.PacEmu
         // The game's video hardware runs at 60hz. It generates an interrupts @ 60hz (VBLANK).To simulate
         // this, we'll calculate the number of cycles we're expecting between each of these interrupts.
         // While this is not entirely accurate, it is close enough for the game to run as expected.
-        private double _cyclesPerInterrupt = Math.Floor(Convert.ToDouble(CPU_MHZ / 60));
+        private int _cyclesPerInterrupt = CPU_MHZ / 60;
         private int _cyclesSinceLastInterrupt = 0;
 
-        // The game's audio hardware runs at a CPU clock / 32.
-        // e.g. 3.072 MHz / 32 = 96 kHz
-        // In to simulate the the audio hardware's clock ticking at 96 kHz a second, we calculate
-        // the number of CPU cycles that will ellapse per audio cycle tick (3.072 MHz / 96 kHz = 32).
-        private double _cyclesPerAudioTick = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000));
-        private int _cyclesSinceLastAudioTick = 0;
-
-        // Due to the way the CPU is throttled (by sleeping if it's going faster than ~60 FPS) the audio
-        // buffers are stalled during this throttling period, which resluts in distortion. Here I attempt
-        // to adjust for a lower sample rate. Also need to change the value in Platform::Initialize().
-        // private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)); // ~96000
-        private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)) * 2; // ~44100
-        // private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)) * 4; // ~22050
-        // private double _cyclesPerAudioSamplePlayback = Math.Floor(Convert.ToDouble(CPU_MHZ / 96000)) * 8; // ~11025
-        private int _cyclesSinceLastAudioSamplePlayback = 0;
+        // The game's WSG3 audio hardware runs at a CPU clock / 32. e.g. 3.072 MHz / 32 = 96 kHz
+        // Ticking this clock at 96 kHz is too performance intensive and results in distorted audio.
+        // Instead, we'll calculate the approximate number of samples per we need to generate per
+        // "frame" assuming 60 Hz. e.g. (3.072 MHz / 60) / (3.072 MHz / 96 kHz) = 1600
+        // Therefore we need to tick the audio hardware ~1600 times every 1/60 of a second (16.6 ms).
+        private int _audioSamplesPerFrame = (CPU_MHZ / 60) / (CPU_MHZ / WSG3_MHZ);
 
         // To keep the emulated CPU from running too fast, we use a stopwatch and count cycles.
         private Stopwatch _cpuStopWatch = new Stopwatch();
@@ -743,10 +737,7 @@ namespace JustinCredible.PacEmu
                         _cpuStopWatch.Restart();
                     }
 
-                    // See if it's time to update the audio hardware or not.
-                    HandleAudioUpdate(cycles);
-
-                    // See if it's time to fire a CPU interrupt or not.
+                    // Fire a CPU interrupt if it's time to do so.
                     HandleInterrupts(cycles);
                 }
 #if !DEBUG
@@ -766,58 +757,23 @@ namespace JustinCredible.PacEmu
         }
 
         /**
-         * Pac-Man's audio hardware runs at the CPU clock / 32, which is 96 kHz. We can use the number
-         * of CPU cycles elapsed to roughly estimate when the audio hardware needs to be updated. This
-         * will handle generating audio samples for playback.
-         */
-        private void HandleAudioUpdate(int cyclesElapsed)
-        {
-            // Keep track of the number of cycles since the audio tick occurred.
-            _cyclesSinceLastAudioTick += cyclesElapsed;
-            _cyclesSinceLastAudioSamplePlayback += cyclesElapsed;
-
-            // Determine if it's time to tick the audio hardware.
-            if (_cyclesSinceLastAudioTick < _cyclesPerAudioTick)
-                return;
-
-            if (_soundEnabled)
-            {
-                var samples = _audio.Tick();
-
-                // Delegate to the audio sample event, passing the audio samples to be played.
-
-                // Uncomment to sample every tick.
-                // _audioSampleEventArgs.Samples = samples;
-                // OnAudioSample(_audioSampleEventArgs);
-
-                // Sample only when a certain number of cycles have elapsed.
-                if (_cyclesSinceLastAudioSamplePlayback >= _cyclesPerAudioSamplePlayback)
-                {
-                    _audioSampleEventArgs.Samples = samples;
-                    OnAudioSample(_audioSampleEventArgs);
-
-                    _cyclesSinceLastAudioSamplePlayback = 0;
-                }
-            }
-
-            // Reset the count so we can count up again.
-            _cyclesSinceLastAudioTick = 0;
-        }
-
-        /**
          * Pac-Man sends a single maskable interrupt, which is driven by the video hardware.
          * We can use the number of CPU cycles elapsed to roughly estimate when this interrupt
-         * should fire which is roughtly 60hz (also known as vblank; when the electron beam reaches
-         * end of the screen).
+         * should fire which is roughly 60hz (also known as vblank; when the electron beam reaches
+         * end of the screen). Returns true if it was time to fire an interrupt and false otherwise.
+         * Note that a true return value does not mean that an interrupt fired (interrupts can be
+         * disabled), only that it was time to fire one.
          */
-        private void HandleInterrupts(int cyclesElapsed)
+        private bool HandleInterrupts(int cyclesElapsed)
         {
             // Keep track of the number of cycles since the last interrupt occurred.
             _cyclesSinceLastInterrupt += cyclesElapsed;
 
             // Determine if it's time for the video hardware to fire an interrupt.
             if (_cyclesSinceLastInterrupt < _cyclesPerInterrupt)
-                return;
+                return false;
+
+            // CRT electron beam reached the end (V-Blank).
 
             // If interrupts are enabled, then handle them, otherwise do nothing.
             if (_cpu.InterruptsEnabled)
@@ -830,30 +786,52 @@ namespace JustinCredible.PacEmu
                 // Execute the handler for the interrupt.
                 _cpu.StepMaskableInterrupt(_port0WriteLastData);
 
-                // CRT electron beam reached the end (V-Blank).
-                if (OnRender != null)
-                {
-                    // Render the screen.
-                    var image = _video.Render(this, _spriteCoordinates, _flipScreen);
-
-                    // Convert the image into a bitmap.
-
-                    byte[] bitmap = null;
-
-                    using (var steam = new MemoryStream())
-                    {
-                        image.Save(steam, new SixLabors.ImageSharp.Formats.Bmp.BmpEncoder());
-                        bitmap = steam.ToArray();
-                    }
-
-                    // Delegate to the render event, passing the framebuffer to be rendered.
-                    _renderEventArgs.FrameBuffer = bitmap;
-                    OnRender(_renderEventArgs);
-                }
+                // Every 1/60 of a second is a good time for us to generate a video frame as
+                // well as all of the audio samples that need to be queued up to play.
+                HandleRenderVideoFrame();
+                HandleRenderAudioSamples();
             }
 
             // Reset the count so we can count up again.
             _cyclesSinceLastInterrupt = 0;
+
+            return true;
+        }
+
+        private void HandleRenderVideoFrame()
+        {
+            // Render the screen into an image.
+            var image = _video.Render(this, _spriteCoordinates, _flipScreen);
+
+            // Convert the image into a bitmap format.
+
+            byte[] bitmap = null;
+
+            using (var steam = new MemoryStream())
+            {
+                image.Save(steam, new SixLabors.ImageSharp.Formats.Bmp.BmpEncoder());
+                bitmap = steam.ToArray();
+            }
+
+            // Delegate to the render event, passing the framebuffer to be rendered.
+            _renderEventArgs.FrameBuffer = bitmap;
+            OnRender?.Invoke(_renderEventArgs);
+        }
+
+        private void HandleRenderAudioSamples()
+        {
+            var samples = new byte[_audioSamplesPerFrame][];
+
+            // Generate the number of audio samples that we need for a given "frame".
+            for (var i = 0; i < _audioSamplesPerFrame; i++)
+            {
+                var sample = _audio.Tick();
+                samples[i] = sample;
+            }
+
+            // Delegate to the event, passing the audio samples to be played.
+            _audioSampleEventArgs.Samples = samples;
+            OnAudioSample?.Invoke(_audioSampleEventArgs);
         }
 
         /**
@@ -1064,7 +1042,6 @@ namespace JustinCredible.PacEmu
                 TotalCycles = _totalCycles,
                 TotalSteps = _totalSteps,
                 CyclesSinceLastInterrupt = _cyclesSinceLastInterrupt,
-                CyclesSinceLastAudioTick = _cyclesSinceLastAudioTick,
                 AudioHardwareState = _audio.SaveState(),
             };
         }
@@ -1085,7 +1062,6 @@ namespace JustinCredible.PacEmu
             _totalCycles = state.TotalCycles;
             _totalSteps = state.TotalSteps;
             _cyclesSinceLastInterrupt = state.CyclesSinceLastInterrupt;
-            _cyclesSinceLastAudioTick = state.CyclesSinceLastAudioTick;
             _audio.LoadState(state.AudioHardwareState);
         }
 
