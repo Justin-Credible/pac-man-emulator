@@ -53,6 +53,20 @@ namespace JustinCredible.PacEmu
          */
         public Image<Rgba32> RenderTile(int tileIndex, int paletteIndex)
         {
+            #region Ms. Pac-Man Blue Maze Bug
+
+            // This occurs when inserting a coin during the Ms. Pac-Man attract mode before
+            // the first ghost appears on the screen. On original hardware this bug causes the
+            // maze tiles to be displayed in the wrong palette, the so-called "blue maze bug".
+            // In this emulator this causes an IndexOutOfRangeException. If this specific case
+            // happens we just set the palette index to something safe so the code can continue.
+            // This preserves the original Ms. Pac-Man bug, and the maze will be blue!
+            // http://donhodges.com/ms_pacman_bugs.htm
+            if (paletteIndex == 65)
+                paletteIndex = 0;
+
+            #endregion
+
             var tile = _tileCache?[paletteIndex]?[tileIndex];
 
             if (tile != null)
