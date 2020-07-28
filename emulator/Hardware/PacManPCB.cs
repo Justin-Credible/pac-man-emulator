@@ -706,8 +706,10 @@ namespace JustinCredible.PacEmu
             _cpuStopWatch.Start();
             _cycleCount = 0;
 
+#if !DEBUG
             try
             {
+#endif
                 while (!_cancelled)
                 {
                     // Handle all the debug tasks that need to happen before we execute an instruction.
@@ -747,6 +749,7 @@ namespace JustinCredible.PacEmu
                     // See if it's time to fire a CPU interrupt or not.
                     HandleInterrupts(cycles);
                 }
+#if !DEBUG
             }
             catch (Exception exception)
             {
@@ -756,6 +759,7 @@ namespace JustinCredible.PacEmu
                 Console.WriteLine("-------------------------------------------------------------------");
                 throw exception;
             }
+#endif
 
             _cpu = null;
             _thread = null;
