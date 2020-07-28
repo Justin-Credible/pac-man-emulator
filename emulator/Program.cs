@@ -66,7 +66,7 @@ namespace JustinCredible.PacEmu
             command.Description = "Runs the emulator using the given ROM files.";
             command.HelpOption("-?|-h|--help");
 
-            var romPathArg = command.Argument("[ROM path]", "The path to a directory containing the Pac-Man ROM set to load.");
+            var romPathArg = command.Argument("[ROM path]", "The path to a directory containing the ROM set to load.");
 
             var romsetOption = command.Option("-rs|--rom-set", "The name of an alternative ROM set and/or PCB configuration to use; pacman or mspacman; defaults to pacman", CommandOptionType.SingleValue);
             var dipSwitchesOption = command.Option("-dw|--dip-switches", "The path to a JSON file containing DIP switch settings; defaults to dip-switches.json in CWD.", CommandOptionType.SingleValue);

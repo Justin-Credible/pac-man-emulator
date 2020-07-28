@@ -6,7 +6,6 @@ namespace JustinCredible.Z80Disassembler
 {
     public static class Disassembler
     {
-
         public static string Disassemble(IMemory rom, bool emitAddresses = false, bool emitPseudocode = false)
         {
             var disassembly = new StringBuilder();
