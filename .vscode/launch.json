@@ -14,13 +14,18 @@
             "args": [
                 "run",
                 "${workspaceFolder}/roms/pacman",
+                // "${workspaceFolder}/roms/mspacman",
+                // "-sc",
+                // "-rs",
+                // "mspacman",
                 // "--debug",
                 // "-a",
-                // "${workspaceFolder}/roms/annotations.txt",
+                // "${workspaceFolder}/roms/mspac.asm",
                 // "--rewind",
                 // "--load-state",
-                // "ufo_soon3.state",
+                // "1a",
                 // "--break",
+                // "0x00e0", // Fun to break here and use F5 to step one frame at a time
                 // "0x2346", // Enabling interrupts right before first CPU HALT
                 // "0x3FFA", // First NMI jump after CPU HALT
             ],
