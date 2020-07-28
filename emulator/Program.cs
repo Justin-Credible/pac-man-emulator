@@ -262,7 +262,10 @@ namespace JustinCredible.PacEmu
 
                 try
                 {
-                    var addressString = line.Substring(0, 4);
+                    if (line.Length < 4)
+                        continue;
+
+                    var addressString = line.Substring(0, 4).ToUpper();
 
                     if (!addressRegEx.IsMatch(addressString))
                         continue;
@@ -270,6 +273,9 @@ namespace JustinCredible.PacEmu
                     var address = Convert.ToUInt16(addressString, 16);
 
                     var parts = line.Split(";");
+
+                    if (parts.Length < 2)
+                        continue;
 
                     annotations.Add(address, parts[1]);
                 }
