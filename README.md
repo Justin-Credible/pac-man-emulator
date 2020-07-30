@@ -100,9 +100,14 @@ Zilog Z80 CPU tests (8000+ test cases):
 2. `dotnet restore`
 3. `dotnet test`
 
-Finally, there are test cases for the Pac-Man specific hardware such as the video hardware which renders a screen of tiles and sprites and compares against [reference images](emulator.tests/ReferenceData).
+Finally, there are test cases for the Pac-Man specific hardware such as the video hardware which renders a screen of tiles and sprites in several different palettes and then compares them against the [reference images](emulator.tests/ReferenceData):
 
+![test data](emulator.tests/ReferenceData/render-all-sprites-palette-1.bmp)
 ![test data](emulator.tests/ReferenceData/render-all-sprites-palette-3.bmp)
+![test data](emulator.tests/ReferenceData/render-all-sprites-palette-24.bmp)
+![test data](emulator.tests/ReferenceData/render-all-tiles-palette-1.bmp)
+![test data](emulator.tests/ReferenceData/render-all-tiles-palette-3.bmp)
+![test data](emulator.tests/ReferenceData/render-all-tiles-palette-24.bmp)
 
 Emulator tests:
 1. `cd emulator.tests`
