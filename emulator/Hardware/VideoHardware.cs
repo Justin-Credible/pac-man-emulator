@@ -407,9 +407,9 @@ namespace JustinCredible.PacEmu
                 var sprite = _spriteRenderer.RenderSprite(spriteIndex, paletteIndex, flipX, flipY);
 
                 // Adjust coordinates. The coordinates are (x, y) from the lower right corner of the screen.
-                // Additionally, we need to account for the  fact that the Y axis of the sprites is offset
+                // Additionally, we need to account for the fact that the Y axis of the sprites is offset
                 // by 16 (the background tiles can be drawn out another 2 tiles, which is 16 pixels).
-                var convertedX = RESOLUTION_WIDTH - spriteOriginX;
+                var convertedX = RESOLUTION_WIDTH - spriteOriginX - 1;
                 var convertedY = RESOLUTION_HEIGHT - 16 - spriteOriginY;
 
                 // Copy the rendered sprite over into the full image.
