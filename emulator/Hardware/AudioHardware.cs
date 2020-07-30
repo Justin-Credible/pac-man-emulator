@@ -96,12 +96,11 @@ namespace JustinCredible.PacEmu
 
             // 4. Multiply that nibble by the volume nibble 0-15.
             // TODO: Should this be a multiply or a logical AND?
-            // A multiply sounds more accurate, but has more distortion.
-            // A logical AND sounds less accurate, but has less distortion.
+            // Both sound slightly off, but a logical AND sounds better to me.
 
-            v1SampleNibble = (byte)(v1SampleNibble * (Voice1Volume & 0x0F));
-            v2SampleNibble = (byte)(v2SampleNibble * (Voice2Volume & 0x0F));
-            v3SampleNibble = (byte)(v3SampleNibble * (Voice3Volume & 0x0F));
+            v1SampleNibble = (byte)(v1SampleNibble & (Voice1Volume & 0x0F));
+            v2SampleNibble = (byte)(v2SampleNibble & (Voice2Volume & 0x0F));
+            v3SampleNibble = (byte)(v3SampleNibble & (Voice3Volume & 0x0F));
 
             // 5. Send the result to the amplifier for output.
 
