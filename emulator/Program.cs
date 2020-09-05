@@ -189,6 +189,7 @@ namespace JustinCredible.PacEmu
                 if (debugOption.HasValue())
                 {
                     _game.Debug = true;
+                    _platform.InitializeDebugger();
 
                     if (breakOption.HasValue())
                     {
@@ -321,8 +322,7 @@ namespace JustinCredible.PacEmu
             if (!_game.Debug)
                 return;
 
-            _game.Break();
-            // TODO: Send event to debugger window to re-draw itself?
+            _platform.StartInteractiveDebugger();
         }
 
         /**

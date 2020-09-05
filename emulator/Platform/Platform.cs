@@ -18,6 +18,8 @@ namespace JustinCredible.PacEmu
         private IntPtr _window = IntPtr.Zero;
         private IntPtr _renderer = IntPtr.Zero;
         private uint _audioDevice = 0;
+        private IntPtr _debugWindow = IntPtr.Zero;
+        private IntPtr _debugRenderer = IntPtr.Zero;
 
         // Used to throttle the GUI event loop so we don't fire the OnTick event
         // more than needed. During each tick we can send key presses as well as
@@ -38,6 +40,9 @@ namespace JustinCredible.PacEmu
 
         // A flag that allows us to make a keypress behave as a toggle switch.
         private bool _allowChangeBoardTestSwitch = true;
+
+        // Indicates if the interactive debugger is currently active.
+        private bool _isDebuggingActive = false;
 
         #endregion
 
@@ -117,6 +122,45 @@ namespace JustinCredible.PacEmu
         }
 
         /**
+         * Used to create a GUI window via SDL for the interactive debugger.
+         */
+        public void InitializeDebugger()
+        {
+            var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO);
+
+            if (initResult != 0)
+                throw new Exception(String.Format("Failure while initializing SDL. SDL Error: {0}", SDL.SDL_GetError()));
+
+            var width = 640;
+            var height = 480;
+            var scaleX = 1;
+            var scaleY = 1;
+
+            _debugWindow = SDL.SDL_CreateWindow("Interactive Debugger",
+                SDL.SDL_WINDOWPOS_CENTERED,
+                SDL.SDL_WINDOWPOS_CENTERED,
+                (int)(width * scaleX),
+                (int)(height * scaleY),
+                SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE
+            );
+
+            if (_debugWindow == IntPtr.Zero)
+                throw new Exception(String.Format("Unable to create a window. SDL Error: {0}", SDL.SDL_GetError()));
+
+            _debugRenderer = SDL.SDL_CreateRenderer(_debugWindow, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED /*| SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC*/);
+
+            if (_debugRenderer == IntPtr.Zero)
+                throw new Exception(String.Format("Unable to create a renderer. SDL Error: {0}", SDL.SDL_GetError()));
+
+            // We can scale the image up or down based on the scaling factor.
+            SDL.SDL_RenderSetScale(_debugRenderer, scaleX, scaleY);
+
+            // By setting the logical size we ensure that the image will scale to fit the window while
+            // still maintaining the original aspect ratio.
+            SDL.SDL_RenderSetLogicalSize(_debugRenderer, width, height);
+        }
+
+        /**
          * Used to start the GUI event loop using the SDL window to poll for events. When an event is
          * received, the keyboard state is read and the OnTick event is fired. After the event completes
          * a frame can be rendered based on the values set in the OnTick event args.
@@ -174,6 +218,11 @@ namespace JustinCredible.PacEmu
                             UpdateKeys(tickEventArgs, sdlEvent.key.keysym.sym, false);
                             break;
                     }
+
+                    if (_isDebuggingActive)
+                    {
+                        HandleDebuggerEvent(sdlEvent);
+                    }
                 }
 
                 // Update the state of the board test toggle switch.
@@ -227,6 +276,11 @@ namespace JustinCredible.PacEmu
                     // Console.WriteLine("Render completed in: " + renderStopwatch.ElapsedMilliseconds + " ms");
                 }
 
+                if (_debugRenderer != IntPtr.Zero)
+                {
+                    RenderDebugger();
+                }
+
                 // See if we need to delay to keep locked to ~ targetTicskHz.
 
                 if (stopwatch.Elapsed.TotalMilliseconds < (1000 / _targetTicksHz))
@@ -239,6 +293,59 @@ namespace JustinCredible.PacEmu
                 if (tickEventArgs.ShouldQuit)
                     return;
             }
+        }
+
+        public void StartInteractiveDebugger()
+        {
+            _isDebuggingActive = true;
+        }
+
+        private void HandleDebuggerEvent(SDL.SDL_Event sdlEvent)
+        {
+            // TODO: Handle all events.
+
+            switch (sdlEvent.type)
+            {
+                case SDL.SDL_EventType.SDL_KEYDOWN:
+                {
+                    var keycode = sdlEvent.key.keysym.sym;
+                    
+                    if (keycode == SDL.SDL_Keycode.SDLK_F5)
+                    {
+                        _isDebuggingActive = false;
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Continue = true, SingleStep = false });
+                    }
+                    else if (keycode == SDL.SDL_Keycode.SDLK_F10)
+                    {
+                        _isDebuggingActive = false;
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Continue = true, SingleStep = true });
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        private void RenderDebugger()
+        {
+            // TODO: Render debugger information.
+            // TODO: Use a C-header monospaced font to render text?
+
+            SDL.SDL_SetRenderDrawColor(_debugRenderer, 0, 0, 255, 255);
+            SDL.SDL_RenderClear(_debugRenderer);
+
+            SDL.SDL_SetRenderDrawColor(_debugRenderer, 255, 0, 0, 0);
+            var rect = new SDL.SDL_Rect() { x = 10, y = 10, w = 100, h = 100 };
+            SDL.SDL_RenderDrawRect(_debugRenderer, ref rect);
+
+            if (_isDebuggingActive)
+            {
+                SDL.SDL_SetRenderDrawColor(_debugRenderer, 0, 255, 0, 0);
+                var rect2 = new SDL.SDL_Rect() { x = 30, y = 30, w = 100, h = 100 };
+                SDL.SDL_RenderDrawRect(_debugRenderer, ref rect2);
+            }
+
+            SDL.SDL_RenderPresent(_debugRenderer);
         }
 
         /**
