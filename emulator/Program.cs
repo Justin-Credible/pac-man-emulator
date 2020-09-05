@@ -114,6 +114,7 @@ namespace JustinCredible.PacEmu
                 // the framebuffer to be rendered.
                 _platform = new Platform();
                 _platform.OnTick += Platform_OnTick;
+                _platform.OnDebugCommand += Platform_OnDebugCommand;
                 _platform.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
 
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
@@ -123,6 +124,7 @@ namespace JustinCredible.PacEmu
                 _game.AllowWritableROM = writableRomOption.HasValue();
                 _game.OnRender += PacManPCB_OnRender;
                 _game.OnAudioSample += PacManPCB_OnAudioSample;
+                _game.OnBreakpointHitEvent += PacManPCB_OnBreakpointHit;
 
                 #region Set Game Options
 
@@ -314,6 +316,15 @@ namespace JustinCredible.PacEmu
                 _platform.QueueAudioSamples(sample);
         }
 
+        private static void PacManPCB_OnBreakpointHit()
+        {
+            if (!_game.Debug)
+                return;
+
+            _game.Break();
+            // TODO: Send event to debugger window to re-draw itself?
+        }
+
         /**
          * Fired when the GUI event loop "ticks". This provides an opportunity
          * to receive user input as well as send the framebuffer to be rendered.
@@ -333,6 +344,21 @@ namespace JustinCredible.PacEmu
                 eventArgs.FrameBuffer = _frameBuffer;
                 eventArgs.ShouldRender = true;
                 _renderFrameNextTick = false;
+            }
+        }
+
+        /**
+         * Fired when the interactive debugger GUI receives a keypress indicating a user
+         * command to be processed (continue, single step, etc).
+         */
+        private static void Platform_OnDebugCommand(DebugCommandEventArgs eventArgs)
+        {
+            if (!_game.Debug)
+                return;
+
+            if (eventArgs.Continue)
+            {
+                _game.Continue(singleStep: eventArgs.SingleStep);
             }
         }
 

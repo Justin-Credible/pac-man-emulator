@@ -49,6 +49,11 @@ namespace JustinCredible.PacEmu
         public delegate void TickEvent(GUITickEventArgs eventArgs);
         public event TickEvent OnTick;
 
+        // Fired when a user presses a key with the interactive debugger GUI window focused
+        // which indicates the user selected a debugger command to execute.
+        public delegate void DebugCommandEvent(DebugCommandEventArgs eventArgs);
+        public event DebugCommandEvent OnDebugCommand;
+
         #endregion
 
         #region Public Methods

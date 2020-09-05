@@ -42,6 +42,10 @@ namespace JustinCredible.PacEmu
         public event AudioSampleEvent OnAudioSample;
         private AudioSampleEventArgs _audioSampleEventArgs = new AudioSampleEventArgs();
 
+        // Fired when a breakpoint is hit and the CPU is paused (only when Debug = true).
+        public delegate void BreakpointHitEvent();
+        public event BreakpointHitEvent OnBreakpointHitEvent;
+
         #endregion
 
         #region Hardware: Components
@@ -163,6 +167,12 @@ namespace JustinCredible.PacEmu
          * to allow for stepping backwards to each state of the system.
          */
         private List<EmulatorState> _executionHistory = new List<EmulatorState>();
+
+        /**
+         * Indicates if the thread is in a busy/lazy wait for the user to submit a command via the
+         * interactive debugger.
+         */
+        private bool _isWaitingForInteractiveDebugger = false;
 
         /**
          * Indicates if we're stingle stepping through opcodes/instructions using the interactive
@@ -306,8 +316,34 @@ namespace JustinCredible.PacEmu
          */
         public void Break()
         {
-            if (Debug)
-                _singleStepping = true;
+            if (!Debug)
+                return;
+
+            _singleStepping = true;
+
+            if (OnBreakpointHitEvent != null)
+            {
+                _isWaitingForInteractiveDebugger = true;
+                OnBreakpointHitEvent.Invoke();
+            }
+        }
+
+        /**
+         * Used to continue CPU execution (only when Debug = true).
+         * If the user only wants to single step, true can be passed here.
+         */
+        public void Continue(bool singleStep = false)
+        {
+            if (!Debug || !_isWaitingForInteractiveDebugger)
+                return;
+
+            // Handle continue vs single step; if we're continuing then we want to release
+            // the single step mode and continue until the next conditional breakpoint.
+            if (!singleStep)
+                _singleStepping = false;
+
+            // Release the thread from busy/lazy waiting.
+            _isWaitingForInteractiveDebugger = false;
         }
 
         #endregion
@@ -708,7 +744,14 @@ namespace JustinCredible.PacEmu
                 {
                     // Handle all the debug tasks that need to happen before we execute an instruction.
                     if (Debug)
+                    {
                         HandleDebugFeaturesPreStep();
+
+                        // If the interactive debugger is active, wait for the user to single step, continue,
+                        // or perform another operation.
+                        while(_isWaitingForInteractiveDebugger)
+                            Thread.Sleep(250);
+                    }
 
                     // Step the CPU to execute the next instruction.
                     var cycles = _cpu.Step();
@@ -855,6 +898,10 @@ namespace JustinCredible.PacEmu
             // If we need to break, print out the CPU state and wait for a keypress.
             if (_singleStepping)
             {
+                Break();
+                return;
+
+                /* TODO: Migrate this logic to the GUI debugger.
                 // Print debug information and wait for user input via the console (key press).
                 while (true)
                 {
@@ -960,6 +1007,7 @@ namespace JustinCredible.PacEmu
                         PrintRecentInstructions(30);
                     }
                 }
+                */
             }
         }
 
