@@ -334,15 +334,13 @@ namespace JustinCredible.PacEmu
             SDL.SDL_SetRenderDrawColor(_debugRenderer, 0, 0, 255, 255);
             SDL.SDL_RenderClear(_debugRenderer);
 
-            SDL.SDL_SetRenderDrawColor(_debugRenderer, 255, 0, 0, 0);
-            var rect = new SDL.SDL_Rect() { x = 10, y = 10, w = 100, h = 100 };
-            SDL.SDL_RenderDrawRect(_debugRenderer, ref rect);
-
             if (_isDebuggingActive)
             {
-                SDL.SDL_SetRenderDrawColor(_debugRenderer, 0, 255, 0, 0);
-                var rect2 = new SDL.SDL_Rect() { x = 30, y = 30, w = 100, h = 100 };
-                SDL.SDL_RenderDrawRect(_debugRenderer, ref rect2);
+                FontRenderer.RenderString(_debugRenderer, "BREAKPOINT HIT!", 0, 0);
+            }
+            else
+            {
+                FontRenderer.RenderString(_debugRenderer, "WAITING FOR BREAKPOINT...", 0, 0);
             }
 
             SDL.SDL_RenderPresent(_debugRenderer);
