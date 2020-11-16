@@ -467,7 +467,7 @@ namespace JustinCredible.PacEmu
             }
             else if (address < 0x00)
             {
-                throw new Exception(String.Format("Invalid read memory address (< 0x0000): 0x{0:X4}", address));
+                throw new IndexOutOfRangeException(String.Format("Invalid read memory address (< 0x0000): 0x{0:X4}", address));
             }
             else
             {
@@ -1118,20 +1118,6 @@ namespace JustinCredible.PacEmu
 
         #region Private Methods: Debugging & Diagnostics
 
-        private void PrintDebugSummary(bool showAnnotatedDisassembly = false)
-        {
-            Console.WriteLine("-------------------------------------------------------------------");
-
-            if (Debug)
-                Console.WriteLine($" Total Steps/Opcodes: {_totalSteps}\tCPU Cycles: {_totalCycles}");
-
-            Console.WriteLine();
-            _cpu.PrintDebugSummary();
-            Console.WriteLine();
-            PrintCurrentExecution(showAnnotatedDisassembly);
-            Console.WriteLine();
-        }
-
         /**
          * Prints last n instructions that were executed up to MAX_ADDRESS_HISTORY.
          * Useful when a debugger is attached. Only works when Debug is true.
@@ -1168,79 +1154,6 @@ namespace JustinCredible.PacEmu
             Console.WriteLine(output.ToString());
         }
 
-        /**
-         * Used to print the disassembly of memory locations before and after the given address.
-         * Useful when a debugger is attached.
-         */
-        private void PrintMemory(UInt16 address, bool annotate = false, int beforeCount = 10, int afterCount = 10)
-        {
-            var output = new StringBuilder();
-
-            // Ensure the start and end locations are within range.
-            // TODO: Should probably use the IMemory implementation here... but if this is just for looking at
-            // disassembly of the ROM regions, direct usage of _memory should be okay, at least for now.
-            var start = (address - beforeCount < 0) ? 0 : (address - beforeCount);
-            var end = (address + afterCount >= _memory.Length) ? _memory.Length - 1 : (address + afterCount);
-
-            for (var i = start; i < end; i++)
-            {
-                var addressIndex = (UInt16)i;
-
-                // If this is the current address location, add an arrow pointing to it.
-                output.Append(address == addressIndex ? "---->\t" : "\t");
-
-                // If we're showing annotations, then don't show the pseudocode.
-                var emitPseudocode = !_showAnnotatedDisassembly;
-
-                // Disasemble the opcode and print it.
-                var instruction = Disassembler.Disassemble(_cpu.Memory, addressIndex, out int instructionLength, true, emitPseudocode);
-                output.Append(instruction);
-
-                // If we're showing annotations, attempt to look up the annotation for this address.
-                if (_showAnnotatedDisassembly && Annotations != null)
-                {
-                    var annotation = Annotations.ContainsKey(addressIndex) ? Annotations[addressIndex] : null;
-                    output.Append("\t\t; ");
-                    output.Append(annotation == null ? "???" : annotation);
-                }
-
-                output.AppendLine();
-
-                // If the opcode is larger than a single byte, we don't want to print subsequent
-                // bytes as opcodes, so here we print the next address locations as the byte value
-                // in parentheses, and then increment so we can skip disassembly of the data.
-                if (instructionLength == 3)
-                {
-                    var upper = _cpu.Memory.Read(addressIndex + 2) << 8;
-                    var lower = _cpu.Memory.Read(addressIndex + 1);
-                    var combined = (UInt16)(upper | lower);
-                    var dataFormatted = String.Format("0x{0:X4}", combined);
-                    var address1Formatted = String.Format("0x{0:X4}", addressIndex+1);
-                    var address2Formatted = String.Format("0x{0:X4}", addressIndex+2);
-                    output.AppendLine($"\t{address1Formatted}\t(D16: {dataFormatted})");
-                    output.AppendLine($"\t{address2Formatted}\t");
-                    i += 2;
-                }
-                else if (instructionLength == 2)
-                {
-                    var dataFormatted = String.Format("0x{0:X2}", _cpu.Memory.Read(addressIndex+1));
-                    var addressFormatted = String.Format("0x{0:X4}", addressIndex+1);
-                    output.AppendLine($"\t{addressFormatted}\t(D8: {dataFormatted})");
-                    i++;
-                }
-            }
-
-            Console.WriteLine(output.ToString());
-        }
-
-        /**
-         * Used to print the disassembly of the memory locations around where the program counter is pointing.
-         * Useful when a debugger is attached.
-         */
-        private void PrintCurrentExecution(bool annotate = false, int beforeCount = 10, int afterCount = 10)
-        {
-            PrintMemory(_cpu.Registers.PC, annotate, beforeCount, afterCount);
-        }
 
         #endregion
     }

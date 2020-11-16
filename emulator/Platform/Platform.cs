@@ -51,6 +51,9 @@ namespace JustinCredible.PacEmu
         // The current CPU; used to render the debugger.
         private CPU _debuggerCpu = null;
 
+        // Indicates if annotated disassembly should be shown (as opposed to pseudocode code).
+        private bool _debuggerShowAnnotatedDisassembly = false;
+
         #endregion
 
         #region Events
@@ -283,7 +286,7 @@ namespace JustinCredible.PacEmu
 
                 if (_debugRendererSurface != IntPtr.Zero && _debuggerNeedsRendering)
                 {
-                    DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _debuggerCpu);
+                    DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _debuggerCpu, _debuggerShowAnnotatedDisassembly);
                     _debuggerNeedsRendering = false;
                 }
 
@@ -331,6 +334,11 @@ namespace JustinCredible.PacEmu
                         _debuggerCpu = null;
                         _debuggerNeedsRendering = true;
                         OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
+                    }
+                    else if (keycode == SDL.SDL_Keycode.SDLK_F11)
+                    {
+                        _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
+                        _debuggerNeedsRendering = true;
                     }
 
                     break;

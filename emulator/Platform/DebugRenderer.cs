@@ -1,5 +1,6 @@
 
 using System;
+using JustinCredible.Z80Disassembler;
 using JustinCredible.ZilogZ80;
 using SDL2;
 
@@ -19,7 +20,7 @@ namespace JustinCredible.PacEmu
         private const int DISASSEMBLY_START_ROW = 18;
         private const int DIASSEMBLY_ROW_COUNT = 34;
 
-        public static void Render(IntPtr surface, bool isDebuggerActive, CPU cpu)
+        public static void Render(IntPtr surface, bool isDebuggerActive, CPU cpu, bool showAnnotatedDisassembly)
         {
             SDL.SDL_SetRenderDrawColor(surface, 0, 0, 0, 255);
             SDL.SDL_RenderClear(surface);
@@ -111,9 +112,20 @@ namespace JustinCredible.PacEmu
 
             if (isDebuggerActive)
             {
+                // TODO: Pass annotations through.
+                var disassembly = Disassembler.FormatDisassemblyForDisplay(cpu.Registers.PC, cpu.Memory, 16, 16, true, null);
+
+                var disassemblyLines = disassembly.Split(Environment.NewLine);
+
                 for (var i = 0; i < DIASSEMBLY_ROW_COUNT; i++)
                 {
-                    FontRenderer.RenderString(surface, "(TODO: Disassembly here)", 0, (DISASSEMBLY_START_ROW + i) * ROW_HEIGHT);
+                    if (i >= disassemblyLines.Length)
+                        continue;
+
+                    var disassemblyLine = disassemblyLines[i];
+                    disassemblyLine = disassemblyLine.Replace("\t", "     ");
+
+                    FontRenderer.RenderString(surface, disassemblyLine, 0, (DISASSEMBLY_START_ROW + i) * ROW_HEIGHT);
                 }
             }
 
