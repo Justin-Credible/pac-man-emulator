@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using JustinCredible.ZilogZ80;
 using SDL2;
 
 namespace JustinCredible.PacEmu
@@ -15,11 +16,11 @@ namespace JustinCredible.PacEmu
         #region Instance Variables
 
         // References to SDL resources.
-        private IntPtr _window = IntPtr.Zero;
-        private IntPtr _renderer = IntPtr.Zero;
+        private IntPtr _gameWindow = IntPtr.Zero;
+        private IntPtr _gameRendererSurface = IntPtr.Zero;
         private uint _audioDevice = 0;
         private IntPtr _debugWindow = IntPtr.Zero;
-        private IntPtr _debugRenderer = IntPtr.Zero;
+        private IntPtr _debugRendererSurface = IntPtr.Zero;
 
         // Used to throttle the GUI event loop so we don't fire the OnTick event
         // more than needed. During each tick we can send key presses as well as
@@ -43,6 +44,12 @@ namespace JustinCredible.PacEmu
 
         // Indicates if the interactive debugger is currently active.
         private bool _isDebuggingActive = false;
+
+        // Used to ensure we only render the debugger window when it has changed.
+        private bool _debuggerNeedsRendering = true;
+
+        // The current CPU; used to render the debugger.
+        private CPU _debuggerCpu = null;
 
         #endregion
 
@@ -74,7 +81,7 @@ namespace JustinCredible.PacEmu
             if (initResult != 0)
                 throw new Exception(String.Format("Failure while initializing SDL. SDL Error: {0}", SDL.SDL_GetError()));
 
-            _window = SDL.SDL_CreateWindow(title,
+            _gameWindow = SDL.SDL_CreateWindow(title,
                 SDL.SDL_WINDOWPOS_CENTERED,
                 SDL.SDL_WINDOWPOS_CENTERED,
                 (int)(width * scaleX),
@@ -82,20 +89,20 @@ namespace JustinCredible.PacEmu
                 SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE
             );
 
-            if (_window == IntPtr.Zero)
+            if (_gameWindow == IntPtr.Zero)
                 throw new Exception(String.Format("Unable to create a window. SDL Error: {0}", SDL.SDL_GetError()));
 
-            _renderer = SDL.SDL_CreateRenderer(_window, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED /*| SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC*/);
+            _gameRendererSurface = SDL.SDL_CreateRenderer(_gameWindow, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED /*| SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC*/);
 
-            if (_renderer == IntPtr.Zero)
+            if (_gameRendererSurface == IntPtr.Zero)
                 throw new Exception(String.Format("Unable to create a renderer. SDL Error: {0}", SDL.SDL_GetError()));
 
             // We can scale the image up or down based on the scaling factor.
-            SDL.SDL_RenderSetScale(_renderer, scaleX, scaleY);
+            SDL.SDL_RenderSetScale(_gameRendererSurface, scaleX, scaleY);
 
             // By setting the logical size we ensure that the image will scale to fit the window while
             // still maintaining the original aspect ratio.
-            SDL.SDL_RenderSetLogicalSize(_renderer, width, height);
+            SDL.SDL_RenderSetLogicalSize(_gameRendererSurface, width, height);
 
             _targetTicksHz = targetTicskHz;
 
@@ -124,7 +131,7 @@ namespace JustinCredible.PacEmu
         /**
          * Used to create a GUI window via SDL for the interactive debugger.
          */
-        public void InitializeDebugger()
+        public void InitializeDebugger(float scaleX = 1, float scaleY = 1)
         {
             var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO);
 
@@ -133,12 +140,10 @@ namespace JustinCredible.PacEmu
 
             var width = 640;
             var height = 480;
-            var scaleX = 1;
-            var scaleY = 1;
 
             _debugWindow = SDL.SDL_CreateWindow("Interactive Debugger",
-                SDL.SDL_WINDOWPOS_CENTERED,
-                SDL.SDL_WINDOWPOS_CENTERED,
+                10,
+                10,
                 (int)(width * scaleX),
                 (int)(height * scaleY),
                 SDL.SDL_WindowFlags.SDL_WINDOW_RESIZABLE
@@ -147,17 +152,17 @@ namespace JustinCredible.PacEmu
             if (_debugWindow == IntPtr.Zero)
                 throw new Exception(String.Format("Unable to create a window. SDL Error: {0}", SDL.SDL_GetError()));
 
-            _debugRenderer = SDL.SDL_CreateRenderer(_debugWindow, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED /*| SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC*/);
+            _debugRendererSurface = SDL.SDL_CreateRenderer(_debugWindow, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED /*| SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC*/);
 
-            if (_debugRenderer == IntPtr.Zero)
+            if (_debugRendererSurface == IntPtr.Zero)
                 throw new Exception(String.Format("Unable to create a renderer. SDL Error: {0}", SDL.SDL_GetError()));
 
             // We can scale the image up or down based on the scaling factor.
-            SDL.SDL_RenderSetScale(_debugRenderer, scaleX, scaleY);
+            SDL.SDL_RenderSetScale(_debugRendererSurface, scaleX, scaleY);
 
             // By setting the logical size we ensure that the image will scale to fit the window while
             // still maintaining the original aspect ratio.
-            SDL.SDL_RenderSetLogicalSize(_debugRenderer, width, height);
+            SDL.SDL_RenderSetLogicalSize(_debugRendererSurface, width, height);
         }
 
         /**
@@ -244,8 +249,8 @@ namespace JustinCredible.PacEmu
 
                     // Clear the background with black so that if the game is letterboxed or pillarboxed
                     // the background color of the unused space will be black.
-                    SDL.SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
-                    SDL.SDL_RenderClear(_renderer);
+                    SDL.SDL_SetRenderDrawColor(_gameRendererSurface, 0, 0, 0, 255);
+                    SDL.SDL_RenderClear(_gameRendererSurface);
 
                     // In order to pass the managed memory bitmap to the unmanaged SDL methods, we need to
                     // manually allocate memory for the byte array. This effectively "pins" it so it won't
@@ -257,11 +262,11 @@ namespace JustinCredible.PacEmu
                     // get an abstract stream interface which will allow us to load the bitmap as a texture.
                     var rwops = SDL.SDL_RWFromConstMem(frameBufferPointer, tickEventArgs.FrameBuffer.Length);
                     var surface = SDL.INTERNAL_SDL_LoadBMP_RW(rwops, 0);
-                    var texture = SDL.SDL_CreateTextureFromSurface(_renderer, surface);
+                    var texture = SDL.SDL_CreateTextureFromSurface(_gameRendererSurface, surface);
 
                     // Now that we've loaded the framebuffer's bitmap as a texture, we can now render it to
                     // the SDL canvas at the given location.
-                    SDL.SDL_RenderCopy(_renderer, texture, ref _renderLocation, ref _renderLocation);
+                    SDL.SDL_RenderCopy(_gameRendererSurface, texture, ref _renderLocation, ref _renderLocation);
 
                     // Ensure we release our unmanaged memory.
                     SDL.SDL_DestroyTexture(texture);
@@ -270,15 +275,16 @@ namespace JustinCredible.PacEmu
                     frameBuffer.Free();
 
                     // Now that we're done rendering, we can present this new frame.
-                    SDL.SDL_RenderPresent(_renderer);
+                    SDL.SDL_RenderPresent(_gameRendererSurface);
 
                     // renderStopwatch.Stop();
                     // Console.WriteLine("Render completed in: " + renderStopwatch.ElapsedMilliseconds + " ms");
                 }
 
-                if (_debugRenderer != IntPtr.Zero)
+                if (_debugRendererSurface != IntPtr.Zero && _debuggerNeedsRendering)
                 {
-                    RenderDebugger();
+                    DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _debuggerCpu);
+                    _debuggerNeedsRendering = false;
                 }
 
                 // See if we need to delay to keep locked to ~ targetTicskHz.
@@ -295,9 +301,11 @@ namespace JustinCredible.PacEmu
             }
         }
 
-        public void StartInteractiveDebugger()
+        public void StartInteractiveDebugger(CPU cpu)
         {
+            _debuggerCpu = cpu;
             _isDebuggingActive = true;
+            _debuggerNeedsRendering = true;
         }
 
         private void HandleDebuggerEvent(SDL.SDL_Event sdlEvent)
@@ -313,37 +321,21 @@ namespace JustinCredible.PacEmu
                     if (keycode == SDL.SDL_Keycode.SDLK_F5)
                     {
                         _isDebuggingActive = false;
-                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Continue = true, SingleStep = false });
+                        _debuggerCpu = null;
+                        _debuggerNeedsRendering = true;
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
                     }
                     else if (keycode == SDL.SDL_Keycode.SDLK_F10)
                     {
                         _isDebuggingActive = false;
-                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Continue = true, SingleStep = true });
+                        _debuggerCpu = null;
+                        _debuggerNeedsRendering = true;
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
                     }
 
                     break;
                 }
             }
-        }
-
-        private void RenderDebugger()
-        {
-            // TODO: Render debugger information.
-            // TODO: Use a C-header monospaced font to render text?
-
-            SDL.SDL_SetRenderDrawColor(_debugRenderer, 0, 0, 255, 255);
-            SDL.SDL_RenderClear(_debugRenderer);
-
-            if (_isDebuggingActive)
-            {
-                FontRenderer.RenderString(_debugRenderer, "BREAKPOINT HIT!", 0, 0);
-            }
-            else
-            {
-                FontRenderer.RenderString(_debugRenderer, "WAITING FOR BREAKPOINT...", 0, 0);
-            }
-
-            SDL.SDL_RenderPresent(_debugRenderer);
         }
 
         /**
@@ -381,11 +373,11 @@ namespace JustinCredible.PacEmu
          */
         public void Dispose()
         {
-            if (_renderer != IntPtr.Zero)
-                SDL.SDL_DestroyRenderer(_renderer);
+            if (_gameRendererSurface != IntPtr.Zero)
+                SDL.SDL_DestroyRenderer(_gameRendererSurface);
 
-            if (_window != IntPtr.Zero)
-                SDL.SDL_DestroyWindow(_window);
+            if (_gameWindow != IntPtr.Zero)
+                SDL.SDL_DestroyWindow(_gameWindow);
 
             SDL.SDL_CloseAudioDevice(_audioDevice);
         }

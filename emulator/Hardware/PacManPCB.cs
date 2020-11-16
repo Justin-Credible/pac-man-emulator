@@ -56,7 +56,8 @@ namespace JustinCredible.PacEmu
         // The Namcom Waveform Sound Generator (WSG3) runs at CPU_MHZ/32 = 96 kHz.
         private const int WSG3_MHZ = CPU_MHZ / 32;
 
-        private CPU _cpu; // Zilog Z80
+        // TODO: Switch back to private (currently exposed for the debugger).
+        internal CPU _cpu; // Zilog Z80
         private VideoHardware _video;
         private AudioHardware _audio;
         public DIPSwitches DIPSwitchState { get; set; } = new DIPSwitches();
@@ -155,7 +156,7 @@ namespace JustinCredible.PacEmu
          * When Debug=true, the program will break at these addresses and allow the user to perform
          * interactive debugging via the console.
          */
-        public List<UInt16> BreakAtAddresses { get; set; }
+        public List<UInt16> BreakAtAddresses { get; set; } = new List<ushort>();
 
         /**
          * When Debug=true, allows for single reverse-stepping in the interactive debugging console.
@@ -892,7 +893,7 @@ namespace JustinCredible.PacEmu
                 _addressHistory.RemoveAt(0);
 
             // See if we need to break based on a given address.
-            if (BreakAtAddresses != null && BreakAtAddresses.Contains(_cpu.Registers.PC))
+            if (BreakAtAddresses.Contains(_cpu.Registers.PC))
                 _singleStepping = true;
 
             // If we need to break, print out the CPU state and wait for a keypress.
@@ -1039,13 +1040,13 @@ namespace JustinCredible.PacEmu
 
         #endregion
 
-        #region Private Methods: Save/Load State
+        #region Public Methods: Save/Load State
 
         /**
          * Used to dump the state of the CPU and all fields needed to restore the emulator's
          * state in order to continue at this execution point later on.
          */
-        private EmulatorState SaveState()
+        public EmulatorState SaveState()
         {
             return new EmulatorState()
             {
@@ -1098,7 +1099,7 @@ namespace JustinCredible.PacEmu
          * Used to restore the state of the CPU and restore all fields to allow the emulator
          * to continue execution from a previously saved state.
          */
-        private void LoadState(EmulatorState state)
+        public void LoadState(EmulatorState state)
         {
             _cpu.Registers = state.Registers;
             _cpu.Flags = state.Flags;

@@ -29,6 +29,12 @@ namespace JustinCredible.PacEmu
         private static byte[] _frameBuffer; // Bitmap File Format
         private static bool _renderFrameNextTick = false;
 
+        // The scaling factor for the windows.
+        private const float GAME_WINDOW_SCALE_X = 2;
+        private const float GAME_WINDOW_SCALE_Y = 2;
+        private const float DEBUG_WINDOW_SCALE_X = 1.5f;
+        private const float DEBUG_WINDOW_SCALE_Y = 1.5f;
+
         #region CLI / Entrypoint
 
         public static void Main(string[] args)
@@ -115,7 +121,7 @@ namespace JustinCredible.PacEmu
                 _platform = new Platform();
                 _platform.OnTick += Platform_OnTick;
                 _platform.OnDebugCommand += Platform_OnDebugCommand;
-                _platform.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
+                _platform.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, GAME_WINDOW_SCALE_X, GAME_WINDOW_SCALE_Y);
 
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
                 // handlers to receive the framebuffer/samples to be rendered/played.
@@ -189,7 +195,7 @@ namespace JustinCredible.PacEmu
                 if (debugOption.HasValue())
                 {
                     _game.Debug = true;
-                    _platform.InitializeDebugger();
+                    _platform.InitializeDebugger(DEBUG_WINDOW_SCALE_X, DEBUG_WINDOW_SCALE_Y);
 
                     if (breakOption.HasValue())
                     {
@@ -322,7 +328,7 @@ namespace JustinCredible.PacEmu
             if (!_game.Debug)
                 return;
 
-            _platform.StartInteractiveDebugger();
+            _platform.StartInteractiveDebugger(_game._cpu);
         }
 
         /**
@@ -356,9 +362,41 @@ namespace JustinCredible.PacEmu
             if (!_game.Debug)
                 return;
 
-            if (eventArgs.Continue)
+            switch (eventArgs.Action)
             {
-                _game.Continue(singleStep: eventArgs.SingleStep);
+                case DebugAction.ResumeContinue:
+                    _game.Continue(singleStep: false);
+                    break;
+
+                case DebugAction.ResumeStep:
+                    _game.Continue(singleStep: true);
+                    break;
+
+                case DebugAction.AddBreakpoint:
+                    if (!_game.BreakAtAddresses.Contains(eventArgs.Address))
+                        _game.BreakAtAddresses.Add(eventArgs.Address);
+                    break;
+
+                case DebugAction.RemoveBreakpoint:
+                    if (_game.BreakAtAddresses.Contains(eventArgs.Address))
+                        _game.BreakAtAddresses.Remove(eventArgs.Address);
+                    break;
+
+                case DebugAction.SaveState:
+                {
+                    var state = _game.SaveState();
+                    var json = JsonSerializer.Serialize<EmulatorState>(state);
+                    File.WriteAllText(eventArgs.FileName, json);
+                    break;
+                }
+
+                case DebugAction.LoadState:
+                {
+                    var json = File.ReadAllText(eventArgs.FileName);
+                    var state = JsonSerializer.Deserialize<EmulatorState>(json);
+                    _game.LoadState(state);
+                    break;
+                }
             }
         }
 
