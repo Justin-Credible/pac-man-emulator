@@ -32,8 +32,8 @@ namespace JustinCredible.PacEmu
         // The scaling factor for the windows.
         private const float GAME_WINDOW_SCALE_X = 2;
         private const float GAME_WINDOW_SCALE_Y = 2;
-        private const float DEBUG_WINDOW_SCALE_X = 1.5f;
-        private const float DEBUG_WINDOW_SCALE_Y = 1.5f;
+        private const float DEBUG_WINDOW_SCALE_X = 2f;
+        private const float DEBUG_WINDOW_SCALE_Y = 2f;
 
         #region CLI / Entrypoint
 

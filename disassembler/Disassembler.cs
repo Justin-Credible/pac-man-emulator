@@ -7,6 +7,8 @@ namespace JustinCredible.Z80Disassembler
 {
     public static class Disassembler
     {
+        public static readonly string CURRENT_LINE_MARKER = "---->";
+
         public static string Disassemble(IMemory rom, bool emitAddresses = false, bool emitPseudocode = false)
         {
             var disassembly = new StringBuilder();
@@ -109,7 +111,7 @@ namespace JustinCredible.Z80Disassembler
                 var addressIndex = (UInt16)i;
 
                 // If this is the current address location, add an arrow pointing to it.
-                output.Append(address == addressIndex ? "---->" : "\t");
+                output.Append(address == addressIndex ? CURRENT_LINE_MARKER : "\t");
 
                 // If we're showing annotations, then don't show the pseudocode.
                 var emitPseudocode = !annotate;

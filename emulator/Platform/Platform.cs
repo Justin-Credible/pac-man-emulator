@@ -42,10 +42,20 @@ namespace JustinCredible.PacEmu
         // A flag that allows us to make a keypress behave as a toggle switch.
         private bool _allowChangeBoardTestSwitch = true;
 
-        // Indicates if the interactive debugger is currently active.
+        #endregion
+
+        #region Instance Variables - Debugger
+
+        // Indicates if the interactive debugger is currently active (i.e. can accept user commands).
         private bool _isDebuggingActive = false;
 
-        // Used to ensure we only render the debugger window when it has changed.
+        // Indicates if the interactive debugger is waiting for a single step to complete.
+        private bool _isDebuggerSingleStepping = false;
+
+        // Mutex for signalling when the debugger window should be re-rendered.
+        private object _debuggerRenderingLock = new Object();
+
+        // Used to ensure we only render the debugger window when it has changed (must use lock on _debuggerRenderingLock).
         private bool _debuggerNeedsRendering = true;
 
         // The current CPU; used to render the debugger.
@@ -284,10 +294,19 @@ namespace JustinCredible.PacEmu
                     // Console.WriteLine("Render completed in: " + renderStopwatch.ElapsedMilliseconds + " ms");
                 }
 
-                if (_debugRendererSurface != IntPtr.Zero && _debuggerNeedsRendering)
+                // Re-render the debugger window; we only do this if it needs re-rendering because part of the
+                // rendering can be expensive as it examines CPU state including registers and memory locations
+                // in order to obtain the data needed to be shown in the window (no need to do this @ 60hz).
+                if (_debugRendererSurface != IntPtr.Zero)
                 {
-                    DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _debuggerCpu, _debuggerShowAnnotatedDisassembly);
-                    _debuggerNeedsRendering = false;
+                    lock (_debuggerRenderingLock)
+                    {
+                        if (_debuggerNeedsRendering)
+                        {
+                            DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _isDebuggerSingleStepping, _debuggerCpu, _debuggerShowAnnotatedDisassembly);
+                            _debuggerNeedsRendering = false;
+                        }
+                    }
                 }
 
                 // See if we need to delay to keep locked to ~ targetTicskHz.
@@ -304,46 +323,16 @@ namespace JustinCredible.PacEmu
             }
         }
 
+        /**
+         * Used to start the interactive debugger session with the given CPU state.
+         * This enables the user to enter commands (continue, step, etc) and examine CPU state.
+         */
         public void StartInteractiveDebugger(CPU cpu)
         {
             _debuggerCpu = cpu;
             _isDebuggingActive = true;
-            _debuggerNeedsRendering = true;
-        }
-
-        private void HandleDebuggerEvent(SDL.SDL_Event sdlEvent)
-        {
-            // TODO: Handle all events.
-
-            switch (sdlEvent.type)
-            {
-                case SDL.SDL_EventType.SDL_KEYDOWN:
-                {
-                    var keycode = sdlEvent.key.keysym.sym;
-                    
-                    if (keycode == SDL.SDL_Keycode.SDLK_F5)
-                    {
-                        _isDebuggingActive = false;
-                        _debuggerCpu = null;
-                        _debuggerNeedsRendering = true;
-                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
-                    }
-                    else if (keycode == SDL.SDL_Keycode.SDLK_F10)
-                    {
-                        _isDebuggingActive = false;
-                        _debuggerCpu = null;
-                        _debuggerNeedsRendering = true;
-                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
-                    }
-                    else if (keycode == SDL.SDL_Keycode.SDLK_F11)
-                    {
-                        _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
-                        _debuggerNeedsRendering = true;
-                    }
-
-                    break;
-                }
-            }
+            _isDebuggerSingleStepping = false;
+            SignalDebuggerNeedsRendering();
         }
 
         /**
@@ -471,6 +460,47 @@ namespace JustinCredible.PacEmu
 
                     break;
                 }
+            }
+        }
+
+        private void SignalDebuggerNeedsRendering()
+        {
+            lock(_debuggerRenderingLock)
+            {
+                _debuggerNeedsRendering = true;
+            }
+        }
+
+        private void HandleDebuggerEvent(SDL.SDL_Event sdlEvent)
+        {
+            // TODO: Handle all events.
+
+            if (sdlEvent.type != SDL.SDL_EventType.SDL_KEYDOWN)
+                return;
+
+            var keycode = sdlEvent.key.keysym.sym;
+            
+            switch (keycode)
+            {
+                case SDL.SDL_Keycode.SDLK_F5: // Continue
+                    _isDebuggingActive = false;
+                    _debuggerCpu = null;
+                    SignalDebuggerNeedsRendering();
+                    OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
+                    break;
+
+                case SDL.SDL_Keycode.SDLK_F10: // Single Step
+                    _isDebuggingActive = false;
+                    _debuggerCpu = null;
+                    _isDebuggerSingleStepping = true;
+                    SignalDebuggerNeedsRendering();
+                    OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
+                    break;
+
+                case SDL.SDL_Keycode.SDLK_F11: // Toggle Annotated Disassembly
+                    _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
+                    SignalDebuggerNeedsRendering();
+                    break;
             }
         }
 

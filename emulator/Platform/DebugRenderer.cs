@@ -20,21 +20,33 @@ namespace JustinCredible.PacEmu
         private const int DISASSEMBLY_START_ROW = 18;
         private const int DIASSEMBLY_ROW_COUNT = 34;
 
-        public static void Render(IntPtr surface, bool isDebuggerActive, CPU cpu, bool showAnnotatedDisassembly)
+        // Colors based on default ANSI colors from Terminal.app
+        private const string COLOR_WHITE = "{170,172,172}";
+        private const string COLOR_BRIGHT_WHITE = "{229,229,229}";
+        private const string COLOR_BRIGHT_RED = "{229,0,0}";
+        private const string COLOR_GREEN = "{1,165,0}";
+        private const string COLOR_BRIGHT_YELLOW = "{229,229,1}";
+        private const string COLOR_YELLOW = "{152,153,1}";
+
+        public static void Render(IntPtr surface, bool isDebuggerActive, bool isDebuggerSingleStepping, CPU cpu, bool showAnnotatedDisassembly)
         {
             SDL.SDL_SetRenderDrawColor(surface, 0, 0, 0, 255);
             SDL.SDL_RenderClear(surface);
 
-            FontRenderer.RenderString(surface, "------------------------------[STATS]-------------------------------------------", 0, 0 * ROW_HEIGHT);
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}------------------------------[STATS]-------------------------------------------", 0, 0 * ROW_HEIGHT);
+
+            var status = $"{COLOR_GREEN}Running";
 
             if (isDebuggerActive)
             {
-                FontRenderer.RenderString(surface, "[CPU State]: Breakpoint         [Cycles]:   TODO            [Ave. FPS]: TODO", 0, 2 * ROW_HEIGHT);
+                status = $"{COLOR_BRIGHT_RED}Breakpoint";
             }
-            else
+            else if (isDebuggerSingleStepping)
             {
-                FontRenderer.RenderString(surface, "[CPU State]: Running            [Cycles]:   TODO            [Ave. FPS]: TODO", 0, 2 * ROW_HEIGHT);
+                status = $"{COLOR_BRIGHT_YELLOW}Stepping...";
             }
+
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[CPU State]: {status}            {COLOR_BRIGHT_WHITE}[Cycles]:   {COLOR_WHITE}TODO            {COLOR_BRIGHT_WHITE}[Ave. FPS]: {COLOR_WHITE}TODO", 0, 2 * ROW_HEIGHT);
 
             FontRenderer.RenderString(surface, "------------------------------[CPU STATE]---------------------------------------", 0, 4 * ROW_HEIGHT);
 
@@ -102,11 +114,11 @@ namespace JustinCredible.PacEmu
                 halfCarry = cpu.Flags.HalfCarry ? "1" : "0";
             }
 
-            FontRenderer.RenderString(surface, $"[PC]: {pc}        [SP]: {sp}", 0, 6 * ROW_HEIGHT);
-            FontRenderer.RenderString(surface, $"[A]: {regA}  [B]: {regB}  [C]: {regC}  [D]: {regD}  [E]: {regE}  [H]: {regH}  [L]: {regL}", 0, 8 * ROW_HEIGHT);
-            FontRenderer.RenderString(surface, $"[DE]: {regDE}   [HL]: {regHL}   [(DE)]: {memDE}   [(HL)]: {memHL}   [Flags]: {regF}", 0, 10 * ROW_HEIGHT);
-            FontRenderer.RenderString(surface, $"[Sign]: {sign}   [Zero]: {zero}   [Parity/Overflow]: {parityOverflow}   [Subtract]: {subtract}", 0, 12 * ROW_HEIGHT);
-            FontRenderer.RenderString(surface, $"[Carry]: {carry}   [Half-Carry]: {halfCarry}", 0, 14 * ROW_HEIGHT);
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[PC]: {COLOR_WHITE}{pc}        {COLOR_BRIGHT_WHITE}[SP]: {COLOR_WHITE}{sp}", 0, 6 * ROW_HEIGHT);
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[A]: {COLOR_WHITE}{regA}  {COLOR_BRIGHT_WHITE}[B]: {COLOR_WHITE}{regB}  {COLOR_BRIGHT_WHITE}[C]: {COLOR_WHITE}{regC}  {COLOR_BRIGHT_WHITE}[D]: {COLOR_WHITE}{regD}  {COLOR_BRIGHT_WHITE}[E]: {COLOR_WHITE}{regE}  {COLOR_BRIGHT_WHITE}[H]: {COLOR_WHITE}{regH}  {COLOR_BRIGHT_WHITE}[L]: {COLOR_WHITE}{regL}", 0, 8 * ROW_HEIGHT);
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[DE]: {COLOR_WHITE}{regDE}   {COLOR_BRIGHT_WHITE}[HL]: {COLOR_WHITE}{regHL}   {COLOR_BRIGHT_WHITE}[(DE)]: {COLOR_WHITE}{memDE}   {COLOR_BRIGHT_WHITE}[(HL)]: {COLOR_WHITE}{memHL}   {COLOR_BRIGHT_WHITE}[Flags]: {COLOR_WHITE}{regF}", 0, 10 * ROW_HEIGHT);
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[Sign]: {COLOR_WHITE}{sign}   {COLOR_BRIGHT_WHITE}[Zero]: {COLOR_WHITE}{zero}   {COLOR_BRIGHT_WHITE}[Parity/Overflow]: {COLOR_WHITE}{parityOverflow}   {COLOR_BRIGHT_WHITE}[Subtract]: {COLOR_WHITE}{subtract}", 0, 12 * ROW_HEIGHT);
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[Carry]: {COLOR_WHITE}{carry}   {COLOR_BRIGHT_WHITE}[Half-Carry]: {COLOR_WHITE}{halfCarry}", 0, 14 * ROW_HEIGHT);
 
             FontRenderer.RenderString(surface, "------------------------------[DISASSEMBLY]-------------------------------------", 0, 16 * ROW_HEIGHT);
 
@@ -123,7 +135,14 @@ namespace JustinCredible.PacEmu
                         continue;
 
                     var disassemblyLine = disassemblyLines[i];
+
+                    // Convert tabs to spaces (there is no tab character in the font set, only 8x8 glyphs).
                     disassemblyLine = disassemblyLine.Replace("\t", "     ");
+
+                    if (disassemblyLine.Contains(Disassembler.CURRENT_LINE_MARKER))
+                        disassemblyLine = $"{COLOR_BRIGHT_WHITE}{disassemblyLine}";
+                    else
+                        disassemblyLine = $"{COLOR_WHITE}{disassemblyLine}";
 
                     FontRenderer.RenderString(surface, disassemblyLine, 0, (DISASSEMBLY_START_ROW + i) * ROW_HEIGHT);
                 }
@@ -135,13 +154,17 @@ namespace JustinCredible.PacEmu
 
             if (isDebuggerActive)
             {
-                FontRenderer.RenderString(surface, "F1 = Save State     F2 = Load State     F4 = Edit Breakpoints", 0, (commandsStartRow + 3) * ROW_HEIGHT);
-                FontRenderer.RenderString(surface, "F5 = Continue       F9 = Step Backwards F10 = Single Step", 0, (commandsStartRow + 4) * ROW_HEIGHT);
-                FontRenderer.RenderString(surface, "F11 = Toggle Annotated Disassembly      F12 = Print Last 12 Opcodes", 0, (commandsStartRow + 5) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F1] {COLOR_WHITE}Save State     {COLOR_BRIGHT_WHITE}[F2] {COLOR_WHITE}Load State     {COLOR_BRIGHT_WHITE}[F4] {COLOR_WHITE}Edit Breakpoints", 0, (commandsStartRow + 3) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F5] {COLOR_WHITE}Continue       {COLOR_BRIGHT_WHITE}[F9] {COLOR_WHITE}Step Backwards {COLOR_BRIGHT_WHITE}[F10] {COLOR_WHITE}Single Step", 0, (commandsStartRow + 4) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F11] {COLOR_WHITE}Toggle Annotated Disassembly      {COLOR_BRIGHT_WHITE}[F12] {COLOR_WHITE}Print Last 12 Opcodes", 0, (commandsStartRow + 5) * ROW_HEIGHT);
+            }
+            else if (isDebuggerSingleStepping)
+            {
+                FontRenderer.RenderString(surface, $" {COLOR_BRIGHT_YELLOW}Single stepping; please wait...", 0, (commandsStartRow + 4) * ROW_HEIGHT);
             }
             else
             {
-                FontRenderer.RenderString(surface, " Press [BREAK], [PAUSE], or [9] to interrupt execution and start debugging...", 0, (commandsStartRow + 4) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $" {COLOR_YELLOW}Press [BREAK], [PAUSE], or [9] to interrupt execution and start debugging...", 0, (commandsStartRow + 4) * ROW_HEIGHT);
             }
 
             FontRenderer.RenderString(surface, "--------------------------------------------------------------------------------", 0, (commandsStartRow + 7) * ROW_HEIGHT);
