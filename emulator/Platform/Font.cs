@@ -100,8 +100,6 @@ Original header:
  * Fetched from: http://dimensionalrift.homelinux.net/combuster/mos3/?p=viewsource&file=/modules/gfx/font8_8.asm
  * Also: https://raw.githubusercontent.com/dhepper/font8x8/master/font8x8_basic.h
  **/
-using System;
-using SDL2;
 
 namespace JustinCredible.PacEmu
 {
@@ -109,7 +107,6 @@ namespace JustinCredible.PacEmu
     {
         // Constant: font8x8_basic
         // Contains an 8x8 font map for unicode points U+0000 - U+007F (basic latin)
-        //public static const int[128][8] font8x8_basic = {
         public static readonly int[,] Basic8x8 = new int[128,8]
         {
             { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0000 (nul)
@@ -241,5 +238,21 @@ namespace JustinCredible.PacEmu
             { 0x6E, 0x3B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+007E (~)
             { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}    // U+007F
         };
+
+        /**
+         * Used to get extended ASCII characters not in the basic ASCII set.
+         * Source: me drawing on graph paper :)
+         */
+        public static int[] GetExtendedCharacter(int asciiCode)
+        {
+            switch (asciiCode)
+            {
+                // TODO: This is listed as 241 in the ASCII table, but it's 177 at debug time?
+                case 177: // ± (Plus-minus sign)
+                    return new int[] { 0x08, 0x08, 0x3E, 0x08, 0x08, 0x00, 0x3E, 0x00 };
+                default:
+                    return null;
+            }
+        }
     }
 }

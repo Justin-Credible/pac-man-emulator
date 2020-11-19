@@ -81,7 +81,7 @@ namespace JustinCredible.PacEmu
             var writableRomOption = command.Option("-wr|--writable-rom", "Allow memory writes to the ROM address space.", CommandOptionType.NoValue);
             var debugOption = command.Option("-d|--debug", "Run in debug mode; enables internal statistics and logs useful when debugging.", CommandOptionType.NoValue);
             var breakOption = command.Option("-b|--break", "Used with debug, will break at the given address and allow single stepping opcode execution (e.g. --break 0x0248)", CommandOptionType.MultipleValue);
-            var rewindOption = command.Option("-r|--rewind", "Used with debug, allows for single stepping in reverse to rewind opcode execution.", CommandOptionType.NoValue);
+            var reverseStepOption = command.Option("-rs|--reverse-step", "Used with debug, allows for single stepping in reverse to rewind opcode execution.", CommandOptionType.NoValue);
             var annotationsPathOption = command.Option("-a|--annotations", "Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 0x1234 .... ; Annotation)", CommandOptionType.SingleValue);
 
             command.OnExecute(() =>
@@ -210,8 +210,8 @@ namespace JustinCredible.PacEmu
                         _game.BreakAtAddresses = addresses;
                     }
 
-                    if (rewindOption.HasValue())
-                        _game.RewindEnabled = true;
+                    if (reverseStepOption.HasValue())
+                        _game.ReverseStepEnabled = true;
 
                     if (annotationsPathOption.HasValue())
                     {
@@ -328,7 +328,7 @@ namespace JustinCredible.PacEmu
             if (!_game.Debug)
                 return;
 
-            _platform.StartInteractiveDebugger(_game._cpu);
+            _platform.StartInteractiveDebugger(_game);
         }
 
         /**
@@ -370,6 +370,10 @@ namespace JustinCredible.PacEmu
 
                 case DebugAction.ResumeStep:
                     _game.Continue(singleStep: true);
+                    break;
+
+                case DebugAction.ReverseStep:
+                    _game.ReverseStep();
                     break;
 
                 case DebugAction.AddBreakpoint:

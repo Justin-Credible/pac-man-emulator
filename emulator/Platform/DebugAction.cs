@@ -5,6 +5,7 @@ namespace JustinCredible.PacEmu
     {
         ResumeContinue,
         ResumeStep,
+        ReverseStep,
         AddBreakpoint,
         RemoveBreakpoint,
         SaveState,

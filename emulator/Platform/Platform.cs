@@ -58,11 +58,11 @@ namespace JustinCredible.PacEmu
         // Used to ensure we only render the debugger window when it has changed (must use lock on _debuggerRenderingLock).
         private bool _debuggerNeedsRendering = true;
 
-        // The current CPU; used to render the debugger.
-        private CPU _debuggerCpu = null;
+        // The current game PCB; used to render the debugger.
+        private PacManPCB _debuggerPcb = null;
 
         // Indicates if annotated disassembly should be shown (as opposed to pseudocode code).
-        private bool _debuggerShowAnnotatedDisassembly = false;
+        private bool _debuggerShowAnnotatedDisassembly = true;
 
         #endregion
 
@@ -303,7 +303,7 @@ namespace JustinCredible.PacEmu
                     {
                         if (_debuggerNeedsRendering)
                         {
-                            DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _isDebuggerSingleStepping, _debuggerCpu, _debuggerShowAnnotatedDisassembly);
+                            DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _isDebuggerSingleStepping, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
                             _debuggerNeedsRendering = false;
                         }
                     }
@@ -324,12 +324,12 @@ namespace JustinCredible.PacEmu
         }
 
         /**
-         * Used to start the interactive debugger session with the given CPU state.
-         * This enables the user to enter commands (continue, step, etc) and examine CPU state.
+         * Used to start the interactive debugger session with the given game PCB state.
+         * This enables the user to enter commands (continue, step, etc) and examine CPU state etc.
          */
-        public void StartInteractiveDebugger(CPU cpu)
+        public void StartInteractiveDebugger(PacManPCB pcb)
         {
-            _debuggerCpu = cpu;
+            _debuggerPcb = pcb;
             _isDebuggingActive = true;
             _isDebuggerSingleStepping = false;
             SignalDebuggerNeedsRendering();
@@ -482,22 +482,38 @@ namespace JustinCredible.PacEmu
             
             switch (keycode)
             {
-                case SDL.SDL_Keycode.SDLK_F5: // Continue
+                case SDL.SDL_Keycode.SDLK_F5: // F5 = Continue
                     _isDebuggingActive = false;
-                    _debuggerCpu = null;
+                    _debuggerPcb = null;
                     SignalDebuggerNeedsRendering();
                     OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
                     break;
 
-                case SDL.SDL_Keycode.SDLK_F10: // Single Step
+                case SDL.SDL_Keycode.SDLK_F9: // F9 = Step Backwards
+
+                    if (_debuggerPcb.ReverseStepEnabled)
+                    {
+                        _isDebuggerSingleStepping = true;
+                        SignalDebuggerNeedsRendering();
+
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ReverseStep });
+
+                        System.Threading.Thread.Sleep(250);
+                        _isDebuggerSingleStepping = false;
+                        SignalDebuggerNeedsRendering();
+                    }
+
+                    break;
+
+                case SDL.SDL_Keycode.SDLK_F10: // F10 = Single Step
                     _isDebuggingActive = false;
-                    _debuggerCpu = null;
+                    _debuggerPcb = null;
                     _isDebuggerSingleStepping = true;
                     SignalDebuggerNeedsRendering();
                     OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
                     break;
 
-                case SDL.SDL_Keycode.SDLK_F11: // Toggle Annotated Disassembly
+                case SDL.SDL_Keycode.SDLK_F11: // F11 = Toggle Annotated Disassembly
                     _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
                     SignalDebuggerNeedsRendering();
                     break;

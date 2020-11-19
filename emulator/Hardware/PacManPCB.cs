@@ -56,7 +56,6 @@ namespace JustinCredible.PacEmu
         // The Namcom Waveform Sound Generator (WSG3) runs at CPU_MHZ/32 = 96 kHz.
         private const int WSG3_MHZ = CPU_MHZ / 32;
 
-        // TODO: Switch back to private (currently exposed for the debugger).
         internal CPU _cpu; // Zilog Z80
         private VideoHardware _video;
         private AudioHardware _audio;
@@ -137,10 +136,10 @@ namespace JustinCredible.PacEmu
         #region Debugging Features
 
         private static readonly int MAX_ADDRESS_HISTORY = 100;
-        private static readonly int MAX_REWIND_HISTORY = 20;
+        private static readonly int MAX_REVERSE_STEP_HISTORY = 20;
 
-        private int _totalCycles = 0;
-        private int _totalSteps = 0;
+        internal long _totalCycles = 0;
+        internal long _totalOpcodes = 0;
 
         /**
          * Enables debugging statistics and features.
@@ -161,10 +160,10 @@ namespace JustinCredible.PacEmu
         /**
          * When Debug=true, allows for single reverse-stepping in the interactive debugging console.
          */
-        public bool RewindEnabled { get; set; } = false;
+        public bool ReverseStepEnabled { get; set; } = false;
 
         /**
-         * When Debug=true and RewindEnabled=true, stores sufficient state of the CPU and emulator
+         * When Debug=true and ReverseStepEnabled=true, stores sufficient state of the CPU and emulator
          * to allow for stepping backwards to each state of the system.
          */
         private List<EmulatorState> _executionHistory = new List<EmulatorState>();
@@ -182,15 +181,8 @@ namespace JustinCredible.PacEmu
         private bool _singleStepping = false;
 
         /**
-         * For use by the interactive debugger when Debug=true. If true, indicates that the disassembly
-         * should be annotated with the values in the Annotations dictionary. If false, the diassembler
-         * will annotate each line with a pseudocode comment instead.
-         */
-        private bool _showAnnotatedDisassembly = false;
-
-        /**
-         * The annotations to be used when Debug=true and _showAnnotatedDisassembly=true. It is a map
-         * of memory addresses to string annotation values.
+         * The disassembly annotations to be used by the interactive debugger when Debug=true. It is
+         * a map of memory addresses to string annotation values.
          */
         public Dictionary<UInt16, String> Annotations { get; set; }
 
@@ -345,6 +337,22 @@ namespace JustinCredible.PacEmu
 
             // Release the thread from busy/lazy waiting.
             _isWaitingForInteractiveDebugger = false;
+        }
+
+        /**
+         * Used to reverse step backwards a single step, effectively reverting the CPU to the state
+         * prior to the last opcode executing. This requires Debug=true and ReverseStepEnabled=true.
+         */
+        public void ReverseStep()
+        {
+            if (!Debug && !ReverseStepEnabled)
+                throw new Exception("Debug feature: reverse stepping is not enabled.");
+
+            var state = _executionHistory[_executionHistory.Count - 1];
+            _executionHistory.RemoveAt(_executionHistory.Count - 1);
+
+            LoadState(state);
+            _cyclesSinceLastInterrupt -= state.LastCyclesExecuted.Value;
         }
 
         #endregion
@@ -1014,21 +1022,21 @@ namespace JustinCredible.PacEmu
 
         /**
          * This method handles all the work that needs to be done when debugging is enabled right after
-         * the CPU executes an opcode. This includes recording CPU stats and rewind history.
+         * the CPU executes an opcode. This includes recording CPU stats and reverse step history.
          */
         private void HandleDebugFeaturesPostStep(int cyclesElapsed)
         {
             // Keep track of the total number of steps (instructions) and cycles ellapsed.
-            _totalSteps++;
+            _totalOpcodes++;
             _totalCycles += cyclesElapsed;
 
             // Used to slow down the emulation to watch the renderer.
             // if (_totalCycles % 1000 == 0)
             //     System.Threading.Thread.Sleep(10);
 
-            if (RewindEnabled)
+            if (ReverseStepEnabled)
             {
-                if (_executionHistory.Count >= MAX_REWIND_HISTORY)
+                if (_executionHistory.Count >= MAX_REVERSE_STEP_HISTORY)
                     _executionHistory.RemoveAt(0);
 
                 var state = SaveState();
@@ -1089,7 +1097,7 @@ namespace JustinCredible.PacEmu
                 Memory = _memory,
                 SpriteCoordinates = _spriteCoordinates,
                 TotalCycles = _totalCycles,
-                TotalSteps = _totalSteps,
+                TotalOpcodes = _totalOpcodes,
                 CyclesSinceLastInterrupt = _cyclesSinceLastInterrupt,
                 AudioHardwareState = _audio.SaveState(),
             };
@@ -1109,7 +1117,7 @@ namespace JustinCredible.PacEmu
             _memory = state.Memory;
             _spriteCoordinates = state.SpriteCoordinates;
             _totalCycles = state.TotalCycles;
-            _totalSteps = state.TotalSteps;
+            _totalOpcodes = state.TotalOpcodes;
             _cyclesSinceLastInterrupt = state.CyclesSinceLastInterrupt;
             _audio.LoadState(state.AudioHardwareState);
         }

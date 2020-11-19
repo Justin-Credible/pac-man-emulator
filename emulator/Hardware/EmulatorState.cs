@@ -11,8 +11,8 @@ namespace JustinCredible.PacEmu
         public InterruptMode InterruptMode { get; set; }
         public byte[] Memory { get; set; }
         public byte[] SpriteCoordinates { get; set; }
-        public int TotalCycles { get; set; }
-        public int TotalSteps { get; set; }
+        public long TotalCycles { get; set; }
+        public long TotalOpcodes { get; set; }
         public int CyclesSinceLastInterrupt { get; set; }
         public AudioHardwareState AudioHardwareState { get; set; }
 

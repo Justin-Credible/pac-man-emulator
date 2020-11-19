@@ -22,13 +22,36 @@ namespace JustinCredible.PacEmu
             {
                 int bitmapRow = Font.Basic8x8[(int)'?', row];
 
-                try
+                if (character >= 128)
                 {
-                    bitmapRow = Font.Basic8x8[(int)character, row];
+                    try
+                    {
+                        var extendedBitmapRow = Font.GetExtendedCharacter((int)character);
+
+                        if (extendedBitmapRow == null)
+                        {
+                            Console.WriteLine($"[WARN] FontRenderer.RenderCharacter: Error fetching bitmap for extended character ${character}; using '?' instead.");
+                        }
+                        else
+                        {
+                            bitmapRow = extendedBitmapRow[row];
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"[WARN] FontRenderer.RenderCharacter: Error fetching bitmap for extended character ${character}; using '?' instead.");
+                    }
                 }
-                catch
+                else
                 {
-                    Console.WriteLine($"[WARN] FontRenderer.RenderCharacter: Error fetching bitmap for character ${character}; using '?' instead.");
+                    try
+                    {
+                        bitmapRow = Font.Basic8x8[(int)character, row];
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"[WARN] FontRenderer.RenderCharacter: Error fetching bitmap for character ${character}; using '?' instead.");
+                    }
                 }
 
                 for (var column = 0; column < 8; column++)

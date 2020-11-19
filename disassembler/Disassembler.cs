@@ -96,7 +96,7 @@ namespace JustinCredible.Z80Disassembler
          * Used to build a visual disassembly of memory locations before and after the given address.
          * Useful for display to an end user inside of a debugger or similar.
          */
-        public static string FormatDisassemblyForDisplay(UInt16 address, IMemory memory, int beforeCount = 10, int afterCount = 10, bool annotate = false, Dictionary<UInt16, String> annotations = null)
+        public static string FormatDisassemblyForDisplay(UInt16 address, IMemory memory, int beforeCount = 10, int afterCount = 10, Dictionary<UInt16, String> annotations = null)
         {
             var output = new StringBuilder();
 
@@ -114,7 +114,7 @@ namespace JustinCredible.Z80Disassembler
                 output.Append(address == addressIndex ? CURRENT_LINE_MARKER : "\t");
 
                 // If we're showing annotations, then don't show the pseudocode.
-                var emitPseudocode = !annotate;
+                var emitPseudocode = annotations == null;
 
                 try
                 {
@@ -123,7 +123,7 @@ namespace JustinCredible.Z80Disassembler
                     output.Append(instruction);
 
                     // If we're showing annotations, attempt to look up the annotation for this address.
-                    if (annotate && annotations != null)
+                    if (annotations != null)
                     {
                         var annotation = annotations.ContainsKey(addressIndex) ? annotations[addressIndex] : null;
                         output.Append("\t\t; ");
