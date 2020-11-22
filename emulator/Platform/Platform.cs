@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using JustinCredible.ZilogZ80;
 using SDL2;
 
 namespace JustinCredible.PacEmu
@@ -46,11 +45,7 @@ namespace JustinCredible.PacEmu
 
         #region Instance Variables - Debugger
 
-        // Indicates if the interactive debugger is currently active (i.e. can accept user commands).
-        private bool _isDebuggingActive = false;
-
-        // Indicates if the interactive debugger is waiting for a single step to complete.
-        private bool _isDebuggerSingleStepping = false;
+        private DebuggerState _debuggerState = DebuggerState.Idle;
 
         // Mutex for signalling when the debugger window should be re-rendered.
         private object _debuggerRenderingLock = new Object();
@@ -237,7 +232,7 @@ namespace JustinCredible.PacEmu
                             break;
                     }
 
-                    if (_isDebuggingActive)
+                    if (_debuggerState == DebuggerState.Breakpoint)
                     {
                         HandleDebuggerEvent(sdlEvent);
                     }
@@ -303,7 +298,7 @@ namespace JustinCredible.PacEmu
                     {
                         if (_debuggerNeedsRendering)
                         {
-                            DebugRenderer.Render(_debugRendererSurface, _isDebuggingActive, _isDebuggerSingleStepping, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
+                            DebugRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
                             _debuggerNeedsRendering = false;
                         }
                     }
@@ -330,8 +325,7 @@ namespace JustinCredible.PacEmu
         public void StartInteractiveDebugger(PacManPCB pcb)
         {
             _debuggerPcb = pcb;
-            _isDebuggingActive = true;
-            _isDebuggerSingleStepping = false;
+            _debuggerState = DebuggerState.Breakpoint;
             SignalDebuggerNeedsRendering();
         }
 
@@ -482,8 +476,20 @@ namespace JustinCredible.PacEmu
             
             switch (keycode)
             {
+                case SDL.SDL_Keycode.SDLK_F1: // F1 = Save State
+                    // TODO
+                    break;
+
+                case SDL.SDL_Keycode.SDLK_F2: // F2 = Load State
+                    // TODO
+                    break;
+
+                case SDL.SDL_Keycode.SDLK_F4: // F4 = Edit Breakpoints
+                    // TODO
+                    break;
+
                 case SDL.SDL_Keycode.SDLK_F5: // F5 = Continue
-                    _isDebuggingActive = false;
+                    _debuggerState = DebuggerState.Idle;
                     _debuggerPcb = null;
                     SignalDebuggerNeedsRendering();
                     OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
@@ -493,22 +499,21 @@ namespace JustinCredible.PacEmu
 
                     if (_debuggerPcb.ReverseStepEnabled)
                     {
-                        _isDebuggerSingleStepping = true;
+                        _debuggerState = DebuggerState.SingleStepping;
                         SignalDebuggerNeedsRendering();
 
                         OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ReverseStep });
 
                         System.Threading.Thread.Sleep(250);
-                        _isDebuggerSingleStepping = false;
+                        _debuggerState = DebuggerState.Breakpoint;
                         SignalDebuggerNeedsRendering();
                     }
 
                     break;
 
                 case SDL.SDL_Keycode.SDLK_F10: // F10 = Single Step
-                    _isDebuggingActive = false;
+                    _debuggerState = DebuggerState.SingleStepping;
                     _debuggerPcb = null;
-                    _isDebuggerSingleStepping = true;
                     SignalDebuggerNeedsRendering();
                     OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
                     break;
@@ -516,6 +521,10 @@ namespace JustinCredible.PacEmu
                 case SDL.SDL_Keycode.SDLK_F11: // F11 = Toggle Annotated Disassembly
                     _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
                     SignalDebuggerNeedsRendering();
+                    break;
+
+                case SDL.SDL_Keycode.SDLK_F12: // F12 = Print Last 12 Opcodes
+                    // TODO
                     break;
             }
         }

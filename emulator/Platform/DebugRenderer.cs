@@ -1,7 +1,6 @@
 
 using System;
 using JustinCredible.Z80Disassembler;
-using JustinCredible.ZilogZ80;
 using SDL2;
 
 namespace JustinCredible.PacEmu
@@ -31,7 +30,7 @@ namespace JustinCredible.PacEmu
         private const string COLOR_BLUE = "{25,12,178}";
         private const string COLOR_BRIGHT_BLUE = "{40,23,255}";
 
-        public static void Render(IntPtr surface, bool isDebuggerActive, bool isDebuggerSingleStepping, PacManPCB pcb, bool showAnnotatedDisassembly)
+        public static void Render(IntPtr surface, DebuggerState state, PacManPCB pcb, bool showAnnotatedDisassembly)
         {
             SDL.SDL_SetRenderDrawColor(surface, 0, 0, 0, 255);
             SDL.SDL_RenderClear(surface);
@@ -40,15 +39,15 @@ namespace JustinCredible.PacEmu
 
             var statusColor = $"{COLOR_GREEN}";
             var status = $"Running";
-            var cycleCount = (isDebuggerActive ? String.Format("{0:n0}", pcb._totalCycles) : "---").PadRight(13);
-            var opcodeCount = (isDebuggerActive ? String.Format("{0:n0}", pcb._totalOpcodes) : "---").PadRight(13);
+            var cycleCount = (state == DebuggerState.Breakpoint ? String.Format("{0:n0}", pcb._totalCycles) : "---").PadRight(13);
+            var opcodeCount = (state == DebuggerState.Breakpoint ? String.Format("{0:n0}", pcb._totalOpcodes) : "---").PadRight(13);
 
-            if (isDebuggerActive)
+            if (state == DebuggerState.Breakpoint)
             {
                 statusColor = $"{COLOR_BRIGHT_RED}";
                 status = "Breakpoint";
             }
-            else if (isDebuggerSingleStepping)
+            else if (state == DebuggerState.SingleStepping)
             {
                 statusColor = $"{COLOR_BRIGHT_YELLOW}";
                 status = "Stepping...";
@@ -83,7 +82,7 @@ namespace JustinCredible.PacEmu
             var carry = EMPTY_BIT_VALUE_DISPLAY;
             var halfCarry = EMPTY_BIT_VALUE_DISPLAY;
 
-            if (isDebuggerActive && pcb._cpu != null)
+            if (state == DebuggerState.Breakpoint && pcb._cpu != null)
             {
                 pc = String.Format("{0:X4}", pcb._cpu.Registers.PC);
                 sp = String.Format("{0:X4}", pcb._cpu.Registers.SP);
@@ -132,7 +131,7 @@ namespace JustinCredible.PacEmu
 
             FontRenderer.RenderString(surface, "------------------------------[DISASSEMBLY]-------------------------------------", 0, 16 * ROW_HEIGHT);
 
-            if (isDebuggerActive)
+            if (state == DebuggerState.Breakpoint)
             {
                 var disassembly = Disassembler.FormatDisassemblyForDisplay(pcb._cpu.Registers.PC, pcb._cpu.Memory, 16, 16, showAnnotatedDisassembly ? pcb.Annotations : null);
 
@@ -187,7 +186,7 @@ namespace JustinCredible.PacEmu
 
             FontRenderer.RenderString(surface, "------------------------------[COMMANDS]----------------------------------------", 0, (commandsStartRow + 1) * ROW_HEIGHT);
 
-            if (isDebuggerActive)
+            if (state == DebuggerState.Breakpoint)
             {
                 var stepBackwards = pcb.ReverseStepEnabled ? $"{COLOR_BRIGHT_WHITE}[F9] {COLOR_WHITE}Step Backwards" : "                   ";
 
@@ -195,7 +194,7 @@ namespace JustinCredible.PacEmu
                 FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F5] {COLOR_WHITE}Continue       {stepBackwards} {COLOR_BRIGHT_WHITE}[F10] {COLOR_WHITE}Single Step", 0, (commandsStartRow + 4) * ROW_HEIGHT);
                 FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F11] {COLOR_WHITE}Toggle Annotated Disassembly      {COLOR_BRIGHT_WHITE}[F12] {COLOR_WHITE}Print Last 12 Opcodes", 0, (commandsStartRow + 5) * ROW_HEIGHT);
             }
-            else if (isDebuggerSingleStepping)
+            else if (state == DebuggerState.SingleStepping)
             {
                 FontRenderer.RenderString(surface, $" {COLOR_BRIGHT_YELLOW}Single stepping; please wait...", 0, (commandsStartRow + 4) * ROW_HEIGHT);
             }
