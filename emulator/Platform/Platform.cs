@@ -47,6 +47,9 @@ namespace JustinCredible.PacEmu
 
         private DebuggerState _debuggerState = DebuggerState.Idle;
 
+        // A string used to hold the contents of user input (during EditBreakpoints, LoadState, etc).
+        private string _debuggerInputString = String.Empty;
+
         // Mutex for signalling when the debugger window should be re-rendered.
         private object _debuggerRenderingLock = new Object();
 
@@ -219,10 +222,10 @@ namespace JustinCredible.PacEmu
                             tickEventArgs.KeyDown = sdlEvent.key.keysym.sym;
                             UpdateKeys(tickEventArgs, sdlEvent.key.keysym.sym, true);
 
-                            // If the break/pause or 9 key is pressed, set a flag indicating the
+                            // If the break/pause or F3 key is pressed, set a flag indicating the
                             // emulator's should activate the interactive debugger.
                             if (sdlEvent.key.keysym.sym == SDL.SDL_Keycode.SDLK_PAUSE
-                                || sdlEvent.key.keysym.sym == SDL.SDL_Keycode.SDLK_9)
+                                || sdlEvent.key.keysym.sym == SDL.SDL_Keycode.SDLK_F3)
                                 tickEventArgs.ShouldBreak = true;
 
                             break;
@@ -232,10 +235,7 @@ namespace JustinCredible.PacEmu
                             break;
                     }
 
-                    if (_debuggerState == DebuggerState.Breakpoint)
-                    {
-                        HandleDebuggerEvent(sdlEvent);
-                    }
+                    HandleDebuggerEvent(sdlEvent);
                 }
 
                 // Update the state of the board test toggle switch.
@@ -298,7 +298,7 @@ namespace JustinCredible.PacEmu
                     {
                         if (_debuggerNeedsRendering)
                         {
-                            DebugRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
+                            DebugRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerInputString, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
                             _debuggerNeedsRendering = false;
                         }
                     }
@@ -467,65 +467,114 @@ namespace JustinCredible.PacEmu
 
         private void HandleDebuggerEvent(SDL.SDL_Event sdlEvent)
         {
-            // TODO: Handle all events.
-
-            if (sdlEvent.type != SDL.SDL_EventType.SDL_KEYDOWN)
-                return;
-
-            var keycode = sdlEvent.key.keysym.sym;
-            
-            switch (keycode)
+            if (_debuggerState == DebuggerState.Breakpoint)
             {
-                case SDL.SDL_Keycode.SDLK_F1: // F1 = Save State
-                    // TODO
-                    break;
+                if (sdlEvent.type != SDL.SDL_EventType.SDL_KEYDOWN)
+                    return;
 
-                case SDL.SDL_Keycode.SDLK_F2: // F2 = Load State
-                    // TODO
-                    break;
+                var keycode = sdlEvent.key.keysym.sym;
 
-                case SDL.SDL_Keycode.SDLK_F4: // F4 = Edit Breakpoints
-                    // TODO
-                    break;
+                switch (keycode)
+                {
+                    case SDL.SDL_Keycode.SDLK_F1: // F1 = Save State
+                        // TODO
+                        break;
 
-                case SDL.SDL_Keycode.SDLK_F5: // F5 = Continue
-                    _debuggerState = DebuggerState.Idle;
-                    _debuggerPcb = null;
-                    SignalDebuggerNeedsRendering();
-                    OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
-                    break;
+                    case SDL.SDL_Keycode.SDLK_F2: // F2 = Load State
+                        // TODO
+                        break;
 
-                case SDL.SDL_Keycode.SDLK_F9: // F9 = Step Backwards
+                    case SDL.SDL_Keycode.SDLK_F4: // F4 = Edit Breakpoints
+                        _debuggerState = DebuggerState.EditBreakpoints;
+                        SignalDebuggerNeedsRendering();
+                        break;
 
-                    if (_debuggerPcb.ReverseStepEnabled)
-                    {
+                    case SDL.SDL_Keycode.SDLK_F5: // F5 = Continue
+                        _debuggerState = DebuggerState.Idle;
+                        _debuggerPcb = null;
+                        SignalDebuggerNeedsRendering();
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeContinue });
+                        break;
+
+                    case SDL.SDL_Keycode.SDLK_F9: // F9 = Step Backwards
+
+                        if (_debuggerPcb.ReverseStepEnabled)
+                        {
+                            _debuggerState = DebuggerState.SingleStepping;
+                            SignalDebuggerNeedsRendering();
+
+                            OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ReverseStep });
+
+                            System.Threading.Thread.Sleep(250);
+                            _debuggerState = DebuggerState.Breakpoint;
+                            SignalDebuggerNeedsRendering();
+                        }
+
+                        break;
+
+                    case SDL.SDL_Keycode.SDLK_F10: // F10 = Single Step
                         _debuggerState = DebuggerState.SingleStepping;
+                        _debuggerPcb = null;
                         SignalDebuggerNeedsRendering();
+                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
+                        break;
 
-                        OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ReverseStep });
-
-                        System.Threading.Thread.Sleep(250);
-                        _debuggerState = DebuggerState.Breakpoint;
+                    case SDL.SDL_Keycode.SDLK_F11: // F11 = Toggle Annotated Disassembly
+                        _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
                         SignalDebuggerNeedsRendering();
+                        break;
+
+                    case SDL.SDL_Keycode.SDLK_F12: // F12 = Print Last 12 Opcodes
+                        // TODO
+                        break;
+                }
+            }
+            else if (_debuggerState == DebuggerState.EditBreakpoints)
+            {
+                if (sdlEvent.type == SDL.SDL_EventType.SDL_KEYDOWN)
+                {
+                    var keycode = sdlEvent.key.keysym.sym;
+                    
+                    switch (keycode)
+                    {
+                        case SDL.SDL_Keycode.SDLK_BACKSPACE: // Backspace
+
+                            if (_debuggerInputString != String.Empty)
+                                _debuggerInputString = _debuggerInputString.Substring(0, _debuggerInputString.Length - 1);
+
+                            SignalDebuggerNeedsRendering();
+                            break;
+
+                        case SDL.SDL_Keycode.SDLK_RETURN: // Return/Enter = Finish input and toggle breakpoint
+                            // TODO: Parse input string to see if it is a valid hex address input.
+                            // TODO: Toggle breakpoint.
+                            _debuggerInputString = String.Empty;
+                            SignalDebuggerNeedsRendering();
+                            break;
+
+                        case SDL.SDL_Keycode.SDLK_ESCAPE: // Escape = Cancel editing breakpoints
+                            _debuggerInputString = String.Empty;
+                            _debuggerState = DebuggerState.Breakpoint;
+                            SignalDebuggerNeedsRendering();
+                            break;
                     }
+                }
+                else if (sdlEvent.type == SDL.SDL_EventType.SDL_TEXTINPUT)
+                {
+                    // Read the user's text input and add to the input string.
+                    // https://github.com/flibitijibibo/SDL2-CS/issues/70#issuecomment-53173978
 
-                    break;
+                    byte[] rawBytes = new byte[SDL2.SDL.SDL_TEXTINPUTEVENT_TEXT_SIZE];
+                    unsafe { Marshal.Copy((IntPtr)sdlEvent.text.text, rawBytes, 0, SDL2.SDL.SDL_TEXTINPUTEVENT_TEXT_SIZE); }
 
-                case SDL.SDL_Keycode.SDLK_F10: // F10 = Single Step
-                    _debuggerState = DebuggerState.SingleStepping;
-                    _debuggerPcb = null;
+                    int length = Array.IndexOf(rawBytes, (byte)0);
+                    string input = System.Text.Encoding.UTF8.GetString(rawBytes, 0, length);
+
+                    if (!String.IsNullOrWhiteSpace(input))
+                        _debuggerInputString += input;
+
                     SignalDebuggerNeedsRendering();
-                    OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ResumeStep });
-                    break;
-
-                case SDL.SDL_Keycode.SDLK_F11: // F11 = Toggle Annotated Disassembly
-                    _debuggerShowAnnotatedDisassembly = !_debuggerShowAnnotatedDisassembly;
-                    SignalDebuggerNeedsRendering();
-                    break;
-
-                case SDL.SDL_Keycode.SDLK_F12: // F12 = Print Last 12 Opcodes
-                    // TODO
-                    break;
+                }
             }
         }
 

@@ -17,5 +17,10 @@ namespace JustinCredible.PacEmu
          * The user requested to single step the CPU and is waiting for the single opcode to execute.
          */
         SingleStepping,
+
+        /**
+         * The is in the Edit Breakpoints menu.
+         */
+        EditBreakpoints,
     }
 }

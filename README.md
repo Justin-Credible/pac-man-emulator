@@ -71,7 +71,7 @@ Homebrew ROMs that target the Pac-Man hardware can be run by leaving the `--rom-
 
 ## Interactive Debugger
 
-If the emulator is launched with the `--debug` option, the debugger will be enabled. You can press the `pause`/`break` or `9` key which will stop execution and print the interactive debugger in the console.
+If the emulator is launched with the `--debug` option, the debugger will be enabled. You can press the `pause`/`break` or `F3` key which will stop execution and print the interactive debugger in the console.
 
 ![debugger](.readme/debugger.png)
 
