@@ -29,6 +29,12 @@ namespace JustinCredible.PacEmu
         private static byte[] _frameBuffer; // Bitmap File Format
         private static bool _renderFrameNextTick = false;
 
+        // The scaling factor for the windows.
+        private const float GAME_WINDOW_SCALE_X = 2;
+        private const float GAME_WINDOW_SCALE_Y = 2;
+        private const float DEBUG_WINDOW_SCALE_X = 2f;
+        private const float DEBUG_WINDOW_SCALE_Y = 2f;
+
         #region CLI / Entrypoint
 
         public static void Main(string[] args)
@@ -75,7 +81,7 @@ namespace JustinCredible.PacEmu
             var writableRomOption = command.Option("-wr|--writable-rom", "Allow memory writes to the ROM address space.", CommandOptionType.NoValue);
             var debugOption = command.Option("-d|--debug", "Run in debug mode; enables internal statistics and logs useful when debugging.", CommandOptionType.NoValue);
             var breakOption = command.Option("-b|--break", "Used with debug, will break at the given address and allow single stepping opcode execution (e.g. --break 0x0248)", CommandOptionType.MultipleValue);
-            var rewindOption = command.Option("-r|--rewind", "Used with debug, allows for single stepping in reverse to rewind opcode execution.", CommandOptionType.NoValue);
+            var reverseStepOption = command.Option("-rs|--reverse-step", "Used with debug, allows for single stepping in reverse to rewind opcode execution.", CommandOptionType.NoValue);
             var annotationsPathOption = command.Option("-a|--annotations", "Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 0x1234 .... ; Annotation)", CommandOptionType.SingleValue);
 
             command.OnExecute(() =>
@@ -114,7 +120,8 @@ namespace JustinCredible.PacEmu
                 // the framebuffer to be rendered.
                 _platform = new Platform();
                 _platform.OnTick += Platform_OnTick;
-                _platform.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, 2, 2);
+                _platform.OnDebugCommand += Platform_OnDebugCommand;
+                _platform.Initialize("Pac-Man Arcade Hardware Emulator", VideoHardware.RESOLUTION_WIDTH, VideoHardware.RESOLUTION_HEIGHT, GAME_WINDOW_SCALE_X, GAME_WINDOW_SCALE_Y);
 
                 // Initialize the Pac-Man arcade hardware/emulator and wire event
                 // handlers to receive the framebuffer/samples to be rendered/played.
@@ -123,6 +130,7 @@ namespace JustinCredible.PacEmu
                 _game.AllowWritableROM = writableRomOption.HasValue();
                 _game.OnRender += PacManPCB_OnRender;
                 _game.OnAudioSample += PacManPCB_OnAudioSample;
+                _game.OnBreakpointHitEvent += PacManPCB_OnBreakpointHit;
 
                 #region Set Game Options
 
@@ -187,6 +195,7 @@ namespace JustinCredible.PacEmu
                 if (debugOption.HasValue())
                 {
                     _game.Debug = true;
+                    _platform.InitializeDebugger(DEBUG_WINDOW_SCALE_X, DEBUG_WINDOW_SCALE_Y);
 
                     if (breakOption.HasValue())
                     {
@@ -201,8 +210,8 @@ namespace JustinCredible.PacEmu
                         _game.BreakAtAddresses = addresses;
                     }
 
-                    if (rewindOption.HasValue())
-                        _game.RewindEnabled = true;
+                    if (reverseStepOption.HasValue())
+                        _game.ReverseStepEnabled = true;
 
                     if (annotationsPathOption.HasValue())
                     {
@@ -314,6 +323,14 @@ namespace JustinCredible.PacEmu
                 _platform.QueueAudioSamples(sample);
         }
 
+        private static void PacManPCB_OnBreakpointHit()
+        {
+            if (!_game.Debug)
+                return;
+
+            _platform.StartInteractiveDebugger(_game);
+        }
+
         /**
          * Fired when the GUI event loop "ticks". This provides an opportunity
          * to receive user input as well as send the framebuffer to be rendered.
@@ -333,6 +350,57 @@ namespace JustinCredible.PacEmu
                 eventArgs.FrameBuffer = _frameBuffer;
                 eventArgs.ShouldRender = true;
                 _renderFrameNextTick = false;
+            }
+        }
+
+        /**
+         * Fired when the interactive debugger GUI receives a keypress indicating a user
+         * command to be processed (continue, single step, etc).
+         */
+        private static void Platform_OnDebugCommand(DebugCommandEventArgs eventArgs)
+        {
+            if (!_game.Debug)
+                return;
+
+            switch (eventArgs.Action)
+            {
+                case DebugAction.ResumeContinue:
+                    _game.Continue(singleStep: false);
+                    break;
+
+                case DebugAction.ResumeStep:
+                    _game.Continue(singleStep: true);
+                    break;
+
+                case DebugAction.ReverseStep:
+                    _game.ReverseStep();
+                    break;
+
+                case DebugAction.AddBreakpoint:
+                    if (!_game.BreakAtAddresses.Contains(eventArgs.Address))
+                        _game.BreakAtAddresses.Add(eventArgs.Address);
+                    break;
+
+                case DebugAction.RemoveBreakpoint:
+                    if (_game.BreakAtAddresses.Contains(eventArgs.Address))
+                        _game.BreakAtAddresses.Remove(eventArgs.Address);
+                    break;
+
+                case DebugAction.SaveState:
+                {
+                    var state = _game.SaveState();
+                    var json = JsonSerializer.Serialize<EmulatorState>(state);
+                    File.WriteAllText(eventArgs.FileName, json);
+                    break;
+                }
+
+                case DebugAction.LoadState:
+                {
+                    var json = File.ReadAllText(eventArgs.FileName);
+                    var state = JsonSerializer.Deserialize<EmulatorState>(json);
+                    _game.LoadState(state);
+                    break;
+                }
             }
         }
 

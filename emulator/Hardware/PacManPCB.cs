@@ -42,6 +42,10 @@ namespace JustinCredible.PacEmu
         public event AudioSampleEvent OnAudioSample;
         private AudioSampleEventArgs _audioSampleEventArgs = new AudioSampleEventArgs();
 
+        // Fired when a breakpoint is hit and the CPU is paused (only when Debug = true).
+        public delegate void BreakpointHitEvent();
+        public event BreakpointHitEvent OnBreakpointHitEvent;
+
         #endregion
 
         #region Hardware: Components
@@ -52,7 +56,7 @@ namespace JustinCredible.PacEmu
         // The Namcom Waveform Sound Generator (WSG3) runs at CPU_MHZ/32 = 96 kHz.
         private const int WSG3_MHZ = CPU_MHZ / 32;
 
-        private CPU _cpu; // Zilog Z80
+        internal CPU _cpu; // Zilog Z80
         private VideoHardware _video;
         private AudioHardware _audio;
         public DIPSwitches DIPSwitchState { get; set; } = new DIPSwitches();
@@ -131,11 +135,11 @@ namespace JustinCredible.PacEmu
 
         #region Debugging Features
 
-        private static readonly int MAX_ADDRESS_HISTORY = 100;
-        private static readonly int MAX_REWIND_HISTORY = 20;
+        private static readonly int MAX_ADDRESS_HISTORY = 50;
+        private static readonly int MAX_REVERSE_STEP_HISTORY = 20;
 
-        private int _totalCycles = 0;
-        private int _totalSteps = 0;
+        internal long _totalCycles = 0;
+        internal long _totalOpcodes = 0;
 
         /**
          * Enables debugging statistics and features.
@@ -145,24 +149,30 @@ namespace JustinCredible.PacEmu
         /**
          * When Debug=true, stores the last MAX_ADDRESS_HISTORY values of the program counter.
          */
-        private List<UInt16> _addressHistory = new List<UInt16>();
+        internal List<UInt16> _addressHistory = new List<UInt16>();
 
         /**
          * When Debug=true, the program will break at these addresses and allow the user to perform
          * interactive debugging via the console.
          */
-        public List<UInt16> BreakAtAddresses { get; set; }
+        public List<UInt16> BreakAtAddresses { get; set; } = new List<ushort>();
 
         /**
          * When Debug=true, allows for single reverse-stepping in the interactive debugging console.
          */
-        public bool RewindEnabled { get; set; } = false;
+        public bool ReverseStepEnabled { get; set; } = false;
 
         /**
-         * When Debug=true and RewindEnabled=true, stores sufficient state of the CPU and emulator
+         * When Debug=true and ReverseStepEnabled=true, stores sufficient state of the CPU and emulator
          * to allow for stepping backwards to each state of the system.
          */
-        private List<EmulatorState> _executionHistory = new List<EmulatorState>();
+        internal List<EmulatorState> _executionHistory = new List<EmulatorState>();
+
+        /**
+         * Indicates if the thread is in a busy/lazy wait for the user to submit a command via the
+         * interactive debugger.
+         */
+        private bool _isWaitingForInteractiveDebugger = false;
 
         /**
          * Indicates if we're stingle stepping through opcodes/instructions using the interactive
@@ -171,15 +181,8 @@ namespace JustinCredible.PacEmu
         private bool _singleStepping = false;
 
         /**
-         * For use by the interactive debugger when Debug=true. If true, indicates that the disassembly
-         * should be annotated with the values in the Annotations dictionary. If false, the diassembler
-         * will annotate each line with a pseudocode comment instead.
-         */
-        private bool _showAnnotatedDisassembly = false;
-
-        /**
-         * The annotations to be used when Debug=true and _showAnnotatedDisassembly=true. It is a map
-         * of memory addresses to string annotation values.
+         * The disassembly annotations to be used by the interactive debugger when Debug=true. It is
+         * a map of memory addresses to string annotation values.
          */
         public Dictionary<UInt16, String> Annotations { get; set; }
 
@@ -306,8 +309,59 @@ namespace JustinCredible.PacEmu
          */
         public void Break()
         {
-            if (Debug)
-                _singleStepping = true;
+            if (!Debug)
+                return;
+
+            _singleStepping = true;
+
+            if (OnBreakpointHitEvent != null)
+            {
+                _isWaitingForInteractiveDebugger = true;
+                OnBreakpointHitEvent.Invoke();
+            }
+        }
+
+        /**
+         * Used to continue CPU execution (only when Debug = true).
+         * If the user only wants to single step, true can be passed here.
+         */
+        public void Continue(bool singleStep = false)
+        {
+            if (!Debug || !_isWaitingForInteractiveDebugger)
+                return;
+
+            // Handle continue vs single step; if we're continuing then we want to release
+            // the single step mode and continue until the next conditional breakpoint.
+            if (!singleStep)
+                _singleStepping = false;
+
+            // Release the thread from busy/lazy waiting.
+            _isWaitingForInteractiveDebugger = false;
+        }
+
+        /**
+         * Used to reverse step backwards a single step, effectively reverting the CPU to the state
+         * prior to the last opcode executing. This requires Debug=true and ReverseStepEnabled=true.
+         */
+        public void ReverseStep()
+        {
+            if (!Debug && !ReverseStepEnabled)
+                throw new Exception("Debug feature: reverse stepping is not enabled.");
+
+            var state = _executionHistory[_executionHistory.Count - 1];
+            _executionHistory.RemoveAt(_executionHistory.Count - 1);
+
+            // The first time we step backwards in the debugger, the most recent saved execution state
+            // will be the same as the current state. In that case, pop again to get the last state.
+            if (state.Registers.PC == _cpu.Registers.PC && _executionHistory.Count > 0)
+            {
+                state = _executionHistory[_executionHistory.Count - 1];
+                _executionHistory.RemoveAt(_executionHistory.Count - 1);
+            }
+
+            LoadState(state);
+            _cyclesSinceLastInterrupt -= state.LastCyclesExecuted.Value;
+            OnBreakpointHitEvent.Invoke();
         }
 
         #endregion
@@ -430,7 +484,7 @@ namespace JustinCredible.PacEmu
             }
             else if (address < 0x00)
             {
-                throw new Exception(String.Format("Invalid read memory address (< 0x0000): 0x{0:X4}", address));
+                throw new IndexOutOfRangeException(String.Format("Invalid read memory address (< 0x0000): 0x{0:X4}", address));
             }
             else
             {
@@ -708,7 +762,14 @@ namespace JustinCredible.PacEmu
                 {
                     // Handle all the debug tasks that need to happen before we execute an instruction.
                     if (Debug)
+                    {
                         HandleDebugFeaturesPreStep();
+
+                        // If the interactive debugger is active, wait for the user to single step, continue,
+                        // or perform another operation.
+                        while(_isWaitingForInteractiveDebugger)
+                            Thread.Sleep(250);
+                    }
 
                     // Step the CPU to execute the next instruction.
                     var cycles = _cpu.Step();
@@ -746,7 +807,7 @@ namespace JustinCredible.PacEmu
             {
                 Console.WriteLine("-------------------------------------------------------------------");
                 Console.WriteLine("An exception occurred during emulation!");
-                PrintDebugSummary(_showAnnotatedDisassembly);
+                _cpu.PrintDebugSummary();
                 Console.WriteLine("-------------------------------------------------------------------");
                 throw exception;
             }
@@ -849,137 +910,34 @@ namespace JustinCredible.PacEmu
                 _addressHistory.RemoveAt(0);
 
             // See if we need to break based on a given address.
-            if (BreakAtAddresses != null && BreakAtAddresses.Contains(_cpu.Registers.PC))
+            if (BreakAtAddresses.Contains(_cpu.Registers.PC))
                 _singleStepping = true;
 
             // If we need to break, print out the CPU state and wait for a keypress.
             if (_singleStepping)
             {
-                // Print debug information and wait for user input via the console (key press).
-                while (true)
-                {
-                    Console.WriteLine("-------------------------------------------------------------------");
-                    PrintDebugSummary(_showAnnotatedDisassembly);
-
-                    var rewindPrompt = "";
-
-                    if (RewindEnabled && _executionHistory.Count > 0)
-                        rewindPrompt = "F9 = Step Backward    ";
-
-                    Console.WriteLine($"  F1 = Save State    F2 = Load State    F4 = Edit Breakpoints");
-                    Console.WriteLine($"  F5 = Continue    {rewindPrompt}F10 = Step");
-                    Console.WriteLine("  F11 = Toggle Annotated Disassembly    F12 = Print Last 30 Opcodes");
-                    var key = Console.ReadKey(); // Blocking
-
-                    // Handle console input.
-                    if (key.Key == ConsoleKey.F1) // Save State
-                    {
-                        var state = SaveState();
-                        var json = JsonSerializer.Serialize<EmulatorState>(state);
-
-                        Console.WriteLine(" Enter file name/path to write save state...");
-                        var filename = Console.ReadLine();
-
-                        File.WriteAllText(filename, json);
-
-                        Console.WriteLine("  State Saved!");
-                    }
-                    else if (key.Key == ConsoleKey.F2) // Load State
-                    {
-                        Console.WriteLine(" Enter file name/path to read save state...");
-                        var filename = Console.ReadLine();
-
-                        var json = File.ReadAllText(filename);
-
-                        var state = JsonSerializer.Deserialize<EmulatorState>(json);
-                        LoadState(state);
-
-                        Console.WriteLine("  State Loaded!");
-                    }
-                    else if (key.Key == ConsoleKey.F4) // Edit Breakpoints
-                    {
-                        if (BreakAtAddresses == null)
-                            BreakAtAddresses = new List<ushort>();
-
-                        while (true)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("Current break point addressess:");
-
-                            if (BreakAtAddresses.Count == 0)
-                            {
-                                Console.Write(" (none)");
-                            }
-                            else
-                            {
-                                foreach (var breakAtAddress in BreakAtAddresses)
-                                    Console.WriteLine(String.Format(" • 0x{0:X4}", breakAtAddress));
-                            }
-
-                            Console.WriteLine("  Enter an address to toggle breakpoint (e.g. '0x1234<ENTER>') or leave empty and press <ENTER> to stop editing breakpoints...");
-                            var addressString = Console.ReadLine();
-
-                            if (String.IsNullOrWhiteSpace(addressString))
-                                break; // Break out of input loop
-
-                            var address = Convert.ToUInt16(addressString, 16);
-
-                            if (BreakAtAddresses.Contains(address))
-                                BreakAtAddresses.Remove(address);
-                            else
-                                BreakAtAddresses.Add(address);
-                        }
-                    }
-                    else if (key.Key == ConsoleKey.F5) // Continue
-                    {
-                        _singleStepping = false;
-                        break; // Break out of input loop
-                    }
-                    else if (RewindEnabled && _executionHistory.Count > 0 && key.Key == ConsoleKey.F9) // Step Backward
-                    {
-                        var state = _executionHistory[_executionHistory.Count - 1];
-                        _executionHistory.RemoveAt(_executionHistory.Count - 1);
-
-                        LoadState(state);
-                        _cyclesSinceLastInterrupt -= state.LastCyclesExecuted.Value;
-                    }
-                    else if (key.Key == ConsoleKey.F10) // Step
-                    {
-                        break; // Break out of input loop
-                    }
-                    else if (key.Key == ConsoleKey.F11) // Toggle Annotated Disassembly
-                    {
-                        _showAnnotatedDisassembly = !_showAnnotatedDisassembly;
-                    }
-                    else if (key.Key == ConsoleKey.F12) // Print List 10 Opcodes
-                    {
-                        Console.WriteLine("-------------------------------------------------------------------");
-                        Console.WriteLine();
-                        Console.WriteLine(" Last 30 Opcodes: ");
-                        Console.WriteLine();
-                        PrintRecentInstructions(30);
-                    }
-                }
+                Break();
+                return;
             }
         }
 
         /**
          * This method handles all the work that needs to be done when debugging is enabled right after
-         * the CPU executes an opcode. This includes recording CPU stats and rewind history.
+         * the CPU executes an opcode. This includes recording CPU stats and reverse step history.
          */
         private void HandleDebugFeaturesPostStep(int cyclesElapsed)
         {
             // Keep track of the total number of steps (instructions) and cycles ellapsed.
-            _totalSteps++;
+            _totalOpcodes++;
             _totalCycles += cyclesElapsed;
 
             // Used to slow down the emulation to watch the renderer.
             // if (_totalCycles % 1000 == 0)
             //     System.Threading.Thread.Sleep(10);
 
-            if (RewindEnabled)
+            if (ReverseStepEnabled)
             {
-                if (_executionHistory.Count >= MAX_REWIND_HISTORY)
+                if (_executionHistory.Count >= MAX_REVERSE_STEP_HISTORY)
                     _executionHistory.RemoveAt(0);
 
                 var state = SaveState();
@@ -991,56 +949,26 @@ namespace JustinCredible.PacEmu
 
         #endregion
 
-        #region Private Methods: Save/Load State
+        #region Public Methods: Save/Load State
 
         /**
          * Used to dump the state of the CPU and all fields needed to restore the emulator's
          * state in order to continue at this execution point later on.
          */
-        private EmulatorState SaveState()
+        public EmulatorState SaveState()
         {
             return new EmulatorState()
             {
-                // TODO: Why not just pass the instance through to be serialized? Risk missing a field here.
-                Registers = new CPURegisters()
-                {
-                    A = _cpu.Registers.A,
-                    B = _cpu.Registers.B,
-                    C = _cpu.Registers.C,
-                    D = _cpu.Registers.D,
-                    E = _cpu.Registers.E,
-                    H = _cpu.Registers.H,
-                    L = _cpu.Registers.L,
-                    Shadow_A = _cpu.Registers.Shadow_A,
-                    Shadow_B = _cpu.Registers.Shadow_B,
-                    Shadow_C = _cpu.Registers.Shadow_C,
-                    Shadow_D = _cpu.Registers.Shadow_D,
-                    Shadow_E = _cpu.Registers.Shadow_E,
-                    Shadow_H = _cpu.Registers.Shadow_H,
-                    Shadow_L = _cpu.Registers.Shadow_L,
-                    I = _cpu.Registers.I,
-                    R = _cpu.Registers.R,
-                    IX = _cpu.Registers.IX,
-                    IY = _cpu.Registers.IY,
-                    PC = _cpu.Registers.PC,
-                    SP = _cpu.Registers.SP,
-                },
-                Flags = new ConditionFlags()
-                {
-                    Zero = _cpu.Flags.Zero,
-                    Sign = _cpu.Flags.Sign,
-                    ParityOverflow = _cpu.Flags.ParityOverflow,
-                    Carry = _cpu.Flags.Carry,
-                    HalfCarry = _cpu.Flags.HalfCarry,
-                    Shadow = _cpu.Flags.Shadow,
-                },
+                Registers = _cpu.Registers,
+                Flags = _cpu.Flags,
                 Halted = _cpu.Halted,
                 InterruptsEnabled = _cpu.InterruptsEnabled,
+                InterruptsEnabledPreviousValue = _cpu.InterruptsEnabledPreviousValue,
                 InterruptMode = _cpu.InterruptMode,
                 Memory = _memory,
                 SpriteCoordinates = _spriteCoordinates,
                 TotalCycles = _totalCycles,
-                TotalSteps = _totalSteps,
+                TotalOpcodes = _totalOpcodes,
                 CyclesSinceLastInterrupt = _cyclesSinceLastInterrupt,
                 AudioHardwareState = _audio.SaveState(),
             };
@@ -1050,147 +978,20 @@ namespace JustinCredible.PacEmu
          * Used to restore the state of the CPU and restore all fields to allow the emulator
          * to continue execution from a previously saved state.
          */
-        private void LoadState(EmulatorState state)
+        public void LoadState(EmulatorState state)
         {
             _cpu.Registers = state.Registers;
             _cpu.Flags = state.Flags;
             _cpu.Halted = state.Halted;
             _cpu.InterruptsEnabled = state.InterruptsEnabled;
+            _cpu.InterruptsEnabledPreviousValue = state.InterruptsEnabledPreviousValue;
             _cpu.InterruptMode = state.InterruptMode;
             _memory = state.Memory;
             _spriteCoordinates = state.SpriteCoordinates;
             _totalCycles = state.TotalCycles;
-            _totalSteps = state.TotalSteps;
+            _totalOpcodes = state.TotalOpcodes;
             _cyclesSinceLastInterrupt = state.CyclesSinceLastInterrupt;
             _audio.LoadState(state.AudioHardwareState);
-        }
-
-        #endregion
-
-        #region Private Methods: Debugging & Diagnostics
-
-        private void PrintDebugSummary(bool showAnnotatedDisassembly = false)
-        {
-            Console.WriteLine("-------------------------------------------------------------------");
-
-            if (Debug)
-                Console.WriteLine($" Total Steps/Opcodes: {_totalSteps}\tCPU Cycles: {_totalCycles}");
-
-            Console.WriteLine();
-            _cpu.PrintDebugSummary();
-            Console.WriteLine();
-            PrintCurrentExecution(showAnnotatedDisassembly);
-            Console.WriteLine();
-        }
-
-        /**
-         * Prints last n instructions that were executed up to MAX_ADDRESS_HISTORY.
-         * Useful when a debugger is attached. Only works when Debug is true.
-         */
-        private void PrintRecentInstructions(int count = 10)
-        {
-            if (!Debug)
-                return;
-
-            var output = new StringBuilder();
-
-            if (count > _addressHistory.Count)
-                count = _addressHistory.Count;
-
-            var startIndex = _addressHistory.Count - count;
-
-            for (var i = startIndex; i < _addressHistory.Count; i++)
-            {
-                var address = _addressHistory[i];
-
-                // Edge case for being able to print instruction history when we've jumped outside
-                // of the allowable memory locations.
-                if (address >= _memory.Length)
-                {
-                    var addressDisplay = String.Format("0x{0:X4}", address);
-                    output.AppendLine($"[IndexOutOfRange: {addressDisplay}]");
-                    continue;
-                }
-
-                var instruction = Disassembler.Disassemble(_cpu.Memory, address, out _, true, true);
-                output.AppendLine(instruction);
-            }
-
-            Console.WriteLine(output.ToString());
-        }
-
-        /**
-         * Used to print the disassembly of memory locations before and after the given address.
-         * Useful when a debugger is attached.
-         */
-        private void PrintMemory(UInt16 address, bool annotate = false, int beforeCount = 10, int afterCount = 10)
-        {
-            var output = new StringBuilder();
-
-            // Ensure the start and end locations are within range.
-            // TODO: Should probably use the IMemory implementation here... but if this is just for looking at
-            // disassembly of the ROM regions, direct usage of _memory should be okay, at least for now.
-            var start = (address - beforeCount < 0) ? 0 : (address - beforeCount);
-            var end = (address + afterCount >= _memory.Length) ? _memory.Length - 1 : (address + afterCount);
-
-            for (var i = start; i < end; i++)
-            {
-                var addressIndex = (UInt16)i;
-
-                // If this is the current address location, add an arrow pointing to it.
-                output.Append(address == addressIndex ? "---->\t" : "\t");
-
-                // If we're showing annotations, then don't show the pseudocode.
-                var emitPseudocode = !_showAnnotatedDisassembly;
-
-                // Disasemble the opcode and print it.
-                var instruction = Disassembler.Disassemble(_cpu.Memory, addressIndex, out int instructionLength, true, emitPseudocode);
-                output.Append(instruction);
-
-                // If we're showing annotations, attempt to look up the annotation for this address.
-                if (_showAnnotatedDisassembly && Annotations != null)
-                {
-                    var annotation = Annotations.ContainsKey(addressIndex) ? Annotations[addressIndex] : null;
-                    output.Append("\t\t; ");
-                    output.Append(annotation == null ? "???" : annotation);
-                }
-
-                output.AppendLine();
-
-                // If the opcode is larger than a single byte, we don't want to print subsequent
-                // bytes as opcodes, so here we print the next address locations as the byte value
-                // in parentheses, and then increment so we can skip disassembly of the data.
-                if (instructionLength == 3)
-                {
-                    var upper = _cpu.Memory.Read(addressIndex + 2) << 8;
-                    var lower = _cpu.Memory.Read(addressIndex + 1);
-                    var combined = (UInt16)(upper | lower);
-                    var dataFormatted = String.Format("0x{0:X4}", combined);
-                    var address1Formatted = String.Format("0x{0:X4}", addressIndex+1);
-                    var address2Formatted = String.Format("0x{0:X4}", addressIndex+2);
-                    output.AppendLine($"\t{address1Formatted}\t(D16: {dataFormatted})");
-                    output.AppendLine($"\t{address2Formatted}\t");
-                    i += 2;
-                }
-                else if (instructionLength == 2)
-                {
-                    var dataFormatted = String.Format("0x{0:X2}", _cpu.Memory.Read(addressIndex+1));
-                    var addressFormatted = String.Format("0x{0:X4}", addressIndex+1);
-                    output.AppendLine($"\t{addressFormatted}\t(D8: {dataFormatted})");
-                    i++;
-                }
-            }
-
-            Console.WriteLine(output.ToString());
-        }
-
-        /**
-         * Used to print the disassembly of the memory locations around where the program counter is pointing.
-         * Useful when a debugger is attached.
-         */
-        private void PrintCurrentExecution(bool annotate = false, int beforeCount = 10, int afterCount = 10)
-        {
-            PrintMemory(_cpu.Registers.PC, annotate, beforeCount, afterCount);
         }
 
         #endregion

@@ -6,7 +6,7 @@ An emulator for the [Zilog Z80](https://en.wikipedia.org/wiki/Zilog_Z80) CPU and
 
 This is based on the Intel 8080 CPU core from my [Space Invaders emulator](https://github.com/Justin-Credible/space-invaders-emulator).
 
-It emulates the graphics and sound, supports save states, has an interactive debugger, has rewind functionality, and includes 8000+ unit test cases.
+It emulates the graphics and sound, supports save states, has an interactive debugger, has reverse-stepping functionality, and includes 8000+ unit test cases.
 
 ![showcase](.readme/showcase.png)
 
@@ -57,7 +57,7 @@ Options:
   -wr|--writable-rom    Allow memory writes to the ROM address space.
   -d|--debug            Run in debug mode; enables internal statistics and logs useful when debugging.
   -b|--break            Used with debug, will break at the given address and allow single stepping opcode execution (e.g. --break 0x0248)
-  -r|--rewind           Used with debug, allows for single stepping in reverse to rewind opcode execution.
+  -rs|--reverse-step    Used with debug, allows for single stepping in reverse to rewind opcode execution.
   -a|--annotations      Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 0x1234 .... ; Annotation)
 ```
 
@@ -71,7 +71,7 @@ Homebrew ROMs that target the Pac-Man hardware can be run by leaving the `--rom-
 
 ## Interactive Debugger
 
-If the emulator is launched with the `--debug` option, the debugger will be enabled. You can press the `pause`/`break` or `9` key which will stop execution and print the interactive debugger in the console.
+If the emulator is launched with the `--debug` option, the debugger will be enabled. You can press the `pause`/`break` or `F3` key which will stop execution and print the interactive debugger in the console.
 
 ![debugger](.readme/debugger.png)
 
@@ -83,9 +83,9 @@ To **single step** over an opcode use `F10`, or `F5` to **continue** until the n
 
 If the emulator was started with the `--annotations` option, `F11` can be used to toggle between the disassembler's generated psuedocode or the provided annotation file. This is used to **show comments for each disassembled opcode** inline in the debugger, which makes tracking down issues and/or understanding the game code easier. You can find an excellent annotated disassembly [here](https://github.com/BleuLlama/GameDocs/blob/master/disassemble/mspac.asm).
 
-`F12` is used to print the last 30 opcodes, so you can see **execution history**.
+`F12` is used to print the last 50 opcodes, so you can see **execution history**.
 
-Finally, if `--rewind` was specified at startup, `F9` can be used to single step _backwards_ over opcodes, effectively allowing you to **rewind CPU state one instruction at a time**. I found this to be very helpful when tracking down bugs in the CPU core.
+Finally, if `--reverse-step` was specified at startup, `F9` can be used to single step _backwards_ over opcodes, effectively allowing you to **rewind CPU state one instruction at a time**. I found this to be very helpful when tracking down bugs in the CPU core.
 
 ## Unit Tests
 
