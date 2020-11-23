@@ -83,7 +83,7 @@ To **single step** over an opcode use `F10`, or `F5` to **continue** until the n
 
 If the emulator was started with the `--annotations` option, `F11` can be used to toggle between the disassembler's generated psuedocode or the provided annotation file. This is used to **show comments for each disassembled opcode** inline in the debugger, which makes tracking down issues and/or understanding the game code easier. You can find an excellent annotated disassembly [here](https://github.com/BleuLlama/GameDocs/blob/master/disassemble/mspac.asm).
 
-`F12` is used to print the last 30 opcodes, so you can see **execution history**.
+`F12` is used to print the last 50 opcodes, so you can see **execution history**.
 
 Finally, if `--reverse-step` was specified at startup, `F9` can be used to single step _backwards_ over opcodes, effectively allowing you to **rewind CPU state one instruction at a time**. I found this to be very helpful when tracking down bugs in the CPU core.
 
