@@ -959,41 +959,11 @@ namespace JustinCredible.PacEmu
         {
             return new EmulatorState()
             {
-                // TODO: Why not just pass the instance through to be serialized? Risk missing a field here.
-                Registers = new CPURegisters()
-                {
-                    A = _cpu.Registers.A,
-                    B = _cpu.Registers.B,
-                    C = _cpu.Registers.C,
-                    D = _cpu.Registers.D,
-                    E = _cpu.Registers.E,
-                    H = _cpu.Registers.H,
-                    L = _cpu.Registers.L,
-                    Shadow_A = _cpu.Registers.Shadow_A,
-                    Shadow_B = _cpu.Registers.Shadow_B,
-                    Shadow_C = _cpu.Registers.Shadow_C,
-                    Shadow_D = _cpu.Registers.Shadow_D,
-                    Shadow_E = _cpu.Registers.Shadow_E,
-                    Shadow_H = _cpu.Registers.Shadow_H,
-                    Shadow_L = _cpu.Registers.Shadow_L,
-                    I = _cpu.Registers.I,
-                    R = _cpu.Registers.R,
-                    IX = _cpu.Registers.IX,
-                    IY = _cpu.Registers.IY,
-                    PC = _cpu.Registers.PC,
-                    SP = _cpu.Registers.SP,
-                },
-                Flags = new ConditionFlags()
-                {
-                    Zero = _cpu.Flags.Zero,
-                    Sign = _cpu.Flags.Sign,
-                    ParityOverflow = _cpu.Flags.ParityOverflow,
-                    Carry = _cpu.Flags.Carry,
-                    HalfCarry = _cpu.Flags.HalfCarry,
-                    Shadow = _cpu.Flags.Shadow,
-                },
+                Registers = _cpu.Registers,
+                Flags = _cpu.Flags,
                 Halted = _cpu.Halted,
                 InterruptsEnabled = _cpu.InterruptsEnabled,
+                InterruptsEnabledPreviousValue = _cpu.InterruptsEnabledPreviousValue,
                 InterruptMode = _cpu.InterruptMode,
                 Memory = _memory,
                 SpriteCoordinates = _spriteCoordinates,
@@ -1014,6 +984,7 @@ namespace JustinCredible.PacEmu
             _cpu.Flags = state.Flags;
             _cpu.Halted = state.Halted;
             _cpu.InterruptsEnabled = state.InterruptsEnabled;
+            _cpu.InterruptsEnabledPreviousValue = state.InterruptsEnabledPreviousValue;
             _cpu.InterruptMode = state.InterruptMode;
             _memory = state.Memory;
             _spriteCoordinates = state.SpriteCoordinates;

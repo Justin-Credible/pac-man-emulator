@@ -8,6 +8,7 @@ namespace JustinCredible.PacEmu
         public ConditionFlags Flags { get; set; }
         public bool Halted { get; set; }
         public bool InterruptsEnabled { get; set; }
+        public bool InterruptsEnabledPreviousValue { get; set; }
         public InterruptMode InterruptMode { get; set; }
         public byte[] Memory { get; set; }
         public byte[] SpriteCoordinates { get; set; }
