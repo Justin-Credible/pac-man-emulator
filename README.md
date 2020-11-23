@@ -27,7 +27,7 @@ The controls are hardcoded as:
 * Test Switch: `8`
 * Player 1 - Up/Down/Left/Right: arrow keys
 * Player 2 - Up/Down/Left/Right: `W`/`S`/`A`/`D`
-* Break/Debug: `BREAK` / `PAUSE` / `9`
+* Break/Debug: `BREAK` / `PAUSE` / `F3`
 
 ## Compiling / Running
 
