@@ -351,8 +351,17 @@ namespace JustinCredible.PacEmu
             var state = _executionHistory[_executionHistory.Count - 1];
             _executionHistory.RemoveAt(_executionHistory.Count - 1);
 
+            // The first time we step backwards in the debugger, the most recent saved execution state
+            // will be the same as the current state. In that case, pop again to get the last state.
+            if (state.Registers.PC == _cpu.Registers.PC && _executionHistory.Count > 0)
+            {
+                state = _executionHistory[_executionHistory.Count - 1];
+                _executionHistory.RemoveAt(_executionHistory.Count - 1);
+            }
+
             LoadState(state);
             _cyclesSinceLastInterrupt -= state.LastCyclesExecuted.Value;
+            OnBreakpointHitEvent.Invoke();
         }
 
         #endregion

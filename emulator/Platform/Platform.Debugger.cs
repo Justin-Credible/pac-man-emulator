@@ -180,13 +180,9 @@ namespace JustinCredible.PacEmu
                     if (_debuggerPcb.ReverseStepEnabled && _debuggerPcb._executionHistory.Count > 0)
                     {
                         _debuggerState = DebuggerState.SingleStepping;
+                        _debuggerPcb = null;
                         SignalDebuggerNeedsRendering();
-
                         OnDebugCommand?.Invoke(new DebugCommandEventArgs() { Action = DebugAction.ReverseStep });
-
-                        System.Threading.Thread.Sleep(250);
-                        _debuggerState = DebuggerState.Breakpoint;
-                        SignalDebuggerNeedsRendering();
                     }
 
                     break;
