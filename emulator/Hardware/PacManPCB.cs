@@ -807,7 +807,7 @@ namespace JustinCredible.PacEmu
             {
                 Console.WriteLine("-------------------------------------------------------------------");
                 Console.WriteLine("An exception occurred during emulation!");
-                PrintDebugSummary(_showAnnotatedDisassembly);
+                _cpu.PrintDebugSummary();
                 Console.WriteLine("-------------------------------------------------------------------");
                 throw exception;
             }
