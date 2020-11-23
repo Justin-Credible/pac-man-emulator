@@ -538,19 +538,41 @@ namespace JustinCredible.PacEmu
                     switch (keycode)
                     {
                         case SDL.SDL_Keycode.SDLK_BACKSPACE: // Backspace
-
+                        {
                             if (_debuggerInputString != String.Empty)
                                 _debuggerInputString = _debuggerInputString.Substring(0, _debuggerInputString.Length - 1);
 
                             SignalDebuggerNeedsRendering();
                             break;
+                        }
 
                         case SDL.SDL_Keycode.SDLK_RETURN: // Return/Enter = Finish input and toggle breakpoint
-                            // TODO: Parse input string to see if it is a valid hex address input.
-                            // TODO: Toggle breakpoint.
+                        {
+                            UInt16 address = 0;
+
+                            if (_debuggerInputString.ToLower() == "clear")
+                            {
+                                _debuggerPcb.BreakAtAddresses.Clear();
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    address = Convert.ToUInt16(_debuggerInputString, 16);
+
+                                    if (_debuggerPcb.BreakAtAddresses.Contains(address))
+                                        _debuggerPcb.BreakAtAddresses.Remove(address);
+                                    else
+                                        _debuggerPcb.BreakAtAddresses.Add(address);
+                                }
+                                catch {}
+                            }
+
                             _debuggerInputString = String.Empty;
+
                             SignalDebuggerNeedsRendering();
                             break;
+                        }
 
                         case SDL.SDL_Keycode.SDLK_ESCAPE: // Escape = Cancel editing breakpoints
                             _debuggerInputString = String.Empty;

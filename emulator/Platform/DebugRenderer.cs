@@ -41,19 +41,19 @@ namespace JustinCredible.PacEmu
 
                 for (var i = 0; i < pcb.BreakAtAddresses.Count && i < 50; i++)
                 {
-                    var address = String.Format("{0:X4}", pcb.BreakAtAddresses[i]);
-                    FontRenderer.RenderString(surface, $"{COLOR_WHITE} * {address}", 0, (i * ROW_HEIGHT) + 2);
+                    var address = String.Format("0x{0:X4}", pcb.BreakAtAddresses[i]);
+                    FontRenderer.RenderString(surface, $"{COLOR_WHITE} * {address}", 0, (i + 2) * ROW_HEIGHT);
                 }
 
                 if (pcb.BreakAtAddresses.Count >= 50)
                 {
-                    FontRenderer.RenderString(surface, $"   (showing the first 50 of {pcb.BreakAtAddresses.Count} breakpoints)", 0, 50 + 1);
+                    FontRenderer.RenderString(surface, $"   {COLOR_YELLOW}(only showing the first 50 of {pcb.BreakAtAddresses.Count} breakpoints)", 0, (50 + 2) * ROW_HEIGHT);
                 }
 
                 FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}--------------------------------------------------------------------------------", 0, (50 + 3) * ROW_HEIGHT);
 
-                FontRenderer.RenderString(surface, $"Enter an address in hexidecimal format and press [ENTER] to toggle a breakpoint.", 0, (50 + 4) * ROW_HEIGHT);
-                FontRenderer.RenderString(surface, $"Press [ESCAPE] to abort.", 0, (50 + 5) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $"{COLOR_WHITE}Enter an address in hexidecimal format and press {COLOR_BRIGHT_GREEN}[ENTER] {COLOR_WHITE}to toggle a breakpoint.", 0, (50 + 4) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $"{COLOR_WHITE}Type \"{COLOR_BRIGHT_RED}clear{COLOR_WHITE}\" to remove all breakpoints. Press {COLOR_BRIGHT_YELLOW}[ESCAPE] {COLOR_WHITE}to abort.", 0, (50 + 5) * ROW_HEIGHT);
                 FontRenderer.RenderString(surface, $"> {inputString}", 0, (50 + 7) * ROW_HEIGHT);
 
                 FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}--------------------------------------------------------------------------------", 0, (50 + 9) * ROW_HEIGHT);
