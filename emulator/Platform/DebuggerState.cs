@@ -19,8 +19,18 @@ namespace JustinCredible.PacEmu
         SingleStepping,
 
         /**
-         * The is in the Edit Breakpoints menu.
+         * The user is in the Edit Breakpoints menu.
          */
         EditBreakpoints,
+
+        /**
+         * The user is in the Load State menu.
+         */
+        LoadState,
+
+        /**
+         * The user is in the Save State menu.
+         */
+        SaveState,
     }
 }

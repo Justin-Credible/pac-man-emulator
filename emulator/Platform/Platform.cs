@@ -236,7 +236,7 @@ namespace JustinCredible.PacEmu
                     {
                         if (_debuggerNeedsRendering)
                         {
-                            DebugWindowRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerInputString, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
+                            DebugWindowRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerInputString, _debuggerFileList,   _debuggerPcb, _debuggerShowAnnotatedDisassembly);
                             _debuggerNeedsRendering = false;
                         }
                     }
