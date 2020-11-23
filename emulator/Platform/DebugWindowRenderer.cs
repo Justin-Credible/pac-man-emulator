@@ -5,7 +5,7 @@ using SDL2;
 
 namespace JustinCredible.PacEmu
 {
-    public static class DebugRenderer
+    public static class DebugWindowRenderer
     {
         // The height of each row of characters (based on the 8x8 pixel font).
         private const int ROW_HEIGHT = 8;
