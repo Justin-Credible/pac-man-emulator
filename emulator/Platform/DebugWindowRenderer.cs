@@ -322,8 +322,21 @@ namespace JustinCredible.PacEmu
 
                 try
                 {
-                    var instruction = Disassembler.Disassemble(memory, address, out _, true, true);
-                    output.Add(instruction);
+                    var disassemblyLine = Disassembler.Disassemble(memory, address, out _, true, true);
+
+                    // Double tabs followed by a semi-colon indicate a split between the address/instruction disassembly
+                    // and the generated psuedocode or annotations.
+                    var disassemblyLineParts = disassemblyLine.Split("\t\t; ");
+                    var disassemblyInstruction = disassemblyLineParts[0];
+                    var disassemblyComments = disassemblyLineParts.Length > 1 ? disassemblyLineParts[1] : "";
+
+                    // Convert tabs to spaces (there is no tab character in the font set, only 8x8 glyphs).
+                    disassemblyInstruction = disassemblyInstruction.Replace("\t", "     ");
+
+                    disassemblyInstruction = disassemblyInstruction.PadRight(30);
+                    var line = $"{COLOR_WHITE}{disassemblyInstruction} {COLOR_BLUE};{disassemblyComments}";
+
+                    output.Add(line);
                 }
                 catch (IndexOutOfRangeException)
                 {
