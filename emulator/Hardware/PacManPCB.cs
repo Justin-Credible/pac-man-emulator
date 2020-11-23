@@ -135,7 +135,7 @@ namespace JustinCredible.PacEmu
 
         #region Debugging Features
 
-        private static readonly int MAX_ADDRESS_HISTORY = 100;
+        private static readonly int MAX_ADDRESS_HISTORY = 50;
         private static readonly int MAX_REVERSE_STEP_HISTORY = 20;
 
         internal long _totalCycles = 0;
@@ -149,7 +149,7 @@ namespace JustinCredible.PacEmu
         /**
          * When Debug=true, stores the last MAX_ADDRESS_HISTORY values of the program counter.
          */
-        private List<UInt16> _addressHistory = new List<UInt16>();
+        internal List<UInt16> _addressHistory = new List<UInt16>();
 
         /**
          * When Debug=true, the program will break at these addresses and allow the user to perform
@@ -166,7 +166,7 @@ namespace JustinCredible.PacEmu
          * When Debug=true and ReverseStepEnabled=true, stores sufficient state of the CPU and emulator
          * to allow for stepping backwards to each state of the system.
          */
-        private List<EmulatorState> _executionHistory = new List<EmulatorState>();
+        internal List<EmulatorState> _executionHistory = new List<EmulatorState>();
 
         /**
          * Indicates if the thread is in a busy/lazy wait for the user to submit a command via the
@@ -909,114 +909,6 @@ namespace JustinCredible.PacEmu
             {
                 Break();
                 return;
-
-                /* TODO: Migrate this logic to the GUI debugger.
-                // Print debug information and wait for user input via the console (key press).
-                while (true)
-                {
-                    Console.WriteLine("-------------------------------------------------------------------");
-                    PrintDebugSummary(_showAnnotatedDisassembly);
-
-                    var rewindPrompt = "";
-
-                    if (RewindEnabled && _executionHistory.Count > 0)
-                        rewindPrompt = "F9 = Step Backward    ";
-
-                    Console.WriteLine($"  F1 = Save State    F2 = Load State    F4 = Edit Breakpoints");
-                    Console.WriteLine($"  F5 = Continue    {rewindPrompt}F10 = Step");
-                    Console.WriteLine("  F11 = Toggle Annotated Disassembly    F12 = Print Last 30 Opcodes");
-                    var key = Console.ReadKey(); // Blocking
-
-                    // Handle console input.
-                    if (key.Key == ConsoleKey.F1) // Save State
-                    {
-                        var state = SaveState();
-                        var json = JsonSerializer.Serialize<EmulatorState>(state);
-
-                        Console.WriteLine(" Enter file name/path to write save state...");
-                        var filename = Console.ReadLine();
-
-                        File.WriteAllText(filename, json);
-
-                        Console.WriteLine("  State Saved!");
-                    }
-                    else if (key.Key == ConsoleKey.F2) // Load State
-                    {
-                        Console.WriteLine(" Enter file name/path to read save state...");
-                        var filename = Console.ReadLine();
-
-                        var json = File.ReadAllText(filename);
-
-                        var state = JsonSerializer.Deserialize<EmulatorState>(json);
-                        LoadState(state);
-
-                        Console.WriteLine("  State Loaded!");
-                    }
-                    else if (key.Key == ConsoleKey.F4) // Edit Breakpoints
-                    {
-                        if (BreakAtAddresses == null)
-                            BreakAtAddresses = new List<ushort>();
-
-                        while (true)
-                        {
-                            Console.WriteLine();
-                            Console.WriteLine("Current break point addressess:");
-
-                            if (BreakAtAddresses.Count == 0)
-                            {
-                                Console.Write(" (none)");
-                            }
-                            else
-                            {
-                                foreach (var breakAtAddress in BreakAtAddresses)
-                                    Console.WriteLine(String.Format(" • 0x{0:X4}", breakAtAddress));
-                            }
-
-                            Console.WriteLine("  Enter an address to toggle breakpoint (e.g. '0x1234<ENTER>') or leave empty and press <ENTER> to stop editing breakpoints...");
-                            var addressString = Console.ReadLine();
-
-                            if (String.IsNullOrWhiteSpace(addressString))
-                                break; // Break out of input loop
-
-                            var address = Convert.ToUInt16(addressString, 16);
-
-                            if (BreakAtAddresses.Contains(address))
-                                BreakAtAddresses.Remove(address);
-                            else
-                                BreakAtAddresses.Add(address);
-                        }
-                    }
-                    else if (key.Key == ConsoleKey.F5) // Continue
-                    {
-                        _singleStepping = false;
-                        break; // Break out of input loop
-                    }
-                    else if (RewindEnabled && _executionHistory.Count > 0 && key.Key == ConsoleKey.F9) // Step Backward
-                    {
-                        var state = _executionHistory[_executionHistory.Count - 1];
-                        _executionHistory.RemoveAt(_executionHistory.Count - 1);
-
-                        LoadState(state);
-                        _cyclesSinceLastInterrupt -= state.LastCyclesExecuted.Value;
-                    }
-                    else if (key.Key == ConsoleKey.F10) // Step
-                    {
-                        break; // Break out of input loop
-                    }
-                    else if (key.Key == ConsoleKey.F11) // Toggle Annotated Disassembly
-                    {
-                        _showAnnotatedDisassembly = !_showAnnotatedDisassembly;
-                    }
-                    else if (key.Key == ConsoleKey.F12) // Print List 10 Opcodes
-                    {
-                        Console.WriteLine("-------------------------------------------------------------------");
-                        Console.WriteLine();
-                        Console.WriteLine(" Last 30 Opcodes: ");
-                        Console.WriteLine();
-                        PrintRecentInstructions(30);
-                    }
-                }
-                */
             }
         }
 
@@ -1121,47 +1013,6 @@ namespace JustinCredible.PacEmu
             _cyclesSinceLastInterrupt = state.CyclesSinceLastInterrupt;
             _audio.LoadState(state.AudioHardwareState);
         }
-
-        #endregion
-
-        #region Private Methods: Debugging & Diagnostics
-
-        /**
-         * Prints last n instructions that were executed up to MAX_ADDRESS_HISTORY.
-         * Useful when a debugger is attached. Only works when Debug is true.
-         */
-        private void PrintRecentInstructions(int count = 10)
-        {
-            if (!Debug)
-                return;
-
-            var output = new StringBuilder();
-
-            if (count > _addressHistory.Count)
-                count = _addressHistory.Count;
-
-            var startIndex = _addressHistory.Count - count;
-
-            for (var i = startIndex; i < _addressHistory.Count; i++)
-            {
-                var address = _addressHistory[i];
-
-                // Edge case for being able to print instruction history when we've jumped outside
-                // of the allowable memory locations.
-                if (address >= _memory.Length)
-                {
-                    var addressDisplay = String.Format("0x{0:X4}", address);
-                    output.AppendLine($"[IndexOutOfRange: {addressDisplay}]");
-                    continue;
-                }
-
-                var instruction = Disassembler.Disassemble(_cpu.Memory, address, out _, true, true);
-                output.AppendLine(instruction);
-            }
-
-            Console.WriteLine(output.ToString());
-        }
-
 
         #endregion
     }

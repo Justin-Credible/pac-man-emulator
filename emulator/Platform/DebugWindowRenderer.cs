@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using JustinCredible.Z80Disassembler;
+using JustinCredible.ZilogZ80;
 using SDL2;
 
 namespace JustinCredible.PacEmu
@@ -43,6 +44,10 @@ namespace JustinCredible.PacEmu
             else if (state == DebuggerState.SaveState || state == DebuggerState.LoadState) // Save/Load state menu
             {
                 RenderSavedStateFileBrowser(surface, state, inputString, fileList, pcb);
+            }
+            else if (state == DebuggerState.InstructionHistory) // "Show Last 50 Opcodes" menu
+            {
+                RenderInstructionHistory(surface, pcb);
             }
             else // Running, at a breakpoint, or stepping over a breakpoint.
             {
@@ -210,11 +215,11 @@ namespace JustinCredible.PacEmu
 
             if (state == DebuggerState.Breakpoint)
             {
-                var stepBackwards = pcb.ReverseStepEnabled ? $"{COLOR_BRIGHT_WHITE}[F9] {COLOR_WHITE}Step Backwards" : "                   ";
+                var stepBackwards = pcb.ReverseStepEnabled && pcb._executionHistory.Count > 0 ? $"{COLOR_BRIGHT_WHITE}[F9] {COLOR_WHITE}Step Backwards" : "                   ";
 
                 FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F1] {COLOR_WHITE}Save State     {COLOR_BRIGHT_WHITE}[F2] {COLOR_WHITE}Load State     {COLOR_BRIGHT_WHITE}[F4] {COLOR_WHITE}Edit Breakpoints", 0, (commandsStartRow + 3) * ROW_HEIGHT);
                 FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F5] {COLOR_WHITE}Continue       {stepBackwards} {COLOR_BRIGHT_WHITE}[F10] {COLOR_WHITE}Single Step", 0, (commandsStartRow + 4) * ROW_HEIGHT);
-                FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F11] {COLOR_WHITE}Toggle Annotated Disassembly      {COLOR_BRIGHT_WHITE}[F12] {COLOR_WHITE}Print Last 12 Opcodes", 0, (commandsStartRow + 5) * ROW_HEIGHT);
+                FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}[F11] {COLOR_WHITE}Toggle Annotated Disassembly      {COLOR_BRIGHT_WHITE}[F12] {COLOR_WHITE}Print Last 50 Opcodes", 0, (commandsStartRow + 5) * ROW_HEIGHT);
             }
             else if (state == DebuggerState.SingleStepping)
             {
@@ -278,6 +283,59 @@ namespace JustinCredible.PacEmu
             FontRenderer.RenderString(surface, $"> {inputString}", 0, (50 + 7) * ROW_HEIGHT);
 
             FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}--------------------------------------------------------------------------------", 0, (50 + 9) * ROW_HEIGHT);
+        }
+
+        private static void RenderInstructionHistory(IntPtr surface, PacManPCB pcb)
+        {
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}------------------------------[HISTORY]-----------------------------------------", 0, 0 * ROW_HEIGHT);
+
+            var recentInstructions = FormatRecentInstructions(pcb._addressHistory, pcb, 50);
+
+            for (var i = 0; i < recentInstructions.Count && i < 50; i++)
+            {
+                FontRenderer.RenderString(surface, recentInstructions[i], 0, (i + 2) * ROW_HEIGHT);
+            }
+
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}--------------------------------------------------------------------------------", 0, (50 + 3) * ROW_HEIGHT);
+
+            FontRenderer.RenderString(surface, $"Press {COLOR_BRIGHT_YELLOW}[ESCAPE] {COLOR_WHITE}to go back.", 0, (50 + 4) * ROW_HEIGHT);
+
+            FontRenderer.RenderString(surface, $"{COLOR_BRIGHT_WHITE}--------------------------------------------------------------------------------", 0, (50 + 9) * ROW_HEIGHT);
+        }
+
+        /**
+         * Prints last n instructions that were executed up to MAX_ADDRESS_HISTORY.
+         * Useful when a debugger is attached. Only works when Debug is true.
+         */
+        private static List<string> FormatRecentInstructions(List<UInt16> history, IMemory memory, int count = 10)
+        {
+            var output = new List<string>();
+
+            if (count > history.Count)
+                count = history.Count;
+
+            var startIndex = history.Count - count;
+
+            for (var i = startIndex; i < history.Count; i++)
+            {
+                var address = history[i];
+
+                try
+                {
+                    var instruction = Disassembler.Disassemble(memory, address, out _, true, true);
+                    output.Add(instruction);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    // Edge case for being able to print instruction history when we've jumped outside
+                    // of the allowable memory locations.
+                    var addressDisplay = String.Format("0x{0:X4}", address);
+                    output.Add($"[IndexOutOfRange: {addressDisplay}]");
+                    continue;
+                }
+            }
+
+            return output;
         }
     }
 }

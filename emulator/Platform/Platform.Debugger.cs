@@ -134,6 +134,10 @@ namespace JustinCredible.PacEmu
             {
                 HandleDebuggerEventForLoadOrSaveStateState(sdlEvent);
             }
+            else if (_debuggerState == DebuggerState.InstructionHistory) // In the "Show Last 50 Opcodes" menu.
+            {
+                HandleDebuggerEventForInstructionHistory(sdlEvent);
+            }
         }
 
         private void HandleDebuggerEventForBreakpointState(SDL.SDL_Event sdlEvent)
@@ -173,7 +177,7 @@ namespace JustinCredible.PacEmu
 
                 case SDL.SDL_Keycode.SDLK_F9: // F9 = Step Backwards
 
-                    if (_debuggerPcb.ReverseStepEnabled)
+                    if (_debuggerPcb.ReverseStepEnabled && _debuggerPcb._executionHistory.Count > 0)
                     {
                         _debuggerState = DebuggerState.SingleStepping;
                         SignalDebuggerNeedsRendering();
@@ -199,8 +203,9 @@ namespace JustinCredible.PacEmu
                     SignalDebuggerNeedsRendering();
                     break;
 
-                case SDL.SDL_Keycode.SDLK_F12: // F12 = Print Last 12 Opcodes
-                    // TODO
+                case SDL.SDL_Keycode.SDLK_F12: // F12 = Print Last 50 Opcodes
+                    _debuggerState = DebuggerState.InstructionHistory;
+                    SignalDebuggerNeedsRendering();
                     break;
             }
         }
@@ -367,6 +372,18 @@ namespace JustinCredible.PacEmu
                     _debuggerState = DebuggerState.Breakpoint;
                     SignalDebuggerNeedsRendering();
                     break;
+            }
+        }
+
+        private void HandleDebuggerEventForInstructionHistory(SDL.SDL_Event sdlEvent)
+        {
+            if (sdlEvent.type != SDL.SDL_EventType.SDL_KEYDOWN)
+                return;
+
+            if (sdlEvent.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE)
+            {
+                _debuggerState = DebuggerState.Breakpoint;
+                SignalDebuggerNeedsRendering();
             }
         }
 

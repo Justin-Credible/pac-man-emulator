@@ -32,5 +32,10 @@ namespace JustinCredible.PacEmu
          * The user is in the Save State menu.
          */
         SaveState,
+
+        /**
+         * The user is in the "Show Last 50 Opcodes" menu.
+         */
+        InstructionHistory,
     }
 }
