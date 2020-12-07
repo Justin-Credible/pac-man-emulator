@@ -8,7 +8,7 @@
             "name": ".NET Core Launch (emulator.cli)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build emulator",
+            "preLaunchTask": "build emulator.cli",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/emulator.cli/bin/Debug/netcoreapp3.1/emulator.cli.dll",
             "args": [

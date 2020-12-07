@@ -16,6 +16,10 @@ namespace JustinCredible.PacEmu
         // The Break/Pause key was pressed; if debugging, the emulator should break execution.
         public bool ShouldBreak { get; set; } = false;
 
+        // Indicates if the CPU emulation was requested to be paused or un-paused.
+        public bool ShouldPause { get; set; } = false;
+        public bool ShouldUnPause { get; set; } = false;
+
         // In
 
         public byte[] FrameBuffer { get; set; } // Bitmap

@@ -22,6 +22,7 @@ namespace JustinCredible.PacEmu
         private List<IntPtr> _controllers = new List<IntPtr>();
         private IntPtr _debugWindow = IntPtr.Zero;
         private IntPtr _debugRendererSurface = IntPtr.Zero;
+        private bool _isWinRT = false; // UWP App
 
         // Used to throttle the GUI event loop so we don't fire the OnTick event
         // more than needed. During each tick we can send key presses as well as
@@ -67,6 +68,8 @@ namespace JustinCredible.PacEmu
 
             if (initResult != 0)
                 throw new Exception(String.Format("Failure while initializing SDL. SDL Error: {0}", SDL.SDL_GetError()));
+
+            _isWinRT = SDL.SDL_GetPlatform() == "WinRT";
 
             _gameWindow = SDL.SDL_CreateWindow(title,
                 SDL.SDL_WINDOWPOS_CENTERED,
@@ -162,6 +165,8 @@ namespace JustinCredible.PacEmu
 
                 tickEventArgs.KeyDown = null;
                 tickEventArgs.ShouldBreak = false;
+                tickEventArgs.ShouldUnPause = false;
+                tickEventArgs.ShouldPause = false;
 
                 while (SDL.SDL_PollEvent(out sdlEvent) != 0)
                 {
@@ -171,6 +176,36 @@ namespace JustinCredible.PacEmu
                         case SDL.SDL_EventType.SDL_QUIT:
                             // Break out of the SDL event loop, which will close the program.
                             return;
+
+                        case SDL.SDL_EventType.SDL_WINDOWEVENT:
+                            {
+                                if (_isWinRT)
+                                {
+                                    // On Xbox, most games keep running when focus is lost (e.g. the user pressed the home button
+                                    // to show the overlay, but hasn't left the app yet). So instead of pausing then, we'll wait
+                                    // until the app is hidden. This isn't great for UWP on Windows desktops, but the UWP app is
+                                    // intended only for Xbox... Windows desktop users should be using the desktop app version.
+                                    
+                                    if (sdlEvent.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_SHOWN)
+                                        tickEventArgs.ShouldUnPause = true;
+
+                                    if (sdlEvent.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_HIDDEN)
+                                        tickEventArgs.ShouldPause = true;
+                                }
+                                else
+                                {
+                                    if (sdlEvent.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED)
+                                        tickEventArgs.ShouldUnPause = true;
+
+                                    if (sdlEvent.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST)
+                                        tickEventArgs.ShouldPause = true;
+                                }
+
+                                if (sdlEvent.window.windowEvent == SDL.SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE)
+                                return; // Break out of the SDL event loop, which will close the program.
+
+                                break;
+                            }
 
                         case SDL.SDL_EventType.SDL_KEYDOWN:
                             tickEventArgs.KeyDown = sdlEvent.key.keysym.sym;

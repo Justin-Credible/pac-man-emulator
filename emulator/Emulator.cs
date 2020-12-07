@@ -212,6 +212,12 @@ namespace JustinCredible.PacEmu
             if (_game.Debug && eventArgs.ShouldBreak)
                 _game.Break();
 
+            if (eventArgs.ShouldPause)
+                _game.Pause();
+
+            if (eventArgs.ShouldUnPause)
+                _game.UnPause();
+
             if (_renderFrameNextTick)
             {
                 eventArgs.FrameBuffer = _frameBuffer;

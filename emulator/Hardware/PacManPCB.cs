@@ -21,6 +21,10 @@ namespace JustinCredible.PacEmu
         // loop in the thread and stop execution.
         private bool _cancelled = false;
 
+        // Indicates if a pause was required via the Pause() method. Used to temporarily stop stepping
+        // the CPU. Can be un-paused by a call to UnPause().
+        private bool _paused = false;
+
         // Indicates if writes should be allowed to the ROM addres space.
         public bool AllowWritableROM { get; set; } = false;
 
@@ -298,6 +302,22 @@ namespace JustinCredible.PacEmu
                 throw new Exception("Emulator cannot be stopped because it wasn't running.");
 
             _cancelled = true;
+        }
+
+        /**
+         * Used to temporarily stop execution of the CPU. Resume with a call to UnPause().
+         */
+        public void Pause()
+        {
+            _paused = true;
+        }
+
+        /**
+         * Used to resume execution of the CPU after a call to Pause().
+         */
+        public void UnPause()
+        {
+            _paused = false;
         }
 
         /**
@@ -757,6 +777,9 @@ namespace JustinCredible.PacEmu
 #endif
                 while (!_cancelled)
                 {
+                    while (_paused)
+                        Thread.Sleep(250);
+
                     // Handle all the debug tasks that need to happen before we execute an instruction.
                     if (Debug)
                     {
