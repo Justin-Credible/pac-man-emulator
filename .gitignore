@@ -276,3 +276,5 @@ __pycache__/
 # End of https://www.gitignore.io/api/aspnetcore
 
 /roms/
+/emulator.cli/SDL2.dll
+/emulator.uwp/roms/

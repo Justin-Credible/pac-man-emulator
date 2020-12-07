@@ -162,7 +162,7 @@ namespace JustinCredible.PacEmu
             {
                 var disassembly = Disassembler.FormatDisassemblyForDisplay(pcb._cpu.Registers.PC, pcb._cpu.Memory, 16, 16, showAnnotatedDisassembly ? pcb.Annotations : null);
 
-                var disassemblyLines = disassembly.Split(Environment.NewLine);
+                var disassemblyLines = disassembly.Split(Environment.NewLine.ToCharArray());
 
                 for (var i = 0; i < DIASSEMBLY_ROW_COUNT; i++)
                 {
@@ -171,7 +171,7 @@ namespace JustinCredible.PacEmu
 
                     // Double tabs followed by a semi-colon indicate a split between the address/instruction disassembly
                     // and the generated psuedocode or annotations.
-                    var disassemblyLineParts = disassemblyLines[i].Split("\t\t; ");
+                    var disassemblyLineParts = disassemblyLines[i].Split("\t\t; ".ToCharArray());
                     var disassemblyInstruction = disassemblyLineParts[0];
                     var disassemblyComments = disassemblyLineParts.Length > 1 ? disassemblyLineParts[1] : "";
 
@@ -326,7 +326,7 @@ namespace JustinCredible.PacEmu
 
                     // Double tabs followed by a semi-colon indicate a split between the address/instruction disassembly
                     // and the generated psuedocode or annotations.
-                    var disassemblyLineParts = disassemblyLine.Split("\t\t; ");
+                    var disassemblyLineParts = disassemblyLine.Split("\t\t; ".ToCharArray());
                     var disassemblyInstruction = disassemblyLineParts[0];
                     var disassemblyComments = disassemblyLineParts.Length > 1 ? disassemblyLineParts[1] : "";
 

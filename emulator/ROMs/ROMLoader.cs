@@ -24,8 +24,11 @@ namespace JustinCredible.PacEmu
 
             foreach (var romFile in romFiles)
             {
-                var path = Path.Join(directoryPath, romFile.FileName);
-                var alternatePath = Path.Join(directoryPath, romFile.AlternateFileName);
+                var path = Path.Combine(directoryPath, romFile.FileName);
+                string alternatePath = null;
+
+                if (!String.IsNullOrWhiteSpace(romFile.AlternateFileName))
+                    alternatePath = Path.Combine(directoryPath, romFile.AlternateFileName);
 
                 byte[] rom = null;
 
@@ -34,7 +37,7 @@ namespace JustinCredible.PacEmu
                 if (File.Exists(path))
                     rom = File.ReadAllBytes(path);
 
-                if (File.Exists(alternatePath))
+                if (!String.IsNullOrWhiteSpace(alternatePath) && File.Exists(alternatePath))
                     rom = File.ReadAllBytes(alternatePath);
 
                 var alternateFileNameMessage = romFile.AlternateFileName == null ? "" : $"(or alternate name '{romFile.AlternateFileName}')";

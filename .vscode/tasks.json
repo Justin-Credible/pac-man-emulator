@@ -18,6 +18,22 @@
             }
         },
         {
+            "label": "build emulator.cli",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/emulator.cli/emulator.cli.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "build emulator.tests",
             "command": "dotnet",
             "type": "process",
