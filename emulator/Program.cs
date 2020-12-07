@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.Extensions.CommandLineUtils;
+using Newtonsoft.Json;
 
 namespace JustinCredible.PacEmu
 {
@@ -149,14 +149,9 @@ namespace JustinCredible.PacEmu
                     // We found a settings file! Parse and load it.
                     var json = File.ReadAllText(dipSwitchesPath);
 
-                    var serializerOptions = new JsonSerializerOptions()
-                    {
-                        ReadCommentHandling = JsonCommentHandling.Skip,
-                    };
-
                     try
                     {
-                        dipSwitchState = JsonSerializer.Deserialize<DIPSwitches>(json, serializerOptions);
+                        dipSwitchState = JsonConvert.DeserializeObject<DIPSwitches>(json);
                     }
                     catch (Exception parseException)
                     {
@@ -185,7 +180,7 @@ namespace JustinCredible.PacEmu
                 if (loadStateOption.HasValue())
                 {
                     var json = File.ReadAllText(loadStateOption.Value());
-                    state = JsonSerializer.Deserialize<EmulatorState>(json);
+                    state = JsonConvert.DeserializeObject<EmulatorState>(json);
                 }
 
                 #endregion
@@ -389,7 +384,7 @@ namespace JustinCredible.PacEmu
                 case DebugAction.SaveState:
                 {
                     var state = _game.SaveState();
-                    var json = JsonSerializer.Serialize<EmulatorState>(state);
+                    var json = JsonConvert.SerializeObject(state);
                     File.WriteAllText(eventArgs.FileName, json);
                     break;
                 }
@@ -397,7 +392,7 @@ namespace JustinCredible.PacEmu
                 case DebugAction.LoadState:
                 {
                     var json = File.ReadAllText(eventArgs.FileName);
-                    var state = JsonSerializer.Deserialize<EmulatorState>(json);
+                    var state = JsonConvert.DeserializeObject<EmulatorState>(json);
                     _game.LoadState(state);
                     break;
                 }

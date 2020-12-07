@@ -1,13 +1,5 @@
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using JustinCredible.Z80Disassembler;
-using JustinCredible.ZilogZ80;
 
 namespace JustinCredible.PacEmu
 {

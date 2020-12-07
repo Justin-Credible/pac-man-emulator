@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.Json;
 using SDL2;
+using Newtonsoft.Json;
 
 namespace JustinCredible.PacEmu
 {
@@ -334,13 +334,13 @@ namespace JustinCredible.PacEmu
                         if (_debuggerState == DebuggerState.LoadState)
                         {
                             var json = File.ReadAllText(filePath);
-                            var state = JsonSerializer.Deserialize<EmulatorState>(json);
+                            var state = JsonConvert.DeserializeObject<EmulatorState>(json);
                             _debuggerPcb.LoadState(state);
                         }
                         else
                         {
                             var state = _debuggerPcb.SaveState();
-                            var json = JsonSerializer.Serialize<EmulatorState>(state);
+                            var json = JsonConvert.SerializeObject(state);
                             File.WriteAllText(filePath, json);
                         }
                     }
