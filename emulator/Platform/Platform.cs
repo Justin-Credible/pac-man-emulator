@@ -189,11 +189,15 @@ namespace JustinCredible.PacEmu
                             break;
 
                         case SDL.SDL_EventType.SDL_CONTROLLERBUTTONDOWN:
-                            UpdateButtons(tickEventArgs, sdlEvent.cbutton.which, sdlEvent.cbutton.button, true);
+                            UpdateControllerButtons(tickEventArgs, sdlEvent.cbutton.which, sdlEvent.cbutton.button, true);
                             break;
 
                         case SDL.SDL_EventType.SDL_CONTROLLERBUTTONUP:
-                            UpdateButtons(tickEventArgs, sdlEvent.cbutton.which, sdlEvent.cbutton.button, false);
+                            UpdateControllerButtons(tickEventArgs, sdlEvent.cbutton.which, sdlEvent.cbutton.button, false);
+                            break;
+
+                        case SDL.SDL_EventType.SDL_CONTROLLERAXISMOTION:
+                            UpdateControllerAxis(tickEventArgs, sdlEvent.caxis.which, sdlEvent.caxis.axis, sdlEvent.caxis.axisValue);
                             break;
                     }
 
@@ -412,7 +416,7 @@ namespace JustinCredible.PacEmu
             }
         }
 
-        private void UpdateButtons(GUITickEventArgs tickEventArgs, int joystickId, byte buttonRaw, bool isDown)
+        private void UpdateControllerButtons(GUITickEventArgs tickEventArgs, int joystickId, byte buttonRaw, bool isDown)
         {
             var button = (SDL.SDL_GameControllerButton)buttonRaw;
 
@@ -445,6 +449,31 @@ namespace JustinCredible.PacEmu
                     break;
                 case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_Y:
                     tickEventArgs.ButtonState.CoinChute1 = isDown;
+                    break;
+            }
+        }
+
+        private void UpdateControllerAxis(GUITickEventArgs tickEventArgs, int joystickId, byte axisRaw, short axisValue)
+        {
+            var axis = (SDL.SDL_GameControllerAxis)axisRaw;
+
+            switch (axis)
+            {
+                case SDL.SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_LEFTY:
+                    var isUp = axisValue < -20000;
+                    var isDown = axisValue > 20000;
+                    tickEventArgs.ButtonState.P1Up = isUp;
+                    tickEventArgs.ButtonState.P2Up = isUp;
+                    tickEventArgs.ButtonState.P1Down = isDown;
+                    tickEventArgs.ButtonState.P2Down = isDown;
+                    break;
+                case SDL.SDL_GameControllerAxis.SDL_CONTROLLER_AXIS_LEFTX:
+                    var isRight = axisValue > 20000;
+                    var isLeft = axisValue < -20000;
+                    tickEventArgs.ButtonState.P1Right = isRight;
+                    tickEventArgs.ButtonState.P2Right = isRight;
+                    tickEventArgs.ButtonState.P1Left = isLeft;
+                    tickEventArgs.ButtonState.P2Left = isLeft;
                     break;
             }
         }
