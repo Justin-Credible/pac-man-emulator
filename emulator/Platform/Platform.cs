@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using SDL2;
@@ -18,6 +19,7 @@ namespace JustinCredible.PacEmu
         private IntPtr _gameWindow = IntPtr.Zero;
         private IntPtr _gameRendererSurface = IntPtr.Zero;
         private uint _audioDevice = 0;
+        private List<IntPtr> _controllers = new List<IntPtr>();
         private IntPtr _debugWindow = IntPtr.Zero;
         private IntPtr _debugRendererSurface = IntPtr.Zero;
 
@@ -61,7 +63,7 @@ namespace JustinCredible.PacEmu
          */
         public void Initialize(string title, int width = 640, int height = 480, float scaleX = 1, float scaleY = 1, int targetTicskHz = 60)
         {
-            var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO);
+            var initResult = SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_GAMECONTROLLER);
 
             if (initResult != 0)
                 throw new Exception(String.Format("Failure while initializing SDL. SDL Error: {0}", SDL.SDL_GetError()));
@@ -111,6 +113,21 @@ namespace JustinCredible.PacEmu
 
             // Unpause the audio device and so that it will play once samples are queued up.
             SDL.SDL_PauseAudioDevice(_audioDevice, 0);
+
+            // Attempt to open controllers.
+
+            var numJoysticks = SDL.SDL_NumJoysticks();
+
+            for (var i = 0; i < numJoysticks; i++)
+            {
+                if (SDL.SDL_IsGameController(i) == SDL.SDL_bool.SDL_FALSE)
+                    continue;
+
+                var controller = SDL.SDL_GameControllerOpen(i);
+
+                if (controller != IntPtr.Zero)
+                    _controllers.Add(controller);
+            }
         }
 
         /**
@@ -169,6 +186,14 @@ namespace JustinCredible.PacEmu
 
                         case SDL.SDL_EventType.SDL_KEYUP:
                             UpdateKeys(tickEventArgs, sdlEvent.key.keysym.sym, false);
+                            break;
+
+                        case SDL.SDL_EventType.SDL_CONTROLLERBUTTONDOWN:
+                            UpdateButtons(tickEventArgs, sdlEvent.cbutton.which, sdlEvent.cbutton.button, true);
+                            break;
+
+                        case SDL.SDL_EventType.SDL_CONTROLLERBUTTONUP:
+                            UpdateButtons(tickEventArgs, sdlEvent.cbutton.which, sdlEvent.cbutton.button, false);
                             break;
                     }
 
@@ -236,7 +261,7 @@ namespace JustinCredible.PacEmu
                     {
                         if (_debuggerNeedsRendering)
                         {
-                            DebugWindowRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerInputString, _debuggerFileList,   _debuggerPcb, _debuggerShowAnnotatedDisassembly);
+                            DebugWindowRenderer.Render(_debugRendererSurface, _debuggerState, _debuggerInputString, _debuggerFileList, _debuggerPcb, _debuggerShowAnnotatedDisassembly);
                             _debuggerNeedsRendering = false;
                         }
                     }
@@ -298,6 +323,9 @@ namespace JustinCredible.PacEmu
                 SDL.SDL_DestroyWindow(_gameWindow);
 
             SDL.SDL_CloseAudioDevice(_audioDevice);
+
+            foreach (var controller in _controllers)
+                SDL.SDL_GameControllerClose(controller);
         }
 
         #endregion
@@ -381,6 +409,43 @@ namespace JustinCredible.PacEmu
 
                     break;
                 }
+            }
+        }
+
+        private void UpdateButtons(GUITickEventArgs tickEventArgs, int joystickId, byte buttonRaw, bool isDown)
+        {
+            var button = (SDL.SDL_GameControllerButton)buttonRaw;
+
+            switch (button)
+            {
+                // Player 1 & 2
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_LEFT:
+                    tickEventArgs.ButtonState.P1Left = isDown;
+                    tickEventArgs.ButtonState.P2Left = isDown;
+                    break;
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_RIGHT:
+                    tickEventArgs.ButtonState.P1Right = isDown;
+                    tickEventArgs.ButtonState.P2Right = isDown;
+                    break;
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_UP:
+                    tickEventArgs.ButtonState.P1Up = isDown;
+                    tickEventArgs.ButtonState.P2Up = isDown;
+                    break;
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_DPAD_DOWN:
+                    tickEventArgs.ButtonState.P1Down = isDown;
+                    tickEventArgs.ButtonState.P2Down = isDown;
+                    break;
+
+                // Player 1/2 Start, Coin
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_A:
+                    tickEventArgs.ButtonState.P1Start = isDown;
+                    break;
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_X:
+                    tickEventArgs.ButtonState.P2Start = isDown;
+                    break;
+                case SDL.SDL_GameControllerButton.SDL_CONTROLLER_BUTTON_Y:
+                    tickEventArgs.ButtonState.CoinChute1 = isDown;
+                    break;
             }
         }
 
