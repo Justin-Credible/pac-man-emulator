@@ -20,34 +20,41 @@ I used [SDL2](https://www.libsdl.org/) for the GUI and audio via the [SDL2#](htt
 
 The keyboard mapping is hardcoded as:
 
-* Insert Coin: `5` or `6`
-* 1/2 Player Start: `1`/`2`
-* Service Credit: `3`
-* Rack Advance: `7`
-* Test Switch: `8`
-* Player 1 - Up/Down/Left/Right: arrow keys
-* Player 2 - Up/Down/Left/Right: `W`/`S`/`A`/`D`
-* Break/Debug: `BREAK` / `PAUSE` / `F3`
+| Action           | Keyboard Key |
+| ---------------- | ------------ |
+| Insert Coin      | `5` or `6`   |
+| Start (1 Player) | `1`          |
+| Start (2 Players)| `2`          |
+| Service Credit   | `3`          |
+| Rack Advance     | `7`          |
+| Test Switch      | `8`          |
+| Player 1 Movement| Arrow Keys   |
+| Player 2 Movement| `W`/`S`/`A`/`D`|
+| Break/Debug      | `BREAK` / `PAUSE` / `F3`|
 
 It also supports using an Xbox-style game controller (both on desktop as well as when running on the Xbox One):
 
-* Movement - Left Stick
-* Y - Insert Point
-* A - Start (1 Player)
-* B - Start (2 Players)
+| Action           | Keyboard Key |
+| ---------------- | ------------ |
+| Movement         | Left Stick or D-Pad |
+| Insert Coin      | `Y`          |
+| Start (1 Player) | `A`          |
+| Start (2 Players)| `X`          |
 
 ## Compiling / Running
 
 The project layout is as follows:
 
-* `/disassembler` - `netstandard2.0` library; used for disassembling code in the debugger
-* `/assembler` - Z80 assembler ([zasm](https://k1.spdns.de/Develop/Projects/zasm/Distributions/)); used to assemble unit tests cases written in Z80 assembly
-* `/z80` - `netstandard2.0` library; Z80 CPU emulator
-* `/z80.tests` - Unit tests for the `z80` library project
-* `/emulator` - `netstandard2.0` library; the emulation code (minus the CPU core) and platform "glue" code
-* `/emulator.cli` - `netcoreapp3.1` CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS)
-* `/emulator.uwp` - Universal Windows application for Xbox One (or Windows 10)
-* `/emulator.tests` - Unit tests for the `emulator` library project
+| Directory        | Target Framework | Description |
+| ---------------- | ---------------- | ----------- |
+| `disassembler`   | `netstandard2.0` | Used for disassembling code in the debugger |
+| `assembler`      | N/A              | Z80 assembler ([zasm](https://k1.spdns.de/Develop/Projects/zasm/Distributions/)); used to assemble unit tests cases written in Z80 assembly  |
+| `z80`            | `netstandard2.0` | Z80 CPU emulator |
+| `z80.tests`      | `netcoreapp3.1`  | Unit tests for the `z80` library project |
+| `emulator`       | `netstandard2.0` | The emulation code and Pac-Man hardware (minus the CPU core), platform "glue" code (SDL) |
+| `emulator.cli`   | `netcoreapp3.1`  | CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS) |
+| `emulator.uwp`   | `UAP`            | Universal Windows application for Xbox One (or Windows 10) |
+| `emulator.tests` | `netcoreapp3.1`  | Unit tests for the `emulator` library project |
 
 ### Windows/Linux/macOS Desktop App
 
@@ -107,6 +114,8 @@ Homebrew ROMs that target the Pac-Man hardware can be run by leaving the `--rom-
 7. Setup for remote deploy to Xbox
     * Project Properties > Debug > Start Options > Authentication Mode: `Universal (Unencrypted Protocol)`
     * Enter IP address of Xbox
+8. Place ROMs in `emulator.uwp/roms`
+    * See [readme](emulator.uwp/roms/readme.txt) for more details
 8. Click the green play button labeled `Remote Machine` to deploy and start running/debugging
 
 ## Interactive Debugger
