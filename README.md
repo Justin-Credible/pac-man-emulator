@@ -14,11 +14,11 @@ It emulates the graphics and sound, supports save states, has an interactive deb
 
 ## Implementation
 
-I wrote the emulator and disassembler in C# targeting the cross-platform [.NET Core](https://dotnet.microsoft.com/) runtime.
+I wrote the emulator and disassembler in C# targeting the cross-platform [.NET Core](https://dotnet.microsoft.com/) runtime. It runs as a desktop app on Windows/Linux/macOS as well as a UWP app on the Xbox One game console.
 
-I used [SDL2](https://www.libsdl.org/) for the GUI and audio via the [SDL2#](https://github.com/flibitijibibo/SDL2-CS) wrapper.
+I used [SDL2](https://www.libsdl.org/) for the GUI and audio via the [SDL2#](https://github.com/flibitijibibo/SDL2-CS) wrapper. The Xbox One version uses the same code wrapped in a UWP app wrapper, which is based on [this starter project](https://github.com/Justin-Credible/xbox-uwp-sdl2-starter).
 
-The controls are hardcoded as:
+The keyboard mapping is hardcoded as:
 
 * Insert Coin: `5` or `6`
 * 1/2 Player Start: `1`/`2`
@@ -29,12 +29,34 @@ The controls are hardcoded as:
 * Player 2 - Up/Down/Left/Right: `W`/`S`/`A`/`D`
 * Break/Debug: `BREAK` / `PAUSE` / `F3`
 
+It also supports using an Xbox-style game controller (both on desktop as well as when running on the Xbox One):
+
+* Movement - Left Stick
+* Y - Insert Point
+* A - Start (1 Player)
+* B - Start (2 Players)
+
 ## Compiling / Running
 
-1. Install [.NET Core](https://dotnet.microsoft.com/download) 3.1
-2. Install [SDL2](https://www.libsdl.org/download-2.0.php)
-3. Clone this repository
-4. `cd emulator`
+The project layout is as follows:
+
+* `/disassembler` - `netstandard2.0` library; used for disassembling code in the debugger
+* `/assembler` - Z80 assembler ([zasm](https://k1.spdns.de/Develop/Projects/zasm/Distributions/)); used to assemble unit tests cases written in Z80 assembly
+* `/z80` - `netstandard2.0` library; Z80 CPU emulator
+* `/z80.tests` - Unit tests for the `z80` library project
+* `/emulator` - `netstandard2.0` library; the emulation code (minus the CPU core) and platform "glue" code
+* `/emulator.cli` - `netcoreapp3.1` CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS)
+* `/emulator.uwp` - Universal Windows application for Xbox One (or Windows 10)
+* `/emulator.tests` - Unit tests for the `emulator` library project
+
+### Windows/Linux/macOS Desktop App
+
+1. Clone this repository
+2. Install [.NET Core](https://dotnet.microsoft.com/download) 3.1
+3. Install [SDL2](https://www.libsdl.org/download-2.0.php)
+    * On macOS, place `SDL.framework` in `/Library/Frameworks`
+    * On Windows, place `SDL2.dll` in the `emulator.cli` directory
+4. `cd emulator.cli`
 5. `dotnet restore`
 6. `dotnet run --` followed by the commands to pass to the CLI program
 
@@ -57,7 +79,7 @@ Options:
   -wr|--writable-rom    Allow memory writes to the ROM address space.
   -d|--debug            Run in debug mode; enables internal statistics and logs useful when debugging.
   -b|--break            Used with debug, will break at the given address and allow single stepping opcode execution (e.g. --break 0x0248)
-  -rs|--reverse-step    Used with debug, allows for single stepping in reverse to rewind opcode execution.
+  -rvs|--reverse-step    Used with debug, allows for single stepping in reverse to rewind opcode execution.
   -a|--annotations      Used with debug, a path to a text file containing memory address annotations for interactive debugging (line format: 0x1234 .... ; Annotation)
 ```
 
@@ -68,6 +90,24 @@ Or, to run Ms. Pac-Man: `dotnet run -- run ../roms/mspacman --rom-set mspacman`
 Game settings (such as number of lives and difficulty) can be adjusted by editing the [`dip-switches.json`](emulator/dip-switches.json) file.
 
 Homebrew ROMs that target the Pac-Man hardware can be run by leaving the `--rom-set` set to the default `pacman` value. You may also need to use a few extra switches depending on the ROM. e.g. `dotnet run -- run ../roms/homebrew --skip-checksums --writable-rom`
+
+### Xbox One
+
+1. Install Visual Studio 2019 with the following components
+    * `Universal Windows Platform development`
+    * `Windows 10 SDK 10.0.18362.0`
+2. Setup Xbox One in developer mode
+    * Use [DevMode activation app](https://docs.microsoft.com/en-us/windows/uwp/xbox-apps/devkit-activation)
+    * Settings > System > Console Info > then quickly press LB, RB, LT, RT to enable
+3. Clone this repository
+4. Open `emulator.uwp/pac-man-emulator-uwp.sln` in Visual Studio
+5. Set project configuration to `Debug x64`
+6. Set signing certificate
+    * Project Properties > Application > Package Manifest > Packaging
+7. Setup for remote deploy to Xbox
+    * Project Properties > Debug > Start Options > Authentication Mode: `Universal (Unencrypted Protocol)`
+    * Enter IP address of Xbox
+8. Click the green play button labeled `Remote Machine` to deploy and start running/debugging
 
 ## Interactive Debugger
 
