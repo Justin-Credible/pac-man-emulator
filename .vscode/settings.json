@@ -7,6 +7,16 @@
         "**/bin": true,
         "**/obj": true
     },
+
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "emulator.uwp": true,
+    },
+
     "csharp.referencesCodeLens.enabled": false,
     "dotnet-test-explorer.testProjectPath": "**/*.tests.csproj",
     "files.associations": {
