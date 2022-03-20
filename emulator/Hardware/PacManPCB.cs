@@ -856,6 +856,11 @@ namespace JustinCredible.PacEmu
 
             // CRT electron beam reached the end (V-Blank).
 
+            // Every 1/60 of a second is a good time for us to generate a video frame as
+            // well as all of the audio samples that need to be queued up to play.
+            HandleRenderVideoFrame();
+            HandleRenderAudioSamples();
+
             // If interrupts are enabled, then handle them, otherwise do nothing.
             if (_cpu.InterruptsEnabled)
             {
@@ -866,11 +871,6 @@ namespace JustinCredible.PacEmu
 
                 // Execute the handler for the interrupt.
                 _cpu.StepMaskableInterrupt(_port0WriteLastData);
-
-                // Every 1/60 of a second is a good time for us to generate a video frame as
-                // well as all of the audio samples that need to be queued up to play.
-                HandleRenderVideoFrame();
-                HandleRenderAudioSamples();
             }
 
             // Reset the count so we can count up again.

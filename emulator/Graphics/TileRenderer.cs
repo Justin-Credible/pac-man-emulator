@@ -65,6 +65,11 @@ namespace JustinCredible.PacEmu
             if (paletteIndex == 65)
                 paletteIndex = 0;
 
+            // Protect against out of bounds exception, which occurs during the
+            // POST/boot process. We'll just default to something safe to continue.
+            if (paletteIndex >= 64)
+                paletteIndex = 0;
+
             #endregion
 
             var tile = _tileCache?[paletteIndex]?[tileIndex];

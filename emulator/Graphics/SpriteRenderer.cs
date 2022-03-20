@@ -68,6 +68,11 @@ namespace JustinCredible.PacEmu
         {
             Image<Rgba32> sprite = null;
 
+            // Protect against out of bounds exception, which occurs during the
+            // POST/boot process. We'll just default to something safe to continue.
+            if (paletteIndex >= 64)
+                paletteIndex = 0;
+
             if (flipX && flipY)
                 sprite = _spriteCacheFlipBoth?[paletteIndex]?[spriteIndex];
             else if (flipX)
