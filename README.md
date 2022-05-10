@@ -50,19 +50,20 @@ The project layout is as follows:
 | `disassembler`   | `netstandard2.0` | Used for disassembling code in the debugger |
 | `assembler`      | N/A              | Z80 assembler ([zasm](https://k1.spdns.de/Develop/Projects/zasm/Distributions/)); used to assemble unit tests cases written in Z80 assembly  |
 | `z80`            | `netstandard2.0` | Z80 CPU emulator |
-| `z80.tests`      | `netcoreapp3.1`  | Unit tests for the `z80` library project |
+| `z80.tests`      | `net6.0`  | Unit tests for the `z80` library project |
 | `emulator`       | `netstandard2.0` | The emulation code and Pac-Man hardware (minus the CPU core), platform "glue" code (SDL) |
-| `emulator.cli`   | `netcoreapp3.1`  | CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS) |
+| `emulator.cli`   | `net6.0`  | CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS) |
 | `emulator.uwp`   | `UAP`            | Universal Windows application for Xbox One (or Windows 10) |
-| `emulator.tests` | `netcoreapp3.1`  | Unit tests for the `emulator` library project |
+| `emulator.tests` | `net6.0`  | Unit tests for the `emulator` library project |
 
 ### Windows/Linux/macOS Desktop App
 
 1. Clone this repository
 2. Install [.NET Core](https://dotnet.microsoft.com/download) 3.1
-3. Install [SDL2](https://www.libsdl.org/download-2.0.php)
-    * On macOS, place `SDL.framework` in `/Library/Frameworks`
-    * On Windows, place `SDL2.dll` in the `emulator.cli` directory
+3. Install [SDL2](https://www.libsdl.org)
+    * macOS: `brew install SDL2 && brew link sdl2`
+    * On M1/arm64 macOS, may also need to do: `sudo ln -s /opt/homebrew/lib/libSDL2.dylib /usr/local/lib/`
+    * On Windows, [download binaries](https://www.libsdl.org/download-2.0.php) and place `SDL2.dll` in the `emulator.cli` directory
 4. `cd emulator.cli`
 5. `dotnet restore`
 6. `dotnet run --` followed by the commands to pass to the CLI program
