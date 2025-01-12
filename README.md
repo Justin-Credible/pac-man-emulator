@@ -50,11 +50,11 @@ The project layout is as follows:
 | `disassembler`   | `netstandard2.0` | Used for disassembling code in the debugger |
 | `assembler`      | N/A              | Z80 assembler ([zasm](https://k1.spdns.de/Develop/Projects/zasm/Distributions/)); used to assemble unit tests cases written in Z80 assembly  |
 | `z80`            | `netstandard2.0` | Z80 CPU emulator |
-| `z80.tests`      | `net6.0`  | Unit tests for the `z80` library project |
+| `z80.tests`      | `net8.0`  | Unit tests for the `z80` library project |
 | `emulator`       | `netstandard2.0` | The emulation code and Pac-Man hardware (minus the CPU core), platform "glue" code (SDL) |
-| `emulator.cli`   | `net6.0`  | CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS) |
+| `emulator.cli`   | `net8.0`  | CLI application; used to launch the app on a desktop platform (Windows/Linux/macOS) |
 | `emulator.uwp`   | `UAP`            | Universal Windows application for Xbox One (or Windows 10) |
-| `emulator.tests` | `net6.0`  | Unit tests for the `emulator` library project |
+| `emulator.tests` | `net8.0`  | Unit tests for the `emulator` library project |
 
 ### Windows/Linux/macOS Desktop App
 
