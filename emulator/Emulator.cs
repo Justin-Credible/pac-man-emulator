@@ -186,8 +186,7 @@ namespace JustinCredible.PacEmu
          */
         private static void PacManPCB_OnAudioSample(AudioSampleEventArgs eventArgs)
         {
-            foreach (var sample in eventArgs.Samples)
-                _platform.QueueAudioSamples(sample);
+            _platform.QueueAudioSamples(eventArgs.Samples);
         }
 
         private static void PacManPCB_OnBreakpointHit()

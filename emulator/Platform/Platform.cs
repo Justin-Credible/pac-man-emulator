@@ -44,6 +44,16 @@ namespace JustinCredible.PacEmu
         // A flag that allows us to make a keypress behave as a toggle switch.
         private bool _allowChangeBoardTestSwitch = true;
 
+        // Determines the audio sampling rate for playback on the target platform.
+        // Pac-Man uses 96 kHz; if set to any other value downsampling will occur.
+        // See QueueAudioSamples() for more details.
+        // private const int AUDIO_SAMPLE_RATE = 96000;
+        private const int AUDIO_SAMPLE_RATE = 44100;
+        // private const int AUDIO_SAMPLE_RATE = 22050;
+        // private const int AUDIO_SAMPLE_RATE = 11025;
+
+        private bool _hasEmittedDownsamplingAlert = false;
+
         #endregion
 
         #region Events
@@ -98,10 +108,7 @@ namespace JustinCredible.PacEmu
 
             // Setup our audio format.
             SDL.SDL_AudioSpec audioSpec = new SDL.SDL_AudioSpec();
-            audioSpec.freq = 96000; // sampling rate
-            // audioSpec.freq = 44100; // sampling rate
-            // audioSpec.freq = 22050; // sampling rate
-            // audioSpec.freq = 11025; // sampling rate
+            audioSpec.freq = AUDIO_SAMPLE_RATE; // sampling rate
             audioSpec.format = SDL.AUDIO_S8; // sample format: 8-bit, signed
             audioSpec.channels = 1; // number of channels
             audioSpec.samples = 4096; // buffer size
@@ -324,30 +331,66 @@ namespace JustinCredible.PacEmu
          * Used to queue the given audio samples for playback. The parameter is expected
          * to be three 8-bit, signed values, one for each voice.
          */
-        public void QueueAudioSamples(byte[] samples)
+        public void QueueAudioSamples(byte[][] samplesByChannel)
         {
-            // Merge all three voices into one.
-            var sampleFull = samples[0] + samples[1] + samples[2];
+            var sourceSamples = new sbyte[samplesByChannel.Length];
 
-            // Clamp the value to the min/max of a 8-bit signed value to avoid distortion.
-            if (sampleFull > 127)
-                sampleFull = 127;
-            else if (sampleFull < -128)
-                sampleFull = -128;
+            for (int i = 0; i < sourceSamples.Length; i++)
+            {
+                var sampleChannel1 = samplesByChannel[i][0];
+                var sampleChannel2 = samplesByChannel[i][1];
+                var sampleChannel3 = samplesByChannel[i][2];
 
-            var sample = (sbyte)sampleFull;
+                // Merge all three voices into one.
+                var sample = sampleChannel1 + sampleChannel2 + sampleChannel3;
+
+                // Clamp the value to the min/max of a 8-bit signed value to avoid distortion.
+                if (sample > 127)
+                    sample = 127;
+                else if (sample < -128)
+                    sample = -128;
+
+                sourceSamples[i] = (sbyte)sample;
+            }
+
+            var targetSamples = sourceSamples;
+
+            var sourceFrameSize = sourceSamples.Length;
+            var targetFrameSize = AUDIO_SAMPLE_RATE / 60;
+            var shouldDownsample = sourceFrameSize != targetFrameSize;
+
+            if (shouldDownsample)
+            {
+                if (!_hasEmittedDownsamplingAlert)
+                {
+                    _hasEmittedDownsamplingAlert = true;
+                    Console.WriteLine($"Audio: Downsampling from {sourceFrameSize*60} hz to {targetFrameSize*60} hz.");
+                }
+
+                float factor = (float)sourceFrameSize / (float)targetFrameSize;
+
+                var downsampledSamples = new sbyte[targetFrameSize];
+
+                for (var i = 0; i < targetFrameSize; i++)
+                {
+                    var offset = (int)(factor * i);
+                    downsampledSamples[i] = sourceSamples[offset];
+                }
+
+                targetSamples = downsampledSamples;
+            }
 
             // Now that we have the combined sample, we need to allocate it as a pinned object
             // on the heap so that we can pass it through to the unmanaged SDL2 code.
-            var samplePinned = GCHandle.Alloc(sample, GCHandleType.Pinned);
-            var pointer = samplePinned.AddrOfPinnedObject();
+            var samplesPinned = GCHandle.Alloc(targetSamples, GCHandleType.Pinned);
+            var pointer = samplesPinned.AddrOfPinnedObject();
 
             // Pass the value to SDL to be queued up for playback.
-            uint sample_size = sizeof(sbyte) * 1;
+            uint sample_size = (uint)(sizeof(sbyte) * 1 * targetSamples.Length);
             SDL.SDL_QueueAudio(_audioDevice, pointer, sample_size);
 
             // Unpin this so the GC can clean it up.
-            samplePinned.Free();
+            samplesPinned.Free();
         }
 
         /**
