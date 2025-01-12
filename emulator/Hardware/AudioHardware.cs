@@ -95,8 +95,6 @@ namespace JustinCredible.PacEmu
             var v3SampleNibble = v3Sample[(Voice3Accumulator & 0xF800) >> 11];
 
             // 4. Multiply that nibble by the volume nibble 0-15.
-            // TODO: Should this be a multiply or a logical AND?
-            // Both sound slightly off, but a logical AND sounds better to me.
 
             v1SampleNibble = (byte)(v1SampleNibble & (Voice1Volume & 0x0F));
             v2SampleNibble = (byte)(v2SampleNibble & (Voice2Volume & 0x0F));
