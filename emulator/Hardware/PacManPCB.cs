@@ -540,7 +540,7 @@ namespace JustinCredible.PacEmu
             else if (address == 0x5001)
             {
                 // Sound enable (bit 0: 0 = disabled, 1 = enabled)
-                _soundEnabled = (value & 0x01) == 0x01;;
+                _soundEnabled = (value & 0x01) == 0x01;
             }
             else if (address == 0x5002)
             {
@@ -859,7 +859,7 @@ namespace JustinCredible.PacEmu
             // Every 1/60 of a second is a good time for us to generate a video frame as
             // well as all of the audio samples that need to be queued up to play.
             HandleRenderVideoFrame();
-            HandleRenderAudioSamples();
+            if (_soundEnabled) HandleRenderAudioSamples();
 
             // If interrupts are enabled, then handle them, otherwise do nothing.
             if (_cpu.InterruptsEnabled)
