@@ -192,3 +192,6 @@ I found the following resources useful in building this emulator:
 * Misc
   * [8-Bit Workshop](https://8bitworkshop.com/)
   * [Let there be sound](https://nicolasallemand.com/2019/12/12/let-there-be-sound/)
+* Other Implementations
+  * [Frisnit's Pac-Man Emulator](https://github.com/frisnit/pacman-emulator) (Java)
+  * [PIE - Pacman Instructional Emulator](https://www.walkofmind.com/programming/pie/pie.htm) (C++)
