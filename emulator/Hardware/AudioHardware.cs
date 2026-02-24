@@ -95,10 +95,12 @@ namespace JustinCredible.PacEmu
             var v3SampleNibble = v3Sample[(Voice3Accumulator & 0xF800) >> 11];
 
             // 4. Multiply that nibble by the volume nibble 0-15.
+            // The nibble is centered around 0 by subtracting 8 (range -8 to +7) before
+            // multiplying, producing a signed sample stored in a byte (two's complement).
 
-            v1SampleNibble = (byte)(v1SampleNibble & (Voice1Volume & 0x0F));
-            v2SampleNibble = (byte)(v2SampleNibble & (Voice2Volume & 0x0F));
-            v3SampleNibble = (byte)(v3SampleNibble & (Voice3Volume & 0x0F));
+            v1SampleNibble = (byte)(((v1SampleNibble & 0x0F) - 8) * (Voice1Volume & 0x0F));
+            v2SampleNibble = (byte)(((v2SampleNibble & 0x0F) - 8) * (Voice2Volume & 0x0F));
+            v3SampleNibble = (byte)(((v3SampleNibble & 0x0F) - 8) * (Voice3Volume & 0x0F));
 
             // 5. Send the result to the amplifier for output.
 
