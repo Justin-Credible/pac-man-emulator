@@ -901,7 +901,7 @@ namespace JustinCredible.PacEmu
 
         private void HandleRenderAudioSamples()
         {
-            var samples = new byte[_audioSamplesPerFrame][];
+            var samples = new sbyte[_audioSamplesPerFrame][];
 
             // Generate the number of audio samples that we need for a given "frame".
             for (var i = 0; i < _audioSamplesPerFrame; i++)

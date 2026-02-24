@@ -331,17 +331,15 @@ namespace JustinCredible.PacEmu
          * Used to queue the given audio samples for playback. The parameter is expected
          * to be three 8-bit, signed values, one for each voice.
          */
-        public void QueueAudioSamples(byte[][] samplesByChannel)
+        public void QueueAudioSamples(sbyte[][] samplesByChannel)
         {
             var sourceSamples = new sbyte[samplesByChannel.Length];
 
             for (int i = 0; i < sourceSamples.Length; i++)
             {
-                // Samples are signed values stored in bytes (two's complement); cast to
-                // sbyte so they are summed correctly rather than treated as unsigned.
-                var sampleChannel1 = (sbyte)samplesByChannel[i][0];
-                var sampleChannel2 = (sbyte)samplesByChannel[i][1];
-                var sampleChannel3 = (sbyte)samplesByChannel[i][2];
+                var sampleChannel1 = samplesByChannel[i][0];
+                var sampleChannel2 = samplesByChannel[i][1];
+                var sampleChannel3 = samplesByChannel[i][2];
 
                 // Merge all three voices into one.
                 var sample = sampleChannel1 + sampleChannel2 + sampleChannel3;

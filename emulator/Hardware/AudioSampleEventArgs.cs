@@ -7,9 +7,8 @@ namespace JustinCredible.PacEmu
         /**
          * An array of audio samples to be played. Each entry in the array
          * is a group of three audio samples, one for each of the voices for
-         * a given moment in time. Only the lower nibble of each byte is used.
-         * The samples are 8-bit, signed.
+         * a given moment in time. The samples are 8-bit signed values.
          */
-        public byte[][] Samples { get; set; }
+        public sbyte[][] Samples { get; set; }
     }
 }

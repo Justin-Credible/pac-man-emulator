@@ -47,7 +47,7 @@ namespace JustinCredible.PacEmu
          * This handles updating the internal registers and creating the audio samples for each
          * of the three voices. It returns three bytes, each a 8-bit, signed audio sample.
          */
-        public byte[] Tick()
+        public sbyte[] Tick()
         {
             // First, lets convert the frequency bytes into the 20-bit or 16-bit values from the array
             // of bytes that the game code sets; each byte only uses the lower nibble, so we need to
@@ -96,15 +96,15 @@ namespace JustinCredible.PacEmu
 
             // 4. Multiply that nibble by the volume nibble 0-15.
             // The nibble is centered around 0 by subtracting 8 (range -8 to +7) before
-            // multiplying, producing a signed sample stored in a byte (two's complement).
+            // multiplying, producing a signed sample in the range -120 to +105.
 
-            v1SampleNibble = (byte)(((v1SampleNibble & 0x0F) - 8) * (Voice1Volume & 0x0F));
-            v2SampleNibble = (byte)(((v2SampleNibble & 0x0F) - 8) * (Voice2Volume & 0x0F));
-            v3SampleNibble = (byte)(((v3SampleNibble & 0x0F) - 8) * (Voice3Volume & 0x0F));
+            var s1 = (sbyte)(((v1SampleNibble & 0x0F) - 8) * (Voice1Volume & 0x0F));
+            var s2 = (sbyte)(((v2SampleNibble & 0x0F) - 8) * (Voice2Volume & 0x0F));
+            var s3 = (sbyte)(((v3SampleNibble & 0x0F) - 8) * (Voice3Volume & 0x0F));
 
             // 5. Send the result to the amplifier for output.
 
-            return new byte[3] { v1SampleNibble, v2SampleNibble, v3SampleNibble };
+            return new sbyte[3] { s1, s2, s3 };
         }
 
         public AudioHardwareState SaveState()
